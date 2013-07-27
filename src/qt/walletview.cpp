@@ -91,7 +91,7 @@ void WalletView::setBitcoinGUI(BitcoinGUI *gui)
         connect(this, SIGNAL(encryptionStatusChanged(int)), gui, SLOT(setEncryptionStatus(int)));
 
         // Pass through transaction notifications
-        connect(this, SIGNAL(incomingTransaction(QString,int,qint64,QString,QString)), gui, SLOT(incomingTransaction(QString,int,qint64,QString,QString)));
+        connect(this, SIGNAL(incomingTransaction(QString,int,const mpq&,QString,QString)), gui, SLOT(incomingTransaction(QString,int,const mpq&,QString,QString)));
     }
 }
 
@@ -139,7 +139,7 @@ void WalletView::processNewTransaction(const QModelIndex& parent, int start, int
     TransactionTableModel *ttm = walletModel->getTransactionTableModel();
 
     QString date = ttm->index(start, TransactionTableModel::Date, parent).data().toString();
-    qint64 amount = ttm->index(start, TransactionTableModel::Amount, parent).data(Qt::EditRole).toULongLong();
+    mpq amount; ParseMoney(ttm->index(start, TransactionTableModel::Amount, parent).data(Qt::EditRole).toString().toStdString(), amount);
     QString type = ttm->index(start, TransactionTableModel::Type, parent).data().toString();
     QString address = ttm->index(start, TransactionTableModel::ToAddress, parent).data().toString();
 

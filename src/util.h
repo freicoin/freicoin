@@ -35,8 +35,8 @@
 class CNetAddr;
 class uint256;
 
-static const int64_t COIN = 100000000;
-static const int64_t CENT = 1000000;
+static const mpq COIN = mpq("100000000/1");
+static const mpq CENT = mpq("1000000/1");
 
 #define BEGIN(a)            ((char*)&(a))
 #define END(a)              ((char*)&((&(a))[1]))
@@ -167,8 +167,9 @@ void LogException(std::exception* pex, const char* pszThread);
 void PrintExceptionContinue(std::exception* pex, const char* pszThread);
 void ParseString(const std::string& str, char c, std::vector<std::string>& v);
 std::string FormatMoney(int64_t n, bool fPlus=false);
-bool ParseMoney(const std::string& str, int64_t& nRet);
-bool ParseMoney(const char* pszIn, int64_t& nRet);
+std::string FormatMoney(const mpq &q, bool fPlus=false);
+bool ParseMoney(const std::string& str, mpq& nRet);
+bool ParseMoney(const char* pszIn, mpq& nRet);
 std::string SanitizeString(const std::string& str);
 std::vector<unsigned char> ParseHex(const char* psz);
 std::vector<unsigned char> ParseHex(const std::string& str);
@@ -270,6 +271,42 @@ inline int64_t abs64(int64_t n)
 {
     return (n >= 0 ? n : -n);
 }
+
+mpz inline i64_to_mpz(int64_t nValue)
+{
+    return mpz(i64tostr(nValue));
+}
+
+mpq inline i64_to_mpq(int64_t nValue)
+{
+    return i64_to_mpz(nValue);
+}
+
+int64_t inline mpz_to_i64(const mpz &zValue)
+{
+    static mpz MPZ_MAX_I64( "9223372036854775807");
+    static mpz MPZ_MIN_I64("-9223372036854775808");
+    if (zValue < MPZ_MIN_I64 || zValue > MPZ_MAX_I64)
+        throw std::runtime_error("mpz_to_i64 : input exceeds range of int64_t type");
+    int64_t result = 0;
+    mpz tmp(zValue);
+    bool sign = tmp < 0;
+    if ( sign ) tmp = -tmp;
+    result = atoi64(tmp.get_str());
+    return (sign ? -result : result);
+}
+
+enum
+{
+    ROUND_TIES_TO_EVEN,
+    ROUND_TOWARDS_ZERO,
+    ROUND_AWAY_FROM_ZERO,
+    ROUND_TOWARD_POSITIVE,
+    ROUND_TOWARD_NEGATIVE,
+    ROUND_SIGNAL,
+};
+
+mpq RoundAbsolute(const mpq &q, int mode=ROUND_TIES_TO_EVEN, int magnitude=0);
 
 template<typename T>
 std::string HexStr(const T itbegin, const T itend, bool fSpaces=false)

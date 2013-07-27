@@ -11,6 +11,8 @@ QT_BEGIN_NAMESPACE
 class QNetworkProxy;
 QT_END_NAMESPACE
 
+#include "bignum.h" // for mpq
+
 /** Interface from Qt to configuration data structure for Bitcoin client.
    To Qt, the options are presented as a list with the different options
    laid out vertically.
@@ -33,7 +35,7 @@ public:
         ProxyIP,                // QString
         ProxyPort,              // int
         ProxySocksVersion,      // int
-        Fee,                    // qint64
+        Fee,                    // mpq serialized as QString
         DisplayUnit,            // BitcoinUnits::Unit
         DisplayAddresses,       // bool
         Language,               // QString
@@ -77,7 +79,7 @@ private:
 
 signals:
     void displayUnitChanged(int unit);
-    void transactionFeeChanged(qint64);
+    void transactionFeeChanged(const mpq&);
     void coinControlFeaturesChanged(bool);
 };
 

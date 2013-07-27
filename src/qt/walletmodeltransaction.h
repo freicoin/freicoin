@@ -26,10 +26,10 @@ public:
 
     CWalletTx *getTransaction();
 
-    void setTransactionFee(qint64 newFee);
-    qint64 getTransactionFee();
+    void setTransactionFee(const mpq& newFee);
+    mpq getTransactionFee();
 
-    qint64 getTotalTransactionAmount();
+    mpq getTotalTransactionAmount();
 
     void newPossibleKeyChange(CWallet *wallet);
     CReserveKey *getPossibleKeyChange();
@@ -38,7 +38,7 @@ private:
     const QList<SendCoinsRecipient> recipients;
     CWalletTx *walletTransaction;
     CReserveKey *keyChange;
-    qint64 fee;
+    mpq fee;
 };
 
 #endif // WALLETMODELTRANSACTION_H

@@ -23,6 +23,8 @@ Dependencies
  qt          | GUI              | GUI toolkit
  protobuf    | Payments in GUI  | Data interchange format used for payment protocol
  libqrencode | QR codes in GUI  | Optional for generating QR codes
+ gmp         | mpz, mpq         | Multi-precision integer and rational types
+ mpfr        | mpfr             | Multi-precision, deterministic floating point
 
 [miniupnpc](http://miniupnp.free.fr/) may be used for UPnP port mapping.  It can be downloaded from [here](
 http://miniupnp.tuxfamily.org/files/).  UPnP support is compiled in and
@@ -51,6 +53,8 @@ Licenses of statically linked libraries:
 -  qt            4.8.3
 -  protobuf      2.5.0
 -  libqrencode   3.2.0
+-  gmp           5.1.2
+-  mpfr          3.1.2
 
 Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------

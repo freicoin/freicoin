@@ -6,6 +6,7 @@
 #ifndef _BITCOINRPC_SERVER_H_
 #define _BITCOINRPC_SERVER_H_ 1
 
+#include "bignum.h" // for mpq
 #include "uint256.h"
 #include "rpcprotocol.h"
 
@@ -99,8 +100,8 @@ extern void InitRPCMining();
 extern void ShutdownRPCMining();
 
 extern int64_t nWalletUnlockTime;
-extern int64_t AmountFromValue(const json_spirit::Value& value);
-extern json_spirit::Value ValueFromAmount(int64_t amount);
+extern mpq AmountFromValue(const json_spirit::Value& value);
+extern json_spirit::Value ValueFromAmount(const mpq& amount);
 extern double GetDifficulty(const CBlockIndex* blockindex = NULL);
 extern std::string HexBits(unsigned int nBits);
 extern std::string HelpRequiringPassphrase();

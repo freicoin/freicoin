@@ -14,6 +14,8 @@
 #include <QString>
 #include <QTreeWidgetItem>
 
+#include "bignum.h" // for mpq
+
 namespace Ui {
     class CoinControlDialog;
 }
@@ -34,7 +36,7 @@ public:
     static void updateLabels(WalletModel*, QDialog*);
     static QString getPriorityLabel(double);
 
-    static QList<qint64> payAmounts;
+    static QList<mpq> payAmounts;
     static CCoinControl *coinControl;
 
 private:

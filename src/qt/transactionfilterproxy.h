@@ -8,6 +8,8 @@
 #include <QDateTime>
 #include <QSortFilterProxyModel>
 
+#include "bignum.h" // for mpq
+
 /** Filter the transaction list according to pre-specified rules. */
 class TransactionFilterProxy : public QSortFilterProxyModel
 {
@@ -31,7 +33,7 @@ public:
       @note Type filter takes a bit field created with TYPE() or ALL_TYPES
      */
     void setTypeFilter(quint32 modes);
-    void setMinAmount(qint64 minimum);
+    void setMinAmount(const mpq& minimum);
 
     /** Set maximum number of rows returned, -1 if unlimited. */
     void setLimit(int limit);
@@ -49,7 +51,7 @@ private:
     QDateTime dateTo;
     QString addrPrefix;
     quint32 typeFilter;
-    qint64 minAmount;
+    mpq minAmount;
     int limitRows;
     bool showInactive;
 };

@@ -7,6 +7,8 @@
 
 #include <QStackedWidget>
 
+#include "bignum.h" // for mpq
+
 class BitcoinGUI;
 class ClientModel;
 class OverviewPage;
@@ -105,7 +107,7 @@ signals:
     /** Encryption status of wallet changed */
     void encryptionStatusChanged(int status);
     /** Notify that a new transaction appeared */
-    void incomingTransaction(const QString& date, int unit, qint64 amount, const QString& type, const QString& address);
+    void incomingTransaction(const QString& date, int unit, const mpq& amount, const QString& type, const QString& address);
 };
 
 #endif // WALLETVIEW_H

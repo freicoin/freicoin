@@ -7,6 +7,8 @@
 #include "bitcoinunits.h"
 #include "guiconstants.h"
 #include "qvaluecombobox.h"
+#include "bignum.h" // for mpq
+#include "core.h" // for MoneyRange()
 
 #include <QApplication>
 #include <QDoubleSpinBox>
@@ -120,9 +122,9 @@ QWidget *BitcoinAmountField::setupTabChain(QWidget *prev)
     return unit;
 }
 
-qint64 BitcoinAmountField::value(bool *valid_out) const
+mpq BitcoinAmountField::value(bool *valid_out) const
 {
-    qint64 val_out = 0;
+    mpq val_out = 0;
     bool valid = BitcoinUnits::parse(currentUnit, text(), &val_out);
     if (valid_out)
     {
@@ -131,9 +133,9 @@ qint64 BitcoinAmountField::value(bool *valid_out) const
     return val_out;
 }
 
-void BitcoinAmountField::setValue(qint64 value)
+void BitcoinAmountField::setValue(const mpq& value)
 {
-    setText(BitcoinUnits::format(currentUnit, value));
+    setText(BitcoinUnits::format(currentUnit, RoundAbsolute(value, ROUND_TOWARDS_ZERO)));
 }
 
 void BitcoinAmountField::setReadOnly(bool fReadOnly)
@@ -152,14 +154,14 @@ void BitcoinAmountField::unitChanged(int idx)
 
     // Parse current value and convert to new unit
     bool valid = false;
-    qint64 currentValue = value(&valid);
+    mpq currentValue = value(&valid);
 
     currentUnit = newUnit;
 
     // Set max length after retrieving the value, to prevent truncation
     amount->setDecimals(BitcoinUnits::decimals(currentUnit));
     amount->setMaximum(qPow(10, BitcoinUnits::amountDigits(currentUnit)) - qPow(10, -amount->decimals()));
-    amount->setSingleStep((double)nSingleStep / (double)BitcoinUnits::factor(currentUnit));
+    amount->setSingleStep(nSingleStep.get_d() / BitcoinUnits::factor(currentUnit).get_d());
 
     if (valid)
     {
@@ -179,7 +181,7 @@ void BitcoinAmountField::setDisplayUnit(int newUnit)
     unit->setValue(newUnit);
 }
 
-void BitcoinAmountField::setSingleStep(qint64 step)
+void BitcoinAmountField::setSingleStep(const mpq& step)
 {
     nSingleStep = step;
     unitChanged(unit->currentIndex());

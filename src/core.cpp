@@ -64,7 +64,7 @@ uint256 CTxOut::GetHash() const
 
 std::string CTxOut::ToString() const
 {
-    return strprintf("CTxOut(nValue=%d.%08d, scriptPubKey=%s)", nValue / COIN, nValue % COIN, scriptPubKey.ToString().substr(0,30));
+    return strprintf("CTxOut(nValue=%s, scriptPubKey=%s)", FormatMoney(nValue).c_str(), scriptPubKey.ToString().substr(0,30));
 }
 
 void CTxOut::print() const
@@ -106,7 +106,7 @@ bool CTransaction::IsNewerThan(const CTransaction& old) const
     return fNewer;
 }
 
-int64_t CTransaction::GetValueOut() const
+mpq CTransaction::GetValueOut() const
 {
     int64_t nValueOut = 0;
     BOOST_FOREACH(const CTxOut& txout, vout)
@@ -115,7 +115,7 @@ int64_t CTransaction::GetValueOut() const
         if (!MoneyRange(txout.nValue) || !MoneyRange(nValueOut))
             throw std::runtime_error("CTransaction::GetValueOut() : value out of range");
     }
-    return nValueOut;
+    return i64_to_mpq(nValueOut);
 }
 
 double CTransaction::ComputePriority(double dPriorityInputs, unsigned int nTxSize) const

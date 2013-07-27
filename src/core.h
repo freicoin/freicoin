@@ -15,8 +15,12 @@
 class CTransaction;
 
 /** No amount larger than this (in satoshi) is valid */
-static const int64_t MAX_MONEY = 21000000 * COIN;
-inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+static const int64_t I64_MAX_MONEY = 9999999999999999LL;
+static const mpz MPZ_MAX_MONEY = mpz("9999999999999999");
+static const mpq MPQ_MAX_MONEY = mpq("9999999999999999/1");
+inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= I64_MAX_MONEY); }
+inline bool MoneyRange(mpz zValue) { return (zValue >= 0 && zValue <= MPZ_MAX_MONEY); }
+inline bool MoneyRange(mpq qValue) { return (qValue >= 0 && qValue <= MPQ_MAX_MONEY); }
 
 /** An outpoint - a combination of a transaction hash and an index n into its vout */
 class COutPoint
@@ -148,7 +152,7 @@ public:
 
     uint256 GetHash() const;
 
-    bool IsDust(int64_t nMinRelayTxFee) const
+    bool IsDust(const mpq& nMinRelayTxFee) const
     {
         // "Dust" is defined in terms of CTransaction::nMinRelayTxFee,
         // which has units satoshis-per-kilobyte.
@@ -158,7 +162,9 @@ public:
         // need a CTxIn of at least 148 bytes to spend,
         // so dust is a txout less than 546 satoshis 
         // with default nMinRelayTxFee.
-        return ((nValue*1000)/(3*((int)GetSerializeSize(SER_DISK,0)+148)) < nMinRelayTxFee);
+        mpq nFee = (i64_to_mpq(nValue)*1000) /
+                   (3*((int)GetSerializeSize(SER_DISK,0)+148));
+        return (nFee < nMinRelayTxFee);
     }
 
     friend bool operator==(const CTxOut& a, const CTxOut& b)
@@ -172,6 +178,23 @@ public:
         return !(a == b);
     }
 
+    void SetInitialValue(int64_t nInitialValue)
+    {
+        nValue = nInitialValue;
+    }
+
+    void SetInitialValue(const mpz &zInitialValue)
+    {
+        nValue = mpz_to_i64(zInitialValue);
+    }
+
+    void SetInitialValue(const mpq &qInitialValue)
+    {
+        const mpq qValue = RoundAbsolute(qInitialValue, ROUND_SIGNAL, 0);
+        const mpz zValue = qValue.get_num() / qValue.get_den();
+        nValue = mpz_to_i64(zValue);
+    }
+
     std::string ToString() const;
     void print() const;
 };
@@ -183,8 +206,8 @@ public:
 class CTransaction
 {
 public:
-    static int64_t nMinTxFee;
-    static int64_t nMinRelayTxFee;
+    static mpq nMinTxFee;
+    static mpq nMinRelayTxFee;
     static const int CURRENT_VERSION=1;
     int nVersion;
     std::vector<CTxIn> vin;
@@ -222,7 +245,7 @@ public:
     bool IsNewerThan(const CTransaction& old) const;
 
     // Return sum of txouts.
-    int64_t GetValueOut() const;
+    mpq GetValueOut() const;
     // GetValueIn() is a method on CCoinsViewCache, because
     // inputs must be known to compute value in.
 

@@ -13,7 +13,7 @@ CTxMemPoolEntry::CTxMemPoolEntry()
     nHeight = MEMPOOL_HEIGHT;
 }
 
-CTxMemPoolEntry::CTxMemPoolEntry(const CTransaction& _tx, int64_t _nFee,
+CTxMemPoolEntry::CTxMemPoolEntry(const CTransaction& _tx, const mpq& _nFee,
                                  int64_t _nTime, double _dPriority,
                                  unsigned int _nHeight):
     tx(_tx), nFee(_nFee), nTime(_nTime), dPriority(_dPriority), nHeight(_nHeight)
@@ -29,8 +29,8 @@ CTxMemPoolEntry::CTxMemPoolEntry(const CTxMemPoolEntry& other)
 double
 CTxMemPoolEntry::GetPriority(unsigned int currentHeight) const
 {
-    int64_t nValueIn = tx.GetValueOut()+nFee;
-    double deltaPriority = ((double)(currentHeight-nHeight)*nValueIn)/nTxSize;
+    mpq nValueIn = tx.GetValueOut()+nFee;
+    double deltaPriority = ((double)(currentHeight-nHeight)*nValueIn.get_d())/nTxSize;
     double dResult = dPriority + deltaPriority;
     return dResult;
 }

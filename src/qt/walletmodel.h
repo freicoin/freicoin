@@ -9,6 +9,7 @@
 #include "walletmodeltransaction.h"
 
 #include "allocators.h" /* for SecureString */
+#include "bignum.h" /* for mpq */
 
 #include <map>
 #include <vector>
@@ -37,7 +38,7 @@ class SendCoinsRecipient
 {
 public:
     explicit SendCoinsRecipient() : amount(0), nVersion(SendCoinsRecipient::CURRENT_VERSION) { }
-    explicit SendCoinsRecipient(const QString &addr, const QString &label, quint64 amount, const QString &message):
+    explicit SendCoinsRecipient(const QString &addr, const QString &label, const mpq& amount, const QString &message):
         address(addr), label(label), amount(amount), message(message), nVersion(SendCoinsRecipient::CURRENT_VERSION) {}
 
     // If from an insecure payment request, this is used for storing
@@ -47,7 +48,7 @@ public:
     // Todo: This is a hack, should be replaced with a cleaner solution!
     QString address;
     QString label;
-    qint64 amount;
+    mpq amount;
     // If from a payment request, this is used for storing the memo
     QString message;
 
@@ -125,9 +126,9 @@ public:
     TransactionTableModel *getTransactionTableModel();
     RecentRequestsTableModel *getRecentRequestsTableModel();
 
-    qint64 getBalance(const CCoinControl *coinControl = NULL) const;
-    qint64 getUnconfirmedBalance() const;
-    qint64 getImmatureBalance() const;
+    mpq getBalance(const CCoinControl *coinControl = NULL) const;
+    mpq getUnconfirmedBalance() const;
+    mpq getImmatureBalance() const;
     int getNumTransactions() const;
     EncryptionStatus getEncryptionStatus() const;
 
@@ -203,9 +204,9 @@ private:
     RecentRequestsTableModel *recentRequestsTableModel;
 
     // Cache some values to be able to detect changes
-    qint64 cachedBalance;
-    qint64 cachedUnconfirmedBalance;
-    qint64 cachedImmatureBalance;
+    mpq cachedBalance;
+    mpq cachedUnconfirmedBalance;
+    mpq cachedImmatureBalance;
     qint64 cachedNumTransactions;
     EncryptionStatus cachedEncryptionStatus;
     int cachedNumBlocks;
@@ -218,7 +219,7 @@ private:
 
 signals:
     // Signal that balance in wallet changed
-    void balanceChanged(qint64 balance, qint64 unconfirmedBalance, qint64 immatureBalance);
+    void balanceChanged(const mpq& balance, const mpq& unconfirmedBalance, const mpq& immatureBalance);
 
     // Number of transactions in wallet changed
     void numTransactionsChanged(int count);

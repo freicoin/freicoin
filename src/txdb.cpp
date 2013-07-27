@@ -114,7 +114,7 @@ bool CCoinsViewDB::GetStats(CCoinsStats &stats) {
     CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
     stats.hashBlock = GetBestBlock();
     ss << stats.hashBlock;
-    int64_t nTotalAmount = 0;
+    mpq nTotalAmount = 0;
     while (pcursor->Valid()) {
         boost::this_thread::interruption_point();
         try {
@@ -140,7 +140,7 @@ bool CCoinsViewDB::GetStats(CCoinsStats &stats) {
                         stats.nTransactionOutputs++;
                         ss << VARINT(i+1);
                         ss << out;
-                        nTotalAmount += out.nValue;
+                        nTotalAmount += i64_to_mpq(out.nValue);
                     }
                 }
                 stats.nSerializedSize += 32 + slValue.size();

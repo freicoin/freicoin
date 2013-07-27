@@ -1,3 +1,4 @@
+#include "bignum.h" // for mpq
 #include "util.h"
 
 #include "sync.h"
@@ -174,22 +175,22 @@ BOOST_AUTO_TEST_CASE(util_WildcardMatch)
 
 BOOST_AUTO_TEST_CASE(util_FormatMoney)
 {
-    BOOST_CHECK_EQUAL(FormatMoney(0, false), "0.00");
+    BOOST_CHECK_EQUAL(FormatMoney(0, false), "0");
     BOOST_CHECK_EQUAL(FormatMoney((COIN/10000)*123456789, false), "12345.6789");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN, true), "+1.00");
-    BOOST_CHECK_EQUAL(FormatMoney(-COIN, false), "-1.00");
-    BOOST_CHECK_EQUAL(FormatMoney(-COIN, true), "-1.00");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN, true), "+1");
+    BOOST_CHECK_EQUAL(FormatMoney(-COIN, false), "-1");
+    BOOST_CHECK_EQUAL(FormatMoney(-COIN, true), "-1");
 
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*100000000, false), "100000000.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*10000000, false), "10000000.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*1000000, false), "1000000.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*100000, false), "100000.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*10000, false), "10000.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*1000, false), "1000.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*100, false), "100.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN*10, false), "10.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN, false), "1.00");
-    BOOST_CHECK_EQUAL(FormatMoney(COIN/10, false), "0.10");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*100000000, false), "100000000");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*10000000, false), "10000000");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*1000000, false), "1000000");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*100000, false), "100000");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*10000, false), "10000");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*1000, false), "1000");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*100, false), "100");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN*10, false), "10");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN, false), "1");
+    BOOST_CHECK_EQUAL(FormatMoney(COIN/10, false), "0.1");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/100, false), "0.01");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/1000, false), "0.001");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/10000, false), "0.0001");
@@ -197,54 +198,56 @@ BOOST_AUTO_TEST_CASE(util_FormatMoney)
     BOOST_CHECK_EQUAL(FormatMoney(COIN/1000000, false), "0.000001");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/10000000, false), "0.0000001");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/100000000, false), "0.00000001");
+
+    BOOST_CHECK_EQUAL(FormatMoney(mpq("3703703671/300"), false), "0.1234567890+1/3");
 }
 
 BOOST_AUTO_TEST_CASE(util_ParseMoney)
 {
-    int64_t ret = -1;
+    mpq ret = -1;
     BOOST_CHECK(ParseMoney("0.0", ret));
     BOOST_CHECK_EQUAL(ret, 0);
 
     BOOST_CHECK(ParseMoney("12345.6789", ret));
-    BOOST_CHECK_EQUAL(ret, (COIN/10000)*123456789);
+    BOOST_CHECK_EQUAL(ret, mpq((COIN/10000)*123456789));
 
     BOOST_CHECK(ParseMoney("100000000.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*100000000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*100000000));
     BOOST_CHECK(ParseMoney("10000000.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*10000000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*10000000));
     BOOST_CHECK(ParseMoney("1000000.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*1000000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*1000000));
     BOOST_CHECK(ParseMoney("100000.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*100000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*100000));
     BOOST_CHECK(ParseMoney("10000.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*10000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*10000));
     BOOST_CHECK(ParseMoney("1000.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*1000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*1000));
     BOOST_CHECK(ParseMoney("100.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*100);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*100));
     BOOST_CHECK(ParseMoney("10.00", ret));
-    BOOST_CHECK_EQUAL(ret, COIN*10);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN*10));
     BOOST_CHECK(ParseMoney("1.00", ret));
     BOOST_CHECK_EQUAL(ret, COIN);
     BOOST_CHECK(ParseMoney("0.1", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/10);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/10));
     BOOST_CHECK(ParseMoney("0.01", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/100);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/100));
     BOOST_CHECK(ParseMoney("0.001", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/1000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/1000));
     BOOST_CHECK(ParseMoney("0.0001", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/10000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/10000));
     BOOST_CHECK(ParseMoney("0.00001", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/100000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/100000));
     BOOST_CHECK(ParseMoney("0.000001", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/1000000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/1000000));
     BOOST_CHECK(ParseMoney("0.0000001", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/10000000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/10000000));
     BOOST_CHECK(ParseMoney("0.00000001", ret));
-    BOOST_CHECK_EQUAL(ret, COIN/100000000);
+    BOOST_CHECK_EQUAL(ret, mpq(COIN/100000000));
 
-    // Attempted 63 bit overflow should fail
-    BOOST_CHECK(!ParseMoney("92233720368.54775808", ret));
+    BOOST_CHECK(ParseMoney("0.1234567890+1/3", ret));
+    BOOST_CHECK_EQUAL(ret, mpq("3703703671/300"));
 }
 
 BOOST_AUTO_TEST_CASE(util_IsHex)
