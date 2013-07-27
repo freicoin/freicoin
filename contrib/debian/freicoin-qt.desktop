@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Freicoin
+Comment=Freicoin P2P Cryptocurrency
+Comment[fr]=Freicoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Freicoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/freicoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/freicoin128.png
+MimeType=x-scheme-handler/freicoin;
+Categories=Office;
