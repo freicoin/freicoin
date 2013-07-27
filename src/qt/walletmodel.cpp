@@ -36,17 +36,17 @@ WalletModel::~WalletModel()
     unsubscribeFromCoreSignals();
 }
 
-qint64 WalletModel::getBalance() const
+mpq WalletModel::getBalance() const
 {
     return wallet->GetBalance();
 }
 
-qint64 WalletModel::getUnconfirmedBalance() const
+mpq WalletModel::getUnconfirmedBalance() const
 {
     return wallet->GetUnconfirmedBalance();
 }
 
-qint64 WalletModel::getImmatureBalance() const
+mpq WalletModel::getImmatureBalance() const
 {
     return wallet->GetImmatureBalance();
 }
@@ -83,9 +83,9 @@ void WalletModel::pollBalanceChanged()
 
 void WalletModel::checkBalanceChanged()
 {
-    qint64 newBalance = getBalance();
-    qint64 newUnconfirmedBalance = getUnconfirmedBalance();
-    qint64 newImmatureBalance = getImmatureBalance();
+    mpq newBalance = getBalance();
+    mpq newUnconfirmedBalance = getUnconfirmedBalance();
+    mpq newImmatureBalance = getImmatureBalance();
 
     if(cachedBalance != newBalance || cachedUnconfirmedBalance != newUnconfirmedBalance || cachedImmatureBalance != newImmatureBalance)
     {
@@ -126,7 +126,7 @@ bool WalletModel::validateAddress(const QString &address)
 
 WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipient> &recipients)
 {
-    qint64 total = 0;
+    mpq total = 0;
     QSet<QString> setAddress;
     QString hex;
 
@@ -161,7 +161,8 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         return AmountExceedsBalance;
     }
 
-    if((total + nTransactionFee) > getBalance())
+    mpq qBalReq = total + nTransactionFee;
+    if(qBalReq > getBalance())
     {
         return SendCoinsReturn(AmountWithFeeExceedsBalance, nTransactionFee);
     }
@@ -170,7 +171,7 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         LOCK2(cs_main, wallet->cs_wallet);
 
         // Sendmany
-        std::vector<std::pair<CScript, int64> > vecSend;
+        std::vector<std::pair<CScript, mpq> > vecSend;
         foreach(const SendCoinsRecipient &rcp, recipients)
         {
             CScript scriptPubKey;
@@ -180,13 +181,13 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
 
         CWalletTx wtx;
         CReserveKey keyChange(wallet);
-        int64 nFeeRequired = 0;
+        mpq nFeeRequired = 0;
         std::string strFailReason;
         bool fCreated = wallet->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, strFailReason);
 
         if(!fCreated)
         {
-            if((total + nFeeRequired) > wallet->GetBalance())
+            if(qBalReq > wallet->GetBalance())
             {
                 return SendCoinsReturn(AmountWithFeeExceedsBalance, nFeeRequired);
             }

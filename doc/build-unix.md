@@ -25,6 +25,8 @@ Dependencies
  libdb4.8    Berkeley DB       Blockchain & wallet storage
  libboost    Boost             C++ Library
  miniupnpc   UPnP Support      Optional firewall-jumping support
+ gmp         mpz, mpq          Multi-precision integer and rational types
+ mpfr        mpfr              Multi-precision, deterministic floating point
 
 [miniupnpc](http://miniupnp.free.fr/) may be used for UPnP port mapping.  It can be downloaded from [here](
 http://miniupnp.tuxfamily.org/files/).  UPnP support is compiled in and
@@ -50,6 +52,8 @@ Licenses of statically linked libraries:
 -  Berkeley DB   4.8.30.NC
 -  Boost         1.37
 -  miniupnpc     1.6
+-  gmp           5.1.2
+-  mpfr          3.1.2
 
 Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------

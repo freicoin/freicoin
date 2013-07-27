@@ -50,7 +50,7 @@ void SendCoinsDialog::setModel(WalletModel *model)
     if(model && model->getOptionsModel())
     {
         setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance());
-        connect(model, SIGNAL(balanceChanged(qint64, qint64, qint64)), this, SLOT(setBalance(qint64, qint64, qint64)));
+        connect(model, SIGNAL(balanceChanged(const mpq&, const mpq&, const mpq&)), this, SLOT(setBalance(const mpq&, const mpq&, const mpq&)));
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
     }
 }
@@ -304,7 +304,7 @@ bool SendCoinsDialog::handleURI(const QString &uri)
     return false;
 }
 
-void SendCoinsDialog::setBalance(qint64 balance, qint64 unconfirmedBalance, qint64 immatureBalance)
+void SendCoinsDialog::setBalance(const mpq& balance, const mpq& unconfirmedBalance, const mpq& immatureBalance)
 {
     Q_UNUSED(unconfirmedBalance);
     Q_UNUSED(immatureBalance);
@@ -312,7 +312,7 @@ void SendCoinsDialog::setBalance(qint64 balance, qint64 unconfirmedBalance, qint
         return;
 
     int unit = model->getOptionsModel()->getDisplayUnit();
-    ui->labelBalance->setText(BitcoinUnits::formatWithUnit(unit, balance));
+    ui->labelBalance->setText(BitcoinUnits::formatWithUnit(unit, RoundAbsolute(balance, ROUND_TOWARDS_ZERO)));
 }
 
 void SendCoinsDialog::updateDisplayUnit()
@@ -320,6 +320,6 @@ void SendCoinsDialog::updateDisplayUnit()
     if(model && model->getOptionsModel())
     {
         // Update labelBalance with the current balance and the current unit
-        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), model->getBalance()));
+        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), RoundAbsolute(model->getBalance(), ROUND_TOWARDS_ZERO)));
     }
 }

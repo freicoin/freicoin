@@ -36,7 +36,7 @@ Verify(const CScript& scriptSig, const CScript& scriptPubKey, bool fStrict)
     txTo.vin[0].prevout.n = 0;
     txTo.vin[0].prevout.hash = txFrom.GetHash();
     txTo.vin[0].scriptSig = scriptSig;
-    txTo.vout[0].nValue = 1;
+    txTo.vout[0].SetInitialValue(1);
 
     return VerifyScript(scriptSig, scriptPubKey, txTo, 0, fStrict ? SCRIPT_VERIFY_P2SH : SCRIPT_VERIFY_NONE, 0);
 }
@@ -78,9 +78,9 @@ BOOST_AUTO_TEST_CASE(sign)
     for (int i = 0; i < 4; i++)
     {
         txFrom.vout[i].scriptPubKey = evalScripts[i];
-        txFrom.vout[i].nValue = COIN;
+        txFrom.vout[i].SetInitialValue(COIN);
         txFrom.vout[i+4].scriptPubKey = standardScripts[i];
-        txFrom.vout[i+4].nValue = COIN;
+        txFrom.vout[i+4].SetInitialValue(COIN);
     }
     BOOST_CHECK(txFrom.IsStandard());
 
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(sign)
         txTo[i].vout.resize(1);
         txTo[i].vin[0].prevout.n = i;
         txTo[i].vin[0].prevout.hash = txFrom.GetHash();
-        txTo[i].vout[0].nValue = 1;
+        txTo[i].vout[0].SetInitialValue(1);
         BOOST_CHECK_MESSAGE(IsMine(keystore, txFrom.vout[i].scriptPubKey), strprintf("IsMine %d", i));
     }
     for (int i = 0; i < 8; i++)
@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE(set)
     for (int i = 0; i < 4; i++)
     {
         txFrom.vout[i].scriptPubKey = outer[i];
-        txFrom.vout[i].nValue = CENT;
+        txFrom.vout[i].SetInitialValue(CENT);
     }
     BOOST_CHECK(txFrom.IsStandard());
 
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE(set)
         txTo[i].vout.resize(1);
         txTo[i].vin[0].prevout.n = i;
         txTo[i].vin[0].prevout.hash = txFrom.GetHash();
-        txTo[i].vout[0].nValue = 1*CENT;
+        txTo[i].vout[0].SetInitialValue(CENT);
         txTo[i].vout[0].scriptPubKey = inner[i];
         BOOST_CHECK_MESSAGE(IsMine(keystore, txFrom.vout[i].scriptPubKey), strprintf("IsMine %d", i));
     }
@@ -266,27 +266,27 @@ BOOST_AUTO_TEST_CASE(AreInputsStandard)
     CScript pay1of3; pay1of3.SetMultisig(1, keys);
 
     txFrom.vout[0].scriptPubKey = payScriptHash1;
-    txFrom.vout[0].nValue = 1000;
+    txFrom.vout[0].SetInitialValue(1000);
     txFrom.vout[1].scriptPubKey = pay1;
-    txFrom.vout[1].nValue = 2000;
+    txFrom.vout[1].SetInitialValue(2000);
     txFrom.vout[2].scriptPubKey = pay1of3;
-    txFrom.vout[2].nValue = 3000;
+    txFrom.vout[2].SetInitialValue(3000);
 
     // Last three non-standard:
     CScript empty;
     keystore.AddCScript(empty);
     txFrom.vout[3].scriptPubKey = empty;
-    txFrom.vout[3].nValue = 4000;
+    txFrom.vout[3].SetInitialValue(4000);
     // Can't use SetPayToScriptHash, it checks for the empty Script. So:
     txFrom.vout[4].scriptPubKey << OP_HASH160 << Hash160(empty) << OP_EQUAL;
-    txFrom.vout[4].nValue = 5000;
+    txFrom.vout[4].SetInitialValue(5000);
     CScript oneOfEleven;
     oneOfEleven << OP_1;
     for (int i = 0; i < 11; i++)
         oneOfEleven << key[0].GetPubKey();
     oneOfEleven << OP_11 << OP_CHECKMULTISIG;
     txFrom.vout[5].scriptPubKey.SetDestination(oneOfEleven.GetID());
-    txFrom.vout[5].nValue = 6000;
+    txFrom.vout[5].SetInitialValue(6000);
 
     coins.SetCoins(txFrom.GetHash(), CCoins(txFrom, 0));
 
@@ -320,7 +320,7 @@ BOOST_AUTO_TEST_CASE(AreInputsStandard)
     CTransaction txToNonStd;
     txToNonStd.vout.resize(1);
     txToNonStd.vout[0].scriptPubKey.SetDestination(key[1].GetPubKey().GetID());
-    txToNonStd.vout[0].nValue = 1000;
+    txToNonStd.vout[0].SetInitialValue(1000);
     txToNonStd.vin.resize(2);
     txToNonStd.vin[0].prevout.n = 4;
     txToNonStd.vin[0].prevout.hash = txFrom.GetHash();

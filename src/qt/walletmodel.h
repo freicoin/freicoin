@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "allocators.h" /* for SecureString */
+#include "bignum.h" /* for mpq */
 
 class OptionsModel;
 class AddressTableModel;
@@ -19,7 +20,7 @@ class SendCoinsRecipient
 public:
     QString address;
     QString label;
-    qint64 amount;
+    mpq amount;
 };
 
 /** Interface to Bitcoin wallet from Qt view code. */
@@ -55,9 +56,9 @@ public:
     AddressTableModel *getAddressTableModel();
     TransactionTableModel *getTransactionTableModel();
 
-    qint64 getBalance() const;
-    qint64 getUnconfirmedBalance() const;
-    qint64 getImmatureBalance() const;
+    mpq getBalance() const;
+    mpq getUnconfirmedBalance() const;
+    mpq getImmatureBalance() const;
     int getNumTransactions() const;
     EncryptionStatus getEncryptionStatus() const;
 
@@ -68,11 +69,11 @@ public:
     struct SendCoinsReturn
     {
         SendCoinsReturn(StatusCode status,
-                         qint64 fee=0,
+                         const mpq& fee=0,
                          QString hex=QString()):
             status(status), fee(fee), hex(hex) {}
         StatusCode status;
-        qint64 fee; // is used in case status is "AmountWithFeeExceedsBalance"
+        mpq fee; // is used in case status is "AmountWithFeeExceedsBalance"
         QString hex; // is filled with the transaction hash if status is "OK"
     };
 
@@ -120,9 +121,9 @@ private:
     TransactionTableModel *transactionTableModel;
 
     // Cache some values to be able to detect changes
-    qint64 cachedBalance;
-    qint64 cachedUnconfirmedBalance;
-    qint64 cachedImmatureBalance;
+    mpq cachedBalance;
+    mpq cachedUnconfirmedBalance;
+    mpq cachedImmatureBalance;
     qint64 cachedNumTransactions;
     EncryptionStatus cachedEncryptionStatus;
     int cachedNumBlocks;
@@ -135,7 +136,7 @@ private:
 
 signals:
     // Signal that balance in wallet changed
-    void balanceChanged(qint64 balance, qint64 unconfirmedBalance, qint64 immatureBalance);
+    void balanceChanged(const mpq& balance, const mpq& unconfirmedBalance, const mpq& immatureBalance);
 
     // Number of transactions in wallet changed
     void numTransactionsChanged(int count);
