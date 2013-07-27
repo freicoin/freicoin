@@ -680,7 +680,7 @@ void BitcoinGUI::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void BitcoinGUI::askFee(qint64 nFeeRequired, bool *payFee)
+void BitcoinGUI::askFee(const mpq& nFeeRequired, bool *payFee)
 {
     QString strMessage = tr("This transaction is over the size limit. You can still send it for a fee of %1, "
         "which goes to the nodes that process your transaction and helps to support the network. "
@@ -691,7 +691,7 @@ void BitcoinGUI::askFee(qint64 nFeeRequired, bool *payFee)
     *payFee = (retval == QMessageBox::Yes);
 }
 
-void BitcoinGUI::incomingTransaction(const QString& date, int unit, qint64 amount, const QString& type, const QString& address)
+void BitcoinGUI::incomingTransaction(const QString& date, int unit, const mpq& amount, const QString& type, const QString& address)
 {
     // On new transaction, make an info balloon
     message((amount)<0 ? tr("Sent transaction") : tr("Incoming transaction"),

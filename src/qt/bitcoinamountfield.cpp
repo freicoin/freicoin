@@ -3,6 +3,8 @@
 #include "qvaluecombobox.h"
 #include "bitcoinunits.h"
 #include "guiconstants.h"
+#include "bignum.h" // for mpq
+#include "main.h" // for MoneyRange()
 
 #include <QHBoxLayout>
 #include <QKeyEvent>
@@ -57,11 +59,10 @@ void BitcoinAmountField::clear()
 
 bool BitcoinAmountField::validate()
 {
-    bool valid = true;
-    if (amount->value() == 0.0)
-        valid = false;
-    if (valid && !BitcoinUnits::parse(currentUnit, text(), 0))
-        valid = false;
+    mpq value = 0;
+    bool valid = false;
+    if (BitcoinUnits::parse(currentUnit, text(), &value) && MoneyRange(value))
+        valid = true;
 
     setValid(valid);
 
@@ -113,7 +114,19 @@ QWidget *BitcoinAmountField::setupTabChain(QWidget *prev)
 
 qint64 BitcoinAmountField::value(bool *valid_out) const
 {
-    qint64 val_out = 0;
+    mpq qValue = valueAsMpq(valid_out);
+    mpz zValue = qValue.get_num() / qValue.get_den();
+    return mpz_to_i64(zValue);
+}
+
+void BitcoinAmountField::setValue(qint64 value)
+{
+    setValue(i64_to_mpq(value));
+}
+
+mpq BitcoinAmountField::valueAsMpq(bool *valid_out) const
+{
+    mpq val_out = 0;
     bool valid = BitcoinUnits::parse(currentUnit, text(), &val_out);
     if(valid_out)
     {
@@ -122,9 +135,9 @@ qint64 BitcoinAmountField::value(bool *valid_out) const
     return val_out;
 }
 
-void BitcoinAmountField::setValue(qint64 value)
+void BitcoinAmountField::setValue(const mpq& value)
 {
-    setText(BitcoinUnits::format(currentUnit, value));
+    setText(BitcoinUnits::format(currentUnit, RoundAbsolute(value, ROUND_TOWARDS_ZERO)));
 }
 
 void BitcoinAmountField::unitChanged(int idx)
@@ -137,7 +150,7 @@ void BitcoinAmountField::unitChanged(int idx)
 
     // Parse current value and convert to new unit
     bool valid = false;
-    qint64 currentValue = value(&valid);
+    mpq currentValue = valueAsMpq(&valid);
 
     currentUnit = newUnit;
 

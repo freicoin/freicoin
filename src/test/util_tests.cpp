@@ -196,11 +196,13 @@ BOOST_AUTO_TEST_CASE(util_FormatMoney)
     BOOST_CHECK_EQUAL(FormatMoney(COIN/1000000, false), "0.000001");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/10000000, false), "0.0000001");
     BOOST_CHECK_EQUAL(FormatMoney(COIN/100000000, false), "0.00000001");
+
+    BOOST_CHECK_EQUAL(FormatMoney(mpq("3703703671/300"), false), "0.1234567890+1/3");
 }
 
 BOOST_AUTO_TEST_CASE(util_ParseMoney)
 {
-    int64 ret = -1;
+    mpq ret = -1;
     BOOST_CHECK(ParseMoney("0.0", ret));
     BOOST_CHECK_EQUAL(ret, 0);
 
@@ -242,8 +244,8 @@ BOOST_AUTO_TEST_CASE(util_ParseMoney)
     BOOST_CHECK(ParseMoney("0.00000001", ret));
     BOOST_CHECK_EQUAL(ret, COIN/100000000);
 
-    // Attempted 63 bit overflow should fail
-    BOOST_CHECK(!ParseMoney("92233720368.54775808", ret));
+    BOOST_CHECK(ParseMoney("0.1234567890+1/3", ret));
+    BOOST_CHECK_EQUAL(ret, mpq("3703703671/300"));
 }
 
 BOOST_AUTO_TEST_CASE(util_IsHex)

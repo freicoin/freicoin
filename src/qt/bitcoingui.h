@@ -5,6 +5,8 @@
 #include <QSystemTrayIcon>
 #include <QMap>
 
+#include "bignum.h" // for mpq
+
 class TransactionTableModel;
 class WalletFrame;
 class WalletView;
@@ -154,11 +156,11 @@ public slots:
       @param[in] nFeeRequired       the required fee
       @param[out] payFee            true to pay the fee, false to not pay the fee
     */
-    void askFee(qint64 nFeeRequired, bool *payFee);
+    void askFee(const mpq& nFeeRequired, bool *payFee);
     void handleURI(QString strURI);
 
     /** Show incoming transaction notification for new transactions. */
-    void incomingTransaction(const QString& date, int unit, qint64 amount, const QString& type, const QString& address);
+    void incomingTransaction(const QString& date, int unit, const mpq& amount, const QString& type, const QString& address);
 
 private slots:
     /** Switch to overview (home) page */

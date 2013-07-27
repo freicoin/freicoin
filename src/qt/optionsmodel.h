@@ -3,6 +3,8 @@
 
 #include <QAbstractListModel>
 
+#include "bignum.h" // for mpq
+
 /** Interface from Qt to configuration data structure for Bitcoin client.
    To Qt, the options are presented as a list with the different options
    laid out vertically.
@@ -25,7 +27,7 @@ public:
         ProxyIP,           // QString
         ProxyPort,         // int
         ProxySocksVersion, // int
-        Fee,               // qint64
+        Fee,               // mpq serialized as QString
         DisplayUnit,       // BitcoinUnits::Unit
         DisplayAddresses,  // bool
         Language,          // QString
@@ -43,7 +45,7 @@ public:
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
     /* Explicit getters */
-    qint64 getTransactionFee();
+    mpq getTransactionFee();
     bool getMinimizeToTray() { return fMinimizeToTray; }
     bool getMinimizeOnClose() { return fMinimizeOnClose; }
     int getDisplayUnit() { return nDisplayUnit; }

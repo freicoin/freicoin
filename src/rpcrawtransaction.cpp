@@ -104,7 +104,7 @@ void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry)
     {
         const CTxOut& txout = tx.vout[i];
         Object out;
-        out.push_back(Pair("value", ValueFromAmount(txout.nValue)));
+        out.push_back(Pair("value", (boost::int64_t)txout.nValue));
         out.push_back(Pair("n", (boost::int64_t)i));
         Object o;
         ScriptPubKeyToJSON(txout.scriptPubKey, o);
@@ -220,7 +220,7 @@ Value listunspent(const Array& params, bool fHelp)
                 continue;
         }
 
-        int64 nValue = out.tx->vout[out.i].nValue;
+        mpq nValue = i64_to_mpq(out.tx->vout[out.i].nValue);
         const CScript& pk = out.tx->vout[out.i].scriptPubKey;
         Object entry;
         entry.push_back(Pair("txid", out.tx->GetHash().GetHex()));
@@ -301,7 +301,12 @@ Value createrawtransaction(const Array& params, bool fHelp)
 
         CScript scriptPubKey;
         scriptPubKey.SetDestination(address.Get());
-        int64 nAmount = AmountFromValue(s.value_);
+
+        mpq qAmount = AmountFromValue(s.value_);
+        if (qAmount != RoundAbsolute(qAmount, ROUND_TOWARDS_ZERO, 0))
+            throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, requested send amount is not an integer number of microcents: "+FormatMoney(qAmount)));
+        mpz zAmount = qAmount.get_num() / qAmount.get_den();
+        int64 nAmount = mpz_to_i64(zAmount);
 
         CTxOut out(nAmount, scriptPubKey);
         rawTx.vout.push_back(out);

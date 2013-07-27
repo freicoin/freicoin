@@ -27,6 +27,8 @@ OpenSSL         \openssl-1.0.1c-mgw        http://www.openssl.org/source/
 Berkeley DB     \db-4.8.30.NC-mgw          http://www.oracle.com/technology/software/products/berkeley-db/index.html
 Boost           \boost-1.50.0-mgw          http://www.boost.org/users/download/
 miniupnpc       \miniupnpc-1.6-mgw         http://miniupnp.tuxfamily.org/files/
+gmp                                        http://gmplib.org/
+mpfr                                       http://www.mpfr.org/
 
 Their licenses:
 
@@ -34,6 +36,8 @@ Their licenses:
 	Berkeley DB    New BSD license with additional requirement that linked software must be free open source
 	Boost          MIT-like license
 	miniupnpc      New (3-clause) BSD license
+	gmp            GNU LGPL
+	mpfr           GNU LGPL
 
 Versions used in this release:
 
@@ -41,6 +45,8 @@ Versions used in this release:
 	Berkeley DB  4.8.30.NC
 	Boost        1.50.0
 	miniupnpc    1.6
+	gmp          5.1.2
+	mpfr         3.1.2
 
 
 OpenSSL

@@ -19,6 +19,9 @@
 
 using namespace std;
 
+#define COIN 100000000LL
+#define CENT 1000000LL
+
 BOOST_AUTO_TEST_SUITE(compress_tests)
 
 bool static TestEncode(uint64 in) {

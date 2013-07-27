@@ -42,7 +42,7 @@ public:
 
         QDateTime date = index.data(TransactionTableModel::DateRole).toDateTime();
         QString address = index.data(Qt::DisplayRole).toString();
-        qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
+        mpq amount; ParseMoney(index.data(TransactionTableModel::AmountRole).toString().toStdString(), amount);
         bool confirmed = index.data(TransactionTableModel::ConfirmedRole).toBool();
         QVariant value = index.data(Qt::ForegroundRole);
         QColor foreground = option.palette.color(QPalette::Text);
@@ -68,7 +68,7 @@ public:
             foreground = option.palette.color(QPalette::Text);
         }
         painter->setPen(foreground);
-        QString amountText = BitcoinUnits::formatWithUnit(unit, amount, true);
+        QString amountText = BitcoinUnits::formatWithUnit(unit, RoundAbsolute(amount, ROUND_TOWARDS_ZERO), true);
         if(!confirmed)
         {
             amountText = QString("[") + amountText + QString("]");
@@ -131,15 +131,15 @@ OverviewPage::~OverviewPage()
     delete ui;
 }
 
-void OverviewPage::setBalance(qint64 balance, qint64 unconfirmedBalance, qint64 immatureBalance)
+void OverviewPage::setBalance(const mpq& balance, const mpq& unconfirmedBalance, const mpq& immatureBalance)
 {
     int unit = walletModel->getOptionsModel()->getDisplayUnit();
     currentBalance = balance;
     currentUnconfirmedBalance = unconfirmedBalance;
     currentImmatureBalance = immatureBalance;
-    ui->labelBalance->setText(BitcoinUnits::formatWithUnit(unit, balance));
-    ui->labelUnconfirmed->setText(BitcoinUnits::formatWithUnit(unit, unconfirmedBalance));
-    ui->labelImmature->setText(BitcoinUnits::formatWithUnit(unit, immatureBalance));
+    ui->labelBalance->setText(BitcoinUnits::formatWithUnit(unit, RoundAbsolute(balance, ROUND_TOWARDS_ZERO)));
+    ui->labelUnconfirmed->setText(BitcoinUnits::formatWithUnit(unit, RoundAbsolute(unconfirmedBalance, ROUND_TOWARDS_ZERO)));
+    ui->labelImmature->setText(BitcoinUnits::formatWithUnit(unit, RoundAbsolute(immatureBalance, ROUND_TOWARDS_ZERO)));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users
@@ -177,7 +177,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
 
         // Keep up to date with wallet
         setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance());
-        connect(model, SIGNAL(balanceChanged(qint64, qint64, qint64)), this, SLOT(setBalance(qint64, qint64, qint64)));
+        connect(model, SIGNAL(balanceChanged(const mpq&, const mpq&, const mpq&)), this, SLOT(setBalance(const mpq&, const mpq&, const mpq&)));
 
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
     }
