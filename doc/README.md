@@ -1,5 +1,5 @@
-Bitcoin 0.8.3 BETA
-====================
+Freicoin 0.8.3 BETA
+===================
 
 Copyright (c) 2009-2013 Bitcoin Developers
 
@@ -11,7 +11,7 @@ cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cry
 
 Intro
 ---------------------
-Bitcoin is a free open source peer-to-peer electronic cash system that is
+Freicoin is a free open source peer-to-peer electronic cash system that is
 completely decentralized, without the need for a central server or trusted
 parties.  Users hold the crypto keys to their own money and transact directly
 with each other, with the help of a P2P network to check for double-spending.
@@ -19,15 +19,15 @@ with each other, with the help of a P2P network to check for double-spending.
 
 Setup
 ---------------------
-You need the Qt4 run-time libraries to run Bitcoin-Qt. On Debian or Ubuntu:
+You need the Qt4 run-time libraries to run Freicoin-Qt. On Debian or Ubuntu:
 	`sudo apt-get install libqtgui4`
 
 Unpack the files into a directory and run:
 
-- bin/32/bitcoin-qt (GUI, 32-bit)
-- bin/32/bitcoind (headless, 32-bit)
-- bin/64/bitcoin-qt (GUI, 64-bit)
-- bin/64/bitcoind (headless, 64-bit)
+- bin/32/freicoin-qt (GUI, 32-bit)
+- bin/32/freicoind (headless, 32-bit)
+- bin/64/freicoin-qt (GUI, 64-bit)
+- bin/64/freicoind (headless, 64-bit)
 
 See the documentation at the [Bitcoin Wiki](https://en.bitcoin.it/wiki/Main_Page)
 for help and more information.
