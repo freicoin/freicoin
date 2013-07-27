@@ -46,7 +46,7 @@ void OptionsModel::Init()
     bDisplayAddresses = settings.value("bDisplayAddresses", false).toBool();
     fMinimizeToTray = settings.value("fMinimizeToTray", false).toBool();
     fMinimizeOnClose = settings.value("fMinimizeOnClose", false).toBool();
-    nTransactionFee = settings.value("nTransactionFee").toLongLong();
+    nTransactionFee = i64_to_mpq(settings.value("nTransactionFee").toLongLong());
     language = settings.value("language", "").toString();
 
     // These are shared with core Bitcoin; we want
@@ -189,7 +189,7 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
                 return QVariant(5);
         }
         case Fee:
-            return QVariant(nTransactionFee);
+            return QVariant(mpz_to_i64(nTransactionFee.get_num() / nTransactionFee.get_den()));
         case DisplayUnit:
             return QVariant(nDisplayUnit);
         case DisplayAddresses:
@@ -262,8 +262,9 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
         }
         break;
         case Fee:
-            nTransactionFee = value.toLongLong();
-            settings.setValue("nTransactionFee", nTransactionFee);
+            nTransactionFee = i64_to_mpq(value.toLongLong());
+            settings.setValue("nTransactionFee",
+                mpz_to_i64(nTransactionFee.get_num() / nTransactionFee.get_den()));
             break;
         case DisplayUnit:
             nDisplayUnit = value.toInt();
@@ -286,7 +287,7 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
     return successful;
 }
 
-qint64 OptionsModel::getTransactionFee()
+mpq OptionsModel::getTransactionFee()
 {
     return nTransactionFee;
 }

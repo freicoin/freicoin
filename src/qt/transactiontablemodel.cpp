@@ -424,7 +424,9 @@ QVariant TransactionTableModel::addressColor(const TransactionRecord *wtx) const
 
 QString TransactionTableModel::formatTxAmount(const TransactionRecord *wtx, bool showUnconfirmed) const
 {
-    QString str = BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), wtx->credit + wtx->debit);
+    mpq qNet = wtx->credit + wtx->debit;
+    qNet = RoundAbsolute(qNet, ROUND_TOWARDS_ZERO);
+    QString str = BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), qNet);
     if(showUnconfirmed)
     {
         if(!wtx->status.confirmed || wtx->status.maturity != TransactionStatus::Mature)
@@ -534,7 +536,11 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         case ToAddress:
             return formatTxToAddress(rec, true);
         case Amount:
-            return rec->credit + rec->debit;
+            {
+                mpq q = rec->credit + rec->debit;
+                q = RoundAbsolute(q, ROUND_TOWARDS_ZERO);
+                return QString::fromStdString(FormatMoney(q));
+            }
         }
         break;
     case Qt::ToolTipRole:
@@ -547,9 +553,12 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         {
             return COLOR_UNCONFIRMED;
         }
-        if(index.column() == Amount && (rec->credit+rec->debit) < 0)
         {
-            return COLOR_NEGATIVE;
+            mpq q = rec->credit + rec->debit;
+            if(index.column() == Amount && q < 0)
+            {
+                return COLOR_NEGATIVE;
+            }
         }
         if(index.column() == ToAddress)
         {
@@ -567,7 +576,11 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
     case LabelRole:
         return walletModel->getAddressTableModel()->labelForAddress(QString::fromStdString(rec->address));
     case AmountRole:
-        return rec->credit + rec->debit;
+        {
+            mpq q = rec->credit + rec->debit;
+            q = RoundAbsolute(q, ROUND_TOWARDS_ZERO);
+            return QString::fromStdString(FormatMoney(q));
+        }
     case TxIDRole:
         return QString::fromStdString(rec->getTxID());
     case ConfirmedRole:

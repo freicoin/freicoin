@@ -190,18 +190,24 @@ SetupDummyInputs(CBasicKeyStore& keystoreRet, CCoinsView & coinsRet)
         keystoreRet.AddKey(key[i]);
     }
 
+    mpq nValue;
+
     // Create some dummy input transactions
     dummyTransactions[0].vout.resize(2);
-    dummyTransactions[0].vout[0].nValue = 11*CENT;
+    nValue = 11*CENT;
+    dummyTransactions[0].vout[0].SetInitialValue(nValue);
     dummyTransactions[0].vout[0].scriptPubKey << key[0].GetPubKey() << OP_CHECKSIG;
-    dummyTransactions[0].vout[1].nValue = 50*CENT;
+    nValue = 50*CENT;
+    dummyTransactions[0].vout[1].SetInitialValue(nValue);
     dummyTransactions[0].vout[1].scriptPubKey << key[1].GetPubKey() << OP_CHECKSIG;
     coinsRet.SetCoins(dummyTransactions[0].GetHash(), CCoins(dummyTransactions[0], 0));
 
     dummyTransactions[1].vout.resize(2);
-    dummyTransactions[1].vout[0].nValue = 21*CENT;
+    nValue = 21*CENT;
+    dummyTransactions[1].vout[0].SetInitialValue(nValue);
     dummyTransactions[1].vout[0].scriptPubKey.SetDestination(key[2].GetPubKey().GetID());
-    dummyTransactions[1].vout[1].nValue = 22*CENT;
+    nValue = 22*CENT;
+    dummyTransactions[1].vout[1].SetInitialValue(nValue);
     dummyTransactions[1].vout[1].scriptPubKey.SetDestination(key[3].GetPubKey().GetID());
     coinsRet.SetCoins(dummyTransactions[1].GetHash(), CCoins(dummyTransactions[1], 0));
 
@@ -215,6 +221,7 @@ BOOST_AUTO_TEST_CASE(test_Get)
     CCoinsViewCache coins(coinsDummy);
     std::vector<CTransaction> dummyTransactions = SetupDummyInputs(keystore, coins);
 
+    mpq nValue;
     CTransaction t1;
     t1.vin.resize(3);
     t1.vin[0].prevout.hash = dummyTransactions[0].GetHash();
@@ -227,7 +234,8 @@ BOOST_AUTO_TEST_CASE(test_Get)
     t1.vin[2].prevout.n = 1;
     t1.vin[2].scriptSig << std::vector<unsigned char>(65, 0) << std::vector<unsigned char>(33, 4);
     t1.vout.resize(2);
-    t1.vout[0].nValue = 90*CENT;
+    nValue = 90*CENT;
+    t1.vout[0].SetInitialValue(nValue);
     t1.vout[0].scriptPubKey << OP_1;
 
     BOOST_CHECK(t1.AreInputsStandard(coins));
@@ -249,23 +257,27 @@ BOOST_AUTO_TEST_CASE(test_IsStandard)
     CCoinsViewCache coins(coinsDummy);
     std::vector<CTransaction> dummyTransactions = SetupDummyInputs(keystore, coins);
 
+    mpq nValue;
     CTransaction t;
     t.vin.resize(1);
     t.vin[0].prevout.hash = dummyTransactions[0].GetHash();
     t.vin[0].prevout.n = 1;
     t.vin[0].scriptSig << std::vector<unsigned char>(65, 0);
     t.vout.resize(1);
-    t.vout[0].nValue = 90*CENT;
+    nValue = 90*CENT;
+    t.vout[0].SetInitialValue(nValue);
     CKey key;
     key.MakeNewKey(true);
     t.vout[0].scriptPubKey.SetDestination(key.GetPubKey().GetID());
 
     BOOST_CHECK(t.IsStandard());
 
-    t.vout[0].nValue = 5011; // dust
+    nValue = 5011;
+    t.vout[0].SetInitialValue(nValue); // dust
     BOOST_CHECK(!t.IsStandard());
 
-    t.vout[0].nValue = 6011; // not dust
+    nValue = 6011;
+    t.vout[0].SetInitialValue(nValue); // not dust
     BOOST_CHECK(t.IsStandard());
 
     t.vout[0].scriptPubKey = CScript() << OP_1;
