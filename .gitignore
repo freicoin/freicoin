@@ -1,11 +1,11 @@
 *.tar.gz
 
 *.exe
-src/bitcoin
-src/bitcoind
-src/bitcoin-cli
-src/test/test_bitcoin
-src/qt/test/test_bitcoin-qt
+src/freicoin
+src/freicoind
+src/freicoin-cli
+src/test/test_freicoin
+src/qt/test/test_freicoin-qt
 
 Makefile.in
 aclocal.m4
@@ -35,7 +35,7 @@ src/qt/test/moc*.cpp
 *.orig
 *.o
 *.patch
-.bitcoin
+.freicoin
 *.a
 *.pb.cc
 *.pb.h
@@ -46,16 +46,17 @@ src/qt/test/moc*.cpp
 
 *.json.h
 *.raw.h
+.freicoin
 
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-bitcoin-qt
-Bitcoin-Qt.app
+freicoin-qt
+Freicoin-Qt.app
 
 # Unit-tests
 Makefile.test
-bitcoin-qt_test
+freicoin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -70,7 +71,7 @@ build
 #lcov
 *.gcno
 /*.info
-test_bitcoin.coverage/
+test_freicoin.coverage/
 total.coverage/
 coverage_percent.txt
 
