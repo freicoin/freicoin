@@ -42,17 +42,18 @@ Description: peer-to-peer network based demurrage currency - daemon
  This package provides freicoind, a combined daemon and CLI tool to
  interact with the daemon.
 
-Package: bitcoin-qt
+Package: freicoin-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: peer-to-peer network based digital currency - Qt GUI
- Bitcoin is a free open source peer-to-peer electronic cash system that
+Description: peer-to-peer network based demurrage currency - Qt GUI
+ Freicoin is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
- check for double-spending.
+ check for double-spending.  Freicoin features built-in demurrage to
+ encourage long-term thinking, low interest rates, and a high velocity
+ of money.
  .
- Full transaction history is stored locally at each client.  This
- requires 2+ GB of space, slowly growing.
+ Full transaction history is stored locally at each client.
  .
- This package provides Bitcoin-Qt, a GUI for Bitcoin based on Qt.
+ This package provides Freicoin-Qt, a GUI for Freicoin based on Qt.

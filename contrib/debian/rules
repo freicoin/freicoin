@@ -16,7 +16,7 @@ override_dh_auto_build:
 	$(MAKE)
 
 override_dh_auto_clean:
-	if [ -f Makefile ]; then $(MAKE) clean; else rm -rf build/; rm -f bitcoin-qt; fi
+	if [ -f Makefile ]; then $(MAKE) clean; else rm -rf build/; rm -f freicoin-qt; fi
 	cd src; $(MAKE) -f makefile.unix clean
 
 override_dh_auto_configure:
@@ -29,5 +29,5 @@ override_dh_auto_test:
 # Ensure wrapper is set executable
 binary-post-install/freicoind:
 	chmod +x $(cdbs_curdestdir)usr/bin/freicoind
-binary-post-install/bitcoin-qt:
-	chmod +x $(cdbs_curdestdir)usr/bin/bitcoin-qt
+binary-post-install/freicoin-qt:
+	chmod +x $(cdbs_curdestdir)usr/bin/freicoin-qt
