@@ -49,9 +49,9 @@ bool fTxIndex = false;
 unsigned int nCoinCacheSize = 5000;
 
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
-int64 CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
+mpq CTransaction::nMinTxFee = mpq("10000/1");  // Override with -mintxfee
 /** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
-int64 CTransaction::nMinRelayTxFee = 10000;
+mpq CTransaction::nMinRelayTxFee = mpq("10000/1");
 
 CMedianFilter<int> cPeerBlockCounts(8, 0); // Amount of blocks that other nodes claim to have
 
@@ -70,7 +70,7 @@ double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
 
 // Settings
-int64 nTransactionFee = 0;
+mpq nTransactionFee = 0;
 
 
 
@@ -370,7 +370,9 @@ bool CTxOut::IsDust() const
     // need a CTxIn of at least 148 bytes to spend,
     // so dust is a txout less than 54 uBTC
     // (5430 satoshis) with default nMinRelayTxFee
-    return ((nValue*1000)/(3*((int)GetSerializeSize(SER_DISK,0)+148)) < CTransaction::nMinRelayTxFee);
+    mpq nFee = (i64_to_mpq(nValue)*1000) /
+               (3*((int)GetSerializeSize(SER_DISK,0)+148));
+    return (nFee < CTransaction::nMinRelayTxFee);
 }
 
 bool CTransaction::IsStandard() const
@@ -558,7 +560,7 @@ bool CTransaction::CheckTransaction(CValidationState &state) const
     {
         if (txout.nValue < 0)
             return state.DoS(100, error("CTransaction::CheckTransaction() : txout.nValue negative"));
-        if (txout.nValue > MAX_MONEY)
+        if (txout.nValue > I64_MAX_MONEY)
             return state.DoS(100, error("CTransaction::CheckTransaction() : txout.nValue too high"));
         nValueOut += txout.nValue;
         if (!MoneyRange(nValueOut))
@@ -589,15 +591,15 @@ bool CTransaction::CheckTransaction(CValidationState &state) const
     return true;
 }
 
-int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
-                              enum GetMinFee_mode mode) const
+mpq CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
+                            enum GetMinFee_mode mode) const
 {
     // Base fee is either nMinTxFee or nMinRelayTxFee
-    int64 nBaseFee = (mode == GMF_RELAY) ? nMinRelayTxFee : nMinTxFee;
+    mpq nBaseFee = (mode == GMF_RELAY) ? nMinRelayTxFee : nMinTxFee;
 
     unsigned int nBytes = ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION);
     unsigned int nNewBlockSize = nBlockSize + nBytes;
-    int64 nMinFee = (1 + (int64)nBytes / 1000) * nBaseFee;
+    mpq nMinFee = (1 + nBytes / 1000) * nBaseFee;
 
     if (fAllowFree)
     {
@@ -620,7 +622,7 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
     if (nMinFee < nBaseFee)
     {
         BOOST_FOREACH(const CTxOut& txout, vout)
-            if (txout.nValue < CENT)
+            if (i64_to_mpq(txout.nValue) < CENT)
                 nMinFee = nBaseFee;
     }
 
@@ -628,12 +630,12 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
     if (nBlockSize != 1 && nNewBlockSize >= MAX_BLOCK_SIZE_GEN/2)
     {
         if (nNewBlockSize >= MAX_BLOCK_SIZE_GEN)
-            return MAX_MONEY;
+            return MPQ_MAX_MONEY;
         nMinFee *= MAX_BLOCK_SIZE_GEN / (MAX_BLOCK_SIZE_GEN - nNewBlockSize);
     }
 
     if (!MoneyRange(nMinFee))
-        nMinFee = MAX_MONEY;
+        nMinFee = MPQ_MAX_MONEY;
     return nMinFee;
 }
 
@@ -751,15 +753,16 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
         // you should add code here to check that the transaction does a
         // reasonable number of ECDSA signature verifications.
 
-        int64 nFees = tx.GetValueIn(view)-tx.GetValueOut();
+        mpq nFees = tx.GetValueIn(view)-tx.GetValueOut();
         unsigned int nSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
 
         // Don't accept it if it can't get into a block
-        int64 txMinFee = tx.GetMinFee(1000, true, GMF_RELAY);
+        mpq txMinFee = tx.GetMinFee(1000, true, GMF_RELAY);
         if (fLimitFree && nFees < txMinFee)
-            return error("CTxMemPool::accept() : not enough fees %s, %"PRI64d" < %"PRI64d,
+            return error("CTxMemPool::accept() : not enough fees %s, %s < %s",
                          hash.ToString().c_str(),
-                         nFees, txMinFee);
+                         FormatMoney(nFees).c_str(),
+                         FormatMoney(txMinFee).c_str());
 
         // Continuously rate-limit free transactions
         // This mitigates 'penny-flooding' -- sending thousands of free transactions just to
@@ -1068,9 +1071,9 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
     return pblock->GetHash();
 }
 
-int64 static GetBlockValue(int nHeight, int64 nFees)
+mpq static GetBlockValue(int nHeight, const mpq& nFees)
 {
-    int64 nSubsidy = 50 * COIN;
+    mpq nSubsidy = 50 * COIN;
 
     // Subsidy is cut in half every 210000 blocks, which will occur approximately every 4 years
     nSubsidy >>= (nHeight / 210000);
@@ -1315,14 +1318,14 @@ const CTxOut &CTransaction::GetOutputFor(const CTxIn& input, CCoinsViewCache& vi
     return coins.vout[input.prevout.n];
 }
 
-int64 CTransaction::GetValueIn(CCoinsViewCache& inputs) const
+mpq CTransaction::GetValueIn(CCoinsViewCache& inputs) const
 {
     if (IsCoinBase())
         return 0;
 
-    int64 nResult = 0;
+    mpq nResult = 0;
     for (unsigned int i = 0; i < vin.size(); i++)
-        nResult += GetOutputFor(vin[i], inputs).nValue;
+        nResult += i64_to_mpq(GetOutputFor(vin[i], inputs).nValue);
 
     return nResult;
 }
@@ -1406,8 +1409,8 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         // While checking, GetBestBlock() refers to the parent block.
         // This is also true for mempool checks.
         int nSpendHeight = inputs.GetBestBlock()->nHeight + 1;
-        int64 nValueIn = 0;
-        int64 nFees = 0;
+        mpq nValueIn = 0;
+        mpq nFees = 0;
         for (unsigned int i = 0; i < vin.size(); i++)
         {
             const COutPoint &prevout = vin[i].prevout;
@@ -1420,7 +1423,7 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
             }
 
             // Check for negative or overflow input values
-            nValueIn += coins.vout[prevout.n].nValue;
+            nValueIn += i64_to_mpq(coins.vout[prevout.n].nValue);
             if (!MoneyRange(coins.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
                 return state.DoS(100, error("CheckInputs() : txin values out of range"));
 
@@ -1430,7 +1433,7 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
             return state.DoS(100, error("CheckInputs() : %s value in < value out (%s < %s)", GetHash().ToString().c_str(), FormatMoney(nValueIn).c_str(), FormatMoney(GetValueOut()).c_str()));
 
         // Tally transaction fees
-        int64 nTxFee = nValueIn - GetValueOut();
+        mpq nTxFee = nValueIn - GetValueOut();
         if (nTxFee < 0)
             return state.DoS(100, error("CheckInputs() : %s nTxFee < 0", GetHash().ToString().c_str()));
         nFees += nTxFee;
@@ -1642,7 +1645,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     CCheckQueueControl<CScriptCheck> control(fScriptChecks && nScriptCheckThreads ? &scriptcheckqueue : NULL);
 
     int64 nStart = GetTimeMicros();
-    int64 nFees = 0;
+    mpq nFees = 0;
     int nInputs = 0;
     unsigned int nSigOps = 0;
     CDiskTxPos pos(pindex->GetBlockPos(), GetSizeOfCompactSize(vtx.size()));
@@ -1672,7 +1675,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
                      return state.DoS(100, error("ConnectBlock() : too many sigops"));
             }
 
-            nFees += tx.GetValueIn(view)-tx.GetValueOut();
+            nFees += tx.GetValueIn(view) - tx.GetValueOut();
 
             std::vector<CScriptCheck> vChecks;
             if (!tx.CheckInputs(state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
@@ -1692,8 +1695,10 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     if (fBenchmark)
         printf("- Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin)\n", (unsigned)vtx.size(), 0.001 * nTime, 0.001 * nTime / vtx.size(), nInputs <= 1 ? 0 : 0.001 * nTime / (nInputs-1));
 
-    if (vtx[0].GetValueOut() > GetBlockValue(pindex->nHeight, nFees))
-        return state.DoS(100, error("ConnectBlock() : coinbase pays too much (actual=%"PRI64d" vs limit=%"PRI64d")", vtx[0].GetValueOut(), GetBlockValue(pindex->nHeight, nFees)));
+    mpq qActualCoinbaseValue = vtx[0].GetValueOut();
+    mpq qAllowedCoinbaseValue = GetBlockValue(pindex->nHeight, nFees);
+    if ( qActualCoinbaseValue > qAllowedCoinbaseValue )
+        return state.DoS(100, error("ConnectBlock() : coinbase pays too much (actual=%s vs limit=%s)", FormatMoney(qActualCoinbaseValue).c_str(), FormatMoney(qAllowedCoinbaseValue).c_str()));
 
     if (!control.Wait())
         return state.DoS(100, false);
@@ -2752,7 +2757,8 @@ bool InitBlockIndex() {
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
-        txNew.vout[0].nValue = 50 * COIN;
+        mpq nSubsidy = 50 * COIN;
+        txNew.vout[0].SetInitialValue(nSubsidy);
         txNew.vout[0].scriptPubKey = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
         CBlock block;
         block.vtx.push_back(txNew);
@@ -4213,7 +4219,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
     nBlockMinSize = std::min(nBlockMaxSize, nBlockMinSize);
 
     // Collect memory pool transactions into the block
-    int64 nFees = 0;
+    mpq nFees = 0;
     {
         LOCK2(cs_main, mempool.cs);
         CBlockIndex* pindexPrev = pindexBest;
@@ -4235,7 +4241,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
 
             COrphan* porphan = NULL;
             double dPriority = 0;
-            int64 nTotalIn = 0;
+            mpq nTotalIn = 0;
             bool fMissingInputs = false;
             BOOST_FOREACH(const CTxIn& txin, tx.vin)
             {
@@ -4264,17 +4270,17 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                     }
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
-                    nTotalIn += mempool.mapTx[txin.prevout.hash].vout[txin.prevout.n].nValue;
+                    nTotalIn += i64_to_mpq(mempool.mapTx[txin.prevout.hash].vout[txin.prevout.n].nValue);
                     continue;
                 }
                 const CCoins &coins = view.GetCoins(txin.prevout.hash);
 
-                int64 nValueIn = coins.vout[txin.prevout.n].nValue;
+                mpq nValueIn = i64_to_mpq(coins.vout[txin.prevout.n].nValue);
                 nTotalIn += nValueIn;
 
                 int nConf = pindexPrev->nHeight - coins.nHeight + 1;
 
-                dPriority += (double)nValueIn * nConf;
+                dPriority += nValueIn.get_d() * nConf;
             }
             if (fMissingInputs) continue;
 
@@ -4285,7 +4291,8 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             // This is a more accurate fee-per-kilobyte than is used by the client code, because the
             // client code rounds up the size to the nearest 1K. That's good, because it gives an
             // incentive to create smaller transactions.
-            double dFeePerKb =  double(nTotalIn-tx.GetValueOut()) / (double(nTxSize)/1000.0);
+            mpq txValueOut = nTotalIn - tx.GetValueOut();
+            double dFeePerKb = txValueOut.get_d() / (double(nTxSize)/1000.0);
 
             if (porphan)
             {
@@ -4342,7 +4349,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             if (!tx.HaveInputs(view))
                 continue;
 
-            int64 nTxFees = tx.GetValueIn(view)-tx.GetValueOut();
+            mpq nTxFees = tx.GetValueIn(view)-tx.GetValueOut();
 
             nTxSigOps += tx.GetP2SHSigOpCount(view);
             if (nBlockSigOps + nTxSigOps >= MAX_BLOCK_SIGOPS)
@@ -4393,7 +4400,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
         nLastBlockSize = nBlockSize;
         printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
-        pblock->vtx[0].vout[0].nValue = GetBlockValue(pindexPrev->nHeight+1, nFees);
+        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(pindexPrev->nHeight+1, nFees), ROUND_TOWARDS_ZERO));
         pblocktemplate->vTxFees[0] = -nFees;
 
         // Fill in header
@@ -4493,7 +4500,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     printf("BitcoinMiner:\n");
     printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
-    printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
+    printf("generated %s\n", FormatMoney(pblock->vtx[0].GetValueOut()).c_str());
 
     // Found a solution
     {

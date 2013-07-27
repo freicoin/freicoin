@@ -43,6 +43,6 @@ index 8b7c559..8a0560c 100644
 - $(DEPSDIR)/lib/libcrypto.a \
 + $(OPENSSLDIR)/lib/libssl.a \
 + $(OPENSSLDIR)/lib/libcrypto.a \
-  -lz
- else
- TESTLIBS += \
+  $(DEPSDIR)/lib/libmpfr.a \
+  $(DEPSDIR)/lib/libgmp.a \
+  $(DEPSDIR)/lib/libgmpxx.a \

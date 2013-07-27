@@ -41,9 +41,9 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
         strHTML += "<html><font face='verdana, arial, helvetica, sans-serif'>";
 
         int64 nTime = wtx.GetTxTime();
-        int64 nCredit = wtx.GetCredit();
-        int64 nDebit = wtx.GetDebit();
-        int64 nNet = nCredit - nDebit;
+        mpq nCredit = wtx.GetCredit();
+        mpq nDebit = wtx.GetDebit();
+        mpq nNet = nCredit - nDebit;
 
         strHTML += "<b>" + tr("Status") + ":</b> " + FormatTxStatus(wtx);
         int nRequests = wtx.GetRequestCount();
@@ -123,7 +123,7 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
             //
             // Coinbase
             //
-            int64 nUnmatured = 0;
+            mpq nUnmatured = 0;
             BOOST_FOREACH(const CTxOut& txout, wtx.vout)
                 nUnmatured += wallet->GetCredit(txout);
             strHTML += "<b>" + tr("Credit") + ":</b> ";
@@ -174,19 +174,19 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
                         }
                     }
 
-                    strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -txout.nValue) + "<br>";
+                    strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -i64_to_mpq(txout.nValue)) + "<br>";
                 }
 
                 if (fAllToMe)
                 {
                     // Payment to self
-                    int64 nChange = wtx.GetChange();
-                    int64 nValue = nCredit - nChange;
+                    mpq nChange = wtx.GetChange();
+                    mpq nValue = nCredit - nChange;
                     strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -nValue) + "<br>";
                     strHTML += "<b>" + tr("Credit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, nValue) + "<br>";
                 }
 
-                int64 nTxFee = nDebit - wtx.GetValueOut();
+                mpq nTxFee = nDebit - wtx.GetValueOut();
                 if (nTxFee > 0)
                     strHTML += "<b>" + tr("Transaction fee") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -nTxFee) + "<br>";
             }
@@ -258,7 +258,7 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
                                     strHTML += GUIUtil::HtmlEscape(wallet->mapAddressBook[address]) + " ";
                                 strHTML += QString::fromStdString(CBitcoinAddress(address).ToString());
                             }
-                            strHTML = strHTML + " " + tr("Amount") + "=" + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, vout.nValue);
+                            strHTML = strHTML + " " + tr("Amount") + "=" + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, i64_to_mpq(vout.nValue));
                             strHTML = strHTML + " IsMine=" + (wallet->IsMine(vout) ? tr("true") : tr("false")) + "</li>";
                         }
                     }

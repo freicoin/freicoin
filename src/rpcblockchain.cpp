@@ -100,12 +100,8 @@ Value settxfee(const Array& params, bool fHelp)
             "settxfee <amount>\n"
             "<amount> is a real and is rounded to the nearest 0.00000001");
 
-    // Amount
-    int64 nAmount = 0;
-    if (params[0].get_real() != 0.0)
-        nAmount = AmountFromValue(params[0]);        // rejects 0.0 amounts
+    nTransactionFee = AmountFromValue(params[0]);
 
-    nTransactionFee = nAmount;
     return true;
 }
 
@@ -218,7 +214,7 @@ Value gettxout(const Array& params, bool fHelp)
         ret.push_back(Pair("confirmations", 0));
     else
         ret.push_back(Pair("confirmations", pcoinsTip->GetBestBlock()->nHeight - coins.nHeight + 1));
-    ret.push_back(Pair("value", ValueFromAmount(coins.vout[n].nValue)));
+    ret.push_back(Pair("value", (boost::int64_t)coins.vout[n].nValue));
     Object o;
     ScriptPubKeyToJSON(coins.vout[n].scriptPubKey, o);
     ret.push_back(Pair("scriptPubKey", o));

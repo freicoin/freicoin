@@ -94,20 +94,18 @@ void RPCTypeCheck(const Object& o,
     }
 }
 
-int64 AmountFromValue(const Value& value)
+mpq AmountFromValue(const Value& value)
 {
-    double dAmount = value.get_real();
-    if (dAmount <= 0.0 || dAmount > 21000000.0)
+    mpq qAmount = mpq(value.get_real()) * COIN;
+    qAmount = RoundAbsolute(qAmount, ROUND_TIES_TO_EVEN);
+    if (!MoneyRange(qAmount))
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount");
-    int64 nAmount = roundint64(dAmount * COIN);
-    if (!MoneyRange(nAmount))
-        throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount");
-    return nAmount;
+    return qAmount;
 }
 
-Value ValueFromAmount(int64 amount)
+Value ValueFromAmount(const mpq& amount)
 {
-    return (double)amount / (double)COIN;
+    return FormatMoney(amount);
 }
 
 std::string HexBits(unsigned int nBits)

@@ -387,71 +387,216 @@ void ParseString(const string& str, char c, vector<string>& v)
 
 string FormatMoney(int64 n, bool fPlus)
 {
-    // Note: not using straight sprintf here because we do NOT want
-    // localized number formatting.
-    int64 n_abs = (n > 0 ? n : -n);
-    int64 quotient = n_abs/COIN;
-    int64 remainder = n_abs%COIN;
-    string str = strprintf("%"PRI64d".%08"PRI64d, quotient, remainder);
+    return FormatMoney(i64_to_mpz(n), fPlus);
+}
 
-    // Right-trim excess zeros before the decimal point:
-    int nTrim = 0;
-    for (int i = str.size()-1; (str[i] == '0' && isdigit(str[i-2])); --i)
-        ++nTrim;
-    if (nTrim)
-        str.erase(str.size()-nTrim, nTrim);
+string FormatMoney(const mpq &q, bool fPlus)
+{
+    const bool negative = q < 0;
+    const mpq q_abs = abs(q) / CENT;
+    const mpz integer = q_abs.get_num() / q_abs.get_den();
+          mpq remainder = q_abs - integer;
 
-    if (n < 0)
+    string str = integer.get_str();
+    if (str.length() < 3)
+        str.insert((unsigned int)0, 3-str.length(), '0');
+    str.insert(str.length()-2, 1, '.');
+
+    if (negative)
         str.insert((unsigned int)0, 1, '-');
-    else if (fPlus && n > 0)
+    else if (fPlus && q > 0)
         str.insert((unsigned int)0, 1, '+');
+
+    if (remainder == 0)
+        return str;
+
+    mpz gcd, ten = 10;
+    while ( remainder != 0 ) {
+        mpz_gcd(gcd.get_mpz_t(), remainder.get_den().get_mpz_t(), ten.get_mpz_t());
+        if ( gcd == 1 )
+            break;
+        remainder *= 10;
+        mpz digit = remainder.get_num() / remainder.get_den();
+        remainder = remainder - digit;
+        str.append(digit.get_str());
+    }
+
+    if (remainder == 0)
+        return str;
+
+    if (negative)
+        str.append(1, '-');
+    else
+        str.append(1, '+');
+
+    str.append(remainder.get_str());
+
     return str;
 }
 
 
-bool ParseMoney(const string& str, int64& nRet)
+bool ParseMoney(const string& str, mpq& nRet)
 {
     return ParseMoney(str.c_str(), nRet);
 }
 
-bool ParseMoney(const char* pszIn, int64& nRet)
+bool ParseMoney(const char* p, mpq& nRet)
 {
-    string strWhole;
-    int64 nUnits = 0;
-    const char* p = pszIn;
+    bool fIntegerNegative = false;
+    bool fFractionNegative = false;
+    bool fDecimal = false;
+    bool fFraction = false;
+    int nUnits = 0;
+    string strInteger;
+    string strFraction;
+
     while (isspace(*p))
-        p++;
+        ++p;
+    if (*p == '-' || *p == '+')
+        if (*p++ == '-')
+            fIntegerNegative = true;
+    while (isspace(*p))
+        ++p;
+
     for (; *p; p++)
     {
+        if (isdigit(*p))
+        {
+            if (fDecimal)
+                --nUnits;
+            strInteger.append(1, *p);
+            continue;
+        }
+
         if (*p == '.')
         {
-            p++;
-            int64 nMult = CENT*10;
-            while (isdigit(*p) && (nMult > 0))
-            {
-                nUnits += nMult * (*p++ - '0');
-                nMult /= 10;
-            }
-            break;
+            if (fDecimal)
+                return false;
+            fDecimal = true;
+            continue;
         }
-        if (isspace(*p))
-            break;
-        if (!isdigit(*p))
-            return false;
-        strWhole.insert(strWhole.end(), *p);
-    }
-    for (; *p; p++)
-        if (!isspace(*p))
-            return false;
-    if (strWhole.size() > 10) // guard against 63 bit overflow
-        return false;
-    if (nUnits < 0 || nUnits > COIN)
-        return false;
-    int64 nWhole = atoi64(strWhole);
-    int64 nValue = nWhole*COIN + nUnits;
 
-    nRet = nValue;
+        if (isspace(*p))
+            continue;
+
+        break;
+    }
+
+    size_t nZeroPrefix = strInteger.find_first_not_of('0');
+    if ( nZeroPrefix && nZeroPrefix!=strInteger.length() )
+        strInteger.erase(0, nZeroPrefix);
+
+    if (!strInteger.length())
+        strInteger.append(1, '0');
+
+    if (*p)
+    {
+        if (*p == '-' || *p == '+')
+            if (*p++ == '-')
+                fFractionNegative = true;
+
+        for (; *p; p++)
+        {
+            if (isdigit(*p))
+            {
+                strFraction.append(1, *p);
+                continue;
+            }
+
+            if (*p == '/')
+            {
+                if (fFraction)
+                    return false;
+                fFraction = true;
+                strFraction.append(1, *p);
+                continue;
+            }
+
+            if (isspace(*p))
+                continue;
+
+            return false;
+        }
+
+        if (!strFraction.length())
+            return false;
+        if (!isdigit(strFraction[0]))
+            return false;
+        if (!isdigit(strFraction[strFraction.length()-1]))
+            return false;
+
+        if (!fFraction)
+            return false;
+    } else {
+        strFraction = string("0/1");
+    }
+
+    mpq qUnits = mpq(string("1/1") + string(-nUnits, '0'));
+    mpq qInteger = mpq(strInteger) * qUnits * (fIntegerNegative ? -1 : 1);
+    mpq qFraction = mpq(strFraction) * qUnits * (fFractionNegative ? -1 : 1);
+
+    nRet = (qInteger + qFraction) * COIN;
     return true;
+}
+
+
+mpq RoundAbsolute(const mpq &q, int mode, int magnitude)
+{
+    mpq qUnits;
+    if (magnitude > 0)
+        qUnits = mpq(string("1") + string(magnitude, '0') + string("/1"));
+    else
+        qUnits = mpq(string("1/1") + string(-magnitude, '0'));
+
+    const mpq qOffset = q / qUnits;
+    const mpz quotient = qOffset.get_num() / qOffset.get_den();
+    const mpz remainder = qOffset.get_num() % qOffset.get_den();
+    const mpz remainder_times_two = abs(remainder) * 2;
+
+    bool ret_next;
+    switch (mode) {
+    case ROUND_TIES_TO_EVEN:
+        if (remainder_times_two < qOffset.get_den())
+            ret_next = false;
+        else if (remainder_times_two > qOffset.get_den())
+            ret_next = true;
+        else if (mpz_even_p(quotient.get_mpz_t()))
+            ret_next = false;
+        else
+            ret_next = true;
+        break;
+    case ROUND_TOWARDS_ZERO:
+        ret_next = false;
+        break;
+    case ROUND_AWAY_FROM_ZERO:
+        ret_next = (remainder != 0);
+        break;
+    case ROUND_TOWARD_POSITIVE:
+        if (quotient > 0)
+            ret_next = (remainder != 0);
+        else
+            ret_next = false;
+        break;
+    case ROUND_TOWARD_NEGATIVE:
+        if (quotient > 0)
+            ret_next = false;
+        else
+            ret_next = (remainder != 0);
+        break;
+    case ROUND_SIGNAL:
+        if (remainder != 0)
+            throw std::runtime_error("RoundAbsolute() : non-zero remainder in ROUND_SIGNAL mode");
+        ret_next = false;
+        break;
+    }
+
+    if (ret_next) {
+        if (quotient >= 0)
+            return (quotient + 1) * qUnits;
+        else
+            return (quotient - 1) * qUnits;
+    }
+    return quotient * qUnits;
 }
 
 

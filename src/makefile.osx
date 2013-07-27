@@ -39,6 +39,9 @@ LIBS += \
  $(DEPSDIR)/lib/libboost_chrono-mt.a \
  $(DEPSDIR)/lib/libssl.a \
  $(DEPSDIR)/lib/libcrypto.a \
+ $(DEPSDIR)/lib/libmpfr.a \
+ $(DEPSDIR)/lib/libgmp.a \
+ $(DEPSDIR)/lib/libgmpxx.a \
  -lz
 else
 TESTLIBS += \
@@ -52,6 +55,9 @@ LIBS += \
  -lboost_chrono-mt \
  -lssl \
  -lcrypto \
+ -lmpfr \
+ -lgmp \
+ -lgmpxx \
  -lz
 TESTDEFS += -DBOOST_TEST_DYN_LINK
 endif
