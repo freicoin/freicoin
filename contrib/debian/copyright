@@ -1,9 +1,8 @@
 Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=174
-Upstream-Name: Bitcoin
-Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
- irc://#bitcoin@freenode.net
-Source: http://sourceforge.net/projects/bitcoin/files/
- https://github.com/bitcoin/bitcoin
+Upstream-Name: Freicoin
+Upstream-Contact: Mark Friedenbach <mark@monetize.io>
+ irc://#freicoin@freenode.net
+Source: https://github.com/freicoin/freicoin
 
 Files: *
 Copyright: 2009-2012, Bitcoin Developers
@@ -22,6 +21,7 @@ License: ISC
 Files: debian/*
 Copyright: 2010-2011, Jonas Smedegaard <dr@jones.dk>
            2011, Matt Corallo <matt@bluematt.me>
+           2012-2013, Mark Friedenbach <mark@monetize.io>
 License: GPL-2+
 
 Files: debian/manpages/*
@@ -67,9 +67,9 @@ License: LGPL
 Comment: Icon Pack: Crystal SVG
 
 Files: src/qt/res/icons/bitcoin.png, src/qt/res/icons/toolbar.png
-Copyright: Bitboy (optimized for 16x16 by Wladimir van der Laan)
+Copyright: Monetize.io Inc.
 License: PUB-DOM
-Comment: Site: https://bitcointalk.org/?topic=1756.0
+Comment: Produced by Aaron Blumenshine <aaron@monetize.io>
 
 Files:  scripts/img/reload.xcf, src/qt/res/movies/update_spinner.mng
 Copyright: Everaldo (Everaldo Coelho)
