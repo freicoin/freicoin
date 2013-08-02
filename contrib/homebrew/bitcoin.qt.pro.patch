@@ -2,7 +2,7 @@ diff --git a/bitcoin-qt.pro b/bitcoin-qt.pro
 index d938c07..e1dd4ec 100644
 --- a/bitcoin-qt.pro
 +++ b/bitcoin-qt.pro
-@@ -353,7 +353,7 @@
+@@ -352,7 +352,7 @@
  }
  
  isEmpty(BDB_LIB_PATH) {
@@ -11,7 +11,7 @@ index d938c07..e1dd4ec 100644
  }
  
  isEmpty(BDB_LIB_SUFFIX) {
-@@ -361,15 +361,15 @@
+@@ -360,15 +360,15 @@
  }
  
  isEmpty(BDB_INCLUDE_PATH) {
