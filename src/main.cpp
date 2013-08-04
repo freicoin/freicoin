@@ -553,6 +553,8 @@ bool CTransaction::CheckTransaction(CValidationState &state) const
     // Size limits
     if (::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return state.DoS(100, error("CTransaction::CheckTransaction() : size limits failed"));
+    if (nRefHeight < 0)
+        return state.DoS(100, error("CTransaction::CheckTransaction() : nRefHeight negative"));
 
     // Check for negative or overflow output values
     int64 nValueOut = 0;
@@ -660,6 +662,9 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
 
     if (!tx.CheckTransaction(state))
         return error("CTxMemPool::accept() : CheckTransaction failed");
+
+    if ( tx.nRefHeight > (nBestHeight + 20) )
+        return error("CTxMemPool::accept() : tx.nRefHeight too high (%d)", tx.nRefHeight);
 
     // Coinbase is only valid in a block, not as a loose transaction
     if (tx.IsCoinBase())
@@ -1318,14 +1323,48 @@ const CTxOut &CTransaction::GetOutputFor(const CTxIn& input, CCoinsViewCache& vi
     return coins.vout[input.prevout.n];
 }
 
+mpq GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth)
+{
+    return GetTimeAdjustedValue(i64_to_mpq(nInitialValue), nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth)
+{
+    mpq initial_value(zInitialValue);
+    return GetTimeAdjustedValue(initial_value, nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
+{
+    return qInitialValue;
+}
+
+mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
+{
+    return GetTimeAdjustedValue(output.nValue, nBlockHeight-coins.nRefHeight);
+}
+
+mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight)
+{
+    return GetTimeAdjustedValue(output.nValue, nBlockHeight-tx.nRefHeight);
+}
+
 mpq CTransaction::GetValueIn(CCoinsViewCache& inputs) const
 {
     if (IsCoinBase())
         return 0;
 
-    mpq nResult = 0;
-    for (unsigned int i = 0; i < vin.size(); i++)
-        nResult += i64_to_mpq(GetOutputFor(vin[i], inputs).nValue);
+    mpq nResult = 0, nInput;
+    for (unsigned int i = 0; i < vin.size(); i++) {
+        const CCoins& coins = inputs.GetCoins(vin[i].prevout.hash);
+        const CTxOut& txOut = coins.vout[vin[i].prevout.n];
+
+        nInput = GetPresentValue(coins, txOut, nRefHeight);
+        nResult += nInput;
+
+        if (!MoneyRange(nInput) || !MoneyRange(nResult))
+            throw std::runtime_error("CTransaction::GetValueIn() : txin values out of range");
+    }
 
     return nResult;
 }
@@ -1409,8 +1448,6 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         // While checking, GetBestBlock() refers to the parent block.
         // This is also true for mempool checks.
         int nSpendHeight = inputs.GetBestBlock()->nHeight + 1;
-        mpq nValueIn = 0;
-        mpq nFees = 0;
         for (unsigned int i = 0; i < vin.size(); i++)
         {
             const COutPoint &prevout = vin[i].prevout;
@@ -1422,23 +1459,25 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
                     return state.Invalid(error("CheckInputs() : tried to spend coinbase at depth %d", nSpendHeight - coins.nHeight));
             }
 
-            // Check for negative or overflow input values
-            nValueIn += i64_to_mpq(coins.vout[prevout.n].nValue);
-            if (!MoneyRange(coins.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
-                return state.DoS(100, error("CheckInputs() : txin values out of range"));
+            if (nRefHeight < coins.nRefHeight)
+                return state.DoS(100, error("CheckInputs() : input refheight less than output refheight"));
 
         }
 
+        // Check for negative or overflow input values
+        mpq nValueIn;
+        try {
+            nValueIn = GetValueIn(inputs);
+        } catch (std::runtime_error &e) {
+            return state.DoS(100, error("CheckInputs() : %s %s", GetHash().ToString().c_str(), e.what()));
+        }
         if (nValueIn < GetValueOut())
             return state.DoS(100, error("CheckInputs() : %s value in < value out (%s < %s)", GetHash().ToString().c_str(), FormatMoney(nValueIn).c_str(), FormatMoney(GetValueOut()).c_str()));
 
         // Tally transaction fees
         mpq nTxFee = nValueIn - GetValueOut();
-        if (nTxFee < 0)
-            return state.DoS(100, error("CheckInputs() : %s nTxFee < 0", GetHash().ToString().c_str()));
-        nFees += nTxFee;
-        if (!MoneyRange(nFees))
-            return state.DoS(100, error("CheckInputs() : nFees out of range"));
+        if (!MoneyRange(nTxFee))
+            return state.DoS(100, error("CheckInputs() : %s nTxFee out of range", GetHash().ToString().c_str()));
 
         // The first loop above does all the inexpensive checks.
         // Only if ALL inputs pass do we perform expensive ECDSA signature checks.
@@ -1533,6 +1572,7 @@ bool CBlock::DisconnectBlock(CValidationState &state, CBlockIndex *pindex, CCoin
                     coins.fCoinBase = undo.fCoinBase;
                     coins.nHeight = undo.nHeight;
                     coins.nVersion = undo.nVersion;
+                    coins.nRefHeight = undo.nRefHeight;
                 } else {
                     if (coins.IsPruned())
                         fClean = fClean && error("DisconnectBlock() : undo data adding output to missing transaction");
@@ -1675,7 +1715,11 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
                      return state.DoS(100, error("ConnectBlock() : too many sigops"));
             }
 
-            nFees += tx.GetValueIn(view) - tx.GetValueOut();
+            if (pindex->nHeight < tx.nRefHeight)
+                return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.nRefHeight"));
+
+            mpq qNet = tx.GetValueIn(view) - tx.GetValueOut();
+            nFees += GetTimeAdjustedValue(qNet, pindex->nHeight - tx.nRefHeight);
 
             std::vector<CScriptCheck> vChecks;
             if (!tx.CheckInputs(state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
@@ -1695,7 +1739,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     if (fBenchmark)
         printf("- Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin)\n", (unsigned)vtx.size(), 0.001 * nTime, 0.001 * nTime / vtx.size(), nInputs <= 1 ? 0 : 0.001 * nTime / (nInputs-1));
 
-    mpq qActualCoinbaseValue = vtx[0].GetValueOut();
+    mpq qActualCoinbaseValue = GetTimeAdjustedValue(vtx[0].GetValueOut(), pindex->nHeight - vtx[0].nRefHeight);
     mpq qAllowedCoinbaseValue = GetBlockValue(pindex->nHeight, nFees);
     if ( qActualCoinbaseValue > qAllowedCoinbaseValue )
         return state.DoS(100, error("ConnectBlock() : coinbase pays too much (actual=%s vs limit=%s)", FormatMoney(qActualCoinbaseValue).c_str(), FormatMoney(qAllowedCoinbaseValue).c_str()));
@@ -4225,6 +4269,8 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
         CBlockIndex* pindexPrev = pindexBest;
         CCoinsViewCache view(*pcoinsTip, true);
 
+        int nHeight = pindexPrev->nHeight + 1;
+
         // Priority order to process transactions
         list<COrphan> vOrphan; // list memory doesn't move
         map<uint256, vector<COrphan*> > mapDependers;
@@ -4270,15 +4316,16 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                     }
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
-                    nTotalIn += i64_to_mpq(mempool.mapTx[txin.prevout.hash].vout[txin.prevout.n].nValue);
+                    const CTransaction &txPrevIn = mempool.mapTx[txin.prevout.hash];
+                    nTotalIn += GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight);
                     continue;
                 }
                 const CCoins &coins = view.GetCoins(txin.prevout.hash);
 
-                mpq nValueIn = i64_to_mpq(coins.vout[txin.prevout.n].nValue);
-                nTotalIn += nValueIn;
+                int nConf = nHeight - coins.nHeight;
 
-                int nConf = pindexPrev->nHeight - coins.nHeight + 1;
+                mpq nValueIn = GetPresentValue(coins, coins.vout[txin.prevout.n], tx.nRefHeight);
+                nTotalIn += nValueIn;
 
                 dPriority += nValueIn.get_d() * nConf;
             }
@@ -4322,6 +4369,10 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             std::pop_heap(vecPriority.begin(), vecPriority.end(), comparer);
             vecPriority.pop_back();
 
+            // Invalid height
+            if (nHeight < tx.nRefHeight)
+                continue;
+
             // Size limits
             unsigned int nTxSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
             if (nBlockSize + nTxSize >= nBlockMaxSize)
@@ -4349,7 +4400,8 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             if (!tx.HaveInputs(view))
                 continue;
 
-            mpq nTxFees = tx.GetValueIn(view)-tx.GetValueOut();
+            mpq nNet = tx.GetValueIn(view)-tx.GetValueOut();
+            mpq nTxFees = GetTimeAdjustedValue(nNet, nHeight-tx.nRefHeight);
 
             nTxSigOps += tx.GetP2SHSigOpCount(view);
             if (nBlockSigOps + nTxSigOps >= MAX_BLOCK_SIGOPS)
@@ -4361,7 +4413,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
 
             CTxUndo txundo;
             uint256 hash = tx.GetHash();
-            tx.UpdateCoins(state, view, txundo, pindexPrev->nHeight+1, hash);
+            tx.UpdateCoins(state, view, txundo, nHeight, hash);
 
             // Added
             pblock->vtx.push_back(tx);
@@ -4400,7 +4452,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
         nLastBlockSize = nBlockSize;
         printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
-        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(pindexPrev->nHeight+1, nFees), ROUND_TOWARDS_ZERO));
+        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(nHeight, nFees), ROUND_TOWARDS_ZERO));
         pblocktemplate->vTxFees[0] = -nFees;
 
         // Fill in header
@@ -4413,7 +4465,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
 
         CBlockIndex indexDummy(*pblock);
         indexDummy.pprev = pindexPrev;
-        indexDummy.nHeight = pindexPrev->nHeight + 1;
+        indexDummy.nHeight = nHeight;
         CCoinsViewCache viewNew(*pcoinsTip, true);
         CValidationState state;
         if (!pblock->ConnectBlock(state, &indexDummy, viewNew, true))

@@ -30,6 +30,7 @@ public:
      */
     void setTypeFilter(quint32 modes);
     void setMinAmount(const mpq& minimum);
+    void setMinRefHeight(int minimum);
 
     /** Set maximum number of rows returned, -1 if unlimited. */
     void setLimit(int limit);
@@ -45,6 +46,7 @@ private:
     QString addrPrefix;
     quint32 typeFilter;
     mpq minAmount;
+    int32_t minRefHeight;
     int limitRows;
 };
 
