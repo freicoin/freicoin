@@ -52,14 +52,14 @@ bool CWalletDB::WriteAccountingEntry(const CAccountingEntry& acentry)
     return WriteAccountingEntry(++nAccountingEntryNumber, acentry);
 }
 
-mpq CWalletDB::GetAccountCreditDebit(const string& strAccount)
+mpq CWalletDB::GetAccountCreditDebit(const string& strAccount, int nBlockHeight)
 {
     list<CAccountingEntry> entries;
     ListAccountCreditDebit(strAccount, entries);
 
     mpq nCreditDebit = 0;
     BOOST_FOREACH (const CAccountingEntry& entry, entries)
-        nCreditDebit += entry.nCreditDebit;
+        nCreditDebit += GetTimeAdjustedValue(entry.nCreditDebit, nBlockHeight-entry.nRefHeight);
 
     return nCreditDebit;
 }

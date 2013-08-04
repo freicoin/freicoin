@@ -96,6 +96,19 @@ TransactionView::TransactionView(QWidget *parent) :
     amountWidget->setValidator(new QDoubleValidator(0, 1e20, 8, this));
     hlayout->addWidget(amountWidget);
 
+    refheightWidget = new QLineEdit(this);
+#if QT_VERSION >= 0x040700
+    /* Do not move this to the XML file, Qt before 4.7 will choke on it */
+    refheightWidget->setPlaceholderText(tr("Min height"));
+#endif
+#ifdef Q_WS_MAC
+    refheightWidget->setFixedWidth(97);
+#else
+    refheightWidget->setFixedWidth(100);
+#endif
+    refheightWidget->setValidator(new QIntValidator(0, 0x7f000000, this));
+    hlayout->addWidget(refheightWidget);
+
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0,0,0,0);
     vlayout->setSpacing(0);
@@ -140,6 +153,7 @@ TransactionView::TransactionView(QWidget *parent) :
     connect(typeWidget, SIGNAL(activated(int)), this, SLOT(chooseType(int)));
     connect(addressWidget, SIGNAL(textChanged(QString)), this, SLOT(changedPrefix(QString)));
     connect(amountWidget, SIGNAL(textChanged(QString)), this, SLOT(changedAmount(QString)));
+    connect(refheightWidget, SIGNAL(textChanged(QString)), this, SLOT(changedRefHeight(QString)));
 
     connect(view, SIGNAL(doubleClicked(QModelIndex)), this, SIGNAL(doubleClicked(QModelIndex)));
     connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualMenu(QPoint)));
@@ -257,6 +271,13 @@ void TransactionView::changedAmount(const QString &amount)
     {
         transactionProxyModel->setMinAmount(0);
     }
+}
+
+void TransactionView::changedRefHeight(const QString &refheight)
+{
+    if(!transactionProxyModel)
+        return;
+    transactionProxyModel->setMinRefHeight(refheight.toInt());
 }
 
 void TransactionView::exportClicked()
