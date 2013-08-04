@@ -36,19 +36,19 @@ WalletModel::~WalletModel()
     unsubscribeFromCoreSignals();
 }
 
-mpq WalletModel::getBalance() const
+mpq WalletModel::getBalance(int nBlockHeight) const
 {
-    return wallet->GetBalance();
+    return wallet->GetBalance(nBlockHeight);
 }
 
-mpq WalletModel::getUnconfirmedBalance() const
+mpq WalletModel::getUnconfirmedBalance(int nBlockHeight) const
 {
-    return wallet->GetUnconfirmedBalance();
+    return wallet->GetUnconfirmedBalance(nBlockHeight);
 }
 
-mpq WalletModel::getImmatureBalance() const
+mpq WalletModel::getImmatureBalance(int nBlockHeight) const
 {
-    return wallet->GetImmatureBalance();
+    return wallet->GetImmatureBalance(nBlockHeight);
 }
 
 int WalletModel::getNumTransactions() const
@@ -83,9 +83,9 @@ void WalletModel::pollBalanceChanged()
 
 void WalletModel::checkBalanceChanged()
 {
-    mpq newBalance = getBalance();
-    mpq newUnconfirmedBalance = getUnconfirmedBalance();
-    mpq newImmatureBalance = getImmatureBalance();
+    mpq newBalance = getBalance(nBestHeight);
+    mpq newUnconfirmedBalance = getUnconfirmedBalance(nBestHeight);
+    mpq newImmatureBalance = getImmatureBalance(nBestHeight);
 
     if(cachedBalance != newBalance || cachedUnconfirmedBalance != newUnconfirmedBalance || cachedImmatureBalance != newImmatureBalance)
     {
@@ -124,7 +124,7 @@ bool WalletModel::validateAddress(const QString &address)
     return addressParsed.IsValid();
 }
 
-WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipient> &recipients)
+WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipient> &recipients, int nRefHeight)
 {
     mpq total = 0;
     QSet<QString> setAddress;
@@ -134,6 +134,9 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
     {
         return OK;
     }
+
+    if (nRefHeight < 0)
+        nRefHeight = nBestHeight;
 
     // Pre-check input data for validity
     foreach(const SendCoinsRecipient &rcp, recipients)
@@ -156,13 +159,13 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         return DuplicateAddress;
     }
 
-    if(total > getBalance())
+    if(total > getBalance(nRefHeight))
     {
         return AmountExceedsBalance;
     }
 
     mpq qBalReq = total + nTransactionFee;
-    if(qBalReq > getBalance())
+    if(qBalReq > getBalance(nRefHeight))
     {
         return SendCoinsReturn(AmountWithFeeExceedsBalance, nTransactionFee);
     }
@@ -183,11 +186,11 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         CReserveKey keyChange(wallet);
         mpq nFeeRequired = 0;
         std::string strFailReason;
-        bool fCreated = wallet->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, strFailReason);
+        bool fCreated = wallet->CreateTransaction(vecSend, nRefHeight, wtx, keyChange, nFeeRequired, strFailReason);
 
         if(!fCreated)
         {
-            if(qBalReq > wallet->GetBalance())
+            if(qBalReq > wallet->GetBalance(nRefHeight))
             {
                 return SendCoinsReturn(AmountWithFeeExceedsBalance, nFeeRequired);
             }

@@ -195,6 +195,8 @@ Value gettxout(const Array& params, bool fHelp)
     if (params.size() > 2)
         fMempool = params[2].get_bool();
 
+    int nBlockHeight = nBestHeight;
+
     CCoins coins;
     if (fMempool) {
         LOCK(mempool.cs);
@@ -214,12 +216,13 @@ Value gettxout(const Array& params, bool fHelp)
         ret.push_back(Pair("confirmations", 0));
     else
         ret.push_back(Pair("confirmations", pcoinsTip->GetBestBlock()->nHeight - coins.nHeight + 1));
-    ret.push_back(Pair("value", (boost::int64_t)coins.vout[n].nValue));
+    ret.push_back(Pair("value", ValueFromAmount(GetPresentValue(coins, coins.vout[n], nBlockHeight))));
     Object o;
     ScriptPubKeyToJSON(coins.vout[n].scriptPubKey, o);
     ret.push_back(Pair("scriptPubKey", o));
     ret.push_back(Pair("version", coins.nVersion));
     ret.push_back(Pair("coinbase", coins.fCoinBase));
+    ret.push_back(Pair("refheight", coins.nRefHeight));
 
     return ret;
 }

@@ -56,9 +56,9 @@ public:
     AddressTableModel *getAddressTableModel();
     TransactionTableModel *getTransactionTableModel();
 
-    mpq getBalance() const;
-    mpq getUnconfirmedBalance() const;
-    mpq getImmatureBalance() const;
+    mpq getBalance(int nBlockHeight) const;
+    mpq getUnconfirmedBalance(int nBlockHeight) const;
+    mpq getImmatureBalance(int nBlockHeight) const;
     int getNumTransactions() const;
     EncryptionStatus getEncryptionStatus() const;
 
@@ -78,7 +78,7 @@ public:
     };
 
     // Send coins to a list of recipients
-    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients);
+    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients, int nRefHeight=-1);
 
     // Wallet encryption
     bool setWalletEncrypted(bool encrypted, const SecureString &passphrase);

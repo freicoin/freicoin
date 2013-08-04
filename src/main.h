@@ -113,6 +113,7 @@ class CReserveKey;
 class CCoinsDB;
 class CBlockTreeDB;
 struct CDiskBlockPos;
+class CTxOut;
 class CCoins;
 class CTxUndo;
 class CCoinsView;
@@ -178,6 +179,13 @@ bool IsInitialBlockDownload();
 std::string GetWarnings(std::string strFor);
 /** Retrieve a transaction (from memory pool, or from disk, if possible) */
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock, bool fAllowSlow = false);
+/** Calculating present value after subtracting demurrage */
+mpq GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue(const mpq &qInitialValue, int nRelativeDepth);
+/** Calculate value of an output at the specified block height */
+mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight);
+mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight);
 /** Connect/disconnect blocks until pindexNew is the new tip of the active block chain */
 bool SetBestChain(CValidationState &state, CBlockIndex* pindexNew);
 /** Find the best known block, and make it the tip of the block chain */
@@ -497,6 +505,7 @@ public:
     std::vector<CTxIn> vin;
     std::vector<CTxOut> vout;
     unsigned int nLockTime;
+    int32_t nRefHeight;
 
     CTransaction()
     {
@@ -510,6 +519,8 @@ public:
         READWRITE(vin);
         READWRITE(vout);
         READWRITE(nLockTime);
+        if ( nVersion == 2 )
+            READWRITE(nRefHeight);
     )
 
     void SetNull()
@@ -518,6 +529,7 @@ public:
         vin.clear();
         vout.clear();
         nLockTime = 0;
+        nRefHeight = 0;
     }
 
     bool IsNull() const
@@ -644,10 +656,11 @@ public:
 
     friend bool operator==(const CTransaction& a, const CTransaction& b)
     {
-        return (a.nVersion  == b.nVersion &&
-                a.vin       == b.vin &&
-                a.vout      == b.vout &&
-                a.nLockTime == b.nLockTime);
+        return (a.nVersion   == b.nVersion &&
+                a.vin        == b.vin &&
+                a.vout       == b.vout &&
+                a.nLockTime  == b.nLockTime &&
+                a.nRefHeight == b.nRefHeight);
     }
 
     friend bool operator!=(const CTransaction& a, const CTransaction& b)
@@ -659,12 +672,13 @@ public:
     std::string ToString() const
     {
         std::string str;
-        str += strprintf("CTransaction(hash=%s, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%u)\n",
+        str += strprintf("CTransaction(hash=%s, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%u, nRefHeight=%u)\n",
             GetHash().ToString().c_str(),
             nVersion,
             vin.size(),
             vout.size(),
-            nLockTime);
+            nLockTime,
+            nRefHeight);
         for (unsigned int i = 0; i < vin.size(); i++)
             str += "    " + vin[i].ToString() + "\n";
         for (unsigned int i = 0; i < vout.size(); i++)
@@ -740,14 +754,16 @@ public:
     bool fCoinBase;       // if the outpoint was the last unspent: whether it belonged to a coinbase
     unsigned int nHeight; // if the outpoint was the last unspent: its height
     int nVersion;         // if the outpoint was the last unspent: its version
+    int nRefHeight;       // if the outpoint was the last unspent: its reference height
 
-    CTxInUndo() : txout(), fCoinBase(false), nHeight(0), nVersion(0) {}
-    CTxInUndo(const CTxOut &txoutIn, bool fCoinBaseIn = false, unsigned int nHeightIn = 0, int nVersionIn = 0) : txout(txoutIn), fCoinBase(fCoinBaseIn), nHeight(nHeightIn), nVersion(nVersionIn) { }
+    CTxInUndo() : txout(), fCoinBase(false), nHeight(0), nVersion(0), nRefHeight(0) {}
+    CTxInUndo(const CTxOut &txoutIn, bool fCoinBaseIn = false, unsigned int nHeightIn = 0, int nVersionIn = 0, int nRefHeightIn = 0) : txout(txoutIn), fCoinBase(fCoinBaseIn), nHeight(nHeightIn), nVersion(nVersionIn), nRefHeight(nRefHeightIn) { }
 
     unsigned int GetSerializeSize(int nType, int nVersion) const {
         return ::GetSerializeSize(VARINT(nHeight*2+(fCoinBase ? 1 : 0)), nType, nVersion) +
                (nHeight > 0 ? ::GetSerializeSize(VARINT(this->nVersion), nType, nVersion) : 0) +
-               ::GetSerializeSize(CTxOutCompressor(REF(txout)), nType, nVersion);
+               ::GetSerializeSize(CTxOutCompressor(REF(txout)), nType, nVersion) +
+               (nHeight > 0 && this->nVersion == 2 ? ::GetSerializeSize(VARINT(nRefHeight), nType, nVersion) : 0);
     }
 
     template<typename Stream>
@@ -756,6 +772,8 @@ public:
         if (nHeight > 0)
             ::Serialize(s, VARINT(this->nVersion), nType, nVersion);
         ::Serialize(s, CTxOutCompressor(REF(txout)), nType, nVersion);
+        if (nHeight > 0 && this->nVersion == 2)
+            ::Serialize(s, VARINT(nRefHeight), nType, nVersion);
     }
 
     template<typename Stream>
@@ -767,6 +785,10 @@ public:
         if (nHeight > 0)
             ::Unserialize(s, VARINT(this->nVersion), nType, nVersion);
         ::Unserialize(s, REF(CTxOutCompressor(REF(txout))), nType, nVersion);
+        if (nHeight > 0 && this->nVersion == 2)
+            ::Unserialize(s, VARINT(nRefHeight), nType, nVersion);
+        else
+            nRefHeight = 0;
     }
 };
 
@@ -919,11 +941,14 @@ public:
     // as new tx version will probably only be introduced at certain heights
     int nVersion;
 
+    // refheight of the CTransaction, or zero if nVersion!=2
+    int nRefHeight;
+
     // construct a CCoins from a CTransaction, at a given height
-    CCoins(const CTransaction &tx, int nHeightIn) : fCoinBase(tx.IsCoinBase()), vout(tx.vout), nHeight(nHeightIn), nVersion(tx.nVersion) { }
+    CCoins(const CTransaction &tx, int nHeightIn) : fCoinBase(tx.IsCoinBase()), vout(tx.vout), nHeight(nHeightIn), nVersion(tx.nVersion), nRefHeight(tx.nRefHeight) { }
 
     // empty constructor
-    CCoins() : fCoinBase(false), vout(0), nHeight(0), nVersion(0) { }
+    CCoins() : fCoinBase(false), vout(0), nHeight(0), nVersion(0), nRefHeight(0) { }
 
     // remove spent outputs at the end of vout
     void Cleanup() {
@@ -938,6 +963,7 @@ public:
         to.vout.swap(vout);
         std::swap(to.nHeight, nHeight);
         std::swap(to.nVersion, nVersion);
+        std::swap(to.nRefHeight, nRefHeight);
     }
 
     // equality test
@@ -945,6 +971,7 @@ public:
          return a.fCoinBase == b.fCoinBase &&
                 a.nHeight == b.nHeight &&
                 a.nVersion == b.nVersion &&
+                a.nRefHeight == b.nRefHeight &&
                 a.vout == b.vout;
     }
     friend bool operator!=(const CCoins &a, const CCoins &b) {
@@ -994,6 +1021,9 @@ public:
         for (unsigned int i = 0; i < vout.size(); i++)
             if (!vout[i].IsNull())
                 nSize += ::GetSerializeSize(CTxOutCompressor(REF(vout[i])), nType, nVersion);
+        // refheight
+        if (this->nVersion == 2)
+            nSize += ::GetSerializeSize(VARINT(nRefHeight), nType, nVersion);
         // height
         nSize += ::GetSerializeSize(VARINT(nHeight), nType, nVersion);
         return nSize;
@@ -1024,6 +1054,9 @@ public:
             if (!vout[i].IsNull())
                 ::Serialize(s, CTxOutCompressor(REF(vout[i])), nType, nVersion);
         }
+        // refheight
+        if (this->nVersion == 2)
+            ::Serialize(s, VARINT(nRefHeight), nType, nVersion);
         // coinbase height
         ::Serialize(s, VARINT(nHeight), nType, nVersion);
     }
@@ -1057,6 +1090,11 @@ public:
             if (vAvail[i])
                 ::Unserialize(s, REF(CTxOutCompressor(vout[i])), nType, nVersion);
         }
+        // refheight
+        if (this->nVersion == 2)
+            ::Unserialize(s, VARINT(nRefHeight), nType, nVersion);
+        else
+            nRefHeight = 0;
         // coinbase height
         ::Unserialize(s, VARINT(nHeight), nType, nVersion);
         Cleanup();
@@ -1075,6 +1113,7 @@ public:
             undo.nHeight = nHeight;
             undo.fCoinBase = fCoinBase;
             undo.nVersion = this->nVersion;
+            undo.nRefHeight = nRefHeight;
         }
         return true;
     }

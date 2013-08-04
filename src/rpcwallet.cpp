@@ -73,7 +73,7 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("version",       (int)CLIENT_VERSION));
     obj.push_back(Pair("protocolversion",(int)PROTOCOL_VERSION));
     obj.push_back(Pair("walletversion", pwalletMain->GetVersion()));
-    obj.push_back(Pair("balance",       ValueFromAmount(pwalletMain->GetBalance())));
+    obj.push_back(Pair("balance",       ValueFromAmount(pwalletMain->GetBalance(nBestHeight))));
     obj.push_back(Pair("blocks",        (int)nBestHeight));
     obj.push_back(Pair("timeoffset",    (boost::int64_t)GetTimeOffset()));
     obj.push_back(Pair("connections",   (int)vNodes.size()));
@@ -269,10 +269,12 @@ Value sendtoaddress(const Array& params, bool fHelp)
     if (params.size() > 3 && params[3].type() != null_type && !params[3].get_str().empty())
         wtx.mapValue["to"]      = params[3].get_str();
 
+    int nRefHeight = nBestHeight;
+
     if (pwalletMain->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
 
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, nRefHeight, wtx);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -289,7 +291,7 @@ Value listaddressgroupings(const Array& params, bool fHelp)
             "in past transactions");
 
     Array jsonGroupings;
-    map<CTxDestination, mpq> balances = pwalletMain->GetAddressBalances();
+    map<CTxDestination, mpq> balances = pwalletMain->GetAddressBalances(nBestHeight);
     BOOST_FOREACH(set<CTxDestination> grouping, pwalletMain->GetAddressGroupings())
     {
         Array jsonGrouping;
@@ -414,7 +416,7 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
         BOOST_FOREACH(const CTxOut& txout, wtx.vout)
             if (txout.scriptPubKey == scriptPubKey)
                 if (wtx.GetDepthInMainChain() >= nMinDepth)
-                    nAmount += i64_to_mpq(txout.nValue);
+                    nAmount += GetPresentValue(wtx, txout, nBestHeight);
     }
 
     return  ValueFromAmount(nAmount);
@@ -462,7 +464,7 @@ Value getreceivedbyaccount(const Array& params, bool fHelp)
             CTxDestination address;
             if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*pwalletMain, address) && setAddress.count(address))
                 if (wtx.GetDepthInMainChain() >= nMinDepth)
-                    nAmount += i64_to_mpq(txout.nValue);
+                    nAmount += GetPresentValue(wtx, txout, nBestHeight);
         }
     }
 
@@ -470,7 +472,7 @@ Value getreceivedbyaccount(const Array& params, bool fHelp)
 }
 
 
-mpq GetAccountBalance(CWalletDB& walletdb, const string& strAccount, int nMinDepth)
+mpq GetAccountBalance(CWalletDB& walletdb, const string& strAccount, int nBlockHeight, int nMinDepth)
 {
     mpq nBalance = 0;
 
@@ -482,7 +484,7 @@ mpq GetAccountBalance(CWalletDB& walletdb, const string& strAccount, int nMinDep
             continue;
 
         mpq nReceived, nSent, nFee;
-        wtx.GetAccountAmounts(strAccount, nReceived, nSent, nFee);
+        wtx.GetAccountAmounts(strAccount, nReceived, nSent, nFee, nBlockHeight);
 
         if (nReceived != 0 && wtx.GetDepthInMainChain() >= nMinDepth)
             nBalance += nReceived;
@@ -490,15 +492,15 @@ mpq GetAccountBalance(CWalletDB& walletdb, const string& strAccount, int nMinDep
     }
 
     // Tally internal accounting entries
-    nBalance += walletdb.GetAccountCreditDebit(strAccount);
+    nBalance += walletdb.GetAccountCreditDebit(strAccount, nBlockHeight);
 
     return nBalance;
 }
 
-mpq GetAccountBalance(const string& strAccount, int nMinDepth)
+mpq GetAccountBalance(const string& strAccount, int nMinDepth, int nBlockHeight)
 {
     CWalletDB walletdb(pwalletMain->strWalletFile);
-    return GetAccountBalance(walletdb, strAccount, nMinDepth);
+    return GetAccountBalance(walletdb, strAccount, nMinDepth, nBlockHeight);
 }
 
 
@@ -511,11 +513,13 @@ Value getbalance(const Array& params, bool fHelp)
             "If [account] is specified, returns the balance in the account.");
 
     if (params.size() == 0)
-        return  ValueFromAmount(pwalletMain->GetBalance());
+        return  ValueFromAmount(pwalletMain->GetBalance(nBestHeight));
 
     int nMinDepth = 1;
     if (params.size() > 1)
         nMinDepth = params[1].get_int();
+
+    int nBlockHeight = nBestHeight;
 
     if (params[0].get_str() == "*") {
         // Calculate total balance a different way from GetBalance()
@@ -532,7 +536,7 @@ Value getbalance(const Array& params, bool fHelp)
             string strSentAccount;
             list<pair<CTxDestination, mpq> > listReceived;
             list<pair<CTxDestination, mpq> > listSent;
-            wtx.GetAmounts(listReceived, listSent, allFee, strSentAccount);
+            wtx.GetAmounts(listReceived, listSent, allFee, strSentAccount, nBlockHeight);
             if (wtx.GetDepthInMainChain() >= nMinDepth)
             {
                 BOOST_FOREACH(const PAIRTYPE(CTxDestination,mpq)& r, listReceived)
@@ -547,7 +551,7 @@ Value getbalance(const Array& params, bool fHelp)
 
     string strAccount = AccountFromValue(params[0]);
 
-    mpq nBalance = GetAccountBalance(strAccount, nMinDepth);
+    mpq nBalance = GetAccountBalance(strAccount, nBlockHeight, nMinDepth);
 
     return ValueFromAmount(nBalance);
 }
@@ -575,6 +579,7 @@ Value movecmd(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_DATABASE_ERROR, "database error");
 
     int64 nNow = GetAdjustedTime();
+    int nRefHeight = nBestHeight;
 
     // Debit
     CAccountingEntry debit;
@@ -582,6 +587,7 @@ Value movecmd(const Array& params, bool fHelp)
     debit.strAccount = strFrom;
     debit.nCreditDebit = -nAmount;
     debit.nTime = nNow;
+    debit.nRefHeight = nRefHeight;
     debit.strOtherAccount = strTo;
     debit.strComment = strComment;
     walletdb.WriteAccountingEntry(debit);
@@ -592,6 +598,7 @@ Value movecmd(const Array& params, bool fHelp)
     credit.strAccount = strTo;
     credit.nCreditDebit = nAmount;
     credit.nTime = nNow;
+    credit.nRefHeight = nRefHeight;
     credit.strOtherAccount = strFrom;
     credit.strComment = strComment;
     walletdb.WriteAccountingEntry(credit);
@@ -627,15 +634,17 @@ Value sendfrom(const Array& params, bool fHelp)
     if (params.size() > 5 && params[5].type() != null_type && !params[5].get_str().empty())
         wtx.mapValue["to"]      = params[5].get_str();
 
+    int nRefHeight = nBestHeight;
+
     EnsureWalletIsUnlocked();
 
     // Check funds
-    mpq nBalance = GetAccountBalance(strAccount, nMinDepth);
+    mpq nBalance = GetAccountBalance(strAccount, nRefHeight, nMinDepth);
     if (nAmount > nBalance)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
 
     // Send
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, nRefHeight, wtx);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -684,10 +693,12 @@ Value sendmany(const Array& params, bool fHelp)
         vecSend.push_back(make_pair(scriptPubKey, nAmount));
     }
 
+    int nRefHeight = nBestHeight;
+
     EnsureWalletIsUnlocked();
 
     // Check funds
-    mpq nBalance = GetAccountBalance(strAccount, nMinDepth);
+    mpq nBalance = GetAccountBalance(strAccount, nRefHeight, nMinDepth);
     if (totalAmount > nBalance)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
 
@@ -695,7 +706,7 @@ Value sendmany(const Array& params, bool fHelp)
     CReserveKey keyChange(pwalletMain);
     mpq nFeeRequired = 0;
     string strFailReason;
-    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, strFailReason);
+    bool fCreated = pwalletMain->CreateTransaction(vecSend, nRefHeight, wtx, keyChange, nFeeRequired, strFailReason);
     if (!fCreated)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, strFailReason);
     if (!pwalletMain->CommitTransaction(wtx, keyChange))
@@ -850,7 +861,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
                 continue;
 
             tallyitem& item = mapTally[address];
-            item.nAmount += i64_to_mpq(txout.nValue);
+            item.nAmount += GetPresentValue(wtx, txout, nBestHeight);
             item.nConf = min(item.nConf, nDepth);
         }
     }
@@ -946,7 +957,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
     list<pair<CTxDestination, mpq> > listReceived;
     list<pair<CTxDestination, mpq> > listSent;
 
-    wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount);
+    wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount, wtx.nRefHeight);
 
     bool fAllAccounts = (strAccount == string("*"));
 
@@ -963,6 +974,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
             entry.push_back(Pair("fee", ValueFromAmount(-nFee)));
             if (fLong)
                 WalletTxToJSON(wtx, entry);
+            entry.push_back(Pair("refheight", wtx.nRefHeight));
             ret.push_back(entry);
         }
     }
@@ -994,6 +1006,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
                 entry.push_back(Pair("amount", ValueFromAmount(r.second)));
                 if (fLong)
                     WalletTxToJSON(wtx, entry);
+                entry.push_back(Pair("refheight", wtx.nRefHeight));
                 ret.push_back(entry);
             }
         }
@@ -1013,6 +1026,7 @@ void AcentryToJSON(const CAccountingEntry& acentry, const string& strAccount, Ar
         entry.push_back(Pair("amount", ValueFromAmount(acentry.nCreditDebit)));
         entry.push_back(Pair("otheraccount", acentry.strOtherAccount));
         entry.push_back(Pair("comment", acentry.strComment));
+        entry.push_back(Pair("refheight", acentry.nRefHeight));
         ret.push_back(entry);
     }
 }
@@ -1086,6 +1100,8 @@ Value listaccounts(const Array& params, bool fHelp)
     if (params.size() > 0)
         nMinDepth = params[0].get_int();
 
+    int nHeight = nBestHeight;
+
     map<string, mpq> mapAccountBalances;
     BOOST_FOREACH(const PAIRTYPE(CTxDestination, string)& entry, pwalletMain->mapAddressBook) {
         if (IsMine(*pwalletMain, entry.first)) // This address belongs to me
@@ -1099,7 +1115,7 @@ Value listaccounts(const Array& params, bool fHelp)
         string strSentAccount;
         list<pair<CTxDestination, mpq> > listReceived;
         list<pair<CTxDestination, mpq> > listSent;
-        wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount);
+        wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount, nBestHeight);
         mapAccountBalances[strSentAccount] -= nFee;
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, mpq)& s, listSent)
             mapAccountBalances[strSentAccount] -= s.second;
@@ -1116,7 +1132,7 @@ Value listaccounts(const Array& params, bool fHelp)
     list<CAccountingEntry> acentries;
     CWalletDB(pwalletMain->strWalletFile).ListAccountCreditDebit("*", acentries);
     BOOST_FOREACH(const CAccountingEntry& entry, acentries)
-        mapAccountBalances[entry.strAccount] += entry.nCreditDebit;
+        mapAccountBalances[entry.strAccount] += GetTimeAdjustedValue(entry.nCreditDebit, nHeight - entry.nRefHeight);
 
     Object ret;
     BOOST_FOREACH(const PAIRTYPE(string, mpq)& accountBalance, mapAccountBalances) {
@@ -1203,8 +1219,8 @@ Value gettransaction(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid or non-wallet transaction id");
     const CWalletTx& wtx = pwalletMain->mapWallet[hash];
 
-    mpq nCredit = wtx.GetCredit();
-    mpq nDebit = wtx.GetDebit();
+    mpq nCredit = wtx.GetCredit(wtx.nRefHeight);
+    mpq nDebit = wtx.GetDebit(wtx.nRefHeight);
     mpq nNet = nCredit - nDebit;
     mpq nFee = 0;
     if ( wtx.IsFromMe() )
@@ -1216,6 +1232,8 @@ Value gettransaction(const Array& params, bool fHelp)
         entry.push_back(Pair("fee", ValueFromAmount(nFee)));
 
     WalletTxToJSON(wtx, entry);
+
+    entry.push_back(Pair("refheight", wtx.nRefHeight));
 
     Array details;
     ListTransactions(wtx, "*", 0, false, details);
