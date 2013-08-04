@@ -137,6 +137,8 @@ bool CCoinsViewDB::GetStats(CCoinsStats &stats) {
                 ss << VARINT(coins.nVersion);
                 ss << (coins.fCoinBase ? 'c' : 'n'); 
                 ss << VARINT(coins.nHeight);
+                if (coins.nVersion == 2)
+                    ss << VARINT(coins.nRefHeight);
                 stats.nTransactions++;
                 for (unsigned int i=0; i<coins.vout.size(); i++) {
                     const CTxOut &out = coins.vout[i];
@@ -144,7 +146,7 @@ bool CCoinsViewDB::GetStats(CCoinsStats &stats) {
                         stats.nTransactionOutputs++;
                         ss << VARINT(i+1);
                         ss << out;
-                        nTotalAmount += i64_to_mpq(out.nValue);
+                        nTotalAmount += GetPresentValue(coins, out, coins.nHeight);
                     }
                 }
                 stats.nSerializedSize += 32 + slValue.size();

@@ -9,6 +9,7 @@
 #include "guiutil.h"
 #include "askpassphrasedialog.h"
 #include "base58.h"
+#include "main.h" // for nBestHeight
 
 #include <QMessageBox>
 #include <QTextDocument>
@@ -39,6 +40,8 @@ void SendCoinsDialog::setModel(WalletModel *model)
 {
     this->model = model;
 
+    int nBlockheight = nBestHeight;
+
     for(int i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
@@ -49,7 +52,7 @@ void SendCoinsDialog::setModel(WalletModel *model)
     }
     if(model && model->getOptionsModel())
     {
-        setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance());
+        setBalance(model->getBalance(nBlockheight), model->getUnconfirmedBalance(nBlockheight), model->getImmatureBalance(nBlockheight));
         connect(model, SIGNAL(balanceChanged(const mpq&, const mpq&, const mpq&)), this, SLOT(setBalance(const mpq&, const mpq&, const mpq&)));
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
     }
@@ -320,6 +323,6 @@ void SendCoinsDialog::updateDisplayUnit()
     if(model && model->getOptionsModel())
     {
         // Update labelBalance with the current balance and the current unit
-        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), RoundAbsolute(model->getBalance(), ROUND_TOWARDS_ZERO)));
+        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), RoundAbsolute(model->getBalance(nBestHeight), ROUND_TOWARDS_ZERO)));
     }
 }
