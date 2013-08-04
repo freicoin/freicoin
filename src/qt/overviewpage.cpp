@@ -13,6 +13,7 @@
 #include "transactionfilterproxy.h"
 #include "transactiontablemodel.h"
 #include "walletmodel.h"
+#include "main.h" // for chainActive
 
 #include <QAbstractItemDelegate>
 #include <QPainter>
@@ -181,8 +182,10 @@ void OverviewPage::setWalletModel(WalletModel *model)
         ui->listTransactions->setModel(filter);
         ui->listTransactions->setModelColumn(TransactionTableModel::ToAddress);
 
+        int nBlockHeight = chainActive.Height();
+
         // Keep up to date with wallet
-        setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance());
+        setBalance(model->getBalance(nBlockHeight), model->getUnconfirmedBalance(nBlockHeight), model->getImmatureBalance(nBlockHeight));
         connect(model, SIGNAL(balanceChanged(const mpq&, const mpq&, const mpq&)), this, SLOT(setBalance(const mpq&, const mpq&, const mpq&)));
 
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));

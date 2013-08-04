@@ -1066,6 +1066,9 @@ public:
              SerializeOutput(s, nOutput, nType, nVersion);
         // Serialie nLockTime
         ::Serialize(s, txTo.nLockTime, nType, nVersion);
+        // Serialie nRefHeight
+        if ( txTo.nVersion == 2 )
+            ::Serialize(s, txTo.nRefHeight, nType, nVersion);
     }
 };
 }

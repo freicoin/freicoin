@@ -146,6 +146,8 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
         CBlockIndex* pindexPrev = chainActive.Tip();
         CCoinsViewCache view(*pcoinsTip, true);
 
+        int nHeight = pindexPrev->nHeight + 1;
+
         // Priority order to process transactions
         list<COrphan> vOrphan; // list memory doesn't move
         map<uint256, vector<COrphan*> > mapDependers;
@@ -192,15 +194,16 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
                     }
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
-                    nTotalIn += i64_to_mpq(mempool.mapTx[txin.prevout.hash].GetTx().vout[txin.prevout.n].nValue);
+                    const CTransaction& txPrevIn = mempool.mapTx[txin.prevout.hash].GetTx();
+                    nTotalIn += GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight);
                     continue;
                 }
                 const CCoins &coins = view.GetCoins(txin.prevout.hash);
 
-                mpq nValueIn = i64_to_mpq(coins.vout[txin.prevout.n].nValue);
-                nTotalIn += nValueIn;
+                int nConf = nHeight - coins.nHeight;
 
-                int nConf = pindexPrev->nHeight - coins.nHeight + 1;
+                mpq nValueIn = GetPresentValue(coins, coins.vout[txin.prevout.n], tx.nRefHeight);
+                nTotalIn += nValueIn;
 
                 dPriority += nValueIn.get_d() * nConf;
             }
@@ -244,6 +247,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
             std::pop_heap(vecPriority.begin(), vecPriority.end(), comparer);
             vecPriority.pop_back();
 
+            // Invalid height
+            if (nHeight < tx.nRefHeight)
+                continue;
+
             // Size limits
             unsigned int nTxSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
             if (nBlockSize + nTxSize >= nBlockMaxSize)
@@ -271,7 +278,8 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
             if (!view.HaveInputs(tx))
                 continue;
 
-            mpq nTxFees = view.GetValueIn(tx)-tx.GetValueOut();
+            mpq nNet = view.GetValueIn(tx)-tx.GetValueOut();
+            mpq nTxFees = GetTimeAdjustedValue(nNet, nHeight-tx.nRefHeight);
 
             nTxSigOps += GetP2SHSigOpCount(tx, view);
             if (nBlockSigOps + nTxSigOps >= MAX_BLOCK_SIGOPS)
@@ -322,7 +330,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
         nLastBlockSize = nBlockSize;
         LogPrintf("CreateNewBlock(): total size %u\n", nBlockSize);
 
-        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(pindexPrev->nHeight+1, nFees), ROUND_TOWARDS_ZERO));
+        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(nHeight, nFees), ROUND_TOWARDS_ZERO));
         pblocktemplate->vTxFees[0] = -nFees;
 
         // Fill in header
@@ -335,7 +343,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
 
         CBlockIndex indexDummy(*pblock);
         indexDummy.pprev = pindexPrev;
-        indexDummy.nHeight = pindexPrev->nHeight + 1;
+        indexDummy.nHeight = nHeight;
         CCoinsViewCache viewNew(*pcoinsTip, true);
         CValidationState state;
         if (!ConnectBlock(*pblock, state, &indexDummy, viewNew, true))

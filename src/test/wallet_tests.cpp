@@ -25,6 +25,7 @@ BOOST_AUTO_TEST_SUITE(wallet_tests)
 static CWallet wallet;
 static vector<COutput> vCoins;
 
+#if 0
 static void add_coin(const mpq& nValue, int nAge = 6*24, bool fIsFromMe = false, int nInput=0)
 {
     static int nextLockTime = 0;
@@ -38,8 +39,8 @@ static void add_coin(const mpq& nValue, int nAge = 6*24, bool fIsFromMe = false,
         // IsFromMe() returns (GetDebit() > 0), and GetDebit() is 0 if vin.empty(),
         // so stop vin being empty, and cache a non-zero Debit to fake out IsFromMe()
         wtx->vin.resize(1);
-        wtx->fDebitCached = true;
-        wtx->nDebitCached = 1;
+        //wtx->fDebitCached = true;
+        //wtx->nDebitCached = 1;
     }
     COutput output(wtx, nInput, nAge);
     vCoins.push_back(output);
@@ -299,5 +300,6 @@ BOOST_AUTO_TEST_CASE(coin_selection_tests)
     }
     empty_wallet();
 }
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()

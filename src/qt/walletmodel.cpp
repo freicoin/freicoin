@@ -50,30 +50,33 @@ WalletModel::~WalletModel()
     unsubscribeFromCoreSignals();
 }
 
-mpq WalletModel::getBalance(const CCoinControl *coinControl) const
+mpq WalletModel::getBalance(int nBlockHeight, const CCoinControl *coinControl) const
 {
+    if (nBlockHeight < 0)
+        nBlockHeight = chainActive.Height();
+
     if (coinControl)
     {
         mpq nBalance = 0;
         std::vector<COutput> vCoins;
         wallet->AvailableCoins(vCoins, true, coinControl);
         BOOST_FOREACH(const COutput& out, vCoins)
-            nBalance += i64_to_mpq(out.tx->vout[out.i].nValue);
+            nBalance += GetPresentValue(*out.tx, out.tx->vout[out.i], nBlockHeight - out.tx->nRefHeight);
 
         return nBalance;
     }
 
-    return wallet->GetBalance();
+    return wallet->GetBalance(nBlockHeight);
 }
 
-mpq WalletModel::getUnconfirmedBalance() const
+mpq WalletModel::getUnconfirmedBalance(int nBlockHeight) const
 {
-    return wallet->GetUnconfirmedBalance();
+    return wallet->GetUnconfirmedBalance(nBlockHeight);
 }
 
-mpq WalletModel::getImmatureBalance() const
+mpq WalletModel::getImmatureBalance(int nBlockHeight) const
 {
-    return wallet->GetImmatureBalance();
+    return wallet->GetImmatureBalance(nBlockHeight);
 }
 
 int WalletModel::getNumTransactions() const
@@ -108,9 +111,10 @@ void WalletModel::pollBalanceChanged()
 
 void WalletModel::checkBalanceChanged()
 {
-    mpq newBalance = getBalance();
-    mpq newUnconfirmedBalance = getUnconfirmedBalance();
-    mpq newImmatureBalance = getImmatureBalance();
+    int nBlockHeight = chainActive.Height();
+    mpq newBalance = getBalance(nBlockHeight);
+    mpq newUnconfirmedBalance = getUnconfirmedBalance(nBlockHeight);
+    mpq newImmatureBalance = getImmatureBalance(nBlockHeight);
 
     if(cachedBalance != newBalance || cachedUnconfirmedBalance != newUnconfirmedBalance || cachedImmatureBalance != newImmatureBalance)
     {
@@ -150,7 +154,7 @@ bool WalletModel::validateAddress(const QString &address)
     return addressParsed.IsValid();
 }
 
-WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransaction &transaction, const CCoinControl *coinControl)
+WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransaction &transaction, int nRefHeight, const CCoinControl *coinControl)
 {
     mpq total = 0;
     QList<SendCoinsRecipient> recipients = transaction.getRecipients();
@@ -160,6 +164,9 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     {
         return OK;
     }
+
+    if (nRefHeight < 0)
+        nRefHeight = chainActive.Height();
 
     QSet<QString> setAddress; // Used to detect duplicates
     int nAddresses = 0;
@@ -212,7 +219,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
         return DuplicateAddress;
     }
 
-    mpq nBalance = getBalance(coinControl);
+    mpq nBalance = getBalance(nRefHeight, coinControl);
 
     if(total > nBalance)
     {
@@ -235,7 +242,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
 
         CWalletTx *newTx = transaction.getTransaction();
         CReserveKey *keyChange = transaction.getPossibleKeyChange();
-        bool fCreated = wallet->CreateTransaction(vecSend, *newTx, *keyChange, nFeeRequired, strFailReason, coinControl);
+        bool fCreated = wallet->CreateTransaction(vecSend, nRefHeight, *newTx, *keyChange, nFeeRequired, strFailReason, coinControl);
         transaction.setTransactionFee(nFeeRequired);
 
         if(!fCreated)

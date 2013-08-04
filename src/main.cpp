@@ -648,6 +648,9 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state)
     if (::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return state.DoS(100, error("CheckTransaction() : size limits failed"),
                          REJECT_INVALID, "bad-txns-oversize");
+    if (tx.nRefHeight < 0)
+        return state.DoS(100, error("CTransaction::CheckTransaction() : nRefHeight negative"),
+                         REJECT_INVALID, "bad-txns-refheight-negative");
 
     // Check for negative or overflow output values
     int64_t nValueOut = 0;
@@ -735,6 +738,9 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState &state, const CTransa
 
     if (!CheckTransaction(tx, state))
         return error("AcceptToMemoryPool: : CheckTransaction failed");
+
+    if ( tx.nRefHeight > (chainActive.Height() + 20) )
+        return error("CTxMemPool::accept() : tx.nRefHeight too high (%d)", tx.nRefHeight);
 
     // Coinbase is only valid in a block, not as a loose transaction
     if (tx.IsCoinBase())
@@ -1385,6 +1391,32 @@ void UpdateTime(CBlockHeader& block, const CBlockIndex* pindexPrev)
 
 
 
+mpq GetTimeAdjustedValue(int64_t nInitialValue, int nRelativeDepth)
+{
+    return GetTimeAdjustedValue(i64_to_mpq(nInitialValue), nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth)
+{
+    mpq initial_value(zInitialValue);
+    return GetTimeAdjustedValue(initial_value, nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
+{
+    return qInitialValue;
+}
+
+mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
+{
+    return GetTimeAdjustedValue(output.nValue, nBlockHeight-coins.nRefHeight);
+}
+
+mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight)
+{
+    return GetTimeAdjustedValue(output.nValue, nBlockHeight-tx.nRefHeight);
+}
+
 
 
 
@@ -1435,8 +1467,6 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
         // This is also true for mempool checks.
         CBlockIndex *pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
         int nSpendHeight = pindexPrev->nHeight + 1;
-        mpq nValueIn = 0;
-        mpq nFees = 0;
         for (unsigned int i = 0; i < tx.vin.size(); i++)
         {
             const COutPoint &prevout = tx.vin[i].prevout;
@@ -1450,14 +1480,19 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
                         REJECT_INVALID, "bad-txns-premature-spend-of-coinbase");
             }
 
-            // Check for negative or overflow input values
-            nValueIn += i64_to_mpq(coins.vout[prevout.n].nValue);
-            if (!MoneyRange(coins.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
-                return state.DoS(100, error("CheckInputs() : txin values out of range"),
-                                 REJECT_INVALID, "bad-txns-inputvalues-outofrange");
-
+            if (tx.nRefHeight < coins.nRefHeight)
+                return state.DoS(100, error("CheckInputs() : input refheight less than output refheight"),
+                                 REJECT_INVALID, "bad-txns-refheight-less-than-inputs");
         }
 
+        // Check for negative or overflow input values
+        mpq nValueIn;
+        try {
+            nValueIn = inputs.GetValueIn(tx);
+        } catch (std::runtime_error &e) {
+            return state.DoS(100, error("CheckInputs() : %s %s", tx.GetHash().ToString(), e.what()),
+                             REJECT_INVALID, "bad-txns-exceptional-valuein");
+        }
         if (nValueIn < tx.GetValueOut())
             return state.DoS(100, error("CheckInputs() : %s value in < value out (%s < %s)",
                                         tx.GetHash().ToString(), FormatMoney(nValueIn), FormatMoney(tx.GetValueOut())),
@@ -1465,11 +1500,7 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
 
         // Tally transaction fees
         mpq nTxFee = nValueIn - tx.GetValueOut();
-        if (nTxFee < 0)
-            return state.DoS(100, error("CheckInputs() : %s nTxFee < 0", tx.GetHash().ToString()),
-                             REJECT_INVALID, "bad-txns-fee-negative");
-        nFees += nTxFee;
-        if (!MoneyRange(nFees))
+        if (!MoneyRange(nTxFee))
             return state.DoS(100, error("CheckInputs() : nFees out of range"),
                              REJECT_INVALID, "bad-txns-fee-outofrange");
 
@@ -1571,6 +1602,7 @@ bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex
                     coins.fCoinBase = undo.fCoinBase;
                     coins.nHeight = undo.nHeight;
                     coins.nVersion = undo.nVersion;
+                    coins.nRefHeight = undo.nRefHeight;
                 } else {
                     if (coins.IsPruned())
                         fClean = fClean && error("DisconnectBlock() : undo data adding output to missing transaction");
@@ -1717,7 +1749,12 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
                                      REJECT_INVALID, "bad-blk-sigops");
             }
 
-            nFees += view.GetValueIn(tx)-tx.GetValueOut();
+            if (pindex->nHeight < tx.nRefHeight)
+                return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.nRefHeight"),
+                                 REJECT_INVALID, "bad-txns-early-refheight");
+
+            mpq qNet = view.GetValueIn(tx)-tx.GetValueOut();
+            nFees += GetTimeAdjustedValue(qNet, pindex->nHeight - tx.nRefHeight);
 
             std::vector<CScriptCheck> vChecks;
             if (!CheckInputs(tx, state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
@@ -1737,7 +1774,7 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
     if (fBenchmark)
         LogPrintf("- Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin)\n", (unsigned)block.vtx.size(), 0.001 * nTime, 0.001 * nTime / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * nTime / (nInputs-1));
 
-    mpq qActualCoinbaseValue = block.vtx[0].GetValueOut();
+    mpq qActualCoinbaseValue = GetTimeAdjustedValue(block.vtx[0].GetValueOut(), pindex->nHeight - block.vtx[0].nRefHeight);
     mpq qAllowedCoinbaseValue = GetBlockValue(pindex->nHeight, nFees);
     if ( qActualCoinbaseValue > qAllowedCoinbaseValue )
         return state.DoS(100,

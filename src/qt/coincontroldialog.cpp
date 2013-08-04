@@ -481,7 +481,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
         nQuantity++;
 
         // Amount
-        nAmount += i64_to_mpq(out.tx->vout[out.i].nValue);
+        nAmount += GetPresentValue(*out.tx, out.tx->vout[out.i], out.nDepth);
 
         // Priority
         dPriorityInputs += (double)out.tx->vout[out.i].nValue * (out.nDepth+1);
@@ -681,7 +681,7 @@ void CoinControlDialog::updateView()
         BOOST_FOREACH(const COutput& out, coins.second)
         {
             int nInputSize = 0;
-            nSum += i64_to_mpq(out.tx->vout[out.i].nValue);
+            nSum += GetPresentValue(*out.tx, out.tx->vout[out.i], out.nDepth);
             nChildren++;
 
             QTreeWidgetItem *itemOutput;
@@ -725,7 +725,7 @@ void CoinControlDialog::updateView()
             }
 
             // amount
-            mpq qAmount = i64_to_mpq(out.tx->vout[out.i].nValue);
+            mpq qAmount = GetPresentValue(*out.tx, out.tx->vout[out.i], out.nDepth);
             itemOutput->setText(COLUMN_AMOUNT, BitcoinUnits::format(nDisplayUnit, qAmount));
             itemOutput->setText(COLUMN_AMOUNT_INT64, strPad(QString::number(mpz_to_i64(qAmount.get_num() / qAmount.get_den())), 15, " ")); // padding so that sorting works correctly
 

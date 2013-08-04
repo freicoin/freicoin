@@ -56,6 +56,7 @@ void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry)
     entry.push_back(Pair("txid", tx.GetHash().GetHex()));
     entry.push_back(Pair("version", tx.nVersion));
     entry.push_back(Pair("locktime", (boost::int64_t)tx.nLockTime));
+    entry.push_back(Pair("refheight", (boost::int64_t)tx.nRefHeight));
     Array vin;
     BOOST_FOREACH(const CTxIn& txin, tx.vin)
     {
@@ -236,6 +237,8 @@ Value listunspent(const Array& params, bool fHelp)
 
     RPCTypeCheck(params, list_of(int_type)(int_type)(array_type));
 
+    int nBlockHeight = chainActive.Height();
+
     int nMinDepth = 1;
     if (params.size() > 0)
         nMinDepth = params[0].get_int();
@@ -278,7 +281,7 @@ Value listunspent(const Array& params, bool fHelp)
                 continue;
         }
 
-        mpq nValue = i64_to_mpq(out.tx->vout[out.i].nValue);
+        mpq nValue = GetPresentValue(*out.tx, out.tx->vout[out.i], nBlockHeight);
         const CScript& pk = out.tx->vout[out.i].scriptPubKey;
         Object entry;
         entry.push_back(Pair("txid", out.tx->GetHash().GetHex()));

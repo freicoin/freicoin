@@ -81,13 +81,16 @@ public:
     // as new tx version will probably only be introduced at certain heights
     int nVersion;
 
+    // refheight of the CTransaction, or zero if nVersion!=2
+    int nRefHeight;
+
     // construct a CCoins from a CTransaction, at a given height
-    CCoins(const CTransaction &tx, int nHeightIn) : fCoinBase(tx.IsCoinBase()), vout(tx.vout), nHeight(nHeightIn), nVersion(tx.nVersion) {
+    CCoins(const CTransaction &tx, int nHeightIn) : fCoinBase(tx.IsCoinBase()), vout(tx.vout), nHeight(nHeightIn), nVersion(tx.nVersion), nRefHeight(tx.nRefHeight) {
         ClearUnspendable();
     }
 
     // empty constructor
-    CCoins() : fCoinBase(false), vout(0), nHeight(0), nVersion(0) { }
+    CCoins() : fCoinBase(false), vout(0), nHeight(0), nVersion(0), nRefHeight(0) { }
 
     // remove spent outputs at the end of vout
     void Cleanup() {
@@ -110,6 +113,7 @@ public:
         to.vout.swap(vout);
         std::swap(to.nHeight, nHeight);
         std::swap(to.nVersion, nVersion);
+        std::swap(to.nRefHeight, nRefHeight);
     }
 
     // equality test
@@ -120,6 +124,7 @@ public:
          return a.fCoinBase == b.fCoinBase &&
                 a.nHeight == b.nHeight &&
                 a.nVersion == b.nVersion &&
+                a.nRefHeight == b.nRefHeight &&
                 a.vout == b.vout;
     }
     friend bool operator!=(const CCoins &a, const CCoins &b) {
@@ -150,6 +155,9 @@ public:
         for (unsigned int i = 0; i < vout.size(); i++)
             if (!vout[i].IsNull())
                 nSize += ::GetSerializeSize(CTxOutCompressor(REF(vout[i])), nType, nVersion);
+        // refheight
+        if (this->nVersion == 2)
+            nSize += ::GetSerializeSize(VARINT(nRefHeight), nType, nVersion);
         // height
         nSize += ::GetSerializeSize(VARINT(nHeight), nType, nVersion);
         return nSize;
@@ -180,6 +188,9 @@ public:
             if (!vout[i].IsNull())
                 ::Serialize(s, CTxOutCompressor(REF(vout[i])), nType, nVersion);
         }
+        // refheight
+        if (this->nVersion == 2)
+            ::Serialize(s, VARINT(nRefHeight), nType, nVersion);
         // coinbase height
         ::Serialize(s, VARINT(nHeight), nType, nVersion);
     }
@@ -213,6 +224,11 @@ public:
             if (vAvail[i])
                 ::Unserialize(s, REF(CTxOutCompressor(vout[i])), nType, nVersion);
         }
+        // refheight
+        if (this->nVersion == 2)
+            ::Unserialize(s, VARINT(nRefHeight), nType, nVersion);
+        else
+            nRefHeight = 0;
         // coinbase height
         ::Unserialize(s, VARINT(nHeight), nType, nVersion);
         Cleanup();

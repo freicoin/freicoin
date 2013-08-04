@@ -393,12 +393,13 @@ Value gettxout(const Array& params, bool fHelp)
         ret.push_back(Pair("confirmations", 0));
     else
         ret.push_back(Pair("confirmations", pindex->nHeight - coins.nHeight + 1));
-    ret.push_back(Pair("value", (boost::int64_t)coins.vout[n].nValue));
+    ret.push_back(Pair("value", ValueFromAmount(GetPresentValue(coins, coins.vout[n], pindex->nHeight))));
     Object o;
     ScriptPubKeyToJSON(coins.vout[n].scriptPubKey, o, true);
     ret.push_back(Pair("scriptPubKey", o));
     ret.push_back(Pair("version", coins.nVersion));
     ret.push_back(Pair("coinbase", coins.fCoinBase));
+    ret.push_back(Pair("refheight", coins.nRefHeight));
 
     return ret;
 }

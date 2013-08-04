@@ -3,6 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "coins.h"
+#include "main.h"
 
 #include <assert.h>
 
@@ -39,6 +40,7 @@ bool CCoins::Spend(const COutPoint &out, CTxInUndo &undo) {
         undo.nHeight = nHeight;
         undo.fCoinBase = fCoinBase;
         undo.nVersion = this->nVersion;
+        undo.nRefHeight = nRefHeight;
     }
     return true;
 }
@@ -151,9 +153,17 @@ mpq CCoinsViewCache::GetValueIn(const CTransaction& tx)
     if (tx.IsCoinBase())
         return 0;
 
-    mpq nResult = 0;
-    for (unsigned int i = 0; i < tx.vin.size(); i++)
-        nResult += i64_to_mpq(GetOutputFor(tx.vin[i]).nValue);
+    mpq nResult = 0, nInput;
+    for (unsigned int i = 0; i < tx.vin.size(); i++) {
+        const CCoins& coins = GetCoins(tx.vin[i].prevout.hash);
+        const CTxOut& txOut = coins.vout[tx.vin[i].prevout.n];
+
+        nInput = GetPresentValue(coins, txOut, tx.nRefHeight);
+        nResult += nInput;
+
+        if (!MoneyRange(nInput) || !MoneyRange(nResult))
+            throw std::runtime_error("CCoinsViewCache::GetValueIn() : txin values out of range");
+    }
 
     return nResult;
 }

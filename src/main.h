@@ -161,6 +161,13 @@ bool IsInitialBlockDownload();
 std::string GetWarnings(std::string strFor);
 /** Retrieve a transaction (from memory pool, or from disk, if possible) */
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock, bool fAllowSlow = false);
+/** Calculating present value after subtracting demurrage */
+mpq GetTimeAdjustedValue(int64_t nInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue(const mpq &qInitialValue, int nRelativeDepth);
+/** Calculate value of an output at the specified block height */
+mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight);
+mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight);
 /** Find the best known block, and make it the tip of the block chain */
 bool ActivateBestChain(CValidationState &state);
 mpq GetBlockValue(int nHeight, const mpq& nFees);

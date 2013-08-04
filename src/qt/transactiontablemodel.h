@@ -29,7 +29,8 @@ public:
         Date = 1,
         Type = 2,
         ToAddress = 3,
-        Amount = 4
+        Amount = 4,
+        RefHeight = 5
     };
 
     /** Roles to get specific information from a transaction row.
@@ -54,6 +55,8 @@ public:
         ConfirmedRole,
         /** Formatted amount, without brackets when unconfirmed */
         FormattedAmountRole,
+        /** Reference height of transaction */
+        RefHeightRole,
         /** Transaction status (TransactionRecord::Status) */
         StatusRole
     };
@@ -78,6 +81,7 @@ private:
     QString formatTxType(const TransactionRecord *wtx) const;
     QString formatTxToAddress(const TransactionRecord *wtx, bool tooltip) const;
     QString formatTxAmount(const TransactionRecord *wtx, bool showUnconfirmed=true) const;
+    QString formatTxRefHeight(const TransactionRecord *wtx) const;
     QString formatTooltip(const TransactionRecord *rec) const;
     QVariant txStatusDecoration(const TransactionRecord *wtx) const;
     QVariant txAddressDecoration(const TransactionRecord *wtx) const;

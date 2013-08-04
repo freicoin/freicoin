@@ -16,6 +16,7 @@
 #include "base58.h"
 #include "coincontrol.h"
 #include "ui_interface.h"
+#include "main.h" // for chainActive
 
 #include <QMessageBox>
 #include <QScrollBar>
@@ -79,6 +80,8 @@ void SendCoinsDialog::setModel(WalletModel *model)
 {
     this->model = model;
 
+    int nBlockheight = chainActive.Height();
+
     if(model && model->getOptionsModel())
     {
         for(int i = 0; i < ui->entries->count(); ++i)
@@ -90,14 +93,14 @@ void SendCoinsDialog::setModel(WalletModel *model)
             }
         }
 
-        setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance());
+        setBalance(model->getBalance(nBlockheight), model->getUnconfirmedBalance(nBlockheight), model->getImmatureBalance(nBlockheight));
         connect(model, SIGNAL(balanceChanged(const mpq&, const mpq&, const mpq&)), this, SLOT(setBalance(const mpq&, const mpq&, const mpq&)));
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
 
         // Coin Control
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(coinControlUpdateLabels()));
         connect(model->getOptionsModel(), SIGNAL(coinControlFeaturesChanged(bool)), this, SLOT(coinControlFeatureChanged(bool)));
-        connect(model->getOptionsModel(), SIGNAL(transactionFeeChanged(qint64)), this, SLOT(coinControlUpdateLabels()));
+        connect(model->getOptionsModel(), SIGNAL(transactionFeeChanged(const mpq&)), this, SLOT(coinControlUpdateLabels()));
         ui->frameCoinControl->setVisible(model->getOptionsModel()->getCoinControlFeatures());
         coinControlUpdateLabels();
     }
@@ -189,7 +192,7 @@ void SendCoinsDialog::on_sendButton_clicked()
     WalletModelTransaction currentTransaction(recipients);
     WalletModel::SendCoinsReturn prepareStatus;
     if (model->getOptionsModel()->getCoinControlFeatures()) // coin control enabled
-        prepareStatus = model->prepareTransaction(currentTransaction, CoinControlDialog::coinControl);
+        prepareStatus = model->prepareTransaction(currentTransaction, -1, CoinControlDialog::coinControl);
     else
         prepareStatus = model->prepareTransaction(currentTransaction);
 

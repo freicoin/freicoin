@@ -126,9 +126,9 @@ public:
     TransactionTableModel *getTransactionTableModel();
     RecentRequestsTableModel *getRecentRequestsTableModel();
 
-    mpq getBalance(const CCoinControl *coinControl = NULL) const;
-    mpq getUnconfirmedBalance() const;
-    mpq getImmatureBalance() const;
+    mpq getBalance(int nBlockHeight=-1, const CCoinControl *coinControl = NULL) const;
+    mpq getUnconfirmedBalance(int nBlockHeight=-1) const;
+    mpq getImmatureBalance(int nBlockHeight=-1) const;
     int getNumTransactions() const;
     EncryptionStatus getEncryptionStatus() const;
 
@@ -144,7 +144,7 @@ public:
     };
 
     // prepare transaction for getting txfee before sending coins
-    SendCoinsReturn prepareTransaction(WalletModelTransaction &transaction, const CCoinControl *coinControl = NULL);
+    SendCoinsReturn prepareTransaction(WalletModelTransaction &transaction, int nRefHeight=-1, const CCoinControl *coinControl = NULL);
 
     // Send coins to a list of recipients
     SendCoinsReturn sendCoins(WalletModelTransaction &transaction);

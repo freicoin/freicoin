@@ -31,8 +31,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
 {
     QList<TransactionRecord> parts;
     int64_t nTime = wtx.GetTxTime();
-    mpq nCredit = wtx.GetCredit(true);
-    mpq nDebit = wtx.GetDebit();
+    mpq nCredit = wtx.GetCredit(wtx.nRefHeight, true);
+    mpq nDebit = wtx.GetDebit(wtx.nRefHeight);
     mpq nNet = nCredit - nDebit;
     uint256 hash = wtx.GetHash();
     std::map<std::string, std::string> mapValue = wtx.mapValue;
@@ -49,7 +49,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 TransactionRecord sub(hash, nTime);
                 CTxDestination address;
                 sub.idx = parts.size(); // sequence number
-                sub.credit = i64_to_mpq(txout.nValue);
+                sub.credit = GetPresentValue(wtx, txout, wtx.nRefHeight);
                 if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
                 {
                     // Received by Bitcoin Address
@@ -68,6 +68,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     sub.type = TransactionRecord::Generated;
                 }
 
+                sub.refheight = wtx.nRefHeight;
+
                 parts.append(sub);
             }
         }
@@ -85,12 +87,12 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
         if (fAllFromMe && fAllToMe)
         {
             // Payment to self
-            mpq nChange = wtx.GetChange();
+            mpq nChange = wtx.GetChange(wtx.nRefHeight);
             mpq debit = -(nDebit - nChange);
             mpq credit = nCredit - nChange;
 
             parts.append(TransactionRecord(hash, nTime, TransactionRecord::SendToSelf, "",
-                                           debit, credit));
+                                           debit, credit, wtx.nRefHeight));
         }
         else if (fAllFromMe)
         {
@@ -126,7 +128,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     sub.address = mapValue["to"];
                 }
 
-                mpq nValue = i64_to_mpq(txout.nValue);
+                mpq nValue = GetPresentValue(wtx, txout, wtx.nRefHeight);
                 /* Add fee to first output */
                 if (nTxFee > 0)
                 {
@@ -134,6 +136,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     nTxFee = 0;
                 }
                 sub.debit = -nValue;
+
+                sub.refheight = wtx.nRefHeight;
 
                 parts.append(sub);
             }
@@ -143,7 +147,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
             //
             // Mixed debit transaction, can't break down payees
             //
-            parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0));
+            parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0, wtx.nRefHeight));
         }
     }
 

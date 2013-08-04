@@ -213,6 +213,7 @@ public:
     std::vector<CTxIn> vin;
     std::vector<CTxOut> vout;
     unsigned int nLockTime;
+    int32_t nRefHeight;
 
     CTransaction()
     {
@@ -226,6 +227,8 @@ public:
         READWRITE(vin);
         READWRITE(vout);
         READWRITE(nLockTime);
+        if ( nVersion == 2 )
+            READWRITE(nRefHeight);
     )
 
     void SetNull()
@@ -234,6 +237,7 @@ public:
         vin.clear();
         vout.clear();
         nLockTime = 0;
+        nRefHeight = 0;
     }
 
     bool IsNull() const
@@ -259,10 +263,11 @@ public:
 
     friend bool operator==(const CTransaction& a, const CTransaction& b)
     {
-        return (a.nVersion  == b.nVersion &&
-                a.vin       == b.vin &&
-                a.vout      == b.vout &&
-                a.nLockTime == b.nLockTime);
+        return (a.nVersion   == b.nVersion &&
+                a.vin        == b.vin &&
+                a.vout       == b.vout &&
+                a.nLockTime  == b.nLockTime &&
+                a.nRefHeight == b.nRefHeight);
     }
 
     friend bool operator!=(const CTransaction& a, const CTransaction& b)
@@ -314,14 +319,16 @@ public:
     bool fCoinBase;       // if the outpoint was the last unspent: whether it belonged to a coinbase
     unsigned int nHeight; // if the outpoint was the last unspent: its height
     int nVersion;         // if the outpoint was the last unspent: its version
+    int nRefHeight;       // if the outpoint was the last unspent: its reference height
 
-    CTxInUndo() : txout(), fCoinBase(false), nHeight(0), nVersion(0) {}
-    CTxInUndo(const CTxOut &txoutIn, bool fCoinBaseIn = false, unsigned int nHeightIn = 0, int nVersionIn = 0) : txout(txoutIn), fCoinBase(fCoinBaseIn), nHeight(nHeightIn), nVersion(nVersionIn) { }
+    CTxInUndo() : txout(), fCoinBase(false), nHeight(0), nVersion(0), nRefHeight(0) {}
+    CTxInUndo(const CTxOut &txoutIn, bool fCoinBaseIn = false, unsigned int nHeightIn = 0, int nVersionIn = 0, int nRefHeightIn = 0) : txout(txoutIn), fCoinBase(fCoinBaseIn), nHeight(nHeightIn), nVersion(nVersionIn), nRefHeight(nRefHeightIn) { }
 
     unsigned int GetSerializeSize(int nType, int nVersion) const {
         return ::GetSerializeSize(VARINT(nHeight*2+(fCoinBase ? 1 : 0)), nType, nVersion) +
                (nHeight > 0 ? ::GetSerializeSize(VARINT(this->nVersion), nType, nVersion) : 0) +
-               ::GetSerializeSize(CTxOutCompressor(REF(txout)), nType, nVersion);
+               ::GetSerializeSize(CTxOutCompressor(REF(txout)), nType, nVersion) +
+               (nHeight > 0 && this->nVersion == 2 ? ::GetSerializeSize(VARINT(nRefHeight), nType, nVersion) : 0);
     }
 
     template<typename Stream>
@@ -330,6 +337,8 @@ public:
         if (nHeight > 0)
             ::Serialize(s, VARINT(this->nVersion), nType, nVersion);
         ::Serialize(s, CTxOutCompressor(REF(txout)), nType, nVersion);
+        if (nHeight > 0 && this->nVersion == 2)
+            ::Serialize(s, VARINT(nRefHeight), nType, nVersion);
     }
 
     template<typename Stream>
@@ -341,6 +350,10 @@ public:
         if (nHeight > 0)
             ::Unserialize(s, VARINT(this->nVersion), nType, nVersion);
         ::Unserialize(s, REF(CTxOutCompressor(REF(txout))), nType, nVersion);
+        if (nHeight > 0 && this->nVersion == 2)
+            ::Unserialize(s, VARINT(nRefHeight), nType, nVersion);
+        else
+            nRefHeight = 0;
     }
 };
 

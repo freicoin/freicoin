@@ -95,7 +95,7 @@ public:
 class CWallet : public CCryptoKeyStore, public CWalletInterface
 {
 private:
-    bool SelectCoins(const mpq& nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, const CCoinControl *coinControl = NULL) const;
+    bool SelectCoins(const mpq& nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, const CCoinControl *coinControl = NULL) const;
 
     CWalletDB *pwalletdbEncryption;
 
@@ -178,8 +178,8 @@ public:
     // check whether we are allowed to upgrade (or already support) to the named feature
     bool CanSupportFeature(enum WalletFeature wf) { AssertLockHeld(cs_wallet); return nWalletMaxVersion >= wf; }
 
-    void AvailableCoins(std::vector<COutput>& vCoins, bool fOnlyConfirmed=true, const CCoinControl *coinControl = NULL) const;
-    bool SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet) const;
+    void AvailableCoins(std::vector<COutput>& vCoins, int nRefHeight=-1, bool fOnlyConfirmed=true, const CCoinControl *coinControl = NULL) const;
+    bool SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1) const;
 
     bool IsSpent(const uint256& hash, unsigned int n) const;
 
@@ -245,16 +245,16 @@ public:
     int ScanForWalletTransactions(CBlockIndex* pindexStart, bool fUpdate = false);
     void ReacceptWalletTransactions();
     void ResendWalletTransactions();
-    mpq GetBalance() const;
-    mpq GetUnconfirmedBalance() const;
-    mpq GetImmatureBalance() const;
-    bool CreateTransaction(const std::vector<std::pair<CScript, mpq> >& vecSend,
+    mpq GetBalance(int nBlockHeight=-1) const;
+    mpq GetUnconfirmedBalance(int nBlockHeight=-1) const;
+    mpq GetImmatureBalance(int nBlockHeight=-1) const;
+    bool CreateTransaction(const std::vector<std::pair<CScript, mpq> >& vecSend, int nRefHeight,
                            CWalletTx& wtxNew, CReserveKey& reservekey, mpq& nFeeRet, std::string& strFailReason, const CCoinControl *coinControl = NULL);
-    bool CreateTransaction(CScript scriptPubKey, const mpq& nValue,
+    bool CreateTransaction(CScript scriptPubKey, const mpq& nValue, int nRefHeight,
                            CWalletTx& wtxNew, CReserveKey& reservekey, mpq& nFeeRet, std::string& strFailReason, const CCoinControl *coinControl = NULL);
     bool CommitTransaction(CWalletTx& wtxNew, CReserveKey& reservekey);
-    std::string SendMoney(CScript scriptPubKey, const mpq& nValue, CWalletTx& wtxNew);
-    std::string SendMoneyToDestination(const CTxDestination &address, const mpq& nValue, CWalletTx& wtxNew);
+    std::string SendMoney(CScript scriptPubKey, const mpq& nValue, int nRefHeight, CWalletTx& wtxNew);
+    std::string SendMoneyToDestination(const CTxDestination &address, const mpq& nValue, int nRefHeight, CWalletTx& wtxNew);
 
     bool NewKeyPool();
     bool TopUpKeyPool(unsigned int kpSize = 0);
@@ -267,27 +267,27 @@ public:
     void GetAllReserveKeys(std::set<CKeyID>& setAddress) const;
 
     std::set< std::set<CTxDestination> > GetAddressGroupings();
-    std::map<CTxDestination, mpq> GetAddressBalances();
+    std::map<CTxDestination, mpq> GetAddressBalances(int nBlockHeight);
 
     std::set<CTxDestination> GetAccountAddresses(std::string strAccount) const;
 
     bool IsMine(const CTxIn& txin) const;
-    mpq GetDebit(const CTxIn& txin) const;
+    mpq GetDebit(const CTxIn& txin, int nBlockHeight) const;
     bool IsMine(const CTxOut& txout) const
     {
         return ::IsMine(*this, txout.scriptPubKey);
     }
-    mpq GetCredit(const CTxOut& txout) const
+    mpq GetCredit(const CTransaction& tx, const CTxOut& txout, int nBlockHeight) const
     {
-        mpq nCredit = i64_to_mpq(txout.nValue);
+        mpq nCredit = GetPresentValue(tx, txout, nBlockHeight);
         if (!MoneyRange(nCredit))
             throw std::runtime_error("CWallet::GetCredit() : value out of range");
         return (IsMine(txout) ? nCredit : 0);
     }
     bool IsChange(const CTxOut& txout) const;
-    mpq GetChange(const CTxOut& txout) const
+    mpq GetChange(const CTransaction& tx, const CTxOut& txout, int nBlockHeight) const
     {
-        mpq nChange = i64_to_mpq(txout.nValue);
+        mpq nChange = GetPresentValue(tx, txout, nBlockHeight);
         if (!MoneyRange(nChange))
             throw std::runtime_error("CWallet::GetChange() : value out of range");
         return (IsChange(txout) ? nChange : 0);
@@ -301,37 +301,39 @@ public:
     }
     bool IsFromMe(const CTransaction& tx) const
     {
-        return (GetDebit(tx) > 0);
+        return (GetDebit(tx,0) > 0);
     }
-    mpq GetDebit(const CTransaction& tx) const
+    mpq GetDebit(const CTransaction& tx, int nBlockHeight) const
     {
         mpq nDebit = 0;
         BOOST_FOREACH(const CTxIn& txin, tx.vin)
         {
-            nDebit += GetDebit(txin);
+            nDebit += GetDebit(txin, nBlockHeight);
             if (!MoneyRange(nDebit))
                 throw std::runtime_error("CWallet::GetDebit() : value out of range");
         }
         return nDebit;
     }
-    mpq GetCredit(const CTransaction& tx) const
+    mpq GetCredit(const CTransaction& tx, int nBlockHeight) const
     {
-        mpq nCredit = 0;
+        mpq nCredit = 0, nAmount;
         BOOST_FOREACH(const CTxOut& txout, tx.vout)
         {
-            nCredit += GetCredit(txout);
-            if (!MoneyRange(nCredit))
+            nAmount = GetCredit(tx, txout, nBlockHeight);
+            nCredit += nAmount;
+            if (!MoneyRange(nAmount) || !MoneyRange(nCredit))
                 throw std::runtime_error("CWallet::GetCredit() : value out of range");
         }
         return nCredit;
     }
-    mpq GetChange(const CTransaction& tx) const
+    mpq GetChange(const CTransaction& tx, int nBlockHeight) const
     {
-        mpq nChange = 0;
+        mpq nChange = 0, nAmount;
         BOOST_FOREACH(const CTxOut& txout, tx.vout)
         {
-            nChange += GetChange(txout);
-            if (!MoneyRange(nChange))
+            nAmount = GetChange(tx, txout, nBlockHeight);
+            nChange += nAmount;
+            if (!MoneyRange(nAmount) || !MoneyRange(nChange))
                 throw std::runtime_error("CWallet::GetChange() : value out of range");
         }
         return nChange;
@@ -458,16 +460,16 @@ public:
     int64_t nOrderPos;  // position in ordered transaction list
 
     // memory only
-    mutable bool fDebitCached;
-    mutable bool fCreditCached;
-    mutable bool fImmatureCreditCached;
-    mutable bool fAvailableCreditCached;
-    mutable bool fChangeCached;
-    mutable mpq nDebitCached;
-    mutable mpq nCreditCached;
-    mutable mpq nImmatureCreditCached;
-    mutable mpq nAvailableCreditCached;
-    mutable mpq nChangeCached;
+    //mutable bool fDebitCached;
+    //mutable bool fCreditCached;
+    //mutable bool fImmatureCreditCached;
+    //mutable bool fAvailableCreditCached;
+    //mutable bool fChangeCached;
+    //mutable mpq nDebitCached;
+    //mutable mpq nCreditCached;
+    //mutable mpq nImmatureCreditCached;
+    //mutable mpq nAvailableCreditCached;
+    //mutable mpq nChangeCached;
 
     CWalletTx()
     {
@@ -499,16 +501,16 @@ public:
         nTimeSmart = 0;
         fFromMe = false;
         strFromAccount.clear();
-        fDebitCached = false;
-        fCreditCached = false;
-        fImmatureCreditCached = false;
-        fAvailableCreditCached = false;
-        fChangeCached = false;
-        nDebitCached = 0;
-        nCreditCached = 0;
-        nImmatureCreditCached = 0;
-        nAvailableCreditCached = 0;
-        nChangeCached = 0;
+        //fDebitCached = false;
+        //fCreditCached = false;
+        //fImmatureCreditCached = false;
+        //fAvailableCreditCached = false;
+        //fChangeCached = false;
+        //nDebitCached = 0;
+        //nCreditCached = 0;
+        //nImmatureCreditCached = 0;
+        //nAvailableCreditCached = 0;
+        //nChangeCached = 0;
         nOrderPos = -1;
     }
 
@@ -558,10 +560,10 @@ public:
     // make sure balances are recalculated
     void MarkDirty()
     {
-        fCreditCached = false;
-        fAvailableCreditCached = false;
-        fDebitCached = false;
-        fChangeCached = false;
+        //fCreditCached = false;
+        //fAvailableCreditCached = false;
+        //fDebitCached = false;
+        //fChangeCached = false;
     }
 
     void BindWallet(CWallet *pwalletIn)
@@ -570,46 +572,52 @@ public:
         MarkDirty();
     }
 
-    mpq GetDebit() const
+    mpq GetDebit(int nBlockHeight) const
     {
         if (vin.empty())
             return 0;
-        if (fDebitCached)
-            return nDebitCached;
-        nDebitCached = pwallet->GetDebit(*this);
-        fDebitCached = true;
-        return nDebitCached;
+        //if (fDebitCached)
+        //    return nDebitCached;
+        //nDebitCached = pwallet->GetDebit(*this);
+        //fDebitCached = true;
+        //return nDebitCached;
+        return pwallet->GetDebit(*this, nBlockHeight);
     }
 
-    mpq GetCredit(bool fUseCache=true) const
+    mpq GetCredit(int nBlockHeight, bool fUseCache=true) const
     {
         // Must wait until coinbase is safely deep enough in the chain before valuing it
         if (IsCoinBase() && GetBlocksToMaturity() > 0)
             return 0;
+        // Don't report coins that can't be spent
+        if (nRefHeight > nBlockHeight)
+            return 0;
 
         // GetBalance can assume transactions in mapWallet won't change
-        if (fUseCache && fCreditCached)
-            return nCreditCached;
-        nCreditCached = pwallet->GetCredit(*this);
-        fCreditCached = true;
-        return nCreditCached;
+        //if (fUseCache && fCreditCached)
+        //    return nCreditCached;
+        //nCreditCached = pwallet->GetCredit(*this);
+        //fCreditCached = true;
+        //return nCreditCached;
+        return pwallet->GetCredit(*this, nBlockHeight);
     }
 
-    mpq GetImmatureCredit(bool fUseCache=true) const
+    mpq GetImmatureCredit(int nBlockHeight, bool fUseCache=true) const
     {
-        if (IsCoinBase() && GetBlocksToMaturity() > 0 && IsInMainChain())
+        if (IsCoinBase() && GetBlocksToMaturity() > 0 && IsInMainChain() && nBlockHeight >= nRefHeight)
         {
-            if (fUseCache && fImmatureCreditCached)
-                return nImmatureCreditCached;
-            nImmatureCreditCached = pwallet->GetCredit(*this);
-            fImmatureCreditCached = true;
-            return nImmatureCreditCached;
+            //if (fUseCache && fImmatureCreditCached)
+            //    return nImmatureCreditCached;
+            //nImmatureCreditCached = pwallet->GetCredit(*this);
+            //fImmatureCreditCached = true;
+            //return nImmatureCreditCached;
+            return pwallet->GetCredit(*this, nBlockHeight);
         }
 
         return 0;
     }
 
-    mpq GetAvailableCredit(bool fUseCache=true) const
+    mpq GetAvailableCredit(int nBlockHeight, bool fUseCache=true) const
     {
         if (pwallet == 0)
             return 0;
@@ -617,47 +625,52 @@ public:
         // Must wait until coinbase is safely deep enough in the chain before valuing it
         if (IsCoinBase() && GetBlocksToMaturity() > 0)
             return 0;
+        // Don't report coins that can't be spent
+        if (nRefHeight > nBlockHeight)
+            return 0;
 
-        if (fUseCache && fAvailableCreditCached)
-            return nAvailableCreditCached;
+        //if (fUseCache && fAvailableCreditCached)
+        //    return nAvailableCreditCached;
 
-        mpq nCredit = 0;
+        mpq nCredit = 0, nAmount;
         for (unsigned int i = 0; i < vout.size(); i++)
         {
             if (!pwallet->IsSpent(GetHash(), i))
             {
                 const CTxOut &txout = vout[i];
-                nCredit += pwallet->GetCredit(txout);
-                if (!MoneyRange(nCredit))
+                nAmount = pwallet->GetCredit(*this, txout, nBlockHeight);
+                nCredit += nAmount;
+                if (!MoneyRange(nAmount) || !MoneyRange(nCredit))
                     throw std::runtime_error("CWalletTx::GetAvailableCredit() : value out of range");
             }
         }
 
-        nAvailableCreditCached = nCredit;
-        fAvailableCreditCached = true;
+        //nAvailableCreditCached = nCredit;
+        //fAvailableCreditCached = true;
         return nCredit;
     }
 
 
-    mpq GetChange() const
+    mpq GetChange(int nBlockHeight) const
     {
-        if (fChangeCached)
-            return nChangeCached;
-        nChangeCached = pwallet->GetChange(*this);
-        fChangeCached = true;
-        return nChangeCached;
+        //if (fChangeCached)
+        //    return nChangeCached;
+        //nChangeCached = pwallet->GetChange(*this);
+        //fChangeCached = true;
+        //return nChangeCached;
+        return pwallet->GetChange(*this, nBlockHeight);
     }
 
     void GetAmounts(std::list<std::pair<CTxDestination, mpq> >& listReceived,
                     std::list<std::pair<CTxDestination, mpq> >& listSent,
-                    mpq& nFee, std::string& strSentAccount) const;
+                    mpq& nFee, std::string& strSentAccount, int nBlockHeight) const;
 
     void GetAccountAmounts(const std::string& strAccount, mpq& nReceived,
-                           mpq& nSent, mpq& nFee) const;
+                           mpq& nSent, mpq& nFee, int nBlockHeight) const;
 
     bool IsFromMe() const
     {
-        return (GetDebit() > 0);
+        return (GetDebit(0) > 0);
     }
 
     bool IsTrusted() const
@@ -714,7 +727,7 @@ public:
 
     std::string ToString() const
     {
-        return strprintf("COutput(%s, %d, %d) [%s]", tx->GetHash().ToString().c_str(), i, nDepth, FormatMoney(i64_to_mpq(tx->vout[i].nValue)).c_str());
+        return strprintf("COutput(%s, %d, %d) [%s]", tx->GetHash().ToString().c_str(), i, nDepth, FormatMoney(GetPresentValue(*tx, tx->vout[i], 0)).c_str());
     }
 
     void print() const
@@ -798,6 +811,7 @@ public:
     int64_t nTime;
     std::string strOtherAccount;
     std::string strComment;
+    int32_t nRefHeight;
     mapValue_t mapValue;
     int64_t nOrderPos;  // position in ordered transaction list
     uint64_t nEntryNo;
@@ -814,6 +828,7 @@ public:
         strAccount.clear();
         strOtherAccount.clear();
         strComment.clear();
+        nRefHeight = 0;
         nOrderPos = -1;
     }
 
@@ -842,6 +857,7 @@ public:
         }
 
         READWRITE(strComment);
+        READWRITE(nRefHeight);
 
         size_t nSepPos = strComment.find("\0", 0, 1);
         if (fRead)
