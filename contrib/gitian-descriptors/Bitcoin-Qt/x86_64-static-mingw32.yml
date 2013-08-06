@@ -1,0 +1,105 @@
+---
+name: "Bitcoin-Qt"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "boost-x86_64-static-mingw32-1_50_0-gitian.zip"
+- "db-x86_64-static-mingw32-4.8.30.NC-gitian.zip"
+- "gmp-x86_64-static-mingw32-5.1.2-gitian.zip"
+- "libpng-x86_64-static-mingw32-1.6.3-gitian.zip"
+- "miniupnpc-x86_64-static-mingw32-1.8-gitian.zip"
+- "mpfr-x86_64-static-mingw32-3.1.2-gitian.zip"
+- "openssl-x86_64-static-mingw32-1.0.1c-gitian.zip"
+- "qrencode-x86_64-static-mingw32-3.4.2-gitian.zip"
+- "qt-x86_64-static-mingw32-4.8.3-gitian.zip"
+- "src-local.tar.xz"
+- "toolchain-x86_64-static-mingw32-1213449-gitian.zip"
+- "zlib-x86_64-static-mingw32-1.2.8-gitian.zip"
+script: |
+  export TARGET=x86_64-static-mingw32
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  BITCOIN_VER=0.8.3
+  BOOST_VER=1_50_0
+  DB_VER=4.8.30.NC
+  GMP_VER=5.1.2
+  LIBPNG_VER=1.6.3
+  MINIUPNPC_VER=1.8
+  MPFR_VER=3.1.2
+  OPENSSL_VER=1.0.1c
+  QRENCODE_VER=3.4.2
+  QT_VER=4.8.3
+  TOOLCHAIN_VER=1213449
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/boost-${TARGET}-${BOOST_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/db-${TARGET}-${DB_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/gmp-${TARGET}-${GMP_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/libpng-${TARGET}-${LIBPNG_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/miniupnpc-${TARGET}-${MINIUPNPC_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/mpfr-${TARGET}-${MPFR_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/qrencode-${TARGET}-${QRENCODE_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/qt-${TARGET}-${QT_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  mkdir -p "$BUILD"/src/bitcoin
+  tar -C "$BUILD"/src/bitcoin -xf "$GITIANDIR"/src-local.tar.xz
+  pushd "$BUILD"/src/bitcoin
+  QMAKEPATH="$PREFIX" \
+  QMAKESPEC=unsupported/win32-g++-cross \
+  qmake \
+    INCLUDEPATH="$PREFIX/include" \
+    LIBS=-L"$PREFIX"/lib \
+    RELEASE=1 \
+    BOOST_LIB_SUFFIX=-mt \
+    BOOST_THREAD_LIB_SUFFIX=_win32-mt \
+    BITCOIN_NEED_QT_PLUGINS=1 \
+    USE_QRCODE=1 \
+    USE_DBUS=0
+  sed -r 's:-lgdi32 (.+) -lcrypto:\1 -lcrypto -lgdi32:' -i Makefile.Release
+  make
+  ${TARGET}-strip release/bitcoin-qt.exe
+  find "$PREFIX" -mindepth 1 -maxdepth 1 -print0 | xargs -0 rm -rf
+  popd
+  
+  mkdir -p "$PREFIX"/bin
+  cp -a "$BUILD"/src/bitcoin/release/bitcoin-qt.exe "$PREFIX"/bin/Bitcoin-Qt.exe
+  
+  mkdir -p "$PREFIX"/src
+  tar -C "$PREFIX"/src -xf "$GITIANDIR"/src-local.tar.xz
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/Bitcoin-Qt-${TARGET}-${BITCOIN_VER}-gitian.zip
+  popd

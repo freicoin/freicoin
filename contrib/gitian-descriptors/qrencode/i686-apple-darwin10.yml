@@ -1,0 +1,78 @@
+---
+name: "qrencode"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "pkg-config"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "libpng-i686-apple-darwin10-1.6.3-gitian.zip"
+- "qrencode-3.4.2.tar.bz2"
+- "toolchain-i686-apple-darwin10-20120119-gitian.zip"
+- "zlib-i686-apple-darwin10-1.2.8-gitian.zip"
+script: |
+  export TARGET=i686-apple-darwin10
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  LIBPNG_VER=1.6.3
+  QRENCODE_VER=3.4.2
+  TOOLCHAIN_VER=20120119
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  export CPLUS_INCLUDE_PATH=$XCHAIN/usr/include/c++/4.2.1/$TARGET:$XCHAIN/usr/include/c++/4.2.1
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/libpng-${TARGET}-${LIBPNG_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/qrencode-${QRENCODE_VER}.tar.bz2
+  pushd "$BUILD"/src/qrencode-${QRENCODE_VER}
+  CPPFLAGS=-I"$PREFIX"/include \
+  LDFLAGS=-L"$PREFIX"/lib \
+  PKG_CONFIG_PATH="$PREFIX"/lib/pkgconfig \
+  ./configure \
+    --host=$TARGET \
+    --prefix="$PREFIX" \
+    --enable-shared \
+    --enable-static \
+    --enable-thread-safety \
+    --disable-sdltest \
+    --disable-rpath \
+    --without-libiconv-prefix
+  make
+  find "$PREFIX" -not -type d -print0 >.pkglist
+  make install
+  cat .pkglist | xargs -0 rm -rf
+  rm -f .pkglist
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/qrencode-${TARGET}-${QRENCODE_VER}-gitian.zip
+  popd

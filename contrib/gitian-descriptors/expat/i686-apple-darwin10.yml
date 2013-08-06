@@ -1,0 +1,57 @@
+---
+name: "expat"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "expat-2.1.0.tar.gz"
+- "toolchain-i686-apple-darwin10-20120119-gitian.zip"
+script: |
+  export TARGET=i686-apple-darwin10
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  EXPAT_VER=2.1.0
+  TOOLCHAIN_VER=20120119
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  export CPLUS_INCLUDE_PATH=$XCHAIN/usr/include/c++/4.2.1/$TARGET:$XCHAIN/usr/include/c++/4.2.1
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/expat-${EXPAT_VER}.tar.gz
+  pushd "$BUILD"/src/expat-${EXPAT_VER}
+  CFLAGS="-DHAVE_MEMMOVE=1" \
+  ./configure \
+    --host=$TARGET \
+    --prefix="$PREFIX" \
+    --enable-static \
+    --enable-shared
+  make
+  make install
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/expat-${TARGET}-${EXPAT_VER}-gitian.zip
+  popd

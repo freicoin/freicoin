@@ -1,0 +1,57 @@
+---
+name: "gmp"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "m4"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "gmp-5.1.2.tar.xz"
+- "toolchain-i686-static-mingw32-1213449-gitian.zip"
+script: |
+  export TARGET=i686-static-mingw32
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  GMP_VER=5.1.2
+  TOOLCHAIN_VER=1213449
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/gmp-${GMP_VER}.tar.xz
+  pushd "$BUILD"/src/gmp-${GMP_VER}
+  ./configure \
+    --host=$TARGET \
+    --prefix="$PREFIX" \
+    --enable-static \
+    --disable-shared \
+    --enable-cxx
+  make
+  make install
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/gmp-${TARGET}-${GMP_VER}-gitian.zip
+  popd
