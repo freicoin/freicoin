@@ -1,0 +1,220 @@
+---
+name: "qt"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "pkg-config"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "libpng-x86_64-static-mingw32-1.6.3-gitian.zip"
+- "openssl-x86_64-static-mingw32-1.0.1c-gitian.zip"
+- "qt-everywhere-opensource-src-4.8.3.tar.gz"
+- "toolchain-x86_64-static-mingw32-1213449-gitian.zip"
+- "zlib-x86_64-static-mingw32-1.2.8-gitian.zip"
+script: |
+  export TARGET=x86_64-static-mingw32
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  LIBPNG_VER=1.6.3
+  OPENSSL_VER=1.0.1c
+  QT_VER=4.8.3
+  TOOLCHAIN_VER=1213449
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/libpng-${TARGET}-${LIBPNG_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  find "$PREFIX" -not -type d -print0 >"$BUILD"/.pkglist
+  mkdir -p "$PREFIX/bin"
+  echo   > "$PREFIX/bin/qmake-ar" '#!/bin/bash'
+  echo  >> "$PREFIX/bin/qmake-ar" 'export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1'
+  echo  >> "$PREFIX/bin/qmake-ar" "${TARGET}"'-ar "$@"'
+  chmod +x "$PREFIX/bin/qmake-ar"
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/qt-everywhere-opensource-src-${QT_VER}.tar.gz
+  pushd "$BUILD"/src/qt-everywhere-opensource-src-${QT_VER}
+  echo  >.patch -e 'diff -rupN a/configure b/configure'
+  echo >>.patch -e '--- a/configure\t2012-09-10 18:36:36.000000000 -0700'
+  echo >>.patch -e '+++ b/configure\t2012-09-10 18:36:36.000000000 -0700'
+  echo >>.patch -e '@@ -4768,7 +4768,7 @@ static const char qt_configure_licensee_'
+  echo >>.patch -e ' static const char qt_configure_licensed_products_str [256 + 12] = "$LICENSE_PRODUCTS_STR";'
+  echo >>.patch -e ' '
+  echo >>.patch -e ' /* Installation date */'
+  echo >>.patch -e '-static const char qt_configure_installation          [12+11]    = "qt_instdate=$TODAY";'
+  echo >>.patch -e '+static const char qt_configure_installation          [12+11]    = "qt_instdate=2012-07-01";'
+  echo >>.patch -e ' EOF'
+  echo >>.patch -e ' '
+  echo >>.patch -e ' '
+  echo >>.patch -e 'diff -rupN a/mkspecs/unsupported/win32-g++-cross/qmake.conf b/mkspecs/unsupported/win32-g++-cross/qmake.conf'
+  echo >>.patch -e '--- a/mkspecs/unsupported/win32-g++-cross/qmake.conf\t2012-09-10 18:36:35.000000000 -0700'
+  echo >>.patch -e '+++ b/mkspecs/unsupported/win32-g++-cross/qmake.conf\t2012-09-10 18:36:35.000000000 -0700'
+  echo >>.patch -e '@@ -14,12 +14,12 @@ QMAKE_COMPILER_DEFINES  += __GNUC__ WIN3'
+  echo >>.patch -e ' QMAKE_EXT_OBJ           = .o'
+  echo >>.patch -e ' QMAKE_EXT_RES           = _res.o'
+  echo >>.patch -e ' '
+  echo >>.patch -e '-QMAKE_CC\t\t= i686-pc-mingw32-gcc'
+  echo >>.patch -e '+QMAKE_CC\t\t= '"${TARGET}"'-gcc'
+  echo >>.patch -e ' QMAKE_LEX\t\t= flex'
+  echo >>.patch -e ' QMAKE_LEXFLAGS\t\t='
+  echo >>.patch -e ' QMAKE_YACC\t\t= byacc'
+  echo >>.patch -e ' QMAKE_YACCFLAGS\t\t= -d'
+  echo >>.patch -e '-QMAKE_CFLAGS\t\t= -pipe'
+  echo >>.patch -e '+QMAKE_CFLAGS\t\t= -pipe -frandom-seed=qtbuild'
+  echo >>.patch -e ' QMAKE_CFLAGS_DEPS\t= -M'
+  echo >>.patch -e ' QMAKE_CFLAGS_WARN_ON\t= -Wall -Wextra'
+  echo >>.patch -e ' QMAKE_CFLAGS_WARN_OFF\t= -w'
+  echo >>.patch -e '@@ -27,7 +27,7 @@ QMAKE_CFLAGS_RELEASE\t= -O2'
+  echo >>.patch -e ' QMAKE_CFLAGS_DEBUG\t= -g'
+  echo >>.patch -e ' QMAKE_CFLAGS_YACC\t= -Wno-unused -Wno-parentheses'
+  echo >>.patch -e ' '
+  echo >>.patch -e '-QMAKE_CXX\t\t= i686-pc-mingw32-g++'
+  echo >>.patch -e '+QMAKE_CXX\t\t= '"${TARGET}"'-g++'
+  echo >>.patch -e ' QMAKE_CXXFLAGS\t\t= $$QMAKE_CFLAGS'
+  echo >>.patch -e ' QMAKE_CXXFLAGS_DEPS\t= $$QMAKE_CFLAGS_DEPS'
+  echo >>.patch -e ' QMAKE_CXXFLAGS_WARN_ON\t= $$QMAKE_CFLAGS_WARN_ON'
+  echo >>.patch -e '@@ -38,7 +38,7 @@ QMAKE_CXXFLAGS_YACC\t= $$QMAKE_CFLAGS_YAC'
+  echo >>.patch -e ' QMAKE_CXXFLAGS_THREAD\t= $$QMAKE_CFLAGS_THREAD'
+  echo >>.patch -e ' QMAKE_CXXFLAGS_RTTI_ON\t= -frtti'
+  echo >>.patch -e ' QMAKE_CXXFLAGS_RTTI_OFF\t= -fno-rtti'
+  echo >>.patch -e '-QMAKE_CXXFLAGS_EXCEPTIONS_ON = -fexceptions -mthreads'
+  echo >>.patch -e '+QMAKE_CXXFLAGS_EXCEPTIONS_ON = -fexceptions'
+  echo >>.patch -e ' QMAKE_CXXFLAGS_EXCEPTIONS_OFF = -fno-exceptions'
+  echo >>.patch -e ' '
+  echo >>.patch -e ' QMAKE_INCDIR\t\t='
+  echo >>.patch -e '@@ -50,10 +50,10 @@ QMAKE_RUN_CC_IMP\t= $(CC) -c $(CFLAGS) $('
+  echo >>.patch -e ' QMAKE_RUN_CXX\t\t= $(CXX) -c $(CXXFLAGS) $(INCPATH) -o $obj $src'
+  echo >>.patch -e ' QMAKE_RUN_CXX_IMP\t= $(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<'
+  echo >>.patch -e ' '
+  echo >>.patch -e '-QMAKE_LINK\t\t= i686-pc-mingw32-g++'
+  echo >>.patch -e '-QMAKE_LINK_C\t\t= i686-pc-mingw32-gcc'
+  echo >>.patch -e '+QMAKE_LINK\t\t= '"${TARGET}"'-g++'
+  echo >>.patch -e '+QMAKE_LINK_C\t\t= '"${TARGET}"'-gcc'
+  echo >>.patch -e ' QMAKE_LFLAGS\t\t='
+  echo >>.patch -e '-QMAKE_LFLAGS_EXCEPTIONS_ON = -mthreads'
+  echo >>.patch -e '+QMAKE_LFLAGS_EXCEPTIONS_ON = -lmingwthrd'
+  echo >>.patch -e ' QMAKE_LFLAGS_EXCEPTIONS_OFF ='
+  echo >>.patch -e ' QMAKE_LFLAGS_RELEASE\t= -Wl,-s'
+  echo >>.patch -e ' QMAKE_LFLAGS_DEBUG\t='
+  echo >>.patch -e '@@ -88,17 +88,17 @@ QMAKE_DEL_DIR\t\t= rmdir'
+  echo >>.patch -e ' QMAKE_SYMBOLIC_LINK\t= ln -s'
+  echo >>.patch -e ' QMAKE_CHK_DIR_EXISTS\t= test -d'
+  echo >>.patch -e ' '
+  echo >>.patch -e '-#QMAKE_IDC\t\t= i686-pc-mingw32-idc'
+  echo >>.patch -e '-QMAKE_MOC\t\t= i686-pc-mingw32-moc'
+  echo >>.patch -e '-QMAKE_RCC\t\t= i686-pc-mingw32-rcc'
+  echo >>.patch -e '-QMAKE_UIC\t\t= i686-pc-mingw32-uic'
+  echo >>.patch -e '+#QMAKE_IDC\t\t= '"${TARGET}"'-idc'
+  echo >>.patch -e '+QMAKE_MOC\t\t= moc'
+  echo >>.patch -e '+QMAKE_RCC\t\t= rcc'
+  echo >>.patch -e '+QMAKE_UIC\t\t= uic'
+  echo >>.patch -e ' '
+  echo >>.patch -e ' #QMAKE_IDL\t\t= midl'
+  echo >>.patch -e '-QMAKE_LIB\t\t= i686-pc-mingw32-ar -ru'
+  echo >>.patch -e '-QMAKE_RC\t\t= i686-pc-mingw32-windres'
+  echo >>.patch -e '+QMAKE_LIB\t\t= '"$PREFIX"'/bin/qmake-ar -Dr'
+  echo >>.patch -e '+QMAKE_RC\t\t= '"${TARGET}"'-windres'
+  echo >>.patch -e ' QMAKE_ZIP\t\t= zip -r -9'
+  echo >>.patch -e ' '
+  echo >>.patch -e '-QMAKE_STRIP\t\t= i686-pc-mingw32-strip'
+  echo >>.patch -e '+QMAKE_STRIP\t\t= '"${TARGET}"'-strip'
+  echo >>.patch -e ' QMAKE_STRIPFLAGS_LIB \t+= --strip-unneeded'
+  echo >>.patch -e '-PKG_CONFIG\t\t= i686-pc-mingw32-pkg-config'
+  echo >>.patch -e '+PKG_CONFIG\t\t= pkg-config --static'
+  echo >>.patch -e ' load(qt_config)'
+  patch -p1 <.patch
+  rm -f .patch
+  PKG_CONFIG_PATH="$PREFIX"/lib/pkgconfig:"$XCHAIN/$TARGET"/lib/pkgconfig \
+  setarch i386 \
+  ./configure \
+    -prefix "$PREFIX" \
+    -I "$PREFIX"/include \
+    -L "$PREFIX"/lib \
+    -confirm-license \
+    -release \
+    -opensource \
+    -no-shared \
+    -static \
+    -xplatform unsupported/win32-g++-cross \
+    -force-pkg-config \
+    -largefile \
+    -no-sql-sqlite \
+    -no-qt3support \
+    -no-xmlpatterns \
+    -no-multimedia \
+    -no-audio-backend \
+    -no-phonon \
+    -no-phonon-backend \
+    -no-svg \
+    -no-webkit \
+    -no-javascript-jit \
+    -no-script \
+    -no-scripttools \
+    -no-declarative \
+    -qt-zlib \
+    -qt-libtiff \
+    -qt-libpng \
+    -qt-libmng \
+    -qt-libjpeg \
+    -openssl-linked \
+    -no-nis \
+    -no-cups \
+    -no-iconv \
+    -no-dbus \
+    -no-opengl \
+    -nomake examples \
+    -nomake demos \
+    -nomake docs \
+    -no-feature-style-plastique \
+    -no-feature-style-cleanlooks \
+    -no-feature-style-motif \
+    -no-feature-style-cde \
+    -no-feature-style-windowsce \
+    -no-feature-style-windowsmobile \
+    -no-feature-style-s60
+  find . -name \*.prl | xargs -l sed 's|/\.||' -i
+  find . -name \*.prl | xargs -l sed 's|/$||' -i
+  make
+  make install
+  cp -a bin/qmake "$PREFIX"/bin
+  ln -s bin/lrelease "$PREFIX"/binlrelease.exe
+  cat "$BUILD"/.pkglist | xargs -0 rm -rf
+  rm -f "$BUILD"/.pkglist
+  popd
+  
+  pushd "$PREFIX"
+  find . -name *.prl | xargs -l sed 's|/$||' -i
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/qt-${TARGET}-${QT_VER}-gitian.zip
+  popd

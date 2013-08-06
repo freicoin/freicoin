@@ -1,0 +1,365 @@
+---
+name: "toolchain"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "autoconf"
+- "automake"
+- "bison"
+- "dmg2img"
+- "flex"
+- "gettext"
+- "gobjc"
+- "gobjc++"
+- "gperf"
+- "groff"
+- "hfsplus"
+- "hfsprogs"
+- "hfsutils"
+- "libgmp3-dev"
+- "libmpc-dev"
+- "libmpfr-dev"
+- "libtool"
+- "make"
+- "libssl-dev"
+- "p7zip-full"
+- "patch"
+- "python-software-properties"
+- "texinfo"
+- "uuid-dev"
+- "yasm"
+- "zip"
+reference_datetime: "2017-01-01 00:00:00"
+remotes: []
+files:
+- "Tatsh-xchain-ab41b58.tar.gz"
+- "cctools-806.tar.gz"
+- "gcc-5666.3.tar.gz"
+- "llvmgcc42-2335.15.tar.gz"
+- "qt-mac-opensource-4.8.2.dmg"
+- "xcode322_2148_developerdvd.dmg"
+script: |
+  export TARGET=i686-apple-darwin10
+  export PREFIX=$HOME/x-tools/target/$TARGET
+  export BUILD=$HOME/build/$TARGET
+  
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  export GITIANDIR=`pwd`
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"
+  
+  XCODE_VER=322_2148
+  SDK=MacOSX10.5.sdk
+  XCHAIN_VER=ab41b58
+  CCTOOLS_VER=806
+  GCC_VER=5666.3
+  LLVMGCC_VER=42-2335.15
+  QT_VER=4.8.2
+  
+  mkdir -p "$BUILD"/xcode${XCODE_VER}_developerdvd
+  pushd "$BUILD"/xcode${XCODE_VER}_developerdvd
+  dmg2img \
+    -i "$GITIANDIR"/xcode${XCODE_VER}_developerdvd.dmg \
+    -o xcode${XCODE_VER}_developerdvd.7z
+  rm -f "$GITIANDIR"/xcode${XCODE_VER}_developerdvd.dmg
+  7z e xcode${XCODE_VER}_developerdvd.7z Mac_OS_X.hfs
+  rm -f xcode${XCODE_VER}_developerdvd.7z
+  7z e Mac_OS_X.hfs Xcode/Packages/MacOSX10.5.pkg
+  rm -f Mac_OS_X.hfs
+  7z e MacOSX10.5.pkg Payload
+  rm -f MacOSX10.5.pkg
+  popd
+  
+  pushd "$PREFIX"
+  gunzip < "$BUILD"/xcode${XCODE_VER}_developerdvd/Payload | cpio -i
+  rm -f "$BUILD"/xcode${XCODE_VER}_developerdvd/Payload
+  rm SDKs/$SDK/Library/Frameworks
+  ln -s ../System/Library/Frameworks SDKs/$SDK/Library/Frameworks
+  mv SDKs/$SDK/Developer/usr/llvm-gcc-4.2 SDKs/$SDK/usr
+  rmdir SDKs/$SDK/Developer/usr
+  ln -s ../usr SDKs/$SDK/Developer/usr
+  ln -s SDKs/$SDK/Developer Developer
+  ln -s SDKs/$SDK/Library   Library
+  ln -s SDKs/$SDK/System    System
+  ln -s SDKs/$SDK/usr       usr
+  popd
+  
+  mkdir -p "$BUILD"/qt-mac-opensource-${QT_VER}
+  pushd "$BUILD"/qt-mac-opensource-${QT_VER}
+  dmg2img \
+    -i "$GITIANDIR"/qt-mac-opensource-${QT_VER}.dmg \
+    -o qt-mac-opensource-${QT_VER}.7z
+  rm -f "$GITIANDIR"/qt-mac-opensource-${QT_VER}.dmg
+  for module in headers imports libraries plugins tools translations; do
+      7z e qt-mac-opensource-4.8.2.7z "Qt 4.8.2/packages/Qt_${module}.pkg/Contents/Archive.pax.gz"
+      gunzip Archive.pax.gz
+      pushd "$PREFIX"
+      7z x -y "$BUILD"/qt-mac-opensource-${QT_VER}/Archive.pax
+      popd
+      rm -f Archive.pax
+  done
+  
+  pushd "$PREFIX"
+  cat >.patch <<EOF
+  diff -rupN a/usr/local/Qt4.8/mkspecs/darwin-g++/qmake.conf b/usr/local/Qt4.8/mkspecs/darwin-g++/qmake.conf
+  --- a/usr/local/Qt4.8/mkspecs/darwin-g++/qmake.conf	2012-05-08 03:43:11.000000000 +0000
+  +++ b/usr/local/Qt4.8/mkspecs/darwin-g++/qmake.conf	2012-05-08 03:43:11.000000000 +0000
+  @@ -11,7 +11,7 @@ CONFIG			+= qt warn_on release link_prl
+   QT			+= core gui
+   DEFINES                 += __USE_WS_X11__
+  
+  -QMAKE_CC		= cc
+  +QMAKE_CC		= llvm-gcc
+   QMAKE_LEX		= flex
+   QMAKE_LEXFLAGS		=
+   QMAKE_YACC		= yacc
+  @@ -32,7 +32,7 @@ QMAKE_CFLAGS_THREAD	=
+   QMAKE_CFLAGS_PRECOMPILE	+= -x c-header -c \${QMAKE_PCH_INPUT} -o \${QMAKE_PCH_OUTPUT}
+   QMAKE_CFLAGS_USE_PRECOMPILE += -include \${QMAKE_PCH_OUTPUT_BASE}
+  
+  -QMAKE_CXX		= c++
+  +QMAKE_CXX		= llvm-g++
+   QMAKE_CXXFLAGS		= \$\$QMAKE_CFLAGS
+   QMAKE_CXXFLAGS_DEPS	= \$\$QMAKE_CFLAGS_DEPS
+   QMAKE_CXXFLAGS_WARN_ON	= \$\$QMAKE_CFLAGS_WARN_ON
+  @@ -45,7 +45,7 @@ QMAKE_CXXFLAGS_YACC	= \$\$QMAKE_CFLAGS_YAC
+   QMAKE_CXXFLAGS_HIDESYMS	+= \$\$QMAKE_CFLAGS_HIDESYMS -fvisibility-inlines-hidden
+   QMAKE_CXXFLAGS_THREAD	=
+
+  -QMAKE_INCDIR		=
+  +QMAKE_INCDIR		= ${PREFIX}/usr/include/c++/4.2.1/${TARGET} ${PREFIX}/usr/include/c++/4.2.1
+   QMAKE_LIBDIR		=
+   QMAKE_INCDIR_X11	= /usr/X11R6/include
+   QMAKE_LIBDIR_X11	= /usr/X11R6/lib
+  @@ -54,8 +54,8 @@ QMAKE_LIBDIR_QT		= \$\$[QT_INSTALL_LIBS]
+   QMAKE_INCDIR_OPENGL	= /usr/X11R6/include
+   QMAKE_LIBDIR_OPENGL	= /usr/X11R6/lib
+  
+  -QMAKE_LINK		= c++
+  -QMAKE_LINK_SHLIB	= c++
+  +QMAKE_LINK		= llvm-g++
+  +QMAKE_LINK_SHLIB	= llvm-g++
+   QMAKE_LFLAGS		+= -headerpad_max_install_names
+   QMAKE_LFLAGS		=
+   QMAKE_LFLAGS_RELEASE	=
+  @@ -81,9 +81,9 @@ QMAKE_LIBS_THREAD	=
+   QMAKE_MOC		= \$\$[QT_INSTALL_BINS]/moc
+   QMAKE_UIC		= \$\$[QT_INSTALL_BINS]/uic
+  
+  -QMAKE_AR		= ar cq
+  -QMAKE_OBJCOPY           = objcopy
+  -QMAKE_RANLIB		= ranlib -s
+  +QMAKE_AR		= ${TARGET}-ar cq
+  +QMAKE_OBJCOPY           = ${TARGET}-objcopy
+  +QMAKE_RANLIB		= ${TARGET}-ranlib -s
+  
+   QMAKE_TAR		= tar -cf
+   QMAKE_GZIP		= gzip -9f
+  EOF
+  patch -p1 <.patch
+  rm -f .patch
+  popd
+  
+  mkdir -p "$BUILD"/src
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/Tatsh-xchain-${XCHAIN_VER}.tar.gz
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/cctools-${CCTOOLS_VER}.tar.gz
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/gcc-${GCC_VER}.tar.gz
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/llvmgcc${LLVMGCC_VER}.tar.gz
+  
+  pushd "$BUILD"/src/cctools-${CCTOOLS_VER}
+  patch -p1 <"$BUILD"/src/Tatsh-xchain-${XCHAIN_VER}/patches/cctools-${CCTOOLS_VER}-nondarwin.patch
+  chmod +x "$BUILD"/src/cctools-${CCTOOLS_VER}/configure
+  popd
+  
+  pushd "$BUILD"/src/gcc-${GCC_VER}
+  patch -p1 <"$BUILD"/src/Tatsh-xchain-${XCHAIN_VER}/patches/gcc-${GCC_VER}-cflags.patch
+  patch -p1 <"$BUILD"/src/Tatsh-xchain-${XCHAIN_VER}/patches/gcc-${GCC_VER}-tooldir.patch
+  popd
+  
+  pushd "$BUILD"/src/llvmgcc${LLVMGCC_VER}
+  patch -p0 <"$BUILD"/src/Tatsh-xchain-${XCHAIN_VER}/patches/llvmgcc${LLVMGCC_VER}-redundant.patch
+  patch -p0 <"$BUILD"/src/Tatsh-xchain-${XCHAIN_VER}/patches/llvmgcc${LLVMGCC_VER}-mempcpy.patch
+  cat >.patch <<EOF
+  diff -rupN llvmgcc42-2335.15/llvmCore/include/llvm/ADT/DenseMap.h llvmgcc42-2335.15.new/llvmCore/include/llvm/ADT/DenseMap.h
+  --- llvmgcc42-2335.15/llvmCore/include/llvm/ADT/DenseMap.h	2010-03-08 20:45:52.000000000 +0000
+  +++ llvmgcc42-2335.15.new/llvmCore/include/llvm/ADT/DenseMap.h	2012-06-19 15:42:25.984224632 +0000
+  @@ -24,6 +24,8 @@
+   #include <cassert>
+   #include <cstring>
+
+  +using std::ptrdiff_t;
+  +
+   namespace llvm {
+
+   template<typename KeyT, typename ValueT,
+  diff -rupN llvmgcc42-2335.15/llvmCore/include/llvm/ADT/ilist.h llvmgcc42-2335.15.new/llvmCore/include/llvm/ADT/ilist.h
+  --- llvmgcc42-2335.15/llvmCore/include/llvm/ADT/ilist.h	2009-12-15 03:10:26.000000000 +0000
+  +++ llvmgcc42-2335.15.new/llvmCore/include/llvm/ADT/ilist.h	2012-06-19 15:45:44.624852046 +0000
+  @@ -41,6 +41,8 @@
+   #include <cassert>
+   #include <iterator>
+
+  +using std::ptrdiff_t;
+  +
+   namespace llvm {
+
+   template<typename NodeTy, typename Traits> class iplist;
+  diff -rupN llvmgcc42-2335.15/llvmCore/include/llvm/ADT/SmallVector.h llvmgcc42-2335.15.new/llvmCore/include/llvm/ADT/SmallVector.h
+  --- llvmgcc42-2335.15/llvmCore/include/llvm/ADT/SmallVector.h	2009-12-17 21:23:46.000000000 +0000
+  +++ llvmgcc42-2335.15.new/llvmCore/include/llvm/ADT/SmallVector.h	2012-06-19 07:40:51.004656509 +0000
+  @@ -20,6 +20,8 @@
+   #include <cstring>
+   #include <memory>
+
+  +using std::ptrdiff_t;
+  +
+   #ifdef _MSC_VER
+   namespace std {
+   #if _MSC_VER <= 1310
+  diff -rupN llvmgcc42-2335.15/llvmCore/include/llvm/Use.h llvmgcc42-2335.15.new/llvmCore/include/llvm/Use.h
+  --- llvmgcc42-2335.15/llvmCore/include/llvm/Use.h	2009-08-27 23:44:33.000000000 +0000
+  +++ llvmgcc42-2335.15.new/llvmCore/include/llvm/Use.h	2012-06-19 07:47:09.928895309 +0000
+  @@ -29,6 +29,8 @@
+   #include "llvm/ADT/PointerIntPair.h"
+   #include <iterator>
+
+  +using std::ptrdiff_t;
+  +
+   namespace llvm {
+
+   class Value;
+  diff -rupN llvmgcc42-2335.15/llvmCore/lib/Target/ARM/ARMConstantPoolValue.h llvmgcc42-2335.15.new/llvmCore/lib/Target/ARM/ARMConstantPoolValue.h
+  --- llvmgcc42-2335.15/llvmCore/lib/Target/ARM/ARMConstantPoolValue.h	2009-11-07 03:52:02.000000000 +0000
+  +++ llvmgcc42-2335.15.new/llvmCore/lib/Target/ARM/ARMConstantPoolValue.h	2012-06-19 16:47:32.553981804 +0000
+  @@ -15,6 +15,7 @@
+   #define LLVM_TARGET_ARM_CONSTANTPOOLVALUE_H
+
+   #include "llvm/CodeGen/MachineConstantPool.h"
+  +#include <cstddef>
+
+   namespace llvm {
+
+  EOF
+  patch -p1 <.patch
+  rm -f .patch
+  popd
+  
+  mkdir -p "$BUILD"/build/build-cctools
+  pushd "$BUILD"/build/build-cctools
+  CFLAGS="-m32" \
+  LDFLAGS="-m32" \
+  "$BUILD"/src/cctools-${CCTOOLS_VER}/configure \
+    --prefix="$PREFIX" \
+    --program-prefix=${TARGET}- \
+    --host=i686-pc-linux-gnu \
+    --target=$TARGET \
+    --with-sysroot="$PREFIX"
+  make
+  make install
+  popd
+  
+  mkdir -p "$BUILD"/build/build-cctools-ld64
+  pushd "$BUILD"/build/build-cctools-ld64
+  CFLAGS="-m32" \
+  LDFLAGS="-m32" \
+  "$BUILD"/src/Tatsh-xchain-${XCHAIN_VER}/odcctools-9.2-ld/configure \
+    --prefix="$PREFIX" \
+    --program-prefix=${TARGET}- \
+    --host=i686-pc-linux-gnu \
+    --target=$TARGET \
+    --enable-ld64 \
+    --with-sysroot="$PREFIX"
+  make
+  pushd ld64
+  make install
+  popd
+  popd
+  
+  mv "$PREFIX"/bin/${TARGET}-ld "$PREFIX"/bin/${TARGET}-ld.orig
+  ln -s ${TARGET}-ld64 "$PREFIX"/bin/${TARGET}-ld
+  
+  mkdir -p "$BUILD"/build/build-gcc
+  pushd "$BUILD"/build/build-gcc
+  CFLAGS="-m32 -O2" \
+  CXXFLAGS="-m32 -O2" \
+  LDFLAGS="-m32" \
+  "$BUILD"/src/gcc-${GCC_VER}/configure \
+    --prefix="$PREFIX" \
+    --program-prefix=${TARGET}- \
+    --disable-checking \
+    --enable-languages=c,c++,objc,obj-c++ \
+    --with-as="$PREFIX"/bin/${TARGET}-as \
+    --with-ld="$PREFIX"/bin/${TARGET}-ld64 \
+    --with-lipo="$PREFIX"/bin/${TARGET}-lipo \
+    --with-ranlib="$PREFIX"/bin/${TARGET}-ranlib \
+    --with-gxx-include-dir="$PREFIX"/include/c++/4.2.1 \
+    --host=i686-pc-linux-gnu \
+    --target=$TARGET \
+    --with-sysroot="$PREFIX" \
+    --enable-static \
+    --enable-shared \
+    --enable-nls \
+    --disable-multilib \
+    --disable-werror \
+    --enable-libgomp
+  make
+  make install
+  popd
+  
+  mkdir -p "$BUILD"/build/build-llvm
+  pushd "$BUILD"/build/build-llvm
+  CFLAGS="-m32" \
+  CXXFLAGS="-m32" \
+  LDFLAGS="-m32" \
+  "$BUILD"/src/llvmgcc${LLVMGCC_VER}/llvmCore/configure \
+    --prefix="$PREFIX" \
+    --host=i686-pc-linux-gnu \
+    --target=$TARGET \
+    --enable-optimized \
+    --disable-assertions
+  make
+  make install
+  popd
+  
+  mkdir -p "$BUILD"/build/build-llvm-gcc
+  pushd "$BUILD"/build/build-llvm-gcc
+  CFLAGS="-m32" \
+  CXXFLAGS="-m32" \
+  LDFLAGS="-m32" \
+  "$BUILD"/src/llvmgcc${LLVMGCC_VER}/configure \
+      --prefix="$PREFIX" \
+      --program-transform-name=/^[cg][^.-]*$/s/$/-4.2/ \
+      --program-prefix=llvm- \
+      --host=i686-pc-linux-gnu \
+      --target=$TARGET \
+      --enable-languages=c,objc,c++,obj-c++ \
+      --disable-bootstrap \
+      --enable-checking \
+      --enable-llvm="$PREFIX" \
+      --enable-shared \
+      --enable-static \
+      --enable-libgomp \
+      --disable-werror \
+      --disable-multilib \
+      --with-tune=generic \
+      --with-sysroot="$PREFIX" \
+      --with-gxx-include-dir="$PREFIX"/usr/include/c++/4.2.1 \
+      --with-slibdir="$PREFIX"/usr/lib \
+      --with-ld="$PREFIX"/bin/${TARGET}-ld64 \
+      --with-as="$PREFIX"/bin/${TARGET}-as \
+      --with-ranlib="$PREFIX"/bin/${TARGET}-ranlib \
+      --with-lipo="$PREFIX"/bin/${TARGET}-lipo
+  make
+  make install
+  popd
+  
+  ln -s ../lib/gcc/${TARGET}/4.2.1/include "$PREFIX"/usr/local/include
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/toolchain-${TARGET}-20120119-gitian.zip
+  popd

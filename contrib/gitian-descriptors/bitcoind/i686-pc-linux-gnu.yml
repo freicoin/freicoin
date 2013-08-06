@@ -1,0 +1,104 @@
+---
+name: "bitcoind"
+suites:
+- "lucid"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "boost-i686-pc-linux-gnu-1_50_0-gitian.zip"
+- "db-i686-pc-linux-gnu-4.8.30.NC-gitian.zip"
+- "gmp-i686-pc-linux-gnu-5.1.2-gitian.zip"
+- "libpng-i686-pc-linux-gnu-1.6.3-gitian.zip"
+- "miniupnpc-i686-pc-linux-gnu-1.8-gitian.zip"
+- "mpfr-i686-pc-linux-gnu-3.1.2-gitian.zip"
+- "openssl-i686-pc-linux-gnu-1.0.1c-gitian.zip"
+- "qrencode-i686-pc-linux-gnu-3.4.2-gitian.zip"
+- "src-local.tar.xz"
+- "toolchain-i686-pc-linux-gnu-1.15.2-gitian.zip"
+- "zlib-i686-pc-linux-gnu-1.2.8-gitian.zip"
+script: |
+  export TARGET=i686-pc-linux-gnu
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  BITCOIN_VER=0.8.3
+  BOOST_VER=1_50_0
+  DB_VER=4.8.30.NC
+  GMP_VER=5.1.2
+  LIBPNG_VER=1.6.3
+  MINIUPNPC_VER=1.8
+  MPFR_VER=3.1.2
+  OPENSSL_VER=1.0.1c
+  QRENCODE_VER=3.4.2
+  TOOLCHAIN_VER=1.15.2
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/boost-${TARGET}-${BOOST_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/db-${TARGET}-${DB_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/gmp-${TARGET}-${GMP_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/libpng-${TARGET}-${LIBPNG_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/miniupnpc-${TARGET}-${MINIUPNPC_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/mpfr-${TARGET}-${MPFR_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/qrencode-${TARGET}-${QRENCODE_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  mkdir -p "$BUILD"/src/bitcoin
+  tar -C "$BUILD"/src/bitcoin -xf "$GITIANDIR"/src-local.tar.xz
+  pushd "$BUILD"/src/bitcoin/src
+  BOOST_LIB_SUFFIX="-mt" \
+  CC=${TARGET}-gcc \
+  CXX=${TARGET}-g++ \
+  CPPFLAGS=-I"$PREFIX/include" \
+  LDFLAGS=-L"$PREFIX/lib" \
+  make \
+    -f makefile.unix \
+    STATIC=1 \
+    OPENSSL_INCLUDE_PATH="$PREFIX/include" \
+    OPENSSL_LIB_PATH="$PREFIX/lib" \
+    USE_IPV6=1 \
+    USE_QRCODE=1 \
+    USE_UPNP=0 \
+    DEBUGFLAGS= \
+    bitcoind
+  ${TARGET}-strip bitcoind
+  find "$PREFIX" -mindepth 1 -maxdepth 1 -print0 | xargs -0 rm -rf
+  popd
+  
+  mkdir -p "$PREFIX"/bin
+  cp -a "$BUILD"/src/bitcoin/src/bitcoind "$PREFIX"/bin
+  
+  mkdir -p "$PREFIX"/src
+  tar -C "$PREFIX"/src -xf "$GITIANDIR"/src-local.tar.xz
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/bitcoind-${TARGET}-${BITCOIN_VER}-gitian.zip
+  popd
