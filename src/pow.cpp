@@ -7,11 +7,13 @@
 
 #include "arith_uint256.h"
 #include "chain.h"
+#include "consensus/consensus.h"
 #include "primitives/block.h"
 #include "uint256.h"
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
+    int nHeight = pindexLast->nHeight + 1;
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
 
     // Genesis block
@@ -40,8 +42,16 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         return pindexLast->nBits;
     }
 
+    // Hardfork BIP99: This fixes an issue where a 51% attack can change difficulty at will.
+    // Go back the full period unless it's the first retarget after genesis.
+    // Code courtesy of Art Forz
+    int nInterval = params.DifficultyAdjustmentInterval();
+    int blockstogoback = nInterval;
+    if (nHeight != nInterval && nHeight > params.nBIP99Height)
+        blockstogoback = nInterval + 1;
+
     // Go back by what we want to be 14 days worth of blocks
-    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
+    int nHeightFirst = nHeight - blockstogoback;
     assert(nHeightFirst >= 0);
     const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
     assert(pindexFirst);

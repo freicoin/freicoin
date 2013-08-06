@@ -39,6 +39,9 @@ struct BIP9Deployment {
 struct Params {
     uint256 hashGenesisBlock;
     int nSubsidyHalvingInterval;
+    /** Consensus rule changes thresholds: */
+    /** Block height at which BIP34 becomes active */
+    int nBIP99Height;
     /** Block height and hash at which BIP34 becomes active */
     int BIP34Height;
     uint256 BIP34Hash;
