@@ -1,3 +1,14 @@
+freicoin (0.8.3~precise2) precise; urgency=high
+
+  [Mark Friedenbach]
+    * Rebase against v0.8.3 of the bitcoin source tree. This is a huge update,
+      but we refer you to the bitcoin changelog for details.
+    * Schedule hard-fork dropping pre-0.8 support after 15 September 2013.
+    * Fix bug where transaction values were being shown as positive on the
+      overview panel.
+
+ -- Mark Friedenbach <mark@monetize.io>  Tue, 6 Aug 2013 12:00:00 -0000
+
 freicoin (0.0.2~precise4) precise; urgency=high
 
   [Mark Friedenbach]
