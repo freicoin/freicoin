@@ -1082,6 +1082,9 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 {
     int64 nSubsidy = 0;
 
+    // Perpetual demurrage-compensating subsidy
+    nSubsidy += EQUILIBRIUM_BASE / DEMURRAGE_RATE;
+
     return nSubsidy + nFees;
 }
 

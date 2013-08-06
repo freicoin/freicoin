@@ -51,6 +51,9 @@ static const unsigned int MEMPOOL_HEIGHT = 0x7FFFFFFF;
 /** No amount larger than this (in satoshi) is valid */
 static const int64 MAX_MONEY = 9007199254740991LL; // 2^53 - 1
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+/** Demurrage for Freicoin host currency */
+static const int DEMURRAGE_RATE = 1048576;
+static const int64 EQUILIBRIUM_BASE = 10000000000000000LL; // 100,000,000.00000000fc
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
