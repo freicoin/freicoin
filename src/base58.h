@@ -388,6 +388,23 @@ public:
         default: return false;
         }
     }
+
+    void ToggleTestnet() {
+        switch (nVersion) {
+            case PUBKEY_ADDRESS:
+                nVersion = PUBKEY_ADDRESS_TEST;
+                break;
+            case SCRIPT_ADDRESS:
+                nVersion = SCRIPT_ADDRESS_TEST;
+                break;
+            case PUBKEY_ADDRESS_TEST:
+                nVersion = PUBKEY_ADDRESS;
+                break;
+            case SCRIPT_ADDRESS_TEST:
+                nVersion = SCRIPT_ADDRESS;
+                break;
+        }
+    }
 };
 
 bool inline CBitcoinAddressVisitor::operator()(const CKeyID &id) const         { return addr->Set(id); }
