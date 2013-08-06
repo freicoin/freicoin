@@ -1083,8 +1083,13 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     int64 nSubsidy = 0;
 
     // Initial distribution until equilibrium is reached
-    if (nHeight < EQUILIBRIUM_HEIGHT)
-        nSubsidy += (EQUILIBRIUM_HEIGHT-nHeight) * INITIAL_SUBSIDY / EQUILIBRIUM_HEIGHT;
+    if (nHeight < EQUILIBRIUM_HEIGHT) {
+        nSubsidy += EQUILIBRIUM_BASE * 4;
+        nSubsidy += 5 * (EQUILIBRIUM_HEIGHT-nHeight) * INITIAL_SUBSIDY;
+        nSubsidy /= 5 * EQUILIBRIUM_HEIGHT;
+        ++nSubsidy; // Integer truncation can cause an error of up to 1 kria
+                    // for the above calculation + residual fees.
+    }
 
     // Perpetual demurrage-compensating subsidy
     nSubsidy += EQUILIBRIUM_BASE / DEMURRAGE_RATE;
