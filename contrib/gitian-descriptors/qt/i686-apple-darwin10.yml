@@ -1,0 +1,173 @@
+---
+name: "qt"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "pkg-config"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "dbus-i686-apple-darwin10-1.7.4-gitian.zip"
+- "expat-i686-apple-darwin10-2.1.0-gitian.zip"
+- "libpng-i686-apple-darwin10-1.6.3-gitian.zip"
+- "openssl-i686-apple-darwin10-1.0.1c-gitian.zip"
+- "qt-everywhere-opensource-src-4.8.3.tar.gz"
+- "toolchain-i686-apple-darwin10-20120119-gitian.zip"
+- "zlib-i686-apple-darwin10-1.2.8-gitian.zip"
+script: |
+  export TARGET=i686-apple-darwin10
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  DBUS_VER=1.7.4
+  EXPAT_VER=2.1.0
+  LIBPNG_VER=1.6.3
+  OPENSSL_VER=1.0.1c
+  QT_VER=4.8.3
+  TOOLCHAIN_VER=20120119
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  export CPLUS_INCLUDE_PATH=$XCHAIN/usr/include/c++/4.2.1/$TARGET:$XCHAIN/usr/include/c++/4.2.1
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/dbus-${TARGET}-${DBUS_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/expat-${TARGET}-${EXPAT_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/libpng-${TARGET}-${LIBPNG_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/qt-everywhere-opensource-src-${QT_VER}.tar.gz
+  pushd "$BUILD"/src/qt-everywhere-opensource-src-${QT_VER}
+  cat >.patch <<EOF
+  diff -rupN a/mkspecs/darwin-g++/qmake.conf b/mkspecs/darwin-g++/qmake.conf
+  --- a/mkspecs/darwin-g++/qmake.conf	2011-09-11 23:49:28.000000000 -0700
+  +++ b/mkspecs/darwin-g++/qmake.conf	2012-08-09 12:21:39.000000000 -0700
+  @@ -11,7 +11,7 @@ CONFIG			+= qt warn_on release link_prl 
+   QT			+= core gui
+   DEFINES                 += __USE_WS_X11__
+
+  -QMAKE_CC		= cc
+  +QMAKE_CC		= llvm-gcc
+   QMAKE_LEX		= flex
+   QMAKE_LEXFLAGS		=
+   QMAKE_YACC		= yacc
+  @@ -32,7 +32,7 @@ QMAKE_CFLAGS_THREAD	=
+   QMAKE_CFLAGS_PRECOMPILE	+= -x c-header -c \${QMAKE_PCH_INPUT} -o \${QMAKE_PCH_OUTPUT}
+   QMAKE_CFLAGS_USE_PRECOMPILE += -include \${QMAKE_PCH_OUTPUT_BASE}
+
+  -QMAKE_CXX		= c++
+  +QMAKE_CXX		= llvm-g++
+   QMAKE_CXXFLAGS		= \$\$QMAKE_CFLAGS
+   QMAKE_CXXFLAGS_DEPS	= \$\$QMAKE_CFLAGS_DEPS
+   QMAKE_CXXFLAGS_WARN_ON	= \$\$QMAKE_CFLAGS_WARN_ON
+  @@ -54,8 +54,8 @@ QMAKE_LIBDIR_QT		= \$\$[QT_INSTALL_LIBS]
+   QMAKE_INCDIR_OPENGL	= /usr/X11R6/include
+   QMAKE_LIBDIR_OPENGL	= /usr/X11R6/lib
+
+  -QMAKE_LINK		= c++
+  -QMAKE_LINK_SHLIB	= c++
+  +QMAKE_LINK		= llvm-g++
+  +QMAKE_LINK_SHLIB	= llvm-g++
+   QMAKE_LFLAGS		+= -headerpad_max_install_names
+   QMAKE_LFLAGS		=
+   QMAKE_LFLAGS_RELEASE	=
+  @@ -81,9 +81,9 @@ QMAKE_LIBS_THREAD	=
+   QMAKE_MOC		= \$\$[QT_INSTALL_BINS]/moc
+   QMAKE_UIC		= \$\$[QT_INSTALL_BINS]/uic
+
+  -QMAKE_AR		= ar cq
+  -QMAKE_OBJCOPY           = objcopy
+  -QMAKE_RANLIB		= ranlib -s
+  +QMAKE_AR		= ${TARGET}-ar cq
+  +QMAKE_OBJCOPY           = ${TARGET}-objcopy
+  +QMAKE_RANLIB		= ${TARGET}-ranlib -s
+
+   QMAKE_TAR		= tar -cf
+   QMAKE_GZIP		= gzip -9f
+  EOF
+  patch -p1 <.patch
+  rm -f .patch
+  PKG_CONFIG_PATH="$PREFIX"/lib/pkgconfig \
+  setarch i386 \
+  ./configure \
+    -prefix "$PREFIX" \
+    -I "$PREFIX"/include \
+    -L "$PREFIX"/lib \
+    -confirm-license \
+    -release \
+    -opensource \
+    -shared \
+    -static \
+    -xplatform darwin-g++ \
+    -force-pkg-config \
+    -largefile \
+    -no-sql-sqlite \
+    -no-qt3support \
+    -no-xmlpatterns \
+    -no-multimedia \
+    -no-audio-backend \
+    -no-phonon \
+    -no-phonon-backend \
+    -no-svg \
+    -no-webkit \
+    -no-javascript-jit \
+    -no-script \
+    -no-scripttools \
+    -no-declarative \
+    -qt-zlib \
+    -qt-gif \
+    -qt-libtiff \
+    -qt-libpng \
+    -qt-libmng \
+    -qt-libjpeg \
+    -openssl-linked \
+    -no-nis \
+    -no-cups \
+    -no-iconv \
+    -dbus \
+    -no-opengl \
+    -nomake examples \
+    -nomake demos \
+    -nomake docs \
+    -no-feature-style-plastique \
+    -no-feature-style-cleanlooks \
+    -no-feature-style-motif \
+    -no-feature-style-cde \
+    -no-feature-style-windowsce \
+    -no-feature-style-windowsmobile \
+    -no-feature-style-s60
+  make
+  find "$PREFIX" -not -type d -print0 >.pkglist
+  make install
+  cat .pkglist | xargs -0 rm -rf
+  rm -f .pkglist
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/qt-${TARGET}-${QT_VER}-gitian.zip
+  popd

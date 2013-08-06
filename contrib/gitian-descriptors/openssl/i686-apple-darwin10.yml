@@ -1,0 +1,97 @@
+---
+name: "openssl"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "openssl-1.0.1c.tar.gz"
+- "toolchain-i686-apple-darwin10-20120119-gitian.zip"
+- "zlib-i686-apple-darwin10-1.2.8-gitian.zip"
+script: |
+  export TARGET=i686-apple-darwin10
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  OPENSSL_VER=1.0.1c
+  TOOLCHAIN_VER=20120119
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  export CPLUS_INCLUDE_PATH=$XCHAIN/usr/include/c++/4.2.1/$TARGET:$XCHAIN/usr/include/c++/4.2.1
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/openssl-${OPENSSL_VER}.tar.gz
+  pushd "$BUILD"/src/openssl-${OPENSSL_VER}
+  sed 's:-arch i386:-m32:g' -i Configure
+  find . -name Makefile -print0 | \
+    xargs -0 -n1 sed 's:ar r:ar -o:' -i
+  find . -name Makefile -print0 | \
+    xargs -0 -n1 sed 's:\(..AR. ..LIB\)\(. ..OBJ.\):if [ ! -e $(LIB) ]; then echo | llvm-gcc -x c++ -c -o $(LIB) -; fi; \1).new $(LIB\2; mv $(LIB).new $(LIB):' -i
+  find . -name Makefile -print0 | \
+    xargs -0 -n1 sed 's:\(..AR. ..LIB\)\(. ..LIBOBJ.\):if [ ! -e $(LIB) ]; then echo | llvm-gcc -x c++ -c -o $(LIB) -; fi; \1).new $(LIB\2; mv $(LIB).new $(LIB):' -i
+  find . -name Makefile -print0 | \
+    xargs -0 -n1 sed 's:\(..AR. ..LIB\)\(. ..FIPSLIBDIR.fipscanister.o\):{ if [ ! -e $(LIB) ]; then echo | llvm-gcc -x c++ -c -o $(LIB) -; fi; \1).new $(LIB\2; mv $(LIB).new $(LIB); }:' -i
+  CC=llvm-gcc \
+  AR="${TARGET}-libtool -o" \
+  RANLIB=: \
+  NM=${TARGET}-nm \
+  ./Configure \
+    --prefix="$PREFIX" \
+    no-shared \
+    threads \
+    zlib \
+    -I"$PREFIX"/include \
+    -L"$PREFIX"/lib \
+    darwin-i386-cc
+  sed \
+    's:cp ..i ..INSTALL_PREFIX...INSTALLTOP./..LIBDIR./..i.new:'"${TARGET}"'-libtool -static -o $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/$$i.new $$i:' \
+    -i Makefile
+  sed \
+    's:..RANLIB. ..INSTALL_PREFIX...INSTALLTOP./..LIBDIR./....new.::' \
+    -i Makefile
+  find . -name Makefile -print0 | \
+    xargs -0 -n1 sed 's:..ARFLAGS. r::' -i
+  find . -print0 | \
+    xargs -0 touch -d "2012-01-01 00:00:00"
+  touch -d "2012-01-02 00:00:00" Makefile
+  make
+  find "$PREFIX" -not -type d -print0 >.pkglist
+  make install
+  cat .pkglist | xargs -0 rm -rf
+  rm -f .pkglist
+  popd
+  
+  i686-apple-darwin10-strip -no_uuid "$PREFIX"/bin/c_rehash
+  i686-apple-darwin10-strip -no_uuid "$PREFIX"/bin/openssl
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  popd
