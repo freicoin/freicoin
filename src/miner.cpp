@@ -146,6 +146,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
         CBlockIndex* pindexPrev = chainActive.Tip();
         CCoinsViewCache view(*pcoinsTip, true);
 
+        // Reference height of coinbase must match block height
+        pblock->vtx[0].nVersion = 2;
+        pblock->vtx[0].refheight = pindexPrev->nHeight + 1;
+
         // Priority order to process transactions
         list<COrphan> vOrphan; // list memory doesn't move
         map<uint256, vector<COrphan*> > mapDependers;
