@@ -1340,6 +1340,12 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     if (pindexLast == NULL)
         return nProofOfWorkLimit;
 
+    // Special, one-time adjustment due to the "hash crash" of Apr/May 2013
+    // which rushed the introduction of the new difficulty adjustment filter.
+    // We adjust back to the difficulty prior to the last adjustment.
+    if (!(TestNet() || RegTest()) && pindexLast->nHeight==(Params().DiffAdjustThreshold()-1))
+        return 0x1b01c13a;
+
     bool fUseFilter = (pindexLast->nHeight >= (Params().DiffAdjustThreshold()-1));
 
     int64_t nInterval       = nFilteredInterval;
