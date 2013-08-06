@@ -1076,14 +1076,97 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
     return pblock->GetHash();
 }
 
-mpq static GetBlockValue(int nHeight, const mpq& nFees)
+typedef boost::tuple<mpz, CTxDestination> CBudgetEntry;
+typedef boost::tuple<mpq, std::vector<CBudgetEntry> > CBudget;
+
+void static ApplyBudget(const mpq& qAmount, const CBudget& budget,
+                        std::map<CTxDestination, mpq>& mapBudgetRet)
+{
+    const std::vector<CBudgetEntry>& vBudgetEntries = boost::get<1>(budget);
+
+    mpz zWeightTotal = 0;
+    BOOST_FOREACH(const CBudgetEntry &entry, vBudgetEntries)
+        zWeightTotal += boost::get<0>(entry);
+
+    BOOST_FOREACH(const CBudgetEntry &entry, vBudgetEntries) {
+        mpq tmp = qAmount;
+        tmp *= boost::get<0>(budget);
+        tmp *= boost::get<0>(entry);
+        tmp /= zWeightTotal;
+        mapBudgetRet[boost::get<1>(entry)] += tmp;
+    }
+
+    std::map<CTxDestination, mpq>::iterator itr = mapBudgetRet.begin();
+    while (itr != mapBudgetRet.end())
+        if (itr->second <= 0)
+            mapBudgetRet.erase(itr++);
+        else
+            ++itr;
+}
+
+bool static VerifyBudget(const std::map<CTxDestination, mpq>& mapBudget,
+                         const std::vector<CTransaction>& vtx, int nBlockHeight)
+{
+    std::map<CTxDestination, mpq> mapActuals;
+
+    CTxDestination address;
+    BOOST_FOREACH(const CTransaction &tx, vtx)
+        BOOST_FOREACH(const CTxOut &txout, tx.vout)
+            if (ExtractDestination(txout.scriptPubKey, address))
+                mapActuals[address] += GetPresentValue(tx, txout, nBlockHeight);
+
+    std::map<CTxDestination, mpq>::const_iterator itr;
+    for (itr = mapBudget.begin(); itr != mapBudget.end(); ++itr) {
+        if (itr->second <= 0)
+            continue;
+
+        if (!mapActuals.count(itr->first))
+            return error("VerifyBudget() : missing budget entry");
+
+        if (mapActuals[itr->first] < itr->second)
+            return error("VerifyBudget() : got %s for line-item, expected %s", FormatMoney(mapActuals[itr->first]).c_str(), FormatMoney(itr->second).c_str());
+    }
+
+    return true;
+}
+
+mpq static GetInitialDistributionAmount(int nHeight)
 {
     mpq nSubsidy = 50 * COIN;
 
     // Subsidy is cut in half every 210000 blocks, which will occur approximately every 4 years
     nSubsidy >>= (nHeight / 210000);
 
-    return nSubsidy + nFees;
+    return nSubsidy;
+}
+
+CBudget static GetInitialDistributionBudget(int nHeight)
+{
+    static CBudget emptyBudget = CBudget(0, std::vector<CBudgetEntry>());
+    return emptyBudget;
+}
+
+mpq static GetPerpetualSubsidyAmount(int nHeight)
+{
+    return 0;
+}
+
+CBudget static GetPerpetualSubsidyBudget(int nHeight)
+{
+    static CBudget emptyBudget = CBudget(0, std::vector<CBudgetEntry>());
+    return emptyBudget;
+}
+
+CBudget static GetTransactionFeeBudget(int nHeight)
+{
+    static CBudget emptyBudget = CBudget(0, std::vector<CBudgetEntry>());
+    return emptyBudget;
+}
+
+mpq static GetBlockValue(int nHeight, const mpq& nFees)
+{
+    return GetInitialDistributionAmount(nHeight) +
+           GetPerpetualSubsidyAmount(nHeight) + nFees;
 }
 
 static const int64 nTargetTimespan = 14 * 24 * 60 * 60; // two weeks
@@ -1743,6 +1826,22 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     mpq qAllowedCoinbaseValue = GetBlockValue(pindex->nHeight, nFees);
     if ( qActualCoinbaseValue > qAllowedCoinbaseValue )
         return state.DoS(100, error("ConnectBlock() : coinbase pays too much (actual=%s vs limit=%s)", FormatMoney(qActualCoinbaseValue).c_str(), FormatMoney(qAllowedCoinbaseValue).c_str()));
+
+    std::map<CTxDestination, mpq> mapBudget;
+
+    mpq nIDAmount = GetInitialDistributionAmount(pindex->nHeight);
+    CBudget budgetID = GetInitialDistributionBudget(pindex->nHeight);
+    ApplyBudget(nIDAmount, budgetID, mapBudget);
+
+    mpq nPSAmount = GetPerpetualSubsidyAmount(pindex->nHeight);
+    CBudget budgetPS = GetPerpetualSubsidyBudget(pindex->nHeight);
+    ApplyBudget(nPSAmount, budgetPS, mapBudget);
+
+    CBudget budgetTF = GetTransactionFeeBudget(pindex->nHeight);
+    ApplyBudget(nFees, budgetTF, mapBudget);
+
+    if (!VerifyBudget(mapBudget, vtx, pindex->nHeight))
+        return state.DoS(100, error("ConnectBlock() : %s block does not meet budget requirements", GetHash().ToString().c_str()));
 
     if (!control.Wait())
         return state.DoS(100, false);
@@ -4228,21 +4327,6 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
         return NULL;
     CBlock *pblock = &pblocktemplate->block; // pointer for convenience
 
-    // Create coinbase tx
-    CTransaction txNew;
-    txNew.vin.resize(1);
-    txNew.vin[0].prevout.SetNull();
-    txNew.vout.resize(1);
-    CPubKey pubkey;
-    if (!reservekey.GetReservedKey(pubkey))
-        return NULL;
-    txNew.vout[0].scriptPubKey << pubkey << OP_CHECKSIG;
-
-    // Add our coinbase tx as first transaction
-    pblock->vtx.push_back(txNew);
-    pblocktemplate->vTxFees.push_back(-1); // updated at end
-    pblocktemplate->vTxSigOps.push_back(-1); // updated at end
-
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = GetArg("-blockmaxsize", MAX_BLOCK_SIZE_GEN/2);
     // Limit to betweeen 1K and MAX_BLOCK_SIZE-1K for sanity:
@@ -4270,6 +4354,47 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
         CCoinsViewCache view(*pcoinsTip, true);
 
         int nHeight = pindexPrev->nHeight + 1;
+
+        std::map<CTxDestination, mpq> mapBudget;
+
+        mpq nIDAmount = GetInitialDistributionAmount(nHeight);
+        CBudget budgetID = GetInitialDistributionBudget(nHeight);
+        ApplyBudget(nIDAmount, budgetID, mapBudget);
+
+        mpq nPSAmount = GetPerpetualSubsidyAmount(nHeight);
+        CBudget budgetPS = GetPerpetualSubsidyBudget(nHeight);
+        ApplyBudget(nPSAmount, budgetPS, mapBudget);
+
+        // To make sure that no transaction fee budgetary entries are dropped due
+        // to truncation, we assume the largest theoretically possible transaction
+        // fee, MAX_MONEY. Once the transactions for the new block have been
+        // selected, we will go back and recreate the budget based on the actual
+        // transaction fees.
+        CBudget budgetTF = GetTransactionFeeBudget(nHeight);
+        ApplyBudget(MPQ_MAX_MONEY, budgetTF, mapBudget);
+
+        // Create coinbase tx
+        CTransaction txNew;
+        txNew.vin.resize(1);
+        txNew.vin[0].prevout.SetNull();
+        txNew.vout.resize(1+mapBudget.size());
+        CPubKey pubkey;
+        if (!reservekey.GetReservedKey(pubkey))
+            return NULL;
+        txNew.vout[0].scriptPubKey << pubkey << OP_CHECKSIG;
+        {
+            std::map<CTxDestination, mpq>::iterator itr; int idx;
+            for (itr = mapBudget.begin(), idx=1; itr != mapBudget.end(); ++itr, ++idx) {
+                txNew.vout[idx].scriptPubKey.SetDestination(itr->first);
+                txNew.vout[idx].SetInitialValue(RoundAbsolute(itr->second, ROUND_AWAY_FROM_ZERO));
+            }
+        }
+        txNew.nRefHeight = nHeight;
+
+        // Add our coinbase tx as first transaction
+        pblock->vtx.push_back(txNew);
+        pblocktemplate->vTxFees.push_back(-1); // updated at end
+        pblocktemplate->vTxSigOps.push_back(-1); // updated at end
 
         // Priority order to process transactions
         list<COrphan> vOrphan; // list memory doesn't move
@@ -4448,11 +4573,28 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             }
         }
 
+        mapBudget.clear();
+        ApplyBudget(nIDAmount, budgetID, mapBudget);
+        ApplyBudget(nPSAmount, budgetPS, mapBudget);
+        ApplyBudget(nFees, budgetTF, mapBudget);
+        pblock->vtx[0].vout.resize(1+mapBudget.size());
+        mpq nBudgetPaid = 0;
+        {
+            std::map<CTxDestination, mpq>::iterator itr; int idx;
+            for (itr = mapBudget.begin(), idx=1; itr != mapBudget.end(); ++itr, ++idx) {
+                txNew.vout[idx].scriptPubKey.SetDestination(itr->first);
+                mpq qActual = RoundAbsolute(itr->second, ROUND_AWAY_FROM_ZERO);
+                txNew.vout[idx].SetInitialValue(qActual);
+                nBudgetPaid += qActual;
+            }
+        }
+
         nLastBlockTx = nBlockTx;
         nLastBlockSize = nBlockSize;
         printf("CreateNewBlock(): total size %"PRI64u"\n", nBlockSize);
 
-        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(nHeight, nFees), ROUND_TOWARDS_ZERO));
+        mpq nBlockReward = GetBlockValue(nHeight, nFees) - nBudgetPaid;
+        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(nBlockReward, ROUND_TOWARDS_ZERO));
         pblocktemplate->vTxFees[0] = -nFees;
 
         // Fill in header
