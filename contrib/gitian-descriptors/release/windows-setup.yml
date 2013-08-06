@@ -11,8 +11,8 @@ packages:
 reference_datetime: "2012-07-01 00:00:00"
 remotes: []
 files:
-- "Freicoin-Qt-i686-static-mingw32-0.8.3-gitian.zip"
-- "freicoind-i686-static-mingw32-0.8.3-gitian.zip"
+- "Freicoin-Qt-i686-static-mingw32-0.8.3-1-gitian.zip"
+- "freicoind-i686-static-mingw32-0.8.3-1-gitian.zip"
 - "src-local.tar.xz"
 script: |
   export ARCH=windows
@@ -22,7 +22,7 @@ script: |
   
   export GITIANDIR=`pwd`
   
-  FREICOIN_VER=0.8.3
+  FREICOIN_VER=0.8.3-1
   
   export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
   export TZ=UTC

@@ -1,4 +1,4 @@
-freicoin (0.8.3~precise2) precise; urgency=high
+freicoin (0.8.3~precise5) precise; urgency=high
 
   [Mark Friedenbach]
     * Rebase against v0.8.3 of the bitcoin source tree. This is a huge update,
