@@ -1007,8 +1007,8 @@ Address: %4
         <translation>دایرکتوری داده را مشخص کن</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>ارتباطات را در &lt;PORT&gt; بشنوید (پیش فرض: 8333 or testnet: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>ارتباطات را در &lt;PORT&gt; بشنوید (پیش فرض: 8639 or testnet: 18639)</translation>
     </message>
     <message>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
@@ -1023,8 +1023,8 @@ Address: %4
         <translation>تعداد ثانیه ها برای اتصال دوباره قرینه های اشتباه (پیش فرض:86400)</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>ارتباطاتِ JSON-RPC  را در &lt;port&gt;  گوش کنید (پیش فرض:8332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>ارتباطاتِ JSON-RPC  را در &lt;port&gt;  گوش کنید (پیش فرض:8638)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>

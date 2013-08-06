@@ -2535,8 +2535,8 @@ Address: %4
         <translation>ציין תיקיית נתונים</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>האזן לחיבורים ב&lt;פורט&gt; (ברירת מחדל: 8333 או ברשת הבדיקה: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>האזן לחיבורים ב&lt;פורט&gt; (ברירת מחדל: 8639 או ברשת הבדיקה: 18639)</translation>
     </message>
     <message>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
@@ -2563,8 +2563,8 @@ Address: %4
         <translation>אירעה שגיאה בעת הגדרת פורט RPC %u להאזנה ב-IPv4: %s</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>האזן לחיבורי JSON-RPC ב- &lt;port&gt; (ברירת מחדל: 8332 או רשת בדיקה: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>האזן לחיבורי JSON-RPC ב- &lt;port&gt; (ברירת מחדל: 8638 או רשת בדיקה: 18638)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>
@@ -2711,8 +2711,8 @@ rpcpassword=%s
         <translation>התחבר רק לצמתים המצוינים</translation>
     </message>
     <message>
-        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>התחבר ל JSON-RPC ב &lt;port&gt; (ברירת מחדל: 8332 או ברשת בדיקה: 18332)</translation>
+        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>התחבר ל JSON-RPC ב &lt;port&gt; (ברירת מחדל: 8638 או ברשת בדיקה: 18638)</translation>
     </message>
     <message>
         <source>Connection options:</source>

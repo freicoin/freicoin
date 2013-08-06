@@ -2604,8 +2604,8 @@ Adress: %4
         <translation>Ange katalog för data</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>Lyssna efter anslutningar på &lt;port&gt; (förvalt: 8333 eller testnet: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>Lyssna efter anslutningar på &lt;port&gt; (förvalt: 8639 eller testnet: 18639)</translation>
     </message>
     <message>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
@@ -2632,8 +2632,8 @@ Adress: %4
         <translation>Ett fel uppstod vid upprättandet av RPC port %u för att lyssna på IPv4: %s</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Lyssna på JSON-RPC-anslutningar på &lt;port&gt; (förvalt: 8332 eller testnet: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Lyssna på JSON-RPC-anslutningar på &lt;port&gt; (förvalt: 8638 eller testnet: 18638)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>
@@ -2816,8 +2816,8 @@ till exempel: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Anslut genom SOCKS-proxy</translation>
     </message>
     <message>
-        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Anslut till JSON-RPC på &lt;port&gt; (förval: 8332 eller testnet: 18332)</translation>
+        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Anslut till JSON-RPC på &lt;port&gt; (förval: 8638 eller testnet: 18638)</translation>
     </message>
     <message>
         <source>Connection options:</source>

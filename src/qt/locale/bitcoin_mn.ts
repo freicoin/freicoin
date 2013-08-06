@@ -1063,8 +1063,8 @@ Address: %4
         <translation>Сонголтууд:</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>&lt;port&gt; дээрх холболтуудыг чагна (ѳгѳгдмѳл: 8333 эсвэл testnet: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>&lt;port&gt; дээрх холболтуудыг чагна (ѳгѳгдмѳл: 8639 эсвэл testnet: 18639)</translation>
     </message>
     <message>
         <source>Connect through SOCKS proxy</source>

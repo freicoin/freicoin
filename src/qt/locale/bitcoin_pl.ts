@@ -2560,8 +2560,8 @@ Adres: %4
         <translation>Wskaż folder danych</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>Nasłuchuj połączeń na &lt;port&gt; (domyślnie: 8333 lub testnet: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>Nasłuchuj połączeń na &lt;port&gt; (domyślnie: 8639 lub testnet: 18639)</translation>
     </message>
     <message>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
@@ -2588,8 +2588,8 @@ Adres: %4
         <translation>Wystąpił błąd podczas ustawiania portu RPC %u w tryb nasłuchu: %s</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Nasłuchuj połączeń JSON-RPC na &lt;port&gt; (domyślnie: 8332 or testnet: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Nasłuchuj połączeń JSON-RPC na &lt;port&gt; (domyślnie: 8638 or testnet: 18638)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>
@@ -2751,8 +2751,8 @@ na przykład: alertnotify=echo %%s | mail -s "Alarm Bitcoin" admin@foo.com⏎</t
         <translation>Połącz przez SOCKS proxy</translation>
     </message>
     <message>
-        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>podłącz do JSON-RPC na &lt;port&gt; (domyślnie: 8332 lub sieć testowa: 18332)</translation>
+        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>podłącz do JSON-RPC na &lt;port&gt; (domyślnie: 8638 lub sieć testowa: 18638)</translation>
     </message>
     <message>
         <source>Connection options:</source>

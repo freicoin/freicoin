@@ -2560,8 +2560,8 @@ Address: %4
         <translation>მიუთითეთ მონაცემთა კატალოგი</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>მიყურადება პორტზე &lt;port&gt; (ნაგულისხმევი: 8333 ან სატესტო ქსელში: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>მიყურადება პორტზე &lt;port&gt; (ნაგულისხმევი: 8639 ან სატესტო ქსელში: 18639)</translation>
     </message>
     <message>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
@@ -2588,8 +2588,8 @@ Address: %4
         <translation>შეცდომა %u RPC-პორტის მიყურადების ჩართვისას IPv4 მისამართზე: %s</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation> JSON-RPC-შეერთებების მიყურადება პორტზე &lt;port&gt; (ნაგულისხმევი: 8332 ან სატესტო ქსელში: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation> JSON-RPC-შეერთებების მიყურადება პორტზე &lt;port&gt; (ნაგულისხმევი: 8638 ან სატესტო ქსელში: 18638)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>
@@ -2724,8 +2724,8 @@ rpcpassword=%s
         <translation>შეერთება SOCKS-პროქსით</translation>
     </message>
     <message>
-        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation> JSON-RPC-შეერთება პორტზე &lt;port&gt; (ნაგულისხმევი: 8332 ან სატესტო ქსელში: 18332)</translation>
+        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation> JSON-RPC-შეერთება პორტზე &lt;port&gt; (ნაგულისხმევი: 8638 ან სატესტო ქსელში: 18638)</translation>
     </message>
     <message>
         <source>Corrupted block database detected</source>

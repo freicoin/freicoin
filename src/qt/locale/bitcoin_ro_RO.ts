@@ -2576,8 +2576,8 @@ Adresa: %4
         <translation>Specificaţi dosarul de date</translation>
     </message>
     <message>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>Ascultă pentru conectări pe &lt;port&gt; (implicit:  8333 sau testnet: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>Ascultă pentru conectări pe &lt;port&gt; (implicit:  8639 sau testnet: 18639)</translation>
     </message>
     <message>
         <source>Maintain at most &lt;n&gt; connections to peers (default: 125)</source>
@@ -2604,8 +2604,8 @@ Adresa: %4
         <translation>A intervenit o eroare în timp ce se seta portul RPC %u pentru ascultare pe IPv4: %s</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Ascultă pentru conexiuni JSON-RPC pe &lt;port&gt; (implicit:8332 sau testnet: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Ascultă pentru conexiuni JSON-RPC pe &lt;port&gt; (implicit:8638 sau testnet: 18638)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>
@@ -2789,8 +2789,8 @@ spre exemplu: alertnotify=echo %%s | mail -s "Alerta Bitcoin" admin@foo.com
         <translation>Conectare prin proxy SOCKS</translation>
     </message>
     <message>
-        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Conectare la JSON-RPC pe &lt;portul&gt; (implicit: 8332 sau testnet: 18332)</translation>
+        <source>Connect to JSON-RPC on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Conectare la JSON-RPC pe &lt;portul&gt; (implicit: 8638 sau testnet: 18638)</translation>
     </message>
     <message>
         <source>Connection options:</source>
