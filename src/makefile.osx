@@ -72,7 +72,7 @@ ifdef RELEASE
 # Compile for maximum compatibility and smallest size.
 # This requires that dependencies are compiled
 # the same way.
-CFLAGS = -mmacosx-version-min=10.5 -arch i386 -O3
+CFLAGS = -mmacosx-version-min=10.7 -arch x86_64 -O3
 else
 DEBUGFLAGS = -g
 endif
