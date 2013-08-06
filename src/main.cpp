@@ -3075,10 +3075,10 @@ bool LoadBlockIndex()
 {
     if (fTestNet)
     {
-        pchMessageStart[0] = 0x0b;
-        pchMessageStart[1] = 0x11;
-        pchMessageStart[2] = 0x09;
-        pchMessageStart[3] = 0x07;
+        pchMessageStart[0] = 0x5e;
+        pchMessageStart[1] = 0xd6;
+        pchMessageStart[2] = 0x7c;
+        pchMessageStart[3] = 0xf3;
         hashGenesisBlock = uint256("0x00000000a52504ffe3420a43bd385ef24f81838921a903460b235d95f37cd65e");
     }
 
@@ -3513,7 +3513,7 @@ bool static AlreadyHave(const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xf9, 0xbe, 0xb4, 0xd9 };
+unsigned char pchMessageStart[4] = { 0x2c, 0xfe, 0x7e, 0x6d };
 
 
 void static ProcessGetData(CNode* pfrom)
