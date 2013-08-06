@@ -1,7 +1,21 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2013 The Bitcoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2011-2018 The Freicoin developers
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the conjunctive terms of BOTH version 3 of the GNU
+// Affero General Public License as published by the Free Software
+// Foundation AND the MIT/X11 software license.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Affero General Public License and the MIT/X11 software license for
+// more details.
+//
+// You should have received a copy of both licenses along with this
+// program.  If not, see <https://www.gnu.org/licenses/> and
+// <http://www.opensource.org/licenses/mit-license.php>
 
 #ifndef BITCOIN_CHAIN_PARAMS_H
 #define BITCOIN_CHAIN_PARAMS_H
@@ -54,6 +68,7 @@ public:
 
     const uint256& HashGenesisBlock() const { return hashGenesisBlock; }
     const MessageStartChars& MessageStart() const { return pchMessageStart; }
+    int DiffAdjustThreshold() const { return diff_adjust_threshold; }
     const vector<unsigned char>& AlertKey() const { return vAlertPubKey; }
     int GetDefaultPort() const { return nDefaultPort; }
     const CBigNum& ProofOfWorkLimit() const { return bnProofOfWorkLimit; }
@@ -70,6 +85,7 @@ protected:
     CChainParams() {}
 
     uint256 hashGenesisBlock;
+    int diff_adjust_threshold;
     MessageStartChars pchMessageStart;
     // Raw pub key bytes for the broadcast alert signing key.
     vector<unsigned char> vAlertPubKey;

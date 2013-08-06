@@ -1,6 +1,20 @@
 // Copyright (c) 2011-2014 The Bitcoin Core developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2018 The Freicoin developers
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the conjunctive terms of BOTH version 3 of the GNU
+// Affero General Public License as published by the Free Software
+// Foundation AND the MIT/X11 software license.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Affero General Public License and the MIT/X11 software license for
+// more details.
+//
+// You should have received a copy of both licenses along with this
+// program.  If not, see <https://www.gnu.org/licenses/> and
+// <http://www.opensource.org/licenses/mit-license.php>
 
 //
 // Unit tests for denial-of-service detection/prevention code
@@ -144,10 +158,10 @@ BOOST_AUTO_TEST_CASE(DoS_checknbits)
     // First checkpoint difficulty at or a while after the last checkpoint time should fail when
     // compared to last checkpoint
     BOOST_CHECK(!CheckNBits(firstcheck.second, lastcheck.first+60*10, lastcheck.second, lastcheck.first));
-    BOOST_CHECK(!CheckNBits(firstcheck.second, lastcheck.first+60*60*24*14, lastcheck.second, lastcheck.first));
+    BOOST_CHECK(!CheckNBits(firstcheck.second, lastcheck.first+300*9*13*20, lastcheck.second, lastcheck.first));
 
     // ... but OK if enough time passed for difficulty to adjust downward:
-    BOOST_CHECK(CheckNBits(firstcheck.second, lastcheck.first+60*60*24*365*4, lastcheck.second, lastcheck.first));
+    BOOST_CHECK(CheckNBits(firstcheck.second, lastcheck.first+300*9*13*21, lastcheck.second, lastcheck.first));
 }
 
 CTransaction RandomOrphan()
