@@ -32,34 +32,34 @@ struct {
     unsigned char extranonce;
     unsigned int nonce;
 } blockinfo[] = {
-    {1, 0x52d00042}, {0, 0x8e9502af}, {0, 0x0c9086ed}, {1, 0x4dafe8b7},
-    {0, 0x2284fd8e}, {1, 0xbe19c94e}, {0, 0x944fb443}, {0, 0x918164c2},
-    {0, 0x5ca9005e}, {2, 0xdfd36b8c}, {1, 0xbea0958d}, {1, 0x63157720},
-    {0, 0xc7c138b1}, {1, 0x47abc96b}, {0, 0x1a41ae50}, {0, 0x33f81ee2},
-    {0, 0x93d37ee6}, {0, 0xd41309ef}, {1, 0xe030f49b}, {0, 0xe92ac447},
-    {2, 0x0a89381e}, {0, 0x23173160}, {0, 0x2dc1d884}, {0, 0xaba6e9b6},
-    {0, 0xbaa9b8fb}, {0, 0x31d86401}, {0, 0x7ab38bc3}, {0, 0xb6a5921c},
-    {1, 0x46901dbf}, {1, 0x55c74e05}, {0, 0x5236e3b6}, {0, 0xa09faea4},
-    {1, 0x239feb9a}, {0, 0x10021b9a}, {1, 0x1edc56aa}, {3, 0x9d65337b},
-    {0, 0x790bf7c1}, {0, 0x2512d056}, {5, 0xcfd1ad26}, {0, 0xfc101a5a},
-    {0, 0x7094b9df}, {0, 0x76cb9875}, {0, 0xc2405a3d}, {0, 0x7b63fe34},
-    {0, 0x0db81fd0}, {0, 0xceceadd6}, {0, 0x95f2ea4b}, {0, 0x4c77115a},
-    {1, 0xa6b53f07}, {1, 0xb526245d}, {0, 0x2d4b00c8}, {1, 0xc35c0090},
-    {1, 0xaada2eda}, {0, 0x3fd18fab}, {0, 0x7747abf2}, {2, 0xb0b92b17},
-    {0, 0x67227e86}, {0, 0xf9fd9455}, {0, 0x69251c19}, {0, 0x633da320},
-    {0, 0x8acefe47}, {0, 0xeb82586d}, {1, 0x121792ef}, {4, 0x3ef76f0e},
-    {1, 0xb4f30ec8}, {0, 0x4245e33b}, {1, 0xb9bd34c0}, {0, 0x293a1297},
-    {0, 0x3843f35f}, {1, 0x5f6ceef1}, {1, 0xcb3a5a97}, {3, 0xa0c5c696},
-    {0, 0xce5b8825}, {0, 0xe5bad1e6}, {2, 0x2e775dcb}, {1, 0xdd7ba849},
-    {0, 0x70ddc54b}, {1, 0x4d7291de}, {2, 0xdac7f375}, {0, 0xb48a1cbc},
-    {0, 0x28e05f52}, {2, 0x833fba3d}, {1, 0x09260f05}, {2, 0x46c7653e},
-    {2, 0x1b02eee1}, {0, 0x4c6dab99}, {0, 0x758ec784}, {1, 0x6963c9fa},
-    {0, 0x8b92a0b4}, {0, 0x6c82722c}, {0, 0x09c12660}, {0, 0xd02bdc4c},
-    {1, 0xb89cdf2d}, {0, 0x107ce7da}, {0, 0x525613a2}, {0, 0xbc717ed5},
-    {0, 0x477812dc}, {0, 0x8a6d8f17}, {0, 0x9df124b3}, {0, 0x461e1332},
-    {0, 0x0dde35c2}, {0, 0x76683cec}, {0, 0x92a5017b}, {0, 0x681fb885},
-    {2, 0x617826d0}, {0, 0x0029a8e6}, {0, 0x1d3108a1}, {4, 0x33dc89e2},
-    {0, 0x520883b9}, {0, 0xfb702683}
+    {2, 0x64287fa7}, {1, 0x879845ca}, {1, 0x481a20d6}, {0, 0x2fafb9e2},
+    {0, 0x398a537c}, {1, 0x869e318a}, {0, 0xde2e37e9}, {0, 0x19e8012e},
+    {0, 0x05c18aa3}, {1, 0x913d7ea2}, {0, 0x6d4019e4}, {1, 0x19dbe5fe},
+    {0, 0x72e8f50b}, {3, 0x83c03e72}, {0, 0x3cb3dc3d}, {0, 0x2f3ec481},
+    {0, 0x257c60cc}, {0, 0x06296904}, {0, 0xb390c08a}, {0, 0xea447344},
+    {0, 0xf95fa035}, {0, 0x123d792e}, {0, 0x338dbd37}, {0, 0x6a945b6a},
+    {1, 0xcab85a93}, {0, 0x282710d1}, {1, 0xc9c31c08}, {2, 0x5f2a7549},
+    {0, 0xd4ec83b1}, {0, 0x59db2b73}, {1, 0xe594668c}, {0, 0xc60e3d7c},
+    {0, 0x0280afa1}, {2, 0x6ee0b70e}, {0, 0xaa84c777}, {0, 0x41be9899},
+    {1, 0x67d4e259}, {0, 0x710a10c8}, {0, 0x12f6404e}, {0, 0x3f56283b},
+    {1, 0x960e8916}, {3, 0x458b90e2}, {4, 0xe0ea2e58}, {0, 0xcf85f74b},
+    {0, 0x21201a02}, {0, 0xe33c6a6d}, {1, 0x0f191ba3}, {0, 0x26ddaad4},
+    {0, 0x68c4d548}, {0, 0x44798d6f}, {0, 0x6b431584}, {0, 0xc32db943},
+    {1, 0xac271fb5}, {1, 0xdfeceaad}, {0, 0x34b07f4a}, {0, 0x4a625753},
+    {0, 0xd9f716fd}, {0, 0x7f1437c0}, {0, 0xf8e32347}, {1, 0x6986eb1c},
+    {0, 0xddf0cea9}, {0, 0xa6e90985}, {0, 0xbe5a58f4}, {1, 0x2219d81e},
+    {1, 0x407854c3}, {1, 0xc95baa1d}, {0, 0x67050137}, {0, 0x6252b8ed},
+    {1, 0xebb0eaae}, {1, 0x2e1c502b}, {0, 0x83a71b98}, {0, 0xce6fdd67},
+    {0, 0x477d1ad5}, {1, 0xee8c9329}, {0, 0x86445f07}, {5, 0xbc6379c9},
+    {0, 0xb3d38698}, {0, 0x33e95c13}, {0, 0x0775ccbf}, {1, 0x2091eea9},
+    {1, 0x5d8011c7}, {1, 0x664d220c}, {2, 0xa94c3bb0}, {2, 0x7b09128d},
+    {1, 0x57e45428}, {0, 0xb06872ad}, {0, 0x35dc4550}, {0, 0x8994a8e7},
+    {1, 0xc9438b5f}, {0, 0x1c8230b7}, {0, 0x2fc1c1fe}, {0, 0x42c9ddd0},
+    {1, 0x40b4eeb0}, {0, 0x0b2832a2}, {0, 0x60d8148f}, {1, 0xadb4835b},
+    {1, 0x8e6a1a55}, {0, 0x8f341684}, {1, 0x1f29a805}, {0, 0xa2098864},
+    {0, 0x1b971472}, {1, 0x44a6ec78}, {2, 0x08320965}, {0, 0xf6154f9e},
+    {0, 0xc3db8219}, {0, 0x366b2460}, {2, 0xca10a1eb}, {0, 0x594e0a1d},
+    {0, 0x526a8b7d}, {0, 0xf5fda6eb}
 };
 
 // NOTE: These tests rely on CreateNewBlock doing its own self-validation!
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
     for (unsigned int i = 0; i < sizeof(blockinfo)/sizeof(*blockinfo); ++i)
     {
         CBlock *pblock = &pblocktemplate->block; // pointer for convenience
-        pblock->nVersion = 2;
+        pblock->nVersion = 1;
         pblock->nTime = chainActive.Tip()->GetMedianTimePast()+1;
         pblock->vtx[0].nVersion = 2;
         pblock->vtx[0].refheight = chainActive.Height()+1;

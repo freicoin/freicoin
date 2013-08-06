@@ -135,25 +135,125 @@ public:
         //     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73)
         //     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)
         //   vMerkleTree: 4a5e1e
-        const char* pszTimestamp = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
+        const char* pszTimestamp = "Telegraph 27/Jun/2012 Barclays hit with \xc2\xa3""290m fine over Libor fixing";
         CTransaction txNew;
-        txNew.nVersion = 1;
+        txNew.nVersion = 2;
+        txNew.refheight = 0;
         txNew.vin.resize(1);
-        txNew.vout.resize(1);
-        txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
-        txNew.vout[0].nValue = 50 * COIN;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+        txNew.vout.resize(8);
+        txNew.vin[0].scriptSig = CScript()
+            << 486604799
+            << CScriptNum(4)
+            << vector<unsigned char>(
+                   (const unsigned char*)pszTimestamp,
+                   (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+        txNew.vout[0].nValue = 25453671561LL;
+        txNew.vout[0].scriptPubKey = CScript()
+            << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f")
+            << OP_CHECKSIG;
+        txNew.vout[1].nValue = 1LL;
+        txNew.vout[1].scriptPubKey = CScript()
+            << uint256("0x000000000000042d1bc432a92c42c186297799da1a7b878d79edc5e080d12950")
+            << OP_DROP
+            << OP_FALSE;
+        const char* pszMessage2 = "\
+Metals were an implicitly abusive agreement.\n\
+Modern \"paper\" is a flawed tool, its engineering is a nest of leeches.\n\
+The old money is obsolete.\n\
+Let the individual monetize its credit without cartel intermediaries.\n\
+Give us a rent-less cash so we can be free for the first time.\n\
+Let this be the awaited dawn.";
+        txNew.vout[2].nValue = 1LL;
+        txNew.vout[2].scriptPubKey = CScript()
+            << ParseHex("202020")
+            << OP_DROP
+            << vector<unsigned char>(
+                   (const unsigned char*)pszMessage2,
+                   (const unsigned char*)pszMessage2 + strlen(pszMessage2))
+            << OP_DROP
+            << OP_DUP
+            << OP_HASH160
+            << ParseHex("0ef0f9d19a653023554146a866238b8822bc84df")
+            << OP_EQUALVERIFY
+            << OP_CHECKSIG;
+        const char* pszMessage3 = "\
+\"Let us calculate, without further ado, in order to see who is right.\" --Gottfried Wilhelm Leibniz\n\
+\xce\xbe\xc2\xb4\xef\xbd\xa5\xe2\x88\x80\xef\xbd\xa5`\xef\xbc\x89\xe3\x80\x80\xe3\x80\x80\xe3\x80\x80\xe3\x80\x80  n\n\
+\xef\xbf\xa3\xe3\x80\x80\xe3\x80\x80\xe3\x80\x80  \xef\xbc\xbc\xe3\x80\x80\xe3\x80\x80  \xef\xbc\x88 E\xef\xbc\x89 good job, maaku!\n\
+\xef\xbe\x8c\xe3\x80\x80\xe3\x80\x80\xe3\x80\x80  /\xe3\x83\xbd \xe3\x83\xbd_\xef\xbc\x8f\xef\xbc\x8f";
+        txNew.vout[3].nValue = 1LL;
+        txNew.vout[3].scriptPubKey = CScript()
+            << ParseHex("2020202020202020")
+            << OP_DROP
+            << vector<unsigned char>(
+                   (const unsigned char*)pszMessage3,
+                   (const unsigned char*)pszMessage3 + strlen(pszMessage3))
+            << OP_DROP
+            << OP_DUP
+            << OP_HASH160
+            << ParseHex("c26be5ec809aa4bf6b30aa89823cff7cedc3679a")
+            << OP_EQUALVERIFY
+            << OP_CHECKSIG;
+        const char* pszMessage4 = "Ich w\xc3\xbc""nsche Freicoin viel Erfolg zum Nutzen der 99 Prozent!";
+        txNew.vout[4].nValue = 1LL;
+        txNew.vout[4].scriptPubKey = CScript()
+            << ParseHex("202020202020")
+            << OP_DROP
+            << vector<unsigned char>(
+                   (const unsigned char*)pszMessage4,
+                   (const unsigned char*)pszMessage4 + strlen(pszMessage4))
+            << OP_DROP
+            << OP_DUP
+            << OP_HASH160
+            << ParseHex("2939acd60037281a708eb11e4e9eda452c029eca")
+            << OP_EQUALVERIFY
+            << OP_CHECKSIG;
+        const char* pszMessage5 = "\"The value of a man should be seen in what he gives and not in what he is able to receive.\" --Albert Einstein";
+        txNew.vout[5].nValue = 1LL;
+        txNew.vout[5].scriptPubKey = CScript()
+            << ParseHex("20202020202020202020202020")
+            << OP_DROP
+            << vector<unsigned char>(
+                   (const unsigned char*)pszMessage5,
+                   (const unsigned char*)pszMessage5 + strlen(pszMessage5))
+            << OP_DROP
+            << OP_DUP
+            << OP_HASH160
+            << ParseHex("f9ca5caab4bda4dc28b5556aa79a2eec0447f0bf")
+            << OP_EQUALVERIFY
+            << OP_CHECKSIG;
+        const char* pszMessage6 = "\"An army of principles can penetrate where an army of soldiers cannot.\" --Thomas Paine";
+        txNew.vout[6].nValue = 1LL;
+        txNew.vout[6].scriptPubKey = CScript()
+            << ParseHex("202020202020202020202020")
+            << OP_DROP
+            << vector<unsigned char>(
+                   (const unsigned char*)pszMessage6,
+                   (const unsigned char*)pszMessage6 + strlen(pszMessage6))
+            << OP_DROP
+            << OP_DUP
+            << OP_HASH160
+            << ParseHex("08f320cbb41a1ae25b794f6175f96080681989f3")
+            << OP_EQUALVERIFY
+            << OP_CHECKSIG;
+        txNew.vout[7].nValue = 49603174604LL;
+        txNew.vout[7].scriptPubKey = CScript()
+            << OP_DUP
+            << OP_HASH160
+            << ParseHex("85e54144c4020a65fa0a8fdbac8bba75dbc2fd00")
+            << OP_EQUALVERIFY
+            << OP_CHECKSIG;
         genesis.vtx.push_back(txNew);
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime    = 1231006505;
+        genesis.nTime    = 1356123600;
         genesis.nBits    = 0x1d00ffff;
-        genesis.nNonce   = 2083236893;
+        genesis.nNonce   =  278229610;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
-        assert(genesis.hashMerkleRoot == uint256("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(hashGenesisBlock == uint256("0x000000005b1e3d23ecfd2dd4a6e1a35238aa0392c0a8528c40df52376d7efe2c"));
+        assert(genesis.hashMerkleRoot == uint256("0xf53b1baa971ea40be88cf51288aabd700dfec96c486bf7155a53a4919af4c8bd"));
         diff_adjust_threshold = 28336;
         alu_activation_height = 229376;
 
@@ -215,13 +315,13 @@ public:
         vAlertPubKey = ParseHex("04302390343f91cc401d56d68b123028bf52e5fca1939df127f63c6467cdf9c8e2c14b61104cf817d0b780da337893ecc4aaff1309e536162dabbdb45200ca2b0a");
         nDefaultPort = 18333;
         nRPCPort = 18332;
-        strDataDir = "testnet3";
+        strDataDir = "testnet";
 
         // Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1296688602;
-        genesis.nNonce = 414098458;
+        genesis.nTime = 1356123600;
+        genesis.nNonce = 3098244593UL;
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+        assert(hashGenesisBlock == uint256("0x00000000a52504ffe3420a43bd385ef24f81838921a903460b235d95f37cd65e"));
         diff_adjust_threshold = 2016;
         alu_activation_height = 2016;
 
@@ -255,13 +355,13 @@ public:
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
         genesis.nTime = 1296688602;
         genesis.nBits = 0x207fffff;
-        genesis.nNonce = 2;
+        genesis.nNonce = 0;
         hashGenesisBlock = genesis.GetHash();
         diff_adjust_threshold = 1;
         alu_activation_height = 1;
         nDefaultPort = 18444;
         strDataDir = "regtest";
-        assert(hashGenesisBlock == uint256("0x0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
+        assert(hashGenesisBlock == uint256("0x50c97b964bd3c34bd19a9ce60df9fed9172595c3c84d227cffa16ac2917cd50e"));
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }
