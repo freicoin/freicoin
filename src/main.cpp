@@ -1493,7 +1493,37 @@ mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth)
 
 mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
 {
-    return qInitialValue;
+    if ( 0 == nRelativeDepth )
+        return qInitialValue;
+
+    mpfr_t rate, mp;
+    mpfr_inits2(113, rate, mp, (mpfr_ptr) 0);
+    mpfr_set_ui(mp,       DEMURRAGE_RATE-1, GMP_RNDN);
+    mpfr_div_ui(rate, mp, DEMURRAGE_RATE,   GMP_RNDN);
+    mpfr_pow_si(mp, rate, nRelativeDepth,   GMP_RNDN);
+
+    int exponent;
+    mpz_t numerator, denominator;
+    mpz_init(numerator);
+    mpz_init(denominator);
+    exponent = mpfr_get_z_exp(numerator, mp);
+    mpz_set_ui(denominator, 1);
+    if ( exponent >= 0 )
+        mpz_mul_2exp(numerator, numerator, exponent);
+    else
+        mpz_mul_2exp(denominator, denominator, -exponent);
+
+    mpfr_clears(rate, mp, (mpfr_ptr) 0);
+
+    mpq adjustment;
+    mpz_set(adjustment.get_num_mpz_t(), numerator);
+    mpz_set(adjustment.get_den_mpz_t(), denominator);
+    adjustment.canonicalize();
+
+    mpz_clear(numerator);
+    mpz_clear(denominator);
+
+    return adjustment * qInitialValue;
 }
 
 mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
