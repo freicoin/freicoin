@@ -68,6 +68,7 @@ public:
     mpq HostDemurrageRate() const { return qHostDemurrageRate; }
     int EquilibriumHeight() const { return nEquilibriumHeight; }
     mpq InitialSubsidy() const { return qInitialSubsidy; }
+    mpq TitheAmount() const { return qTitheAmount; }
     virtual const vector<CAddress>& FixedSeeds() const = 0;
     int RPCPort() const { return nRPCPort; }
 protected:
@@ -88,6 +89,7 @@ protected:
     mpq qHostDemurrageRate;
     int nEquilibriumHeight;
     mpq qInitialSubsidy;
+    mpq qTitheAmount;
 };
 
 /**

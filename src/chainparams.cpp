@@ -119,6 +119,8 @@ public:
         /** Subsidy for Freicoin host currency */
         nEquilibriumHeight = 161280;
         qInitialSubsidy = mpq("15916928404/1"); // 159.16928404 FRC
+        /** Budgetary requirements for Freicoin host currency */
+        qTitheAmount = MPQ_MAX_MONEY * mpq("4/5") / nEquilibriumHeight;
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot
         // be spent as it did not originally exist in the database.
