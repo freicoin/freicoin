@@ -1097,9 +1097,11 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 14 * 24 * 60 * 60; // two weeks
 static const int64 nTargetSpacing = 10 * 60;
-static const int64 nInterval = nTargetTimespan / nTargetSpacing;
+static const int64 nOriginalInterval = 2016;
+static const int64 nFilteredInterval =    9;
+static const int64 nOriginalTargetTimespan = nOriginalInterval * nTargetSpacing; // two weeks
+static const int64 nFilteredTargetTimespan = nFilteredInterval * nTargetSpacing; // 1.5 hrs
 
 //
 // minimum amount of work that could possibly be required nTime after
@@ -1119,7 +1121,7 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
         // Maximum 400% adjustment...
         bnResult *= 4;
         // ... in best-case exactly 4-times-normal target time
-        nTime -= nTargetTimespan*4;
+        nTime -= nOriginalTargetTimespan*4;
     }
     if (bnResult > bnProofOfWorkLimit)
         bnResult = bnProofOfWorkLimit;
@@ -1128,11 +1130,52 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
 
 unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
-    unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
+    static unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
+
+    #define WINDOW 144
+    static const std::pair<int16_t, int16_t> kGain(41,400);     // 0.1025
+    static const std::pair<int16_t, int16_t> kLimiter(211,200); // 1.055
+    static int32_t kFilterCoeff[WINDOW] = {
+         -845859,  -459003,  -573589,  -703227,  -848199, -1008841,
+        -1183669, -1372046, -1573247, -1787578, -2011503, -2243311,
+        -2482346, -2723079, -2964681, -3202200, -3432186, -3650186,
+        -3851924, -4032122, -4185340, -4306430, -4389146, -4427786,
+        -4416716, -4349289, -4220031, -4022692, -3751740, -3401468,
+        -2966915, -2443070, -1825548, -1110759,  -295281,   623307,
+         1646668,  2775970,  4011152,  5351560,  6795424,  8340274,
+         9982332, 11717130, 13539111, 15441640, 17417389, 19457954,
+        21554056, 23695744, 25872220, 28072119, 30283431, 32493814,
+        34690317, 36859911, 38989360, 41065293, 43074548, 45004087,
+        46841170, 48573558, 50189545, 51678076, 53028839, 54232505,
+        55280554, 56165609, 56881415, 57422788, 57785876, 57968085,
+        57968084, 57785876, 57422788, 56881415, 56165609, 55280554,
+        54232505, 53028839, 51678076, 50189545, 48573558, 46841170,
+        45004087, 43074548, 41065293, 38989360, 36859911, 34690317,
+        32493814, 30283431, 28072119, 25872220, 23695744, 21554057,
+        19457953, 17417389, 15441640, 13539111, 11717130,  9982332,
+         8340274,  6795424,  5351560,  4011152,  2775970,  1646668,
+          623307,  -295281, -1110759, -1825548, -2443070, -2966915,
+        -3401468, -3751740, -4022692, -4220031, -4349289, -4416715,
+        -4427787, -4389146, -4306430, -4185340, -4032122, -3851924,
+        -3650186, -3432186, -3202200, -2964681, -2723079, -2482346,
+        -2243311, -2011503, -1787578, -1573247, -1372046, -1183669,
+        -1008841,  -848199,  -703227,  -573589,  -459003,  -845858
+    };
 
     // Genesis block
     if (pindexLast == NULL)
         return nProofOfWorkLimit;
+
+    bool fUseFilter =
+         (fTestNet && pindexLast->nHeight>=(DIFF_FILTER_THRESHOLD_TESTNET-1)) ||
+        (!fTestNet && pindexLast->nHeight>=(DIFF_FILTER_THRESHOLD-1));
+
+    int64 nInterval       = nFilteredInterval;
+    int64 nTargetTimespan = nFilteredTargetTimespan;
+    if ( !fUseFilter ) {
+        nInterval       = nOriginalInterval;
+        nTargetTimespan = nOriginalTargetTimespan;
+    }
 
     // Only change once per interval
     if ((pindexLast->nHeight+1) % nInterval != 0)
@@ -1157,39 +1200,71 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         return pindexLast->nBits;
     }
 
-    // This fixes an issue where a 51% attack can change difficulty at will.
-    // Go back the full period unless it's the first retarget after genesis.
-    // Code courtesy of Art Forz
-    int blockstogoback = nInterval-1;
-    if ((pindexLast->nHeight+1) != nInterval)
-        blockstogoback = nInterval;
+    std::pair<int64, int64> dAdjustmentFactor;
 
-    // Go back by what we want to be 14 days worth of blocks
-    const CBlockIndex* pindexFirst = pindexLast;
-    for (int i = 0; pindexFirst && i < blockstogoback; i++)
-        pindexFirst = pindexFirst->pprev;
-    assert(pindexFirst);
+    if (fUseFilter) {
+        int32_t vTimeDelta[WINDOW];
 
-    // Limit adjustment step
-    int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
-    printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
-    if (nActualTimespan < nTargetTimespan/4)
-        nActualTimespan = nTargetTimespan/4;
-    if (nActualTimespan > nTargetTimespan*4)
-        nActualTimespan = nTargetTimespan*4;
+        size_t idx = 0;
+        const CBlockIndex *pitr = pindexLast;
+        for (; idx!=WINDOW && pitr && pitr->pprev; ++idx, pitr=pitr->pprev)
+            vTimeDelta[idx] = (int32_t)(pitr->GetBlockTime() - pitr->pprev->GetBlockTime());
+        for (; idx!=WINDOW; ++idx)
+            vTimeDelta[idx] = (int32_t)nTargetSpacing;
+
+        int64 vFilteredTime = 0;
+        for (idx=0; idx<WINDOW; ++idx)
+            vFilteredTime += (int64)kFilterCoeff[idx] * (int64)vTimeDelta[idx];
+
+        if (vFilteredTime < 597105209444LL) {
+            dAdjustmentFactor.first = kLimiter.first;
+            dAdjustmentFactor.second = kLimiter.second;
+        } else if (vFilteredTime > 1943831401459LL) {
+            dAdjustmentFactor.first = kLimiter.second;
+            dAdjustmentFactor.second = kLimiter.first;
+        } else {
+            dAdjustmentFactor.first = ((int64)(kGain.first + kGain.second) * nTargetSpacing) << 31;
+            dAdjustmentFactor.first -= (int64)kGain.first * vFilteredTime;
+            dAdjustmentFactor.second = ((int64)kGain.second * nTargetSpacing) << 31;
+        }
+    } else {
+        // This fixes an issue where a 51% attack can change difficulty at will.
+        // Go back the full period unless it's the first retarget after genesis.
+        // Code courtesy of Art Forz
+        int blockstogoback = nInterval-1;
+        if ((pindexLast->nHeight+1) != nInterval)
+            blockstogoback = nInterval;
+
+        // Go back by what we want to be 14 days worth of blocks
+        const CBlockIndex* pindexFirst = pindexLast;
+        for (int i = 0; pindexFirst && i < blockstogoback; i++)
+            pindexFirst = pindexFirst->pprev;
+        assert(pindexFirst);
+
+        // Limit adjustment step
+        int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+        printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
+        if (nActualTimespan < nTargetTimespan/4)
+            nActualTimespan = nTargetTimespan/4;
+        if (nActualTimespan > nTargetTimespan*4)
+            nActualTimespan = nTargetTimespan*4;
+
+        dAdjustmentFactor.first = nTargetTimespan;
+        dAdjustmentFactor.second = nActualTimespan;
+    }
 
     // Retarget
     CBigNum bnNew;
     bnNew.SetCompact(pindexLast->nBits);
-    bnNew *= nActualTimespan;
-    bnNew /= nTargetTimespan;
+    bnNew *= dAdjustmentFactor.second;
+    bnNew /= dAdjustmentFactor.first;
 
     if (bnNew > bnProofOfWorkLimit)
         bnNew = bnProofOfWorkLimit;
 
     /// debug print
     printf("GetNextWorkRequired RETARGET\n");
-    printf("nTargetTimespan = %"PRI64d"    nActualTimespan = %"PRI64d"\n", nTargetTimespan, nActualTimespan);
+    printf("dAdjustmentFactor = %g\n", (double)dAdjustmentFactor.first/(double)dAdjustmentFactor.second);
     printf("Before: %08x  %s\n", pindexLast->nBits, CBigNum().SetCompact(pindexLast->nBits).getuint256().ToString().c_str());
     printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
 
@@ -2501,6 +2576,9 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
         {
             return state.DoS(100, error("ProcessBlock() : block with timestamp before last checkpoint"));
         }
+#if 0
+        // Now that we are using a FIR filter (see above) this is no longer
+        // a straightforward calculation.
         CBigNum bnNewBlock;
         bnNewBlock.SetCompact(pblock->nBits);
         CBigNum bnRequired;
@@ -2509,6 +2587,7 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
         {
             return state.DoS(100, error("ProcessBlock() : block with too little proof-of-work"));
         }
+#endif
     }
 
 

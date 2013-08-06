@@ -60,6 +60,9 @@ static const int64 INITIAL_SUBSIDY = 15916928404LL;
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
+/** FIR difficulty filter parameters */
+static const int DIFF_FILTER_THRESHOLD_TESTNET = std::numeric_limits<int>::max();
+static const int DIFF_FILTER_THRESHOLD         = std::numeric_limits<int>::max();
 /** Maximum number of script-checking threads allowed */
 static const int MAX_SCRIPTCHECK_THREADS = 16;
 #ifdef USE_UPNP
