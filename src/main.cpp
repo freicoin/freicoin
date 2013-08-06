@@ -1926,6 +1926,9 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
     if (fBenchmark)
         LogPrintf("- Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin)\n", (unsigned)block.vtx.size(), 0.001 * nTime, 0.001 * nTime / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * nTime / (nInputs-1));
 
+    if (block.vtx[0].nRefHeight != pindex->nHeight)
+        return state.DoS(100, error("ConnectBlock() : coinbase height != block height"));
+
     mpq qActualCoinbaseValue = GetTimeAdjustedValue(block.vtx[0].GetValueOut(), pindex->nHeight - block.vtx[0].nRefHeight);
     mpq qAllowedCoinbaseValue = GetBlockValue(pindex->nHeight, nFees);
     if ( qActualCoinbaseValue > qAllowedCoinbaseValue )
