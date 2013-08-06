@@ -1151,7 +1151,7 @@ CBudget static GetInitialDistributionBudget(int nHeight)
 
 mpq static GetPerpetualSubsidyAmount(int nHeight)
 {
-    return 0;
+    return MPQ_MAX_MONEY / DEMURRAGE_RATE;
 }
 
 CBudget static GetPerpetualSubsidyBudget(int nHeight)
