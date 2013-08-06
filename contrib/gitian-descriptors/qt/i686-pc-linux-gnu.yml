@@ -1,0 +1,206 @@
+---
+name: "qt"
+suites:
+- "lucid"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "libfontconfig1-dev"
+- "libfreetype6-dev"
+- "libx11-dev"
+- "libxcursor-dev"
+- "libxext-dev"
+- "libxfixes-dev"
+- "libxft-dev"
+- "libxi-dev"
+- "libxrandr-dev"
+- "libxrender-dev"
+- "pkg-config"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "dbus-i686-pc-linux-gnu-1.7.4-gitian.zip"
+- "expat-i686-pc-linux-gnu-2.1.0-gitian.zip"
+- "libpng-i686-pc-linux-gnu-1.6.3-gitian.zip"
+- "openssl-i686-pc-linux-gnu-1.0.1c-gitian.zip"
+- "qt-everywhere-opensource-src-4.8.3.tar.gz"
+- "toolchain-i686-pc-linux-gnu-1.15.2-gitian.zip"
+- "zlib-i686-pc-linux-gnu-1.2.8-gitian.zip"
+script: |
+  export TARGET=i686-pc-linux-gnu
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  DBUS_VER=1.7.4
+  EXPAT_VER=2.1.0
+  LIBPNG_VER=1.6.3
+  OPENSSL_VER=1.0.1c
+  QT_VER=4.8.3
+  TOOLCHAIN_VER=1.15.2
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/dbus-${TARGET}-${DBUS_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/expat-${TARGET}-${EXPAT_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/libpng-${TARGET}-${LIBPNG_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/qt-everywhere-opensource-src-${QT_VER}.tar.gz
+  pushd "$BUILD"/src/qt-everywhere-opensource-src-${QT_VER}
+  cat >.patch <<EOF
+  diff -rupN a/mkspecs/common/g++-base.conf b/mkspecs/common/g++-base.conf
+  --- a/mkspecs/common/g++-base.conf	2012-09-10 18:36:35.000000000 -0700
+  +++ b/mkspecs/common/g++-base.conf	2012-09-10 18:36:35.000000000 -0700
+  @@ -8,14 +8,14 @@
+   # you can use the manual test in tests/manual/mkspecs.
+   #
+   
+  -QMAKE_CC = gcc
+  +QMAKE_CC = ${TARGET}-gcc
+   
+   QMAKE_LINK_C       = \$\$QMAKE_CC
+   QMAKE_LINK_C_SHLIB = \$\$QMAKE_CC
+   
+   QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += -O2 -g
+   
+  -QMAKE_CXX = g++
+  +QMAKE_CXX = ${TARGET}-g++
+   
+   QMAKE_LINK       = \$\$QMAKE_CXX
+   QMAKE_LINK_SHLIB = \$\$QMAKE_CXX
+  diff -rupN a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
+  --- a/mkspecs/common/gcc-base.conf	2012-09-10 18:36:35.000000000 -0700
+  +++ b/mkspecs/common/gcc-base.conf	2012-09-10 18:36:35.000000000 -0700
+  @@ -53,7 +53,7 @@ QMAKE_CXXFLAGS_STATIC_LIB += \$\$QMAKE_CFL
+   QMAKE_CXXFLAGS_YACC       += \$\$QMAKE_CFLAGS_YACC
+   QMAKE_CXXFLAGS_HIDESYMS   += \$\$QMAKE_CFLAGS_HIDESYMS -fvisibility-inlines-hidden
+   
+  -QMAKE_LFLAGS         +=
+  +QMAKE_LFLAGS         += -Wl,-rpath,/usr/lib
+   QMAKE_LFLAGS_DEBUG   +=
+   QMAKE_LFLAGS_APP     +=
+   QMAKE_LFLAGS_RELEASE +=
+  diff -rupN a/mkspecs/common/linux.conf b/mkspecs/common/linux.conf
+  --- a/mkspecs/common/linux.conf	2012-09-10 18:36:35.000000000 -0700
+  +++ b/mkspecs/common/linux.conf	2012-09-10 18:36:35.000000000 -0700
+  @@ -5,10 +5,10 @@
+   QMAKE_CFLAGS_THREAD	+= -D_REENTRANT
+   QMAKE_CXXFLAGS_THREAD	+= \$\$QMAKE_CFLAGS_THREAD
+   
+  -QMAKE_INCDIR          =
+  -QMAKE_LIBDIR          =
+  -QMAKE_INCDIR_X11      = /usr/X11R6/include
+  -QMAKE_LIBDIR_X11      = /usr/X11R6/lib
+  +QMAKE_INCDIR         += /usr/include/i386-linux-gnu /usr/include
+  +QMAKE_LIBDIR         += /usr/lib/i386-linux-gnu /usr/lib
+  +QMAKE_INCDIR_X11      = /usr/include
+  +QMAKE_LIBDIR_X11      = /usr/lib
+   QMAKE_INCDIR_QT       = \$\$[QT_INSTALL_HEADERS]
+   QMAKE_LIBDIR_QT       = \$\$[QT_INSTALL_LIBS]
+   QMAKE_INCDIR_OPENGL   = /usr/X11R6/include
+  @@ -44,8 +44,8 @@ QMAKE_DEFINES_WAYLAND =
+   QMAKE_MOC             = \$\$[QT_INSTALL_BINS]/moc
+   QMAKE_UIC             = \$\$[QT_INSTALL_BINS]/uic
+   
+  -QMAKE_AR              = ar cqs
+  -QMAKE_OBJCOPY         = objcopy
+  +QMAKE_AR              = ${TARGET}-ar cqs
+  +QMAKE_OBJCOPY         = ${TARGET}-objcopy
+   QMAKE_RANLIB          =
+   
+   QMAKE_TAR             = tar -cf
+  @@ -57,7 +57,7 @@ QMAKE_COPY_DIR        = \$(COPY) -r
+   QMAKE_MOVE            = mv -f
+   QMAKE_DEL_FILE        = rm -f
+   QMAKE_DEL_DIR         = rmdir
+  -QMAKE_STRIP           = strip
+  +QMAKE_STRIP           = ${TARGET}-strip
+   QMAKE_STRIPFLAGS_LIB += --strip-unneeded
+   QMAKE_CHK_DIR_EXISTS  = test -d
+   QMAKE_MKDIR           = mkdir -p
+  EOF
+  patch -p1 <.patch
+  rm -f .patch
+  PKG_CONFIG_PATH="$PREFIX"/lib/pkgconfig \
+  setarch i386 \
+  ./configure \
+    -prefix "$PREFIX" \
+    -I "$PREFIX"/include \
+    -L "$PREFIX"/lib \
+    -confirm-license \
+    -release \
+    -opensource \
+    -shared \
+    -static \
+    -xplatform linux-g++-32 \
+    -force-pkg-config \
+    -largefile \
+    -no-sql-sqlite \
+    -no-qt3support \
+    -no-xmlpatterns \
+    -no-multimedia \
+    -no-audio-backend \
+    -no-phonon \
+    -no-phonon-backend \
+    -no-svg \
+    -no-webkit \
+    -no-javascript-jit \
+    -no-script \
+    -no-scripttools \
+    -no-declarative \
+    -qt-zlib \
+    -qt-libtiff \
+    -qt-libpng \
+    -qt-libmng \
+    -qt-libjpeg \
+    -openssl-linked \
+    -no-nis \
+    -no-cups \
+    -no-iconv \
+    -dbus \
+    -no-opengl \
+    -nomake examples \
+    -nomake demos \
+    -nomake docs \
+    -no-feature-style-plastique \
+    -no-feature-style-cleanlooks \
+    -no-feature-style-motif \
+    -no-feature-style-cde \
+    -no-feature-style-windowsce \
+    -no-feature-style-windowsmobile \
+    -no-feature-style-s60
+  make
+  find "$PREFIX" -not -type d -print0 >.pkglist
+  make install
+  cat .pkglist | xargs -0 rm -rf
+  rm -f .pkglist
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/qt-${TARGET}-${QT_VER}-gitian.zip
+  popd

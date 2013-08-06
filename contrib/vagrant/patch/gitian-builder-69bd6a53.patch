@@ -1,0 +1,117 @@
+diff --git a/bin/make-base-vm b/bin/make-base-vm
+index c85a16c..f7052e7 100755
+--- a/bin/make-base-vm
++++ b/bin/make-base-vm
+@@ -3,8 +3,8 @@ set -e
+ 
+ SUITE=lucid
+ ARCH=amd64
+-MIRROR=http://${MIRROR_HOST:-127.0.0.1}:3142/archive.ubuntu.com/ubuntu
+-SECURITY_MIRROR=http://${MIRROR_HOST:-127.0.0.1}:3142/security.ubuntu.com/ubuntu
++MIRROR=http://mirror.anl.gov/pub/ubuntu/
++SECURITY_MIRROR=http://security.ubuntu.com/ubuntu
+ LXC=0
+ 
+ usage() {
+@@ -69,6 +69,7 @@ if [ $ARCH = "amd64" -a $SUITE = "hardy" ]; then
+ fi
+ 
+ addpkg=openssh-server,pciutils,build-essential,git-core,subversion
++removepkg=cron
+ 
+ if [ -e $OUT.qcow2 ]; then
+   echo $OUT.qcow2 already exists, please remove it first
+@@ -76,7 +77,7 @@ if [ -e $OUT.qcow2 ]; then
+ fi
+ 
+ rm -rf $OUT
+-sudo vmbuilder kvm ubuntu --arch=$ARCH --suite=$SUITE --addpkg=$addpkg --ssh-key=var/id_dsa.pub --ssh-user-key=var/id_dsa.pub --mirror=$MIRROR --security-mirror=$SECURITY_MIRROR --dest=$OUT --flavour=$FLAVOUR --firstboot=`pwd`/target-bin/bootstrap-fixup
++sudo vmbuilder kvm ubuntu --rootsize=2000 --arch=$ARCH --suite=$SUITE --addpkg=$addpkg --removepkg=$removepkg --ssh-key=var/id_dsa.pub --ssh-user-key=var/id_dsa.pub --mirror=$MIRROR --security-mirror=$SECURITY_MIRROR --dest=$OUT --flavour=$FLAVOUR --firstboot=`pwd`/target-bin/bootstrap-fixup
+ mv $OUT/*.qcow2 $OUT.qcow2
+ rm -rf $OUT
+ 
+diff --git a/etc/lxc.config.in b/etc/lxc.config.in
+index b4c02e5..734035b 100644
+--- a/etc/lxc.config.in
++++ b/etc/lxc.config.in
+@@ -22,6 +22,10 @@ lxc.cgroup.devices.allow = c 254:0 rwm
+ # mounts points
+ lxc.mount.entry=proc ROOTFS/proc proc nodev,noexec,nosuid 0 0
+ lxc.mount.entry=sysfs ROOTFS/sys sysfs defaults  0 0
++lxc.mount.entry=PWD/tmpfs/build home/ubuntu/build none bind 0 0
++lxc.mount.entry=PWD/tmpfs/out home/ubuntu/out none bind 0 0
++lxc.mount.entry=PWD/tmpfs/sysroot home/ubuntu/sysroot none bind 0 0
++lxc.mount.entry=PWD/tmpfs/x-tools home/ubuntu/x-tools none bind 0 0
+ 
+ # Container with network virtualized using a pre-configured bridge named br0 and
+ # veth pair virtual network devices
+diff --git a/libexec/config-lxc b/libexec/config-lxc
+index bc401af..f2594cc 100755
+--- a/libexec/config-lxc
++++ b/libexec/config-lxc
+@@ -1,4 +1,4 @@
+ #!/bin/bash
+ 
+ wd=`pwd`
+-sed "s;ROOTFS;$wd/target-$LXC_SUITE-$LXC_ARCH;;s;ARCH;$LXC_ARCH;g" < etc/lxc.config.in > var/lxc.config
++sed "s;ROOTFS;$wd/target-$LXC_SUITE-$LXC_ARCH;;s;ARCH;$LXC_ARCH;;s;PWD;$wd;g" < etc/lxc.config.in > var/lxc.config
+diff --git a/libexec/make-clean-vm b/libexec/make-clean-vm
+index cf7d658..9dae74e 100755
+--- a/libexec/make-clean-vm
++++ b/libexec/make-clean-vm
+@@ -47,6 +47,17 @@ OUT=target-$SUITE-$ARCH
+ if [ -z "$USE_LXC" ]; then
+     qemu-img create -f qcow2 -o backing_file="$BASE.qcow2" "$OUT.qcow2"
+ else
++    sudo rm -rf tmpfs
+     cp -a $BASE $OUT
++    sudo mount -o loop $OUT /mnt
++    sudo mkdir -p /mnt/home/ubuntu/build
++    sudo mkdir -p /mnt/home/ubuntu/out
++    sudo mkdir -p /mnt/home/ubuntu/sysroot
++    sudo mkdir -p /mnt/home/ubuntu/x-tools
++    sudo umount /mnt
++    mkdir -p tmpfs/build
++    mkdir -p tmpfs/out
++    mkdir -p tmpfs/sysroot
++    mkdir -p tmpfs/x-tools
+     on-target -u root bash < target-bin/bootstrap-fixup
+ fi
+diff --git a/target-bin/bootstrap-fixup b/target-bin/bootstrap-fixup
+index d6e77c6..07a8d25 100755
+--- a/target-bin/bootstrap-fixup
++++ b/target-bin/bootstrap-fixup
+@@ -2,5 +2,10 @@
+ 
+ set -e
+ 
+-echo 'deb http://10.0.2.2:3142/archive.ubuntu.com/ubuntu lucid main universe' > $1/etc/apt/sources.list
+-echo 'deb http://10.0.2.2:3142/archive.ubuntu.com/ubuntu lucid-updates main universe' >> $1/etc/apt/sources.list
++echo "deb http://10.0.2.15:3142/archive.ubuntu.com/ubuntu `lsb_release -c | cut -f2` main universe" > $1/etc/apt/sources.list
++echo "deb http://10.0.2.15:3142/archive.ubuntu.com/ubuntu `lsb_release -c | cut -f2`-updates main universe" >> $1/etc/apt/sources.list
++mkdir -p /home/ubuntu/build
++mkdir -p /home/ubuntu/out
++mkdir -p /home/ubuntu/sysroot
++mkdir -p /home/ubuntu/x-tools
++chown ubuntu /home/ubuntu/*
+diff -rupN a/var/id_dsa b/var/id_dsa
+--- a/var/id_dsa	1970-01-01 00:00:00.000000000 +0000
++++ b/var/id_dsa	2012-07-06 01:35:07.514553903 +0000
+@@ -0,0 +1,12 @@
++-----BEGIN DSA PRIVATE KEY-----
++MIIBugIBAAKBgQCjPELx9IgbW7F17XHddG/v1e47UOFuArK27FCBEnH/OBWQWmSr
++4qUGYg4OSIOWK1zc4XQB53dXt0ukOlz9230jILyEffoTrqW/Lca6OdzEex/FF88C
++ROmEAQC1lq5edts7UkIPT8WSxlINFh3VI85m1YqNe4G9UIVyAVIATLq/kQIVAJD1
++oWkFkhTqyHzGcq3NrJuVkpfFAoGAMWADuFyUtPtYmUyZ4dFSgjGpCAfHIGb1S8wW
++LKWAmqjKVLq92pvSQqFaZDkcq80ivSsUaYrftydhxx2eSFBQuEKp9ibAi+oDf+0h
++pnq4hW8sBXzanjF3vZ2CZ1hxifJnFBrG9rcHfnE3/poXUKOQGr3HXH7MpeZoYlih
++dsgsOd4CgYBTe12qpE5oV/2t7dXEoiR2qgh7q2g8ow8A683NBmlyRl6HvJqKMAd3
++/b8ckqqWkCoCe92JnmlSaR8MNB1EIc5N+H6oZXIxjwW1wxVCnqT65jcgjF3KNqwC
++0wUGbjZJw9u8v5MYJNRVGASM29C/J+TRpJjaA4onOR/DO1bjIwN90wIUAVvjDDOK
++MhkC+5GN+VGrMSAdD44=
++-----END DSA PRIVATE KEY-----
+diff -rupN a/var/id_dsa.pub b/var/id_dsa.pub
+--- a/var/id_dsa.pub	1970-01-01 00:00:00.000000000 +0000
++++ b/var/id_dsa.pub	2012-07-06 01:35:07.518555852 +0000
+@@ -0,0 +1 @@
++ssh-dss AAAAB3NzaC1kc3MAAACBAKM8QvH0iBtbsXXtcd10b+/V7jtQ4W4CsrbsUIEScf84FZBaZKvipQZiDg5Ig5YrXNzhdAHnd1e3S6Q6XP3bfSMgvIR9+hOupb8txro53MR7H8UXzwJE6YQBALWWrl522ztSQg9PxZLGUg0WHdUjzmbVio17gb1QhXIBUgBMur+RAAAAFQCQ9aFpBZIU6sh8xnKtzayblZKXxQAAAIAxYAO4XJS0+1iZTJnh0VKCMakIB8cgZvVLzBYspYCaqMpUur3am9JCoVpkORyrzSK9KxRpit+3J2HHHZ5IUFC4Qqn2JsCL6gN/7SGmeriFbywFfNqeMXe9nYJnWHGJ8mcUGsb2twd+cTf+mhdQo5Aavcdcfsyl5mhiWKF2yCw53gAAAIBTe12qpE5oV/2t7dXEoiR2qgh7q2g8ow8A683NBmlyRl6HvJqKMAd3/b8ckqqWkCoCe92JnmlSaR8MNB1EIc5N+H6oZXIxjwW1wxVCnqT65jcgjF3KNqwC0wUGbjZJw9u8v5MYJNRVGASM29C/J+TRpJjaA4onOR/DO1bjIwN90w== vagrant@precise64

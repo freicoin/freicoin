@@ -1,0 +1,62 @@
+---
+name: "miniupnpc"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "miniupnpc-1.8.tar.gz"
+- "toolchain-x86_64-static-mingw32-1213449-gitian.zip"
+script: |
+  export TARGET=x86_64-static-mingw32
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  MINIUPNPC_VER=1.8
+  TOOLCHAIN_VER=1213449
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/miniupnpc-${MINIUPNPC_VER}.tar.gz
+  pushd "$BUILD"/src/miniupnpc-${MINIUPNPC_VER}
+  sed 's/dllwrap -k --driver-name gcc/$(DLLWRAP) -k --driver-name $(CC)/' -i Makefile.mingw
+  sed 's:^OBJSDLL=.*$:OBJSDLL=$(OBJS):g' -i Makefile.mingw
+  cp miniupnpcstrings.h.in miniupnpcstrings.h
+  sed 's|"OS/version"|"MSWindows/5.1.2600"|' -i miniupnpcstrings.h
+  sed 's|"version"|"1.8"|' -i miniupnpcstrings.h
+  sed 's|wingenminiupnpcstrings $< $@|true|' -i Makefile.mingw
+  sed "s|CC = gcc|CC = ${TARGET}-gcc|" -i Makefile.mingw
+  AR=${TARGET}-ar \
+  DLLWRAP=${TARGET}-dllwrap \
+  make -f Makefile.mingw
+  mkdir -p "$PREFIX"/include/miniupnpc
+  cp -a *.h "$PREFIX"/include/miniupnpc
+  mkdir -p "$PREFIX"/lib
+  cp -a libminiupnpc.a miniupnpc.lib miniupnpc.dll "$PREFIX"/lib
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/miniupnpc-${TARGET}-${MINIUPNPC_VER}-gitian.zip
+  popd

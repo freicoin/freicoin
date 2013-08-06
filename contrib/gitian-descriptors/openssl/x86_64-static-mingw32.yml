@@ -1,0 +1,70 @@
+---
+name: "openssl"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "openssl-1.0.1c.tar.gz"
+- "toolchain-x86_64-static-mingw32-1213449-gitian.zip"
+- "zlib-x86_64-static-mingw32-1.2.8-gitian.zip"
+script: |
+  export TARGET=x86_64-static-mingw32
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  OPENSSL_VER=1.0.1c
+  TOOLCHAIN_VER=1213449
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  unzip -d "$PREFIX" "$GITIANDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  pushd "$PREFIX"
+  export PREFIX=`pwd`
+  popd
+  export PATH=$PREFIX/bin:$PREFIX/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/openssl-${OPENSSL_VER}.tar.gz
+  pushd "$BUILD"/src/openssl-${OPENSSL_VER}
+  ./Configure \
+    --cross-compile-prefix=${TARGET}- \
+    --prefix="$PREFIX" \
+    no-shared \
+    threads \
+    zlib \
+    -I"$PREFIX"/include \
+    -L"$PREFIX"/lib \
+    mingw64
+  make
+  find "$PREFIX" -not -type d -print0 >.pkglist
+  make install
+  cat .pkglist | xargs -0 rm -rf
+  rm -f .pkglist
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/openssl-${TARGET}-${OPENSSL_VER}-gitian.zip
+  popd

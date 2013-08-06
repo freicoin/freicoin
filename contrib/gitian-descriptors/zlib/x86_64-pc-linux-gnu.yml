@@ -1,0 +1,53 @@
+---
+name: "zlib"
+suites:
+- "lucid"
+architectures:
+- "amd64"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "toolchain-x86_64-pc-linux-gnu-1.15.2-gitian.zip"
+- "zlib-1.2.8.tar.gz"
+script: |
+  export TARGET=x86_64-pc-linux-gnu
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  TOOLCHAIN_VER=1.15.2
+  ZLIB_VER=1.2.8
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/zlib-${ZLIB_VER}.tar.gz
+  pushd "$BUILD"/src/zlib-${ZLIB_VER}
+  CC=${TARGET}-gcc \
+  ./configure \
+    --prefix="$PREFIX"
+  make
+  make install
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/zlib-${TARGET}-${ZLIB_VER}-gitian.zip
+  popd
