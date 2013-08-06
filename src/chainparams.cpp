@@ -112,6 +112,8 @@ public:
         nRPCPort = 8332;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 32);
         nSubsidyHalvingInterval = 210000;
+        /** FIR difficulty filter parameters */
+        nFIRDiffFilterThreshold = std::numeric_limits<int>::max();
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot
         // be spent as it did not originally exist in the database.

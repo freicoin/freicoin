@@ -1187,9 +1187,11 @@ mpq GetBlockValue(int nHeight, const mpq& nFees)
            GetPerpetualSubsidyAmount(nHeight) + nFees;
 }
 
-static const int64_t nTargetTimespan = 14 * 24 * 60 * 60; // two weeks
 static const int64_t nTargetSpacing = 10 * 60;
-static const int64_t nInterval = nTargetTimespan / nTargetSpacing;
+static const int64_t nOriginalInterval = 2016; // two weeks
+static const int64_t nFilteredInterval =    9;
+static const int64_t nOriginalTargetTimespan = nOriginalInterval * nTargetSpacing; // two weeks
+static const int64_t nFilteredTargetTimespan = nFilteredInterval * nTargetSpacing; // 1.5 hrs
 
 //
 // minimum amount of work that could possibly be required nTime after
@@ -1210,7 +1212,7 @@ unsigned int ComputeMinWork(unsigned int nBase, int64_t nTime)
         // Maximum 400% adjustment...
         bnResult *= 4;
         // ... in best-case exactly 4-times-normal target time
-        nTime -= nTargetTimespan*4;
+        nTime -= nOriginalTargetTimespan*4;
     }
     if (bnResult > bnLimit)
         bnResult = bnLimit;
@@ -1221,9 +1223,52 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 {
     unsigned int nProofOfWorkLimit = Params().ProofOfWorkLimit().GetCompact();
 
+    #define WINDOW 144
+    static mpq kOne = mpq(1);
+    static mpq kTwoToTheThirtyOne = mpq("2147483648");
+    static mpq kGain = mpq(41, 400);       // 0.025
+    static mpq kLimiterUp = mpq(211, 200); // 1.055
+    static mpq kLimiterDown = mpq(200, 211);
+    static mpq kTargetInterval = i64_to_mpq(nTargetSpacing);
+    static int32_t kFilterCoeff[WINDOW] = {
+         -845859,  -459003,  -573589,  -703227,  -848199, -1008841,
+        -1183669, -1372046, -1573247, -1787578, -2011503, -2243311,
+        -2482346, -2723079, -2964681, -3202200, -3432186, -3650186,
+        -3851924, -4032122, -4185340, -4306430, -4389146, -4427786,
+        -4416716, -4349289, -4220031, -4022692, -3751740, -3401468,
+        -2966915, -2443070, -1825548, -1110759,  -295281,   623307,
+         1646668,  2775970,  4011152,  5351560,  6795424,  8340274,
+         9982332, 11717130, 13539111, 15441640, 17417389, 19457954,
+        21554056, 23695744, 25872220, 28072119, 30283431, 32493814,
+        34690317, 36859911, 38989360, 41065293, 43074548, 45004087,
+        46841170, 48573558, 50189545, 51678076, 53028839, 54232505,
+        55280554, 56165609, 56881415, 57422788, 57785876, 57968085,
+        57968084, 57785876, 57422788, 56881415, 56165609, 55280554,
+        54232505, 53028839, 51678076, 50189545, 48573558, 46841170,
+        45004087, 43074548, 41065293, 38989360, 36859911, 34690317,
+        32493814, 30283431, 28072119, 25872220, 23695744, 21554057,
+        19457953, 17417389, 15441640, 13539111, 11717130,  9982332,
+         8340274,  6795424,  5351560,  4011152,  2775970,  1646668,
+          623307,  -295281, -1110759, -1825548, -2443070, -2966915,
+        -3401468, -3751740, -4022692, -4220031, -4349289, -4416715,
+        -4427787, -4389146, -4306430, -4185340, -4032122, -3851924,
+        -3650186, -3432186, -3202200, -2964681, -2723079, -2482346,
+        -2243311, -2011503, -1787578, -1573247, -1372046, -1183669,
+        -1008841,  -848199,  -703227,  -573589,  -459003,  -845858
+    };
+
     // Genesis block
     if (pindexLast == NULL)
         return nProofOfWorkLimit;
+
+    bool fUseFilter = pindexLast->nHeight>=(Params().FIRDiffFilterThreshold()-1);
+
+    int64_t nInterval       = nFilteredInterval;
+    int64_t nTargetTimespan = nFilteredTargetTimespan;
+    if ( !fUseFilter ) {
+        nInterval       = nOriginalInterval;
+        nTargetTimespan = nOriginalTargetTimespan;
+    }
 
     // Only change once per interval
     if ((pindexLast->nHeight+1) % nInterval != 0)
@@ -1247,32 +1292,59 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         return pindexLast->nBits;
     }
 
-    // Go back by what we want to be 14 days worth of blocks
-    const CBlockIndex* pindexFirst = pindexLast;
-    for (int i = 0; pindexFirst && i < nInterval-1; i++)
-        pindexFirst = pindexFirst->pprev;
-    assert(pindexFirst);
+    mpq dAdjustmentFactor;
 
-    // Limit adjustment step
-    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
-    LogPrintf("  nActualTimespan = %d  before bounds\n", nActualTimespan);
-    if (nActualTimespan < nTargetTimespan/4)
-        nActualTimespan = nTargetTimespan/4;
-    if (nActualTimespan > nTargetTimespan*4)
-        nActualTimespan = nTargetTimespan*4;
+    if ( fUseFilter ) {
+        int32_t vTimeDelta[WINDOW];
+
+        size_t idx = 0;
+        const CBlockIndex *pitr = pindexLast;
+        for ( ; idx!=WINDOW && pitr && pitr->pprev; ++idx, pitr=pitr->pprev )
+            vTimeDelta[idx] = (int32_t)(pitr->GetBlockTime() - pitr->pprev->GetBlockTime());
+        for ( ; idx!=WINDOW; ++idx )
+            vTimeDelta[idx] = (int32_t)nTargetSpacing;
+
+        int64_t vFilteredTime = 0;
+        for ( idx=0; idx<WINDOW; ++idx )
+            vFilteredTime += (int64_t)kFilterCoeff[idx] * (int64_t)vTimeDelta[idx];
+        mpq dFilteredInterval = i64_to_mpq(vFilteredTime) / kTwoToTheThirtyOne;
+
+        dAdjustmentFactor = kOne - kGain * (dFilteredInterval - kTargetInterval) / kTargetInterval;
+        if ( dAdjustmentFactor > kLimiterUp )
+            dAdjustmentFactor = kLimiterUp;
+        else if ( dAdjustmentFactor < kLimiterDown )
+            dAdjustmentFactor = kLimiterDown;
+    } else {
+        // Go back by what we want to be 14 days worth of blocks
+        const CBlockIndex* pindexFirst = pindexLast;
+        for (int i = 0; pindexFirst && i < nInterval-1; i++)
+            pindexFirst = pindexFirst->pprev;
+        assert(pindexFirst);
+
+        // Limit adjustment step
+        int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+        LogPrintf("  nActualTimespan = %d  before bounds\n", nActualTimespan);
+        if (nActualTimespan < nTargetTimespan/4)
+            nActualTimespan = nTargetTimespan/4;
+        if (nActualTimespan > nTargetTimespan*4)
+            nActualTimespan = nTargetTimespan*4;
+
+        dAdjustmentFactor = i64_to_mpq(nTargetTimespan) /
+                            i64_to_mpq(nActualTimespan);
+    }
 
     // Retarget
     CBigNum bnNew;
     bnNew.SetCompact(pindexLast->nBits);
-    bnNew *= nActualTimespan;
-    bnNew /= nTargetTimespan;
+    bnNew *= mpz_to_i64(dAdjustmentFactor.get_den());
+    bnNew /= mpz_to_i64(dAdjustmentFactor.get_num());
 
     if (bnNew > Params().ProofOfWorkLimit())
         bnNew = Params().ProofOfWorkLimit();
 
     /// debug print
     LogPrintf("GetNextWorkRequired RETARGET\n");
-    LogPrintf("nTargetTimespan = %d    nActualTimespan = %d\n", nTargetTimespan, nActualTimespan);
+    LogPrintf("dAdjustmentFactor = %g\n", dAdjustmentFactor.get_d());
     LogPrintf("Before: %08x  %s\n", pindexLast->nBits, CBigNum().SetCompact(pindexLast->nBits).getuint256().ToString());
     LogPrintf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString());
 
@@ -2554,6 +2626,9 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
             return state.DoS(100, error("ProcessBlock() : block with timestamp before last checkpoint"),
                              REJECT_CHECKPOINT, "time-too-old");
         }
+#if 0
+        // Now that we are using a FIR filter (see above) this is no longer
+        // a straightforward calculation.
         CBigNum bnNewBlock;
         bnNewBlock.SetCompact(pblock->nBits);
         CBigNum bnRequired;
@@ -2563,6 +2638,7 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
             return state.DoS(100, error("ProcessBlock() : block with too little proof-of-work"),
                              REJECT_INVALID, "bad-diffbits");
         }
+#endif
     }
 
 
