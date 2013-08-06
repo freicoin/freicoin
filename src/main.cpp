@@ -4891,8 +4891,8 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
     // Limit to betweeen 1K and MAX_BLOCK_SIZE-1K for sanity:
     nBlockMaxSize = std::max((unsigned int)1000, std::min((unsigned int)(MAX_BLOCK_SIZE-1000), nBlockMaxSize));
 
-    // Special compatibility rule before 15 May: limit size to 500,000 bytes:
-    if (GetAdjustedTime() < 1368576000)
+    // Special compatibility rule before 15 Sept: limit size to 500,000 bytes:
+    if (GetAdjustedTime() < 1379246400)
         nBlockMaxSize = std::min(nBlockMaxSize, (unsigned int)(MAX_BLOCK_SIZE_GEN));
 
     // How much of the block should be dedicated to high-priority transactions,
