@@ -113,7 +113,7 @@ public:
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 32);
         nSubsidyHalvingInterval = 210000;
         /** FIR difficulty filter parameters */
-        nFIRDiffFilterThreshold = std::numeric_limits<int>::max();
+        nFIRDiffFilterThreshold = 28336;
         /** Demurrage for Freicoin host currency */
         qHostDemurrageRate = mpq("-1/1048576");
         /** Subsidy for Freicoin host currency */
@@ -308,6 +308,7 @@ public:
         nDefaultPort = 18639;
         nRPCPort = 18638;
         strDataDir = "testnet3";
+        nFIRDiffFilterThreshold = 2016;
 
         // Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime  = 1356123600;
