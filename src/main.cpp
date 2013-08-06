@@ -1097,14 +1097,94 @@ void static PruneOrphanBlocks()
     mapOrphanBlocks.erase(hash);
 }
 
-mpq GetBlockValue(int nHeight, const mpq& nFees)
+void ApplyBudget(const mpq& qAmount, const CBudget& budget,
+                 std::map<CTxDestination, mpq>& mapBudgetRet)
+{
+    const std::vector<CBudgetEntry>& vBudgetEntries = boost::get<1>(budget);
+
+    mpz zWeightTotal = 0;
+    BOOST_FOREACH(const CBudgetEntry &entry, vBudgetEntries)
+        zWeightTotal += boost::get<0>(entry);
+
+    BOOST_FOREACH(const CBudgetEntry &entry, vBudgetEntries) {
+        mpq tmp = qAmount;
+        tmp *= boost::get<0>(budget);
+        tmp *= boost::get<0>(entry);
+        tmp /= zWeightTotal;
+        mapBudgetRet[boost::get<1>(entry)] += tmp;
+    }
+
+    std::map<CTxDestination, mpq>::iterator itr = mapBudgetRet.begin();
+    while (itr != mapBudgetRet.end())
+        if (itr->second <= 0)
+            mapBudgetRet.erase(itr++);
+        else
+            ++itr;
+}
+
+bool VerifyBudget(const std::map<CTxDestination, mpq>& mapBudget,
+                  const std::vector<CTransaction>& vtx, int nBlockHeight)
+{
+    std::map<CTxDestination, mpq> mapActuals;
+
+    CTxDestination address;
+    BOOST_FOREACH(const CTransaction &tx, vtx)
+        BOOST_FOREACH(const CTxOut &txout, tx.vout)
+            if (ExtractDestination(txout.scriptPubKey, address))
+                mapActuals[address] += GetPresentValue(tx, txout, nBlockHeight);
+
+    std::map<CTxDestination, mpq>::const_iterator itr;
+    for (itr = mapBudget.begin(); itr != mapBudget.end(); ++itr) {
+        if (itr->second <= 0)
+            continue;
+
+        if (!mapActuals.count(itr->first))
+            return error("VerifyBudget() : missing budget entry");
+
+        if (mapActuals[itr->first] < itr->second)
+            return error("VerifyBudget() : got %s for line-item, expected %s", FormatMoney(mapActuals[itr->first]), FormatMoney(itr->second));
+    }
+
+    return true;
+}
+
+mpq GetInitialDistributionAmount(int nHeight)
 {
     mpq nSubsidy = 50 * COIN;
 
     // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
     nSubsidy >>= (nHeight / Params().SubsidyHalvingInterval());
 
-    return nSubsidy + nFees;
+    return nSubsidy;
+}
+
+CBudget GetInitialDistributionBudget(int nHeight)
+{
+    static CBudget emptyBudget = CBudget(0, std::vector<CBudgetEntry>());
+    return emptyBudget;
+}
+
+mpq GetPerpetualSubsidyAmount(int nHeight)
+{
+    return 0;
+}
+
+CBudget GetPerpetualSubsidyBudget(int nHeight)
+{
+    static CBudget emptyBudget = CBudget(0, std::vector<CBudgetEntry>());
+    return emptyBudget;
+}
+
+CBudget GetTransactionFeeBudget(int nHeight)
+{
+    static CBudget emptyBudget = CBudget(0, std::vector<CBudgetEntry>());
+    return emptyBudget;
+}
+
+mpq GetBlockValue(int nHeight, const mpq& nFees)
+{
+    return GetInitialDistributionAmount(nHeight) +
+           GetPerpetualSubsidyAmount(nHeight) + nFees;
 }
 
 static const int64_t nTargetTimespan = 14 * 24 * 60 * 60; // two weeks
@@ -1782,6 +1862,22 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
                                FormatMoney(qActualCoinbaseValue),
                                FormatMoney(qAllowedCoinbaseValue)),
                          REJECT_INVALID, "bad-cb-amount");
+
+    std::map<CTxDestination, mpq> mapBudget;
+
+    mpq nIDAmount = GetInitialDistributionAmount(pindex->nHeight);
+    CBudget budgetID = GetInitialDistributionBudget(pindex->nHeight);
+    ApplyBudget(nIDAmount, budgetID, mapBudget);
+
+    mpq nPSAmount = GetPerpetualSubsidyAmount(pindex->nHeight);
+    CBudget budgetPS = GetPerpetualSubsidyBudget(pindex->nHeight);
+    ApplyBudget(nPSAmount, budgetPS, mapBudget);
+
+    CBudget budgetTF = GetTransactionFeeBudget(pindex->nHeight);
+    ApplyBudget(nFees, budgetTF, mapBudget);
+
+    if (!VerifyBudget(mapBudget, block.vtx, pindex->nHeight))
+        return state.DoS(100, error("ConnectBlock() : %s block does not meet budget requirements", block.GetHash().ToString()));
 
     if (!control.Wait())
         return state.DoS(100, false);

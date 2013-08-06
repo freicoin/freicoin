@@ -170,6 +170,18 @@ mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
 mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight);
 /** Find the best known block, and make it the tip of the block chain */
 bool ActivateBestChain(CValidationState &state);
+/** Calculate and enforce budgetary requirements */
+typedef boost::tuple<mpz, CTxDestination> CBudgetEntry;
+typedef boost::tuple<mpq, std::vector<CBudgetEntry> > CBudget;
+void ApplyBudget(const mpq& qAmount, const CBudget& budget,
+                 std::map<CTxDestination, mpq>& mapBudgetRet);
+bool VerifyBudget(const std::map<CTxDestination, mpq>& mapBudget,
+                  const std::vector<CTransaction>& vtx, int nBlockHeight);
+mpq GetInitialDistributionAmount(int nHeight);
+CBudget GetInitialDistributionBudget(int nHeight);
+mpq GetPerpetualSubsidyAmount(int nHeight);
+CBudget GetPerpetualSubsidyBudget(int nHeight);
+CBudget GetTransactionFeeBudget(int nHeight);
 mpq GetBlockValue(int nHeight, const mpq& nFees);
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock);
 

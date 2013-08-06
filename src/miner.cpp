@@ -112,18 +112,6 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
         return NULL;
     CBlock *pblock = &pblocktemplate->block; // pointer for convenience
 
-    // Create coinbase tx
-    CTransaction txNew;
-    txNew.vin.resize(1);
-    txNew.vin[0].prevout.SetNull();
-    txNew.vout.resize(1);
-    txNew.vout[0].scriptPubKey = scriptPubKeyIn;
-
-    // Add our coinbase tx as first transaction
-    pblock->vtx.push_back(txNew);
-    pblocktemplate->vTxFees.push_back(-1); // updated at end
-    pblocktemplate->vTxSigOps.push_back(-1); // updated at end
-
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = GetArg("-blockmaxsize", DEFAULT_BLOCK_MAX_SIZE);
     // Limit to betweeen 1K and MAX_BLOCK_SIZE-1K for sanity:
@@ -147,6 +135,44 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
         CCoinsViewCache view(*pcoinsTip, true);
 
         int nHeight = pindexPrev->nHeight + 1;
+
+        std::map<CTxDestination, mpq> mapBudget;
+
+        mpq nIDAmount = GetInitialDistributionAmount(nHeight);
+        CBudget budgetID = GetInitialDistributionBudget(nHeight);
+        ApplyBudget(nIDAmount, budgetID, mapBudget);
+
+        mpq nPSAmount = GetPerpetualSubsidyAmount(nHeight);
+        CBudget budgetPS = GetPerpetualSubsidyBudget(nHeight);
+        ApplyBudget(nPSAmount, budgetPS, mapBudget);
+
+        // To make sure that no transaction fee budgetary entries are dropped due
+        // to truncation, we assume the largest theoretically possible transaction
+        // fee, MAX_MONEY. Once the transactions for the new block have been
+        // selected, we will go back and recreate the budget based on the actual
+        // transaction fees.
+        CBudget budgetTF = GetTransactionFeeBudget(nHeight);
+        ApplyBudget(MPQ_MAX_MONEY, budgetTF, mapBudget);
+
+        // Create coinbase tx
+        CTransaction txNew;
+        txNew.vin.resize(1);
+        txNew.vin[0].prevout.SetNull();
+        txNew.vout.resize(1+mapBudget.size());
+        txNew.vout[0].scriptPubKey = scriptPubKeyIn;
+        {
+            std::map<CTxDestination, mpq>::iterator itr; int idx;
+            for (itr = mapBudget.begin(), idx=1; itr != mapBudget.end(); ++itr, ++idx) {
+                txNew.vout[idx].scriptPubKey.SetDestination(itr->first);
+                txNew.vout[idx].SetInitialValue(RoundAbsolute(itr->second, ROUND_AWAY_FROM_ZERO));
+            }
+        }
+        txNew.nRefHeight = nHeight;
+
+        // Add our coinbase tx as first transaction
+        pblock->vtx.push_back(txNew);
+        pblocktemplate->vTxFees.push_back(-1); // updated at end
+        pblocktemplate->vTxSigOps.push_back(-1); // updated at end
 
         // Priority order to process transactions
         list<COrphan> vOrphan; // list memory doesn't move
@@ -326,11 +352,28 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
             }
         }
 
+        mapBudget.clear();
+        ApplyBudget(nIDAmount, budgetID, mapBudget);
+        ApplyBudget(nPSAmount, budgetPS, mapBudget);
+        ApplyBudget(nFees, budgetTF, mapBudget);
+        pblock->vtx[0].vout.resize(1+mapBudget.size());
+        mpq nBudgetPaid = 0;
+        {
+            std::map<CTxDestination, mpq>::iterator itr; int idx;
+            for (itr = mapBudget.begin(), idx=1; itr != mapBudget.end(); ++itr, ++idx) {
+                txNew.vout[idx].scriptPubKey.SetDestination(itr->first);
+                mpq qActual = RoundAbsolute(itr->second, ROUND_AWAY_FROM_ZERO);
+                txNew.vout[idx].SetInitialValue(qActual);
+                nBudgetPaid += qActual;
+            }
+        }
+
         nLastBlockTx = nBlockTx;
         nLastBlockSize = nBlockSize;
         LogPrintf("CreateNewBlock(): total size %u\n", nBlockSize);
 
-        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(GetBlockValue(nHeight, nFees), ROUND_TOWARDS_ZERO));
+        mpq nBlockReward = GetBlockValue(nHeight, nFees) - nBudgetPaid;
+        pblock->vtx[0].vout[0].SetInitialValue(RoundAbsolute(nBlockReward, ROUND_TOWARDS_ZERO));
         pblocktemplate->vTxFees[0] = -nFees;
 
         // Fill in header
