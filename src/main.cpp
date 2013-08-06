@@ -1577,6 +1577,12 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
     if (pindexLast == NULL)
         return nProofOfWorkLimit;
 
+    // Special, one-time adjustment due to the "hash crash" of Apr/May 2013
+    // which rushed the introduction of the new difficulty adjustment filter.
+    // We adjust back to the difficulty prior to the last adjustment.
+    if ( !fTestNet && pindexLast->nHeight==(DIFF_FILTER_THRESHOLD-1) )
+        return 0x1b01c13a;
+
     bool fUseFilter =
          (fTestNet && pindexLast->nHeight>=(DIFF_FILTER_THRESHOLD_TESTNET-1)) ||
         (!fTestNet && pindexLast->nHeight>=(DIFF_FILTER_THRESHOLD-1));
