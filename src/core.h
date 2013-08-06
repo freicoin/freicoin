@@ -29,7 +29,7 @@
 class CTransaction;
 
 /** No amount larger than this (in satoshi) is valid */
-static const int64_t MAX_MONEY = 21000000 * COIN;
+static const int64_t MAX_MONEY = 4503599627370495LL; // 2^52 - 1
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 /** Adjust to present value by subtracting demurrage */
 int64_t GetTimeAdjustedValue(int64_t initial_value, int relative_depth);
