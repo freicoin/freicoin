@@ -66,6 +66,8 @@ public:
     const std::vector<unsigned char> &Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
     int FIRDiffFilterThreshold() const { return nFIRDiffFilterThreshold; }
     mpq HostDemurrageRate() const { return qHostDemurrageRate; }
+    int EquilibriumHeight() const { return nEquilibriumHeight; }
+    mpq InitialSubsidy() const { return qInitialSubsidy; }
     virtual const vector<CAddress>& FixedSeeds() const = 0;
     int RPCPort() const { return nRPCPort; }
 protected:
@@ -84,6 +86,8 @@ protected:
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
     int nFIRDiffFilterThreshold;
     mpq qHostDemurrageRate;
+    int nEquilibriumHeight;
+    mpq qInitialSubsidy;
 };
 
 /**

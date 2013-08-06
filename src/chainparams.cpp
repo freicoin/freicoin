@@ -116,6 +116,9 @@ public:
         nFIRDiffFilterThreshold = std::numeric_limits<int>::max();
         /** Demurrage for Freicoin host currency */
         qHostDemurrageRate = mpq("-1/1048576");
+        /** Subsidy for Freicoin host currency */
+        nEquilibriumHeight = 161280;
+        qInitialSubsidy = mpq("15916928404/1"); // 159.16928404 FRC
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot
         // be spent as it did not originally exist in the database.
