@@ -1,0 +1,47 @@
+---
+name: "release"
+suites:
+- "lucid"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "Bitcoin-Qt-i686-static-mingw32-0.8.3-gitian.zip"
+- "bitcoind-i686-static-mingw32-0.8.3-gitian.zip"
+- "src-local.tar.xz"
+script: |
+  export ARCH=windows
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  BITCOIN_VER=0.8.3
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"/bitcoin-${BITCOIN_VER}-${ARCH}
+  pushd "$PREFIX"/bitcoin-${BITCOIN_VER}-${ARCH}
+
+  mkdir -p src
+  tar -C src -xf "$GITIANDIR"/src-local.tar.xz
+  cp -a src/doc/README_windows.txt ./README.txt
+  cp -a src/COPYING ./COPYING.txt
+  unzip "$GITIANDIR"/bitcoind-i686-static-mingw32-${BITCOIN_VER}-gitian.zip bin/bitcoind.exe
+  mkdir -p daemon
+  mv bin/bitcoind.exe daemon/
+  unzip "$GITIANDIR"/Bitcoin-Qt-i686-static-mingw32-${BITCOIN_VER}-gitian.zip bin/Bitcoin-Qt.exe
+  mv bin/Bitcoin-Qt.exe ./
+  rmdir bin
+  
+  cd ..
+  find bitcoin-${BITCOIN_VER}-${ARCH} -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/bitcoin-${BITCOIN_VER}-${ARCH}.zip
+  popd

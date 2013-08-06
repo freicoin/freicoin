@@ -1,0 +1,61 @@
+---
+name: "miniupnpc"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "faketime"
+- "zip"
+reference_datetime: "2012-07-01 00:00:00"
+remotes: []
+files:
+- "miniupnpc-1.8.tar.gz"
+- "toolchain-i686-apple-darwin10-20120119-gitian.zip"
+script: |
+  export TARGET=i686-apple-darwin10
+  export XCHAIN=$HOME/x-tools/target/$TARGET
+  export PREFIX=$HOME/sysroot
+  export BUILD=$HOME/build
+  
+  export GITIANDIR=`pwd`
+  
+  MINIUPNPC_VER=1.8
+  TOOLCHAIN_VER=20120119
+  
+  export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
+  export TZ=UTC
+  export FAKETIME=$REFERENCE_DATETIME
+  
+  mkdir -p "$PREFIX"
+  mkdir -p "$BUILD"/src
+  mkdir -p "$BUILD"/build
+  
+  mkdir -p "$XCHAIN"
+  unzip -d "$XCHAIN" "$GITIANDIR"/toolchain-${TARGET}-${TOOLCHAIN_VER}-gitian.zip
+  pushd "$XCHAIN"
+  export XCHAIN=`pwd`
+  export CPLUS_INCLUDE_PATH=$XCHAIN/usr/include/c++/4.2.1/$TARGET:$XCHAIN/usr/include/c++/4.2.1
+  popd
+  export PATH=$XCHAIN/bin:$XCHAIN/usr/bin:$PATH
+  
+  tar -C "$BUILD"/src -xf "$GITIANDIR"/miniupnpc-${MINIUPNPC_VER}.tar.gz
+  pushd "$BUILD"/src/miniupnpc-${MINIUPNPC_VER}
+  cp miniupnpcstrings.h.in miniupnpcstrings.h
+  sed 's|"OS/version"|"Darwin/11.4.0"|' -i miniupnpcstrings.h
+  sed 's|"version"|"1.8"|' -i miniupnpcstrings.h
+  sed 's|..SH. updateminiupnpcstrings.sh|true|' -i Makefile
+  sed 's|..SH. updateminiupnpcstrings.sh|true|' -i Makefile
+  sed 's|OS =|OS ?=|' -i Makefile
+  OS=Darwin \
+  AR="${TARGET}-ar" \
+  CC="${TARGET}-gcc -m32" \
+  CFLAGS="-D_DARWIN_C_SOURCE" \
+  INSTALLPREFIX="$PREFIX" \
+  make install
+  popd
+  
+  pushd "$PREFIX"
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/miniupnpc-${TARGET}-${MINIUPNPC_VER}-gitian.zip
+  popd

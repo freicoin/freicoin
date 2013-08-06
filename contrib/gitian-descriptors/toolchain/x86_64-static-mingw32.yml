@@ -1,0 +1,98 @@
+---
+name: "toolchain"
+suites:
+- "precise"
+architectures:
+- "i386"
+packages:
+- "autoconf"
+- "automake"
+- "bash"
+- "bison"
+- "bzip2"
+- "cmake"
+- "flex"
+- "intltool"
+- "libtool"
+- "openssl"
+- "perl"
+- "pkg-config"
+- "scons"
+- "unzip"
+- "wget"
+- "xz-utils"
+- "yasm"
+- "zip"
+reference_datetime: "2017-01-01 00:00:00"
+remotes: []
+files:
+- "binutils-2.22.tar.bz2"
+- "dbus-1.5.12.tar.gz"
+- "expat-2.1.0.tar.gz"
+- "gcc-4.7.0.tar.bz2"
+- "gmp-5.0.4.tar.bz2"
+- "mingw-w64-v2.0.3.tar.gz"
+- "mingwrt-3.20-mingw32-dev.tar.gz"
+- "mpc-0.9.tar.gz"
+- "mpfr-3.1.0.tar.bz2"
+- "tonytheodore-mxe-1213449.tar.gz"
+- "w32api-3.17-2-mingw32-dev.tar.lzma"
+script: |
+  export TARGET=x86_64-static-mingw32
+  export BUILD="$HOME/build"
+  export XTOOLS="$HOME/x-tools"
+  
+  export GITIANDIR=`pwd`
+  
+  mkdir -p "$BUILD"
+  mkdir -p "$XTOOLS/target/$TARGET"
+  tar -C "$BUILD" -xf tonytheodore-mxe-1213449.tar.gz
+  pushd "$BUILD/tonytheodore-mxe-1213449"
+  
+  mkdir -p pkg
+  cp "$GITIANDIR/binutils-2.22.tar.bz2"              pkg/
+  cp "$GITIANDIR/dbus-1.5.12.tar.gz"                 pkg/
+  cp "$GITIANDIR/expat-2.1.0.tar.gz"                 pkg/
+  cp "$GITIANDIR/gcc-4.7.0.tar.bz2"                  pkg/
+  cp "$GITIANDIR/gmp-5.0.4.tar.bz2"                  pkg/
+  cp "$GITIANDIR/mingw-w64-v2.0.3.tar.gz"            pkg/
+  cp "$GITIANDIR/mingwrt-3.20-mingw32-dev.tar.gz"    pkg/
+  cp "$GITIANDIR/mpc-0.9.tar.gz"                     pkg/
+  cp "$GITIANDIR/mpfr-3.1.0.tar.bz2"                 pkg/
+  cp "$GITIANDIR/w32api-3.17-2-mingw32-dev.tar.lzma" pkg/
+  
+  echo  >.patch 'diff -rupN a/Makefile b/Makefile'
+  echo >>.patch '--- a/Makefile	2012-05-07 14:55:30.000000000 +0000'
+  echo >>.patch '+++ b/Makefile	2012-05-07 14:55:30.000000000 +0000'
+  echo >>.patch '@@ -2,9 +2,7 @@'
+  echo >>.patch ' # See index.html for further information.'
+  echo >>.patch ' '
+  echo >>.patch ' JOBS               := 1'
+  echo >>.patch '-TARGETS            := i686-static-mingw32 \'
+  echo >>.patch '-                      x86_64-static-mingw32 \'
+  echo >>.patch '-                      i686-dynamic-mingw32'
+  echo >>.patch '+TARGETS            := '$TARGET
+  echo >>.patch ' SOURCEFORGE_MIRROR := kent.dl.sourceforge.net'
+  echo >>.patch ' '
+  echo >>.patch ' PWD        := $(shell pwd)'
+  echo >>.patch '@@ -21,7 +19,7 @@ REQUIREMENTS := autoconf automake bash b'
+  echo >>.patch '                 $(MAKE) openssl $(PATCH) $(PERL) pkg-config \'
+  echo >>.patch '                 scons $(SED) unzip wget xz yasm'
+  echo >>.patch ' '
+  echo >>.patch '-PREFIX     := $(PWD)/usr'
+  echo >>.patch '+PREFIX     := '"$XTOOLS"'/target/'$TARGET
+  echo >>.patch ' LOG_DIR    := $(PWD)/log'
+  echo >>.patch ' TIMESTAMP  := $(shell date +%Y%m%d_%H%M%S)'
+  echo >>.patch ' PKG_DIR    := $(PWD)/pkg'
+  patch -p1 <.patch
+  rm -f .patch
+  
+  setarch i386 \
+    make gcc dbus
+  
+  popd
+  
+  pushd "$XTOOLS"/target/$TARGET
+  find * -not -type d -print0 | sort -z | xargs -0 \
+    zip -r "$OUTDIR"/toolchain-${TARGET}-1213449-gitian.zip
+  popd
