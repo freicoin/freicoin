@@ -17,7 +17,8 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "If the file does not exist, create it with owner-readable-only file "
 "permissions.\n"
 "It is also recommended to set alertnotify so you are notified of problems;\n"
-"for example: alertnotify=echo %%s | mail -s \"Freicoin Alert\" admin@foo.com\n"),
+"for example: alertnotify=echo %%s | mail -s \"Freicoin Alert\" admin@foo."
+"com\n"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Acceptable ciphers (default: TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:"
 "@STRENGTH)"),
@@ -49,7 +50,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Execute command when the best block changes (%s in cmd is replaced by block "
 "hash)"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
-"Listen for JSON-RPC connections on <port> (default: 8638 or testnet: 18638)"),
+"Listen for JSON-RPC connections on <port> (default: 8332 or testnet: 18332)"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Number of seconds to keep misbehaving peers from reconnecting (default: "
 "86400)"),
@@ -91,7 +92,6 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Add a node to connect to and attempt to keep 
 QT_TRANSLATE_NOOP("bitcoin-core", "Allow DNS lookups for -addnode, -seednode and -connect"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Allow JSON-RPC connections from specified IP address"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Attempt to recover private keys from a corrupt wallet.dat"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Freicoin version"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Block creation options:"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot downgrade wallet"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot resolve -bind address: '%s'"),
@@ -128,6 +128,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Failed to write transaction index"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Failed to write undo data"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Fee per KB to add to transactions you send"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Find peers using DNS lookup (default: 1 unless -connect)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Freicoin version"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Generate coins (default: 0)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Get help for a command"),
 QT_TRANSLATE_NOOP("bitcoin-core", "How many blocks to check at startup (default: 288, 0 = all)"),
@@ -142,7 +143,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount for -mintxfee=<amount>: '%s'")
 QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount for -paytxfee=<amount>: '%s'"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Invalid amount"),
 QT_TRANSLATE_NOOP("bitcoin-core", "List commands"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Listen for connections on <port> (default: 8639 or testnet: 18639)"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Listen for connections on <port> (default: 8333 or testnet: 18333)"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading addresses..."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading block index..."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Loading wallet..."),
