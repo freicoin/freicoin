@@ -1193,10 +1193,12 @@ void MapPort(bool)
 static const char *strMainNetDNSSeed[][2] = {
     {"node.freico.in", "seed.freico.in"},
     {"abacus.freico.in", "fledge.freico.in"},
+    {"mainnet.freicoin.pw", "seed.mainnet.freicoin.pw"},
     {NULL, NULL}
 };
 
 static const char *strTestNetDNSSeed[][2] = {
+    {"testnet.freicoin.pw", "seed.testnet.freicoin.pw"},
     {NULL, NULL}
 };
 
