@@ -97,6 +97,8 @@ for other Ubuntu & Debian:
 	sudo apt-get install libdb4.8-dev
 	sudo apt-get install libdb4.8++-dev
 	sudo apt-get install libboost1.55-all-dev
+	sudo apt-get install libgmp-dev
+	sudo apt-get install libmpfr-dev
 
 Optional:
 
