@@ -73,9 +73,15 @@ for Ubuntu 12.04:
 
 for other Ubuntu & Debian:
 
-	sudo apt-get install libdb4.8-dev
-	sudo apt-get install libdb4.8++-dev
-	sudo apt-get install libboost1.37-dev
+	sudo apt-get install libdb-dev
+	sudo apt-get install libdb++-dev
+	sudo apt-get install libboost-dev
+	sudo apt-get install libboost-system-dev
+	sudo apt-get install libboost-filesystem-dev
+	sudo apt-get install libboost-program-options-dev
+	sudo apt-get install libboost-thread-dev
+	sudo apt-get install libgmp-dev
+	sudo apt-get install libmpfr-dev
  (If using Boost 1.37, append -mt to the boost libraries in the makefile)
 
 Optional:
