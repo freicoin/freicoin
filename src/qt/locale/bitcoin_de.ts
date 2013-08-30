@@ -63,17 +63,17 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>Ausgewählte Adresse in die Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location line="-11"/>
+        <location line="+25"/>
+        <source>Sign a message to prove you own a Freicoin address</source>
+        <translation>Eine Nachricht signieren, um den Besitz einer Freicoin-Adresse zu beweisen</translation>
+    </message>
+    <message>
+        <location line="-36"/>
         <source>&amp;New Address</source>
         <translation>&amp;Neue Adresse</translation>
     </message>
     <message>
-        <location filename="../addressbookpage.cpp" line="+63"/>
-        <source>These are your Freicoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Dies sind Ihre Freicoin-Adressen zum Empfangen von Zahlungen. Es steht Ihnen frei, jedem Absender eine Andere mitzuteilen, um einen besseren Überblick über eingehende Zahlungen zu erhalten.</translation>
-    </message>
-    <message>
-        <location filename="../forms/addressbookpage.ui" line="+14"/>
+        <location line="+14"/>
         <source>&amp;Copy Address</source>
         <translation>Adresse &amp;kopieren</translation>
     </message>
@@ -83,17 +83,17 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>&amp;QR-Code anzeigen</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Sign a message to prove you own a Freicoin address</source>
-        <translation>Eine Nachricht signieren, um den Besitz einer Freicoin-Adresse zu beweisen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+14"/>
         <source>Sign &amp;Message</source>
         <translation>Nachricht &amp;signieren</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+11"/>
+        <source>Verify a message to ensure it was signed with a specified Freicoin address</source>
+        <translation>Die Nachricht signieren, um sicherzustellen, dass diese mit der angegebenen Freicoin-Adresse signiert wurde.</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Delete the currently selected address from the list</source>
         <translation>Die ausgewählte Adresse aus der Liste entfernen.</translation>
     </message>
@@ -108,12 +108,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>E&amp;xportieren</translation>
     </message>
     <message>
-        <location line="-44"/>
-        <source>Verify a message to ensure it was signed with a specified Freicoin address</source>
-        <translation>Eine Nachricht verifizieren, um sicherzustellen, dass diese mit einer angegebenen Freicoin-Adresse signiert wurde</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="-41"/>
         <source>&amp;Verify Message</source>
         <translation>Nachricht &amp;verifizieren</translation>
     </message>
@@ -123,12 +118,17 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>&amp;Löschen</translation>
     </message>
     <message>
-        <location filename="../addressbookpage.cpp" line="-5"/>
+        <location filename="../addressbookpage.cpp" line="+58"/>
         <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation>Dies sind Ihre Freicoin-Adressen zum Tätigen von Überweisungen. Bitte prüfen Sie den Betrag und die Empfangsadresse, bevor Sie Freicoins überweisen.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+5"/>
+        <source>These are your Freicoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Dies sind Ihre Freicoin-Adressen zum Empfangen von Zahlungen. Es steht Ihnen frei, jedem Absender eine Andere mitzuteilen, um einen besseren Überblick über eingehende Zahlungen zu erhalten.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Copy &amp;Label</source>
         <translation>&amp;Bezeichnung kopieren</translation>
     </message>
@@ -150,7 +150,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
     <message>
         <location line="+1"/>
         <source>Comma separated file (*.csv)</source>
-        <translation>Kommagetrennte-Datei (*.csv)</translation>
+        <translation>Kommagetrennte Datei (*.csv)</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -216,7 +216,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
     <message>
         <location line="+3"/>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation>Dieser Vorgang benötigt Ihre Passphrase, um die Brieftasche zu entsperren.</translation>
+        <translation>Dieser Vorgang benötigt Ihre Passphrase um die Brieftasche zu entsperren.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -226,7 +226,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
     <message>
         <location line="+3"/>
         <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
-        <translation>Dieser Vorgang benötigt Ihre Passphrase, um die Brieftasche zu entschlüsseln.</translation>
+        <translation>Dieser Vorgang benötigt Ihre Passphrase um die Brieftasche zu entschlüsseln.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -256,12 +256,12 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
     <message>
         <location line="+0"/>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Wenn Sie Ihre Brieftasche verschlüsseln und Ihre Passphrase verlieren, werden Sie &lt;b&gt;ALLE IHRE FREICOINS VERLIEREN&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Freicoin wird jetzt beendet, um den Verschlüsselungsprozess abzuschliessen. Bitte beachten Sie, dass die Verschlüsselung Ihrer Brieftasche nicht vollständig vor Diebstahl Ihrer Freicoins durch Schadsoftware schützt, die Ihren Computer befällt.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -375,12 +375,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>Anwendung beenden</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Show information about Freicoin</source>
-        <translation>Informationen über Freicoin anzeigen</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+6"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
@@ -420,17 +415,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>Reindiziere Blöcke auf Laufwerk...</translation>
     </message>
     <message>
-        <location line="-347"/>
-        <source>Send coins to a Freicoin address</source>
-        <translation>Freicoins an eine Freicoin-Adresse überweisen</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>Modify configuration options for Freicoin</source>
-        <translation>Die Konfiguration des Clients bearbeiten</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="-289"/>
         <source>Backup wallet to another location</source>
         <translation>Eine Sicherungskopie der Brieftasche erstellen und abspeichern</translation>
     </message>
@@ -456,12 +441,6 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
     </message>
     <message>
         <location line="-165"/>
-        <location line="+530"/>
-        <source>Freicoin</source>
-        <translation>Freicoin</translation>
-    </message>
-    <message>
-        <location line="-530"/>
         <source>Wallet</source>
         <translation>Brieftasche</translation>
     </message>
@@ -481,12 +460,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>&amp;Adressen</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>&amp;About Freicoin</source>
-        <translation>&amp;Über Freicoin</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+31"/>
         <source>&amp;Show / Hide</source>
         <translation>&amp;Anzeigen / Verstecken</translation>
     </message>
@@ -501,17 +475,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>Verschlüsselt die zu Ihrer Brieftasche gehörenden privaten Schlüssel</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Sign messages with your Freicoin addresses to prove you own them</source>
-        <translation>Nachrichten signieren, um den Besitz Ihrer Freicoin-Adressen zu beweisen</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
-        <translation>Nachrichten verifizieren, um sicherzustellen, dass diese mit den angegebenen Freicoin-Adressen signiert wurden</translation>
-    </message>
-    <message>
-        <location line="+28"/>
+        <location line="+37"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
@@ -537,20 +501,7 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>[Testnetz]</translation>
     </message>
     <message>
-        <location line="+47"/>
-        <source>Freicoin client</source>
-        <translation>Freicoin-Client</translation>
-    </message>
-    <message numerus="yes">
-        <location line="+141"/>
-        <source>%n active connection(s) to Freicoin network</source>
-        <translation>
-            <numerusform>%n aktive Verbindung zum Freicoin-Netzwerk</numerusform>
-            <numerusform>%n aktive Verbindungen zum Freicoin-Netzwerk</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+210"/>
         <source>No block source available...</source>
         <translation>Keine Blockquelle verfügbar...</translation>
     </message>
@@ -629,7 +580,56 @@ Dieses Produkt enthält Software, die vom OpenSSL-Projekt zur Verwendung im Open
         <translation>Auf aktuellem Stand</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="-475"/>
+        <location line="+530"/>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
+    </message>
+    <message>
+        <location line="-428"/>
+        <source>Send coins to a Freicoin address</source>
+        <translation>Freicoins an eine Freicoin-Adresse überweisen</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>&amp;About Freicoin</source>
+        <translation>&amp;Über Freicoin</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show information about Freicoin</source>
+        <translation>Informationen über Freicoin anzeigen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Die Konfiguration des Clients bearbeiten</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
+        <translation>Nachrichten signieren, um den Besitz Ihrer Freicoin-Adressen zu beweisen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
+        <translation>Nachrichten verifizieren, um sicherzustellen, dass diese mit den angegebenen Freicoin-Adressen signiert wurden</translation>
+    </message>
+    <message>
+        <location line="+124"/>
+        <source>Freicoin client</source>
+        <translation>Freicoin-Client</translation>
+    </message>
+    <message numerus="yes">
+        <location line="+141"/>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation>
+            <numerusform>%n aktive Verbindung zum Freicoin-Netzwerk</numerusform>
+            <numerusform>%n aktive Verbindungen zum Freicoin-Netzwerk</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>Catching up...</source>
         <translation>Hole auf...</translation>
     </message>
@@ -706,7 +706,7 @@ Adresse: %4</translation>
     <message>
         <location line="+11"/>
         <source>&amp;Label</source>
-        <translation>&amp;Bezeichnung</translation>
+        <translation>Bezei&amp;chnung</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -716,7 +716,7 @@ Adresse: %4</translation>
     <message>
         <location line="+7"/>
         <source>&amp;Address</source>
-        <translation>&amp;Adresse</translation>
+        <translation>Adre&amp;sse</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -744,17 +744,17 @@ Adresse: %4</translation>
         <translation>Zahlungsadresse bearbeiten</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+71"/>
+        <source>The entered address &quot;%1&quot; is not a valid Freicoin address.</source>
+        <translation>Die eingegebene Adresse &quot;%1&quot; ist keine gültige Freicoin Adresse.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>The entered address &quot;%1&quot; is already in the address book.</source>
         <translation>Die eingegebene Adresse &quot;%1&quot; befindet sich bereits im Adressbuch.</translation>
     </message>
     <message>
-        <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Freicoin address.</source>
-        <translation>Die eingegebene Adresse &quot;%1&quot; ist keine gültige Freicoin-Adresse.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Could not unlock wallet.</source>
         <translation>Die Brieftasche konnte nicht entsperrt werden.</translation>
     </message>
@@ -768,17 +768,17 @@ Adresse: %4</translation>
     <name>GUIUtil::HelpMessageBox</name>
     <message>
         <location filename="../guiutil.cpp" line="+424"/>
+        <source>version</source>
+        <translation>Version</translation>
+    </message>
+    <message>
+        <location line="+0"/>
         <location line="+12"/>
         <source>Freicoin-Qt</source>
         <translation>Freicoin-Qt</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>version</source>
-        <translation>Version</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="-10"/>
         <source>Usage:</source>
         <translation>Benutzung:</translation>
     </message>
@@ -818,7 +818,7 @@ Adresse: %4</translation>
     <message>
         <location line="+16"/>
         <source>&amp;Main</source>
-        <translation>&amp;Allgemein</translation>
+        <translation>Allge&amp;mein</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -831,17 +831,7 @@ Adresse: %4</translation>
         <translation>Transaktions&amp;gebühr bezahlen</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <source>Automatically start Freicoin after logging in to the system.</source>
-        <translation>Freicoin nach der Anmeldung am System automatisch ausführen.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&amp;Start Freicoin on system login</source>
-        <translation>&amp;Starte Freicoin nach Systemanmeldung</translation>
-    </message>
-    <message>
-        <location line="+35"/>
+        <location line="+69"/>
         <source>Reset all client options to default.</source>
         <translation>Setzt die Clientkonfiguration auf Standardwerte zurück.</translation>
     </message>
@@ -853,22 +843,32 @@ Adresse: %4</translation>
     <message>
         <location line="+13"/>
         <source>&amp;Network</source>
-        <translation>&amp;Netzwerk</translation>
+        <translation>Netz&amp;werk</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatisch den Freicoin-Clientport auf dem Router öffnen. Dies funktioniert nur, wenn Ihr Router UPnP unterstützt und dies aktiviert ist.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+9"/>
         <source>Map port using &amp;UPnP</source>
         <translation>Portweiterleitung via &amp;UPnP</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-63"/>
+        <source>Automatically start Freicoin after logging in to the system.</source>
+        <translation>Freicoin nach der Anmeldung am System automatisch ausführen.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Start Freicoin on system login</source>
+        <translation>&amp;Starte Freicoin nach Systemanmeldung</translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatisch den Freicoin Clientport auf dem Router öffnen. Dies funktioniert nur, wenn ihr Router UPnP unterstützt und dies aktiviert ist.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Connect to the Freicoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Über einen SOCKS-Proxy mit dem Freicoin-Netzwerk verbinden (z.B. beim Verbinden über Tor).</translation>
+        <translation>Über einen Socks Proxy mit dem Freicoin-Netzwerk verbinden (z.B. beim Verbinden über Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -883,12 +883,12 @@ Adresse: %4</translation>
     <message>
         <location line="+19"/>
         <source>IP address of the proxy (e.g. 127.0.0.1)</source>
-        <translation>IP-Adresse des Proxies (z.B. 127.0.0.1)</translation>
+        <translation>IP-Adresse des Proxyservers (z.B. 127.0.0.1)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Port:</source>
-        <translation>&amp;Port:</translation>
+        <translation>Po&amp;rt:</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -923,17 +923,17 @@ Adresse: %4</translation>
     <message>
         <location line="+7"/>
         <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Quit in the menu.</source>
-        <translation>Minimiert die Anwendung anstatt sie zu beenden wenn das Fenster geschlossen wird. Wenn dies aktiviert ist, müssen Sie das Programm über &quot;Beenden&quot; im Menü schließen.</translation>
+        <translation>Minimiert die Anwendung anstatt sie zu beenden wenn das Fenster geschlossen wird. Wenn dies aktiviert ist, müssen Sie das Programm über &quot;Beenden&quot; im Menü schliessen.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>M&amp;inimize on close</source>
-        <translation>Beim Schließen m&amp;inimieren</translation>
+        <translation>Beim &amp;Schliessen minimieren</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>&amp;Display</source>
-        <translation>&amp;Anzeige</translation>
+        <translation>An&amp;zeige</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -946,7 +946,12 @@ Adresse: %4</translation>
         <translation>Legt die Sprache der Benutzeroberfläche fest. Diese Einstellung wird erst nach einem Neustart von Freicoin aktiv.</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+33"/>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
+        <translation>Legt fest, ob Freicoin-Adressen in der Transaktionsliste angezeigt werden.</translation>
+    </message>
+    <message>
+        <location line="-22"/>
         <source>&amp;Unit to show amounts in:</source>
         <translation>&amp;Einheit der Beträge:</translation>
     </message>
@@ -956,12 +961,7 @@ Adresse: %4</translation>
         <translation>Wählen Sie die Standarduntereinheit, die in der Benutzeroberfläche und beim Überweisen von Freicoins angezeigt werden soll.</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
-        <translation>Legt fest, ob Freicoin-Adressen in der Transaktionsliste angezeigt werden.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+12"/>
         <source>&amp;Display addresses in transaction list</source>
         <translation>Adressen in der Transaktionsliste &amp;anzeigen</translation>
     </message>
@@ -978,7 +978,7 @@ Adresse: %4</translation>
     <message>
         <location line="+10"/>
         <source>&amp;Apply</source>
-        <translation>&amp;Übernehmen</translation>
+        <translation>Über&amp;nehmen</translation>
     </message>
     <message>
         <location filename="../optionsdialog.cpp" line="+53"/>
@@ -1010,7 +1010,7 @@ Adresse: %4</translation>
         <location line="-9"/>
         <location line="+9"/>
         <source>This setting will take effect after restarting Freicoin.</source>
-        <translation>Diese Einstellung wird erst nach einem Neustart von Freicoin aktiv.</translation>
+        <translation>Diese Einstellung wird erst nach einem Neustrat von Freicoin aktiv.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1026,13 +1026,7 @@ Adresse: %4</translation>
         <translation>Formular</translation>
     </message>
     <message>
-        <location line="+50"/>
-        <location line="+166"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>Die angezeigten Informationen sind möglicherweise nicht mehr aktuell. Ihre Brieftasche wird automatisch synchronisiert, nachdem eine Verbindung zum Freicoin-Netzwerk hergestellt wurde. Dieser Prozess ist jedoch derzeit noch nicht abgeschlossen.</translation>
-    </message>
-    <message>
-        <location line="-124"/>
+        <location line="+92"/>
         <source>Balance:</source>
         <translation>Kontostand:</translation>
     </message>
@@ -1047,7 +1041,13 @@ Adresse: %4</translation>
         <translation>Brieftasche</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+7"/>
+        <location line="+166"/>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Die angezeigten Informationen sind möglicherweise nicht mehr aktuell. Ihre Brieftasche wird automatisch synchronisiert, nachdem eine Verbindung zum Freicoin-Netzwerk hergestellt wurde. Dieser Prozess ist jedoch derzeit noch nicht abgeschlossen.</translation>
+    </message>
+    <message>
+        <location line="-66"/>
         <source>Immature:</source>
         <translation>Unreif:</translation>
     </message>
@@ -1083,7 +1083,7 @@ Adresse: %4</translation>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
         <source>Cannot start freicoin: click-to-pay handler</source>
-        <translation type="unfinished"></translation>
+        <translation>Freicoin konnte nicht gestartet werden. Klicken-zum-Bezahlen-Handler konnte nicht gestartet werden.</translation>
     </message>
 </context>
 <context>
@@ -1141,7 +1141,7 @@ Adresse: %4</translation>
     <message>
         <location line="+0"/>
         <source>PNG Images (*.png)</source>
-        <translation>PNG-Bild (*.png)</translation>
+        <translation>PNG Bild (*.png)</translation>
     </message>
 </context>
 <context>
@@ -1149,7 +1149,7 @@ Adresse: %4</translation>
     <message>
         <location filename="../forms/rpcconsole.ui" line="+46"/>
         <source>Client name</source>
-        <translation>Clientname</translation>
+        <translation>Client Name</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1168,7 +1168,7 @@ Adresse: %4</translation>
     <message>
         <location line="-217"/>
         <source>Client version</source>
-        <translation>Clientversion</translation>
+        <translation>Client Version</translation>
     </message>
     <message>
         <location line="-45"/>
@@ -1176,7 +1176,17 @@ Adresse: %4</translation>
         <translation>&amp;Information</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="-10"/>
+        <source>Freicoin - Debug window</source>
+        <translation>Freicoin - Debugfenster</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Freicoin Core</source>
+        <translation>Freicoin-Kern</translation>
+    </message>
+    <message>
+        <location line="+53"/>
         <source>Using OpenSSL version</source>
         <translation>Verwendete OpenSSL-Version</translation>
     </message>
@@ -1221,9 +1231,14 @@ Adresse: %4</translation>
         <translation>Letzte Blockzeit</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+49"/>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Öffnet die Freicoin-Debugprotokolldatei aus dem aktuellen Datenverzeichnis. Dies kann bei großen Protokolldateien einige Sekunden dauern.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>&amp;Open</source>
-        <translation>&amp;Öffnen</translation>
+        <translation>Ö&amp;ffnen</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -1251,27 +1266,12 @@ Adresse: %4</translation>
         <translation>Erstellungsdatum</translation>
     </message>
     <message>
-        <location line="-104"/>
-        <source>Freicoin - Debug window</source>
-        <translation>Freicoin - Debugfenster</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Freicoin Core</source>
-        <translation>Freicoin-Kern</translation>
-    </message>
-    <message>
-        <location line="+279"/>
+        <location line="+200"/>
         <source>Debug log file</source>
         <translation>Debugprotokolldatei</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Öffnet die Freicoin-Debugprotokolldatei aus dem aktuellen Datenverzeichnis. Dies kann bei großen Protokolldateien einige Sekunden dauern.</translation>
-    </message>
-    <message>
-        <location line="+102"/>
+        <location line="+109"/>
         <source>Clear console</source>
         <translation>Konsole zurücksetzen</translation>
     </message>
@@ -1313,7 +1313,7 @@ Adresse: %4</translation>
     <message>
         <location line="+3"/>
         <source>Add &amp;Recipient</source>
-        <translation>Empfänger &amp;hinzufügen</translation>
+        <translation>Empfänger hinzu&amp;fügen</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -1343,7 +1343,7 @@ Adresse: %4</translation>
     <message>
         <location line="+3"/>
         <source>S&amp;end</source>
-        <translation>&amp;Überweisen</translation>
+        <translation>Über&amp;weisen</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-59"/>
@@ -1416,7 +1416,7 @@ Adresse: %4</translation>
     <message>
         <location line="+13"/>
         <source>Pay &amp;To:</source>
-        <translation>&amp;Empfänger:</translation>
+        <translation>E&amp;mpfänger:</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -1432,7 +1432,7 @@ Adresse: %4</translation>
     <message>
         <location line="-78"/>
         <source>&amp;Label:</source>
-        <translation>&amp;Bezeichnung:</translation>
+        <translation>Bezei&amp;chnung:</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1530,14 +1530,19 @@ Adresse: %4</translation>
         <translation>Die Nachricht signieren, um den Besitz dieser Freicoin-Adresse zu beweisen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+146"/>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Die Nachricht verifizieren, um sicherzustellen, dass diese mit der angegebenen Freicoin-Adresse signiert wurde</translation>
+    </message>
+    <message>
+        <location line="-143"/>
         <source>Sign &amp;Message</source>
         <translation>&amp;Nachricht signieren</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Reset all sign message fields</source>
-        <translation>Alle &quot;Nachricht signieren&quot;-Felder zurücksetzen</translation>
+        <translation>Alle Nachricht signieren Felder zurücksetzen</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1561,33 +1566,28 @@ Adresse: %4</translation>
         <translation>Die Adresse mit der die Nachricht signiert wurde (z.B. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
-        <translation>Die Nachricht verifizieren, um sicherzustellen, dass diese mit der angegebenen Freicoin-Adresse signiert wurde</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+43"/>
         <source>Verify &amp;Message</source>
         <translation>&amp;Nachricht verifizieren</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Reset all verify message fields</source>
-        <translation>Alle &quot;Nachricht verifizieren&quot;-Felder zurücksetzen</translation>
+        <translation>Alle Nachricht verifizieren Felder zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../signverifymessagedialog.cpp" line="+27"/>
+        <location filename="../signverifymessagedialog.cpp" line="+28"/>
+        <source>Click &quot;Sign Message&quot; to generate signature</source>
+        <translation>Auf &quot;Nachricht signieren&quot; klicken, um die Signatur zu erzeugen</translation>
+    </message>
+    <message>
+        <location line="-1"/>
         <location line="+3"/>
         <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Freicoin-Adresse eingeben (z.B. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <location line="-2"/>
-        <source>Click &quot;Sign Message&quot; to generate signature</source>
-        <translation>Auf &quot;Nachricht signieren&quot; klicken, um die Signatur zu erzeugen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Enter Freicoin signature</source>
         <translation>Freicoin-Signatur eingeben</translation>
     </message>
@@ -1798,7 +1798,7 @@ Adresse: %4</translation>
     <message>
         <location line="+2"/>
         <source>Reference Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzhöhe</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1897,7 +1897,7 @@ Adresse: %4</translation>
     <message>
         <location line="+0"/>
         <source>Ref-height</source>
-        <translation type="unfinished"></translation>
+        <translation>Ref-Höhe</translation>
     </message>
     <message numerus="yes">
         <location line="+57"/>
@@ -2003,7 +2003,7 @@ Adresse: %4</translation>
     <message>
         <location line="+2"/>
         <source>Reference block number that amount is pegged to.</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenz-Blocknummer an die dieser Betrag gebunden ist.</translation>
     </message>
 </context>
 <context>
@@ -2077,12 +2077,12 @@ Adresse: %4</translation>
     <message>
         <location line="+7"/>
         <source>Min amount</source>
-        <translation>Minimaler Betrag</translation>
+        <translation>Min. Betrag</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Min height</source>
-        <translation type="unfinished"></translation>
+        <translation>Min. Höhe</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -2122,7 +2122,7 @@ Adresse: %4</translation>
     <message>
         <location line="+1"/>
         <source>Comma separated file (*.csv)</source>
-        <translation>Kommagetrennte-Datei (*.csv)</translation>
+        <translation>Kommagetrennte Datei (*.csv)</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -2234,12 +2234,7 @@ Adresse: %4</translation>
 <context>
     <name>bitcoin-core</name>
     <message>
-        <location filename="../bitcoinstrings.cpp" line="+131"/>
-        <source>Freicoin version</source>
-        <translation>Freicoin-Version</translation>
-    </message>
-    <message>
-        <location line="+66"/>
+        <location filename="../bitcoinstrings.cpp" line="+197"/>
         <source>Usage:</source>
         <translation>Benutzung:</translation>
     </message>
@@ -2339,12 +2334,7 @@ Adresse: %4</translation>
         <translation>An die angegebene Adresse binden und immer abhören. Für IPv6 [Host]:Port-Schreibweise verwenden</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
-        <translation>Datenverzeichnis %s kann nicht gesperrt werden. Evtl. wurde Freicoin bereits gestartet.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Error: The transaction was rejected! This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
         <translation>Fehler: Die Transaktion wurde abgelehnt! Dies kann passieren, wenn einige Freicoins aus Ihrer Brieftasche bereits ausgegeben wurden. Beispielsweise weil Sie eine Kopie Ihrer wallet.dat genutzt, die Freicoins dort ausgegeben haben und dies daher in der derzeit aktiven Brieftasche nicht vermerkt ist.</translation>
     </message>
@@ -2384,12 +2374,7 @@ Adresse: %4</translation>
         <translation>Warnung: Angezeigte Transaktionen sind evtl. nicht korrekt! Sie oder die anderen Knoten müssen unter Umständen (den Client) aktualisieren.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
-        <translation>Warnung: Bitte korrigieren Sie die Datums- und Uhrzeiteinstellungen Ihres Computers, da Freicoin ansonsten nicht ordnungsgemäß funktionieren wird!</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Warning: error reading wallet.dat! All keys read correctly, but transaction data or address book entries might be missing or incorrect.</source>
         <translation>Warnung: Lesen von wallet.dat fehlgeschlagen! Alle Schlüssel wurden korrekt gelesen, Transaktionsdaten bzw. Adressbucheinträge fehlen aber möglicherweise oder sind inkorrekt.</translation>
     </message>
@@ -2549,27 +2534,17 @@ Adresse: %4</translation>
         <translation>Blockkettenindex aus aktuellen Dateien blk000??.dat wiederaufbauen</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Send command to -server or freicoind</source>
-        <translation type="unfinished"></translation>
+        <location line="+4"/>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>SSL-Optionen: (siehe Freicoin-Wiki für SSL-Installationsanweisungen)</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Set the number of threads to service RPC calls (default: 4)</source>
         <translation>Maximale Anzahl an Threads zur Verarbeitung von RPC-Anfragen festlegen (Standard: 4)</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Specify configuration file (default: freicoin.conf)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Specify pid file (default: freicoind.pid)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+26"/>
         <source>Verifying blocks...</source>
         <translation>Verifiziere Blöcke...</translation>
     </message>
@@ -2596,15 +2571,49 @@ If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
 for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo.com
 </source>
-        <translation type="unfinished"></translation>
+        <translation>%s, Sie müssen den Wert rpcpasswort in der Konfigurationsdatei angeben:
+%s
+Es wird empfohlen das folgende Zufallspasswort zu verwenden:
+rpcuser=freicoinrpc
+rpcpassword=%s
+(Sie müssen sich dieses Passwort nicht merken!)
+Falls die Konfigurationsdatei nicht existiert, erzeugen Sie diese bitte mit Leserechten nur für den Dateibesitzer.
+Es ist ausserdem empfohlen, einen Alarm einzurichten, damit Sie über allfällige Probleme informiert werden;
+z.B.: alertnotify=echo %%s | mail -s &quot;Freicoin Alarm&quot; admin@foo.com
+</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+24"/>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
+        <translation>Datenverzeichnis %s kann nicht gesperrt werden. Evtl. wurde Freicoin bereits gestartet.</translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Set the number of script verification threads (up to 16, 0 = auto, &lt;0 = leave that many cores free, default: 0)</source>
         <translation>Maximale Anzahl an Skript-Verifizierungs-Threads festlegen (bis zu 16, 0 = automatisch, &lt;0 = soviele Kerne frei lassen, Standard: 0)</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+6"/>
+        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
+        <translation>Kann auf diesem Computer nicht an %s binden. Evtl. wurde Freicoin bereits gestartet.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Warnung: Bitte korrigieren Sie die Datums- und Uhrzeiteinstellungen Ihres Computers, da Freicoin ansonsten nicht ordnungsgemäß funktionieren wird!</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Fehler beim Laden von wallet.dat: Brieftasche benötigt neuere Version von Freicoin</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Freicoin version</source>
+        <translation>Freicoin-Version</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Information</source>
         <translation>Hinweis</translation>
     </message>
@@ -2664,17 +2673,17 @@ for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo
         <translation>Der Debugausgabe einen Zeitstempel voranstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
-        <translation>SSL-Optionen: (siehe Freicoin-Wiki für SSL-Installationsanweisungen)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+6"/>
         <source>Select the version of socks proxy to use (4-5, default: 5)</source>
         <translation>SOCKS-Version des Proxies festlegen (4-5, Standard: 5)</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
+        <source>Send command to -server or freicoind</source>
+        <translation>Befehl an -server oder freicoind senden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Send trace/debug info to console instead of debug.log file</source>
         <translation>Rückverfolgungs- und Debuginformationen an die Konsole senden anstatt sie in die Datei debug.log zu schreiben</translation>
     </message>
@@ -2704,12 +2713,22 @@ for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo
         <translation>Signierung der Transaktion fehlgeschlagen</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>Konfigurationsdatei angeben (Standard: freicoin.conf)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Specify connection timeout in milliseconds (default: 5000)</source>
         <translation>Verbindungstimeout in Millisekunden festlegen (Standard: 5000)</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>PID-Datei angeben (Standard: freicoind.pid)</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>System error: </source>
         <translation>Systemfehler: </translation>
     </message>
@@ -2749,7 +2768,12 @@ for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo
         <translation>Benutzername für JSON-RPC-Verbindungen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Brieftasche musste neu geschrieben werden: Starten Sie Freicoin zur Fertigstellung neu</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -2854,17 +2878,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo
         <translation>Fehler beim Laden von wallet.dat: Brieftasche beschädigt</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
-        <translation>Fehler beim Laden von wallet.dat: Brieftasche benötigt neuere Version von Freicoin</translation>
-    </message>
-    <message>
-        <location line="+94"/>
-        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
-        <translation>Brieftasche musste neu geschrieben werden: Starten Sie Freicoin zur Fertigstellung neu</translation>
-    </message>
-    <message>
-        <location line="-96"/>
+        <location line="-1"/>
         <source>Error loading wallet.dat</source>
         <translation>Fehler beim Laden von wallet.dat (Brieftasche)</translation>
     </message>
@@ -2919,12 +2933,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo
         <translation>Mit dem Knoten verbinden und versuchen die Verbindung aufrecht zu halten</translation>
     </message>
     <message>
-        <location line="-25"/>
-        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
-        <translation>Kann auf diesem Computer nicht an %s binden. Evtl. wurde Freicoin bereits gestartet.</translation>
-    </message>
-    <message>
-        <location line="+63"/>
+        <location line="+38"/>
         <source>Fee per KB to add to transactions you send</source>
         <translation>Gebühr pro KB, die gesendeten Transaktionen hinzugefügt wird</translation>
     </message>
