@@ -1,16 +1,18 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="el_GR" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="el_GR">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Bitcoin</source>
-        <translation>Σχετικά με το Bitcoin</translation>
+        <source>About Freicoin</source>
+        <translation>Σχετικά με το Freicoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Bitcoin&lt;/b&gt; version</source>
-        <translation>Έκδοση Bitcoin</translation>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
+        <translation>Έκδοση Freicoin</translation>
     </message>
     <message>
         <location line="+57"/>
@@ -34,8 +36,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+0"/>
-        <source>The Bitcoin developers</source>
-        <translation>Οι Bitcoin προγραμματιστές </translation>
+        <source>The Freicoin developers</source>
+        <translation>Οι Freicoin προγραμματιστές </translation>
     </message>
 </context>
 <context>
@@ -67,8 +69,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="+63"/>
-        <source>These are your Bitcoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Αυτές είναι οι Bitcoin διευθύνσεις σας για να λαμβάνετε πληρωμές. Δίνοντας μία ξεχωριστή διεύθυνση σε κάθε αποστολέα, θα μπορείτε να ελέγχετε ποιος σας πληρώνει.</translation>
+        <source>These are your Freicoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Αυτές είναι οι Freicoin διευθύνσεις σας για να λαμβάνετε πληρωμές. Δίνοντας μία ξεχωριστή διεύθυνση σε κάθε αποστολέα, θα μπορείτε να ελέγχετε ποιος σας πληρώνει.</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="+14"/>
@@ -82,8 +84,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a Bitcoin address</source>
-        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως σας ανήκει μια συγκεκριμένη διεύθυνση Bitcoin</translation>
+        <source>Sign a message to prove you own a Freicoin address</source>
+        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως σας ανήκει μια συγκεκριμένη διεύθυνση Freicoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -107,8 +109,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-44"/>
-        <source>Verify a message to ensure it was signed with a specified Bitcoin address</source>
-        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως ανήκει μια συγκεκριμένη διεύθυνση Bitcoin</translation>
+        <source>Verify a message to ensure it was signed with a specified Freicoin address</source>
+        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως ανήκει μια συγκεκριμένη διεύθυνση Freicoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -122,8 +124,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="-5"/>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Αυτές είναι οι Bitcoin διευθύνσεις σας για να λαμβάνετε πληρωμές. Δίνοντας μία ξεχωριστή διεύθυνση σε κάθε αποστολέα, θα μπορείτε να ελέγχετε ποιος σας πληρώνει.</translation>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Αυτές είναι οι Freicoin διευθύνσεις σας για να λαμβάνετε πληρωμές. Δίνοντας μία ξεχωριστή διεύθυνση σε κάθε αποστολέα, θα μπορείτε να ελέγχετε ποιος σας πληρώνει.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -248,17 +250,21 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>Προσοχη: Εαν κρυπτογραφησεις το πορτοφολι σου και χάσεις τον κωδικο σου θα χάσεις &lt;b&gt; ΟΛΑ ΣΟΥ ΤΑ BITCOINS&lt;/b&gt;!
-Είσαι σίγουρος ότι θέλεις να κρυπτογραφησεις το πορτοφολι;</translation>
-    </message>
-    <message>
-        <location line="+0"/>
         <source>Are you sure you wish to encrypt your wallet?</source>
         <translation>Είστε σίγουροι ότι θέλετε να κρυπτογραφήσετε το πορτοφόλι σας;</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+0"/>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
         <translation>ΣΗΜΑΝΤΙΚΟ: Τα προηγούμενα αντίγραφα ασφαλείας που έχετε κάνει από το αρχείο του πορτοφόλιου σας θα πρέπει να αντικατασταθουν με το νέο που δημιουργείται, κρυπτογραφημένο αρχείο πορτοφόλιου. Για λόγους ασφαλείας, τα προηγούμενα αντίγραφα ασφαλείας του μη κρυπτογραφημένου αρχείου πορτοφόλιου θα καταστουν άχρηστα μόλις αρχίσετε να χρησιμοποιείτε το νέο κρυπτογραφημένο πορτοφόλι. </translation>
     </message>
@@ -275,12 +281,7 @@ This product includes software developed by the OpenSSL Project for use in the O
         <translation>Κρυπτογραφημενο πορτοφολι</translation>
     </message>
     <message>
-        <location line="-56"/>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Το Bitcoin θα κλεισει τώρα για να τελειώσει την διαδικασία κρυπτογραφησης. Θυμησου ότι κρυπτογραφώντας το πορτοφολι σου δεν μπορείς να προστατέψεις πλήρως τα bitcoins σου από κλοπή στην περίπτωση όπου μολυνθεί ο υπολογιστής σου με κακόβουλο λογισμικο.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="-43"/>
         <location line="+7"/>
         <location line="+42"/>
         <location line="+6"/>
@@ -375,8 +376,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Bitcoin</source>
-        <translation>Εμφάνισε πληροφορίες σχετικά με το Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Εμφάνισε πληροφορίες σχετικά με το Freicoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -420,13 +421,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-347"/>
-        <source>Send coins to a Bitcoin address</source>
+        <source>Send coins to a Freicoin address</source>
         <translation>Στείλε νομισματα σε μια διεύθυνση bitcoin</translation>
     </message>
     <message>
         <location line="+49"/>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>Επεργασία  ρυθμισεων επιλογών για το Bitcoin</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Επεργασία  ρυθμισεων επιλογών για το Freicoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -456,8 +457,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-165"/>
         <location line="+530"/>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <location line="-530"/>
@@ -481,8 +482,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+22"/>
-        <source>&amp;About Bitcoin</source>
-        <translation>&amp;Σχετικα:Bitcoin</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>&amp;Σχετικα:Freicoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -501,13 +502,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
         <translation>Υπογράψτε ένα μήνυμα για να βεβαιώσετε πως είστε ο κάτοχος αυτής της διεύθυνσης</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως ανήκει μια συγκεκριμένη διεύθυνση Bitcoin</translation>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
+        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως ανήκει μια συγκεκριμένη διεύθυνση Freicoin</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -537,13 +538,16 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+47"/>
-        <source>Bitcoin client</source>
-        <translation>Πελάτης Bitcoin</translation>
+        <source>Freicoin client</source>
+        <translation>Πελάτης Freicoin</translation>
     </message>
     <message numerus="yes">
         <location line="+141"/>
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n ενεργή σύνδεση στο δίκτυο Bitcoin</numerusform><numerusform>%n ενεργές συνδέσεις στο δίκτυο Βitcoin</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation>
+            <numerusform>%n ενεργή σύνδεση στο δίκτυο Freicoin</numerusform>
+            <numerusform>%n ενεργές συνδέσεις στο δίκτυο Βitcoin</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+22"/>
@@ -563,17 +567,26 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message numerus="yes">
         <location line="+20"/>
         <source>%n hour(s)</source>
-        <translation><numerusform>%n ώρες </numerusform><numerusform>%n ώρες </numerusform></translation>
+        <translation>
+            <numerusform>%n ώρες </numerusform>
+            <numerusform>%n ώρες </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n day(s)</source>
-        <translation><numerusform>%n ημέρες </numerusform><numerusform>%n ημέρες </numerusform></translation>
+        <translation>
+            <numerusform>%n ημέρες </numerusform>
+            <numerusform>%n ημέρες </numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n week(s)</source>
-        <translation><numerusform>%n εβδομαδες</numerusform><numerusform>%n εβδομαδες</numerusform></translation>
+        <translation>
+            <numerusform>%n εβδομαδες</numerusform>
+            <numerusform>%n εβδομαδες</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+4"/>
@@ -659,8 +672,8 @@ Address: %4
     <message>
         <location line="-23"/>
         <location line="+23"/>
-        <source>URI can not be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation>Το URI δεν μπορεί να αναλυθεί! Αυτό μπορεί να προκληθεί από μια μη έγκυρη διεύθυνση Bitcoin ή ακατάλληλη παραμέτρο URI.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Freicoin address or malformed URI parameters.</source>
+        <translation>Το URI δεν μπορεί να αναλυθεί! Αυτό μπορεί να προκληθεί από μια μη έγκυρη διεύθυνση Freicoin ή ακατάλληλη παραμέτρο URI.</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -674,8 +687,8 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+111"/>
-        <source>A fatal error occurred. Bitcoin can no longer continue safely and will quit.</source>
-        <translation>Παρουσιάστηκε ανεπανόρθωτο σφάλμα. Το Bitcoin δεν μπορεί πλέον να συνεχίσει με ασφάλεια και θα τερματισθει.</translation>
+        <source>A fatal error occurred. Freicoin can no longer continue safely and will quit.</source>
+        <translation>Παρουσιάστηκε ανεπανόρθωτο σφάλμα. Το Freicoin δεν μπορεί πλέον να συνεχίσει με ασφάλεια και θα τερματισθει.</translation>
     </message>
 </context>
 <context>
@@ -740,8 +753,8 @@ Address: %4
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Bitcoin address.</source>
-        <translation>Η διεύθυνση &quot;%1&quot; δεν είναι έγκυρη Bitcoin διεύθυνση.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Freicoin address.</source>
+        <translation>Η διεύθυνση &quot;%1&quot; δεν είναι έγκυρη Freicoin διεύθυνση.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -759,7 +772,7 @@ Address: %4
     <message>
         <location filename="../guiutil.cpp" line="+424"/>
         <location line="+12"/>
-        <source>Bitcoin-Qt</source>
+        <source>Freicoin-Qt</source>
         <translation>bitcoin-qt</translation>
     </message>
     <message>
@@ -822,12 +835,12 @@ Address: %4
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
-        <translation>Αυτόματη εκκίνηση του Bitcoin μετά την εισαγωγή στο σύστημα</translation>
+        <source>Automatically start Freicoin after logging in to the system.</source>
+        <translation>Αυτόματη εκκίνηση του Freicoin μετά την εισαγωγή στο σύστημα</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Bitcoin on system login</source>
+        <source>&amp;Start Freicoin on system login</source>
         <translation>&amp;Έναρξη του Βιtcoin κατά την εκκίνηση του συστήματος</translation>
     </message>
     <message>
@@ -847,8 +860,8 @@ Address: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Αυτόματο άνοιγμα των θυρών Bitcoin στον δρομολογητή. Λειτουργεί μόνο αν ο δρομολογητής σας υποστηρίζει τη λειτουργία UPnP.</translation>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Αυτόματο άνοιγμα των θυρών Freicoin στον δρομολογητή. Λειτουργεί μόνο αν ο δρομολογητής σας υποστηρίζει τη λειτουργία UPnP.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -857,8 +870,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Bitcoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Σύνδεση στο Bitcoin δίκτυο μέσω διαμεσολαβητή SOCKS4 (π.χ. για σύνδεση μέσω Tor)</translation>
+        <source>Connect to the Freicoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Σύνδεση στο Freicoin δίκτυο μέσω διαμεσολαβητή SOCKS4 (π.χ. για σύνδεση μέσω Tor)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -932,8 +945,8 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
-        <translation>Εδώ μπορεί να ρυθμιστεί η γλώσσα διεπαφής χρήστη. Αυτή η ρύθμιση θα ισχύσει μετά την επανεκκίνηση του Bitcoin.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
+        <translation>Εδώ μπορεί να ρυθμιστεί η γλώσσα διεπαφής χρήστη. Αυτή η ρύθμιση θα ισχύσει μετά την επανεκκίνηση του Freicoin.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -947,8 +960,8 @@ Address: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show Bitcoin addresses in the transaction list or not.</source>
-        <translation>Επιλέξτε αν θέλετε να εμφανίζονται οι διευθύνσεις Bitcoin στη λίστα συναλλαγών.</translation>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
+        <translation>Επιλέξτε αν θέλετε να εμφανίζονται οι διευθύνσεις Freicoin στη λίστα συναλλαγών.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -999,8 +1012,8 @@ Address: %4
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Bitcoin.</source>
-        <translation>Αυτή η ρύθμιση θα ισχύσει μετά την επανεκκίνηση του Bitcoin.</translation>
+        <source>This setting will take effect after restarting Freicoin.</source>
+        <translation>Αυτή η ρύθμιση θα ισχύσει μετά την επανεκκίνηση του Freicoin.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1018,8 +1031,8 @@ Address: %4
     <message>
         <location line="+50"/>
         <location line="+166"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>Οι πληροφορίες που εμφανίζονται μπορεί να είναι ξεπερασμένες. Το πορτοφόλι σας συγχρονίζεται αυτόματα με το δίκτυο Bitcoin μετά από μια σύνδεση, αλλά αυτή η διαδικασία δεν έχει ακόμη ολοκληρωθεί. </translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Οι πληροφορίες που εμφανίζονται μπορεί να είναι ξεπερασμένες. Το πορτοφόλι σας συγχρονίζεται αυτόματα με το δίκτυο Freicoin μετά από μια σύνδεση, αλλά αυτή η διαδικασία δεν έχει ακόμη ολοκληρωθεί. </translation>
     </message>
     <message>
         <location line="-124"/>
@@ -1062,7 +1075,7 @@ Address: %4
         <translation>Το άθροισμα των συναλλαγών που δεν έχουν ακόμα επιβεβαιωθεί και δεν προσμετρώνται στο τρέχον υπόλοιπό σας</translation>
     </message>
     <message>
-        <location filename="../overviewpage.cpp" line="+116"/>
+        <location filename="../overviewpage.cpp" line="+117"/>
         <location line="+1"/>
         <source>out of sync</source>
         <translation>εκτός συγχρονισμού</translation>
@@ -1072,8 +1085,8 @@ Address: %4
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
-        <translation>Δεν είναι δυνατή η εκκίνηση του Bitcoin: click-to-pay handler</translation>
+        <source>Cannot start freicoin: click-to-pay handler</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1222,8 +1235,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the Bitcoin-Qt help message to get a list with possible Bitcoin command-line options.</source>
-        <translation>Εμφανιση του Bitcoin-Qt μήνυματος βοήθειας για να πάρετε μια λίστα με τις πιθανές επιλογές Bitcoin γραμμής εντολών.</translation>
+        <source>Show the Freicoin-Qt help message to get a list with possible Freicoin command-line options.</source>
+        <translation>Εμφανιση του Freicoin-Qt μήνυματος βοήθειας για να πάρετε μια λίστα με τις πιθανές επιλογές Freicoin γραμμής εντολών.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1242,13 +1255,13 @@ Address: %4
     </message>
     <message>
         <location line="-104"/>
-        <source>Bitcoin - Debug window</source>
-        <translation>Bitcoin - Παράθυρο αποσφαλμάτωσης</translation>
+        <source>Freicoin - Debug window</source>
+        <translation>Freicoin - Παράθυρο αποσφαλμάτωσης</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin Core</source>
+        <translation>Freicoin Core</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1257,7 +1270,7 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Bitcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>Ανοίξτε το αρχείο καταγραφής εντοπισμού σφαλμάτων από τον τρέχοντα κατάλογο δεδομένων. Αυτό μπορεί να πάρει μερικά δευτερόλεπτα για τα μεγάλα αρχεία καταγραφής. </translation>
     </message>
     <message>
@@ -1267,8 +1280,8 @@ Address: %4
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-30"/>
-        <source>Welcome to the Bitcoin RPC console.</source>
-        <translation>Καλώς ήρθατε στην Bitcoin RPC κονσόλα.</translation>
+        <source>Welcome to the Freicoin RPC console.</source>
+        <translation>Καλώς ήρθατε στην Freicoin RPC κονσόλα.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1285,7 +1298,7 @@ Address: %4
     <name>SendCoinsDialog</name>
     <message>
         <location filename="../forms/sendcoinsdialog.ui" line="+14"/>
-        <location filename="../sendcoinsdialog.cpp" line="+124"/>
+        <location filename="../sendcoinsdialog.cpp" line="+127"/>
         <location line="+5"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -1322,8 +1335,8 @@ Address: %4
     </message>
     <message>
         <location line="+10"/>
-        <source>123.456 BTC</source>
-        <translation>123,456 BTC</translation>
+        <source>123.456 FRC</source>
+        <translation>123,456 FRC</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1451,8 +1464,8 @@ Address: %4
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Εισάγετε μια διεύθυνση Bitcoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Εισάγετε μια διεύθυνση Freicoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1475,7 +1488,7 @@ Address: %4
     <message>
         <location line="+18"/>
         <source>The address to sign the message with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Εισάγετε μια διεύθυνση Bitcoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Εισάγετε μια διεύθυνση Freicoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1516,8 +1529,8 @@ Address: %4
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Bitcoin address</source>
-        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως σας ανήκει μια συγκεκριμένη διεύθυνση Bitcoin</translation>
+        <source>Sign the message to prove you own this Freicoin address</source>
+        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως σας ανήκει μια συγκεκριμένη διεύθυνση Freicoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1548,12 +1561,12 @@ Address: %4
     <message>
         <location line="+21"/>
         <source>The address the message was signed with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Εισάγετε μια διεύθυνση Bitcoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Εισάγετε μια διεύθυνση Freicoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως υπογραφθηκε απο μια συγκεκριμένη διεύθυνση Bitcoin</translation>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Υπογράψτε ένα μήνυμα για ν&apos; αποδείξετε πως υπογραφθηκε απο μια συγκεκριμένη διεύθυνση Freicoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1568,8 +1581,8 @@ Address: %4
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Εισάγετε μια διεύθυνση Bitcoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Εισάγετε μια διεύθυνση Freicoin (π.χ. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -1578,8 +1591,8 @@ Address: %4
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Bitcoin signature</source>
-        <translation>Εισαγωγή υπογραφής Bitcoin</translation>
+        <source>Enter Freicoin signature</source>
+        <translation>Εισαγωγή υπογραφής Freicoin</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -1652,8 +1665,8 @@ Address: %4
     <name>SplashScreen</name>
     <message>
         <location filename="../splashscreen.cpp" line="+22"/>
-        <source>The Bitcoin developers</source>
-        <translation>Οι Bitcoin προγραμματιστές </translation>
+        <source>The Freicoin developers</source>
+        <translation>Οι Freicoin προγραμματιστές </translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1691,7 +1704,10 @@ Address: %4
     <message numerus="yes">
         <location line="+7"/>
         <source>, broadcast through %n node(s)</source>
-        <translation><numerusform>, έχει μεταδοθεί μέσω %n κόμβων</numerusform><numerusform>, έχει μεταδοθεί μέσω %n κόμβων</numerusform></translation>
+        <translation>
+            <numerusform>, έχει μεταδοθεί μέσω %n κόμβων</numerusform>
+            <numerusform>, έχει μεταδοθεί μέσω %n κόμβων</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1737,14 +1753,17 @@ Address: %4
         <location line="+12"/>
         <location line="+45"/>
         <location line="+17"/>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Credit</source>
         <translation>Πίστωση </translation>
     </message>
     <message numerus="yes">
-        <location line="-102"/>
+        <location line="-104"/>
         <source>matures in %n more block(s)</source>
-        <translation><numerusform>ωρίμανση σε %n επιπλέον μπλοκ</numerusform><numerusform>ωρίμανση σε %n επιπλέον μπλοκ</numerusform></translation>
+        <translation>
+            <numerusform>ωρίμανση σε %n επιπλέον μπλοκ</numerusform>
+            <numerusform>ωρίμανση σε %n επιπλέον μπλοκ</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1755,12 +1774,12 @@ Address: %4
         <location line="+44"/>
         <location line="+8"/>
         <location line="+15"/>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Debit</source>
         <translation>Debit</translation>
     </message>
     <message>
-        <location line="-39"/>
+        <location line="-41"/>
         <source>Transaction fee</source>
         <translation>Τέλος συναλλαγής </translation>
     </message>
@@ -1778,6 +1797,11 @@ Address: %4
         <location line="+2"/>
         <source>Comment</source>
         <translation>Σχόλιο:</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Reference Height</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1820,14 +1844,17 @@ Address: %4
         <translation>αναληθής </translation>
     </message>
     <message>
-        <location line="-209"/>
+        <location line="-211"/>
         <source>, has not been successfully broadcast yet</source>
         <translation>, δεν έχει ακόμα μεταδοθεί μ&apos; επιτυχία</translation>
     </message>
     <message numerus="yes">
         <location line="-35"/>
         <source>Open for %n more block(s)</source>
-        <translation><numerusform>Ανοιχτό για %n μπλοκ</numerusform><numerusform>Ανοιχτό για %n μπλοκ</numerusform></translation>
+        <translation>
+            <numerusform>Ανοιχτό για %n μπλοκ</numerusform>
+            <numerusform>Ανοιχτό για %n μπλοκ</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+70"/>
@@ -1851,7 +1878,7 @@ Address: %4
 <context>
     <name>TransactionTableModel</name>
     <message>
-        <location filename="../transactiontablemodel.cpp" line="+225"/>
+        <location filename="../transactiontablemodel.cpp" line="+226"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
@@ -1870,10 +1897,18 @@ Address: %4
         <source>Amount</source>
         <translation>Ποσό</translation>
     </message>
+    <message>
+        <location line="+0"/>
+        <source>Ref-height</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
         <location line="+57"/>
         <source>Open for %n more block(s)</source>
-        <translation><numerusform>Ανοιχτό για %n μπλοκ</numerusform><numerusform>Ανοιχτό για %n μπλοκ</numerusform></translation>
+        <translation>
+            <numerusform>Ανοιχτό για %n μπλοκ</numerusform>
+            <numerusform>Ανοιχτό για %n μπλοκ</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1898,7 +1933,10 @@ Address: %4
     <message numerus="yes">
         <location line="+8"/>
         <source>Mined balance will be available when it matures in %n more block(s)</source>
-        <translation><numerusform>Το υπόλοιπο από την εξόρυξη θα είναι διαθέσιμο μετά από %n μπλοκ</numerusform><numerusform>Το υπόλοιπο από την εξόρυξη θα είναι διαθέσιμο μετά από %n μπλοκ</numerusform></translation>
+        <translation>
+            <numerusform>Το υπόλοιπο από την εξόρυξη θα είναι διαθέσιμο μετά από %n μπλοκ</numerusform>
+            <numerusform>Το υπόλοιπο από την εξόρυξη θα είναι διαθέσιμο μετά από %n μπλοκ</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1941,7 +1979,7 @@ Address: %4
         <translation>(δ/α)</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+223"/>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
         <translation>Κατάσταση συναλλαγής. Πηγαίνετε το ποντίκι πάνω από αυτό το πεδίο για να δείτε τον αριθμό των επικυρώσεων</translation>
     </message>
@@ -1964,6 +2002,11 @@ Address: %4
         <location line="+2"/>
         <source>Amount removed from or added to balance.</source>
         <translation>Ποσό που αφαιρέθηκε ή προστέθηκε στο υπόλοιπο.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Reference block number that amount is pegged to.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2040,6 +2083,11 @@ Address: %4
         <translation>Ελάχιστο ποσό</translation>
     </message>
     <message>
+        <location line="+13"/>
+        <source>Min height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+34"/>
         <source>Copy address</source>
         <translation>Αντιγραφή διεύθυνσης</translation>
@@ -2070,7 +2118,7 @@ Address: %4
         <translation>Εμφάνιση λεπτομερειών συναλλαγής</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+147"/>
         <source>Export Transaction Data</source>
         <translation>Εξαγωγή Στοιχείων Συναλλαγών</translation>
     </message>
@@ -2138,7 +2186,7 @@ Address: %4
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+193"/>
+        <location filename="../walletmodel.cpp" line="+197"/>
         <source>Send Coins</source>
         <translation>Αποστολή νομισμάτων</translation>
     </message>
@@ -2189,22 +2237,17 @@ Address: %4
 <context>
     <name>bitcoin-core</name>
     <message>
-        <location filename="../bitcoinstrings.cpp" line="+94"/>
-        <source>Bitcoin version</source>
-        <translation>Έκδοση Bitcoin</translation>
+        <location filename="../bitcoinstrings.cpp" line="+131"/>
+        <source>Freicoin version</source>
+        <translation>Έκδοση Freicoin</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+66"/>
         <source>Usage:</source>
         <translation>Χρήση:</translation>
     </message>
     <message>
-        <location line="-29"/>
-        <source>Send command to -server or bitcoind</source>
-        <translation>Αποστολή εντολής στον εξυπηρετητή ή στο bitcoind</translation>
-    </message>
-    <message>
-        <location line="-23"/>
+        <location line="-52"/>
         <source>List commands</source>
         <translation>Λίστα εντολών</translation>
     </message>
@@ -2219,17 +2262,7 @@ Address: %4
         <translation>Επιλογές:</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Ορίστε αρχείο ρυθμίσεων (προεπιλογή: bitcoin.conf)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Ορίστε αρχείο pid (προεπιλογή: bitcoind.pid)</translation>
-    </message>
-    <message>
-        <location line="-1"/>
+        <location line="+26"/>
         <source>Specify data directory</source>
         <translation>Ορισμός φακέλου δεδομένων</translation>
     </message>
@@ -2240,8 +2273,8 @@ Address: %4
     </message>
     <message>
         <location line="-28"/>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>Εισερχόμενες συνδέσεις στη θύρα &lt;port&gt; (προεπιλογή: 8333 ή στο testnet: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>Εισερχόμενες συνδέσεις στη θύρα &lt;port&gt; (προεπιλογή: 8639 ή στο testnet: 18639)</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2249,12 +2282,12 @@ Address: %4
         <translation>Μέγιστες αριθμός συνδέσεων με τους peers &lt;n&gt; (προεπιλογή: 125)</translation>
     </message>
     <message>
-        <location line="-48"/>
+        <location line="-49"/>
         <source>Connect to a node to retrieve peer addresses, and disconnect</source>
         <translation>Σύνδεση σε έναν κόμβο για την ανάκτηση διευθύνσεων από ομοτίμους, και αποσυνδέσh</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+83"/>
         <source>Specify your own public address</source>
         <translation>Διευκρινίστε τη δικιά σας δημόσια διεύθυνση.</translation>
     </message>
@@ -2275,8 +2308,8 @@ Address: %4
     </message>
     <message>
         <location line="+27"/>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Εισερχόμενες συνδέσεις JSON-RPC στη θύρα &lt;port&gt; (προεπιλογή: 8332 or testnet: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Εισερχόμενες συνδέσεις JSON-RPC στη θύρα &lt;port&gt; (προεπιλογή: 8638 or testnet: 18638)</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -2299,32 +2332,7 @@ Address: %4
         <translation>Να δέχεσαι συνδέσεις από έξω(προεπιλογή:1)</translation>
     </message>
     <message>
-        <location line="-80"/>
-        <source>%s, you must set a rpcpassword in the configuration file:
-%s
-It is recommended you use the following random password:
-rpcuser=bitcoinrpc
-rpcpassword=%s
-(you do not need to remember this password)
-The username and password MUST NOT be the same.
-If the file does not exist, create it with owner-readable-only file permissions.
-It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
-</source>
-        <translation>%s, you must set a rpcpassword in the configuration file:
-%s
-It is recommended you use the following random password:
-rpcuser=bitcoinrpc
-rpcpassword=%s
-(you do not need to remember this password)
-The username and password MUST NOT be the same.
-If the file does not exist, create it with owner-readable-only file permissions.
-It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
-</translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="-63"/>
         <source>An error occurred while setting up the RPC port %u for listening on IPv6, falling back to IPv4: %s</source>
         <translation>Ένα σφάλμα συνέβη καθώς προετοιμαζόταν η υποδοχη RPC %u για αναμονη του IPv6, επεσε πισω στο IPv4:%s</translation>
     </message>
@@ -2335,8 +2343,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Bitcoin is probably already running.</source>
-        <translation>Αδυναμία κλειδώματος του φακέλου δεδομένων %s. Πιθανώς το Bitcoin να είναι ήδη ενεργό.</translation>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
+        <translation>Αδυναμία κλειδώματος του φακέλου δεδομένων %s. Πιθανώς το Freicoin να είναι ήδη ενεργό.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2381,8 +2389,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
-        <translation>Προειδοποίηση: Παρακαλώ βεβαιωθείτε πως η ημερομηνία κι ώρα του συστήματός σας είναι σωστές. Αν το ρολόι του υπολογιστή σας πάει λάθος, ενδέχεται να μη λειτουργεί σωστά το Bitcoin.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Προειδοποίηση: Παρακαλώ βεβαιωθείτε πως η ημερομηνία κι ώρα του συστήματός σας είναι σωστές. Αν το ρολόι του υπολογιστή σας πάει λάθος, ενδέχεται να μη λειτουργεί σωστά το Freicoin.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2400,7 +2408,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Προσπάθεια για ανακτησει ιδιωτικων κλειδιων από ενα διεφθαρμένο αρχειο wallet.dat </translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Block creation options:</source>
         <translation>Αποκλεισμός επιλογων δημιουργίας: </translation>
     </message>
@@ -2520,7 +2528,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Βρες ομότιμους υπολογιστές χρησιμοποιώντας αναζήτηση DNS(προεπιλογή:1)</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Generate coins (default: 0)</source>
         <translation>Δημιουργία νομισμάτων (προκαθορισμος: 0)</translation>
     </message>
@@ -2545,12 +2553,27 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Εισαγωγή μπλοκ από εξωτερικό αρχείο blk000?.dat</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
+        <source>Send command to -server or freicoind</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Set the number of threads to service RPC calls (default: 4)</source>
         <translation>Ορίσμος του αριθμόυ θεματων στην υπηρεσία κλήσεων RPC (προεπιλογή: 4) </translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+3"/>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Verifying blocks...</source>
         <translation>Επαλήθευση των μπλοκ... </translation>
     </message>
@@ -2565,7 +2588,22 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Εισαγωγή μπλοκ από εξωτερικό αρχείο blk000?.dat</translation>
     </message>
     <message>
-        <location line="-76"/>
+        <location line="-127"/>
+        <source>%s, you must set a rpcpassword in the configuration file:
+%s
+It is recommended you use the following random password:
+rpcuser=freicoinrpc
+rpcpassword=%s
+(you do not need to remember this password)
+The username and password MUST NOT be the same.
+If the file does not exist, create it with owner-readable-only file permissions.
+It is also recommended to set alertnotify so you are notified of problems;
+for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo.com
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+51"/>
         <source>Set the number of script verification threads (up to 16, 0 = auto, &lt;0 = leave that many cores free, default: 0)</source>
         <translation>Ορίσμος του αριθμό των νημάτων ελέγχου σεναρίου (μέχρι 16, 0 = auto, &lt;0 = αφήνουν τους πολλους πυρήνες δωρεάν, default: 0)</translation>
     </message>
@@ -2631,8 +2669,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+5"/>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>Ρυθμίσεις SSL: (ανατρέξτε στο Bitcoin Wiki για οδηγίες ρυθμίσεων SSL)</translation>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>Ρυθμίσεις SSL: (ανατρέξτε στο Freicoin Wiki για οδηγίες ρυθμίσεων SSL)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2800,12 +2838,12 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Αδύνατη η σύνδεση με τη θύρα %s αυτού του υπολογιστή (bind returned error %d, %s) </translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-92"/>
         <source>Connect through socks proxy</source>
         <translation>Σύνδεση μέσω διαμεσολαβητή socks</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="-9"/>
         <source>Allow DNS lookups for -addnode, -seednode and -connect</source>
         <translation>Να επιτρέπονται οι έλεγχοι DNS για προσθήκη και σύνδεση κόμβων</translation>
     </message>
@@ -2815,27 +2853,27 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Φόρτωση διευθύνσεων...</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-36"/>
         <source>Error loading wallet.dat: Wallet corrupted</source>
         <translation>Σφάλμα φόρτωσης wallet.dat: Κατεστραμμένο Πορτοφόλι</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation>Σφάλμα φόρτωσης wallet.dat: Το Πορτοφόλι απαιτεί μια νεότερη έκδοση του Bitcoin</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Σφάλμα φόρτωσης wallet.dat: Το Πορτοφόλι απαιτεί μια νεότερη έκδοση του Freicoin</translation>
     </message>
     <message>
-        <location line="+93"/>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Απαιτείται η επανεγγραφή του Πορτοφολιού, η οποία θα ολοκληρωθεί στην επανεκκίνηση του Bitcoin</translation>
+        <location line="+94"/>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Απαιτείται η επανεγγραφή του Πορτοφολιού, η οποία θα ολοκληρωθεί στην επανεκκίνηση του Freicoin</translation>
     </message>
     <message>
-        <location line="-95"/>
+        <location line="-96"/>
         <source>Error loading wallet.dat</source>
         <translation>Σφάλμα φόρτωσης αρχείου wallet.dat</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <source>Invalid -proxy address: &apos;%s&apos;</source>
         <translation>Δεν είναι έγκυρη η διεύθυνση διαμεσολαβητή: &apos;%s&apos;</translation>
     </message>
@@ -2850,7 +2888,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Άγνωστo δίκτυο ορίζεται: %i</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-97"/>
         <source>Cannot resolve -bind address: &apos;%s&apos;</source>
         <translation>Δεν μπορώ να γράψω την προεπιλεγμένη διεύθυνση: &apos;%s&apos;</translation>
     </message>
@@ -2860,7 +2898,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Δεν μπορώ να γράψω την προεπιλεγμένη διεύθυνση: &apos;%s&apos;</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+45"/>
         <source>Invalid amount for -paytxfee=&lt;amount&gt;: &apos;%s&apos;</source>
         <translation>Μη έγκυρο ποσό για την παράμετρο -paytxfee=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
@@ -2886,21 +2924,21 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
     </message>
     <message>
         <location line="-25"/>
-        <source>Unable to bind to %s on this computer. Bitcoin is probably already running.</source>
-        <translation>Αδύνατη η σύνδεση με τη θύρα %s αυτού του υπολογιστή. Το Bitcoin είναι πιθανώς ήδη ενεργό.</translation>
+        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
+        <translation>Αδύνατη η σύνδεση με τη θύρα %s αυτού του υπολογιστή. Το Freicoin είναι πιθανώς ήδη ενεργό.</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>Fee per KB to add to transactions you send</source>
         <translation>Αμοιβή ανά KB που θα προστίθεται στις συναλλαγές που στέλνεις</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Loading wallet...</source>
         <translation>Φόρτωση πορτοφολιού...</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-53"/>
         <source>Cannot downgrade wallet</source>
         <translation>Δεν μπορώ να υποβαθμίσω το πορτοφόλι</translation>
     </message>
@@ -2910,27 +2948,27 @@ for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.
         <translation>Δεν μπορώ να γράψω την προεπιλεγμένη διεύθυνση</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+65"/>
         <source>Rescanning...</source>
         <translation>Ανίχνευση...</translation>
     </message>
     <message>
-        <location line="-57"/>
+        <location line="-58"/>
         <source>Done loading</source>
         <translation>Η φόρτωση ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+83"/>
         <source>To use the %s option</source>
         <translation>Χρήση της %s επιλογής</translation>
     </message>
     <message>
-        <location line="-74"/>
+        <location line="-75"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-30"/>
         <source>You must set rpcpassword=&lt;password&gt; in the configuration file:
 %s
 If the file does not exist, create it with owner-readable-only file permissions.</source>

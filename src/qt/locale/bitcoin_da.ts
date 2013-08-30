@@ -1,16 +1,18 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="da">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Bitcoin</source>
-        <translation>Om Bitcoin</translation>
+        <source>About Freicoin</source>
+        <translation>Om Freicoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Bitcoin&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Bitcoin&lt;/b&gt; version</translation>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Freicoin&lt;/b&gt; version</translation>
     </message>
     <message>
         <location line="+57"/>
@@ -34,8 +36,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+0"/>
-        <source>The Bitcoin developers</source>
-        <translation>Bitcoin-udviklerne</translation>
+        <source>The Freicoin developers</source>
+        <translation>Freicoin-udviklerne</translation>
     </message>
 </context>
 <context>
@@ -67,8 +69,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="+63"/>
-        <source>These are your Bitcoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Dette er dine Bitcoin-adresser til at modtage betalinger med. Du kan give en forskellig adresse til hver afsender, så du kan holde styr på, hvem der betaler dig.</translation>
+        <source>These are your Freicoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Dette er dine Freicoin-adresser til at modtage betalinger med. Du kan give en forskellig adresse til hver afsender, så du kan holde styr på, hvem der betaler dig.</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="+14"/>
@@ -82,8 +84,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a Bitcoin address</source>
-        <translation>Underskriv en besked for at bevise, at en Bitcoin-adresse tilhører dig</translation>
+        <source>Sign a message to prove you own a Freicoin address</source>
+        <translation>Underskriv en besked for at bevise, at en Freicoin-adresse tilhører dig</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -107,8 +109,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="-44"/>
-        <source>Verify a message to ensure it was signed with a specified Bitcoin address</source>
-        <translation>Efterprøv en besked for at sikre, at den er underskrevet med den angivne Bitcoin-adresse</translation>
+        <source>Verify a message to ensure it was signed with a specified Freicoin address</source>
+        <translation>Efterprøv en besked for at sikre, at den er underskrevet med den angivne Freicoin-adresse</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -122,8 +124,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="-5"/>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Disse er dine Bitcoin-adresser for at sende betalinger. Tjek altid beløb og modtageradresse, inden du sender bitcoins.</translation>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Disse er dine Freicoin-adresser for at sende betalinger. Tjek altid beløb og modtageradresse, inden du sender bitcoins.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -248,16 +250,21 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>Advarsel: Hvis du krypterer din tegnebog og mister din adgangskode, vil du &lt;b&gt;MISTE ALLE DINE BITCOINS&lt;/b&gt;!</translation>
-    </message>
-    <message>
-        <location line="+0"/>
         <source>Are you sure you wish to encrypt your wallet?</source>
         <translation>Er du sikker på, at du ønsker at kryptere din tegnebog?</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+0"/>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
         <translation>VIGTIGT: Enhver tidligere sikkerhedskopi, som du har lavet af tegnebogsfilen, bør blive erstattet af den nyligt genererede, krypterede tegnebogsfil. Af sikkerhedsmæssige årsager vil tidligere sikkerhedskopier af den ikke-krypterede tegnebogsfil blive ubrugelig i det øjeblik, du starter med at anvende den nye, krypterede tegnebog.</translation>
     </message>
@@ -274,12 +281,7 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
         <translation>Tegnebog krypteret</translation>
     </message>
     <message>
-        <location line="-56"/>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Bitcoin vil nu lukke for at gennemføre krypteringsprocessen. Husk på, at kryptering af din tegnebog vil ikke beskytte dine bitcoins fuldt ud mod at blive stjålet af malware på din computer.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="-43"/>
         <location line="+7"/>
         <location line="+42"/>
         <location line="+6"/>
@@ -374,8 +376,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Bitcoin</source>
-        <translation>Vis informationer om Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Vis informationer om Freicoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -419,13 +421,13 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="-347"/>
-        <source>Send coins to a Bitcoin address</source>
-        <translation>Send bitcoins til en Bitcoin-adresse</translation>
+        <source>Send coins to a Freicoin address</source>
+        <translation>Send bitcoins til en Freicoin-adresse</translation>
     </message>
     <message>
         <location line="+49"/>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>Rediger konfigurationsindstillinger af Bitcoin</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Rediger konfigurationsindstillinger af Freicoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -455,8 +457,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     <message>
         <location line="-165"/>
         <location line="+530"/>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <location line="-530"/>
@@ -480,8 +482,8 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+22"/>
-        <source>&amp;About Bitcoin</source>
-        <translation>Om Bitcoin</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>Om Freicoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -500,13 +502,13 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation>Underskriv beskeder med dine Bitcoin-adresser for at bevise, at de tilhører dig</translation>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
+        <translation>Underskriv beskeder med dine Freicoin-adresser for at bevise, at de tilhører dig</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation>Efterprøv beskeder for at sikre, at de er underskrevet med de(n) angivne Bitcoin-adresse(r)</translation>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
+        <translation>Efterprøv beskeder for at sikre, at de er underskrevet med de(n) angivne Freicoin-adresse(r)</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -536,13 +538,16 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     </message>
     <message>
         <location line="+47"/>
-        <source>Bitcoin client</source>
-        <translation>Bitcoin-klient</translation>
+        <source>Freicoin client</source>
+        <translation>Freicoin-klient</translation>
     </message>
     <message numerus="yes">
         <location line="+141"/>
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n aktiv(e) forbindelse(r) til Bitcoin-netværket</numerusform><numerusform>%n aktiv(e) forbindelse(r) til Bitcoin-netværket</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation>
+            <numerusform>%n aktiv(e) forbindelse(r) til Freicoin-netværket</numerusform>
+            <numerusform>%n aktiv(e) forbindelse(r) til Freicoin-netværket</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+22"/>
@@ -562,17 +567,26 @@ Produktet indeholder software som er udviklet af OpenSSL Project til brug i Open
     <message numerus="yes">
         <location line="+20"/>
         <source>%n hour(s)</source>
-        <translation><numerusform>%n time(r)</numerusform><numerusform>%n time(r)</numerusform></translation>
+        <translation>
+            <numerusform>%n time(r)</numerusform>
+            <numerusform>%n time(r)</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n day(s)</source>
-        <translation><numerusform>%n dag(e)</numerusform><numerusform>%n dag(e)</numerusform></translation>
+        <translation>
+            <numerusform>%n dag(e)</numerusform>
+            <numerusform>%n dag(e)</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <location line="+4"/>
         <source>%n week(s)</source>
-        <translation><numerusform>%n uge(r)</numerusform><numerusform>%n uge(r)</numerusform></translation>
+        <translation>
+            <numerusform>%n uge(r)</numerusform>
+            <numerusform>%n uge(r)</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+4"/>
@@ -656,8 +670,8 @@ Adresse: %4
     <message>
         <location line="-23"/>
         <location line="+23"/>
-        <source>URI can not be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation>URI kan ikke fortolkes! Dette kan skyldes en ugyldig Bitcoin-adresse eller misdannede URI-parametre.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Freicoin address or malformed URI parameters.</source>
+        <translation>URI kan ikke fortolkes! Dette kan skyldes en ugyldig Freicoin-adresse eller misdannede URI-parametre.</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -671,8 +685,8 @@ Adresse: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+111"/>
-        <source>A fatal error occurred. Bitcoin can no longer continue safely and will quit.</source>
-        <translation>Der opstod en fatal fejl. Bitcoin kan ikke længere fortsætte sikkert og vil afslutte.</translation>
+        <source>A fatal error occurred. Freicoin can no longer continue safely and will quit.</source>
+        <translation>Der opstod en fatal fejl. Freicoin kan ikke længere fortsætte sikkert og vil afslutte.</translation>
     </message>
 </context>
 <context>
@@ -737,8 +751,8 @@ Adresse: %4
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Bitcoin address.</source>
-        <translation>Den indtastede adresse &quot;%1&quot; er ikke en gyldig Bitcoin-adresse.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Freicoin address.</source>
+        <translation>Den indtastede adresse &quot;%1&quot; er ikke en gyldig Freicoin-adresse.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -756,8 +770,8 @@ Adresse: %4
     <message>
         <location filename="../guiutil.cpp" line="+424"/>
         <location line="+12"/>
-        <source>Bitcoin-Qt</source>
-        <translation>Bitcoin-Qt</translation>
+        <source>Freicoin-Qt</source>
+        <translation>Freicoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -819,13 +833,13 @@ Adresse: %4
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
-        <translation>Start Bitcoin automatisk, når der logges ind på systemet</translation>
+        <source>Automatically start Freicoin after logging in to the system.</source>
+        <translation>Start Freicoin automatisk, når der logges ind på systemet</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Bitcoin on system login</source>
-        <translation>Start Bitcoin, når systemet startes</translation>
+        <source>&amp;Start Freicoin on system login</source>
+        <translation>Start Freicoin, når systemet startes</translation>
     </message>
     <message>
         <location line="+35"/>
@@ -844,8 +858,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Åbn Bitcoin-klientens port på routeren automatisk. Dette virker kun, når din router understøtter UPnP og UPnP er aktiveret.</translation>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Åbn Freicoin-klientens port på routeren automatisk. Dette virker kun, når din router understøtter UPnP og UPnP er aktiveret.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -854,8 +868,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Bitcoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Opret forbindelse til Bitcoin-netværket via en SOCKS-proxy (f.eks. ved tilslutning gennem Tor)</translation>
+        <source>Connect to the Freicoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Opret forbindelse til Freicoin-netværket via en SOCKS-proxy (f.eks. ved tilslutning gennem Tor)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -929,8 +943,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
-        <translation>Brugergrænsefladesproget kan angives her. Denne indstilling træder først i kraft, når Bitcoin genstartes.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
+        <translation>Brugergrænsefladesproget kan angives her. Denne indstilling træder først i kraft, når Freicoin genstartes.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -944,8 +958,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show Bitcoin addresses in the transaction list or not.</source>
-        <translation>Afgør hvorvidt Bitcoin-adresser skal vises i transaktionslisten eller ej.</translation>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
+        <translation>Afgør hvorvidt Freicoin-adresser skal vises i transaktionslisten eller ej.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -996,8 +1010,8 @@ Adresse: %4
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Bitcoin.</source>
-        <translation>Denne indstilling træder i kraft, efter Bitcoin genstartes.</translation>
+        <source>This setting will take effect after restarting Freicoin.</source>
+        <translation>Denne indstilling træder i kraft, efter Freicoin genstartes.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1015,8 +1029,8 @@ Adresse: %4
     <message>
         <location line="+50"/>
         <location line="+166"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>Den viste information kan være forældet. Din tegnebog synkroniserer automatisk med Bitcoin-netværket, når en forbindelse etableres, men denne proces er ikke gennemført endnu.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Den viste information kan være forældet. Din tegnebog synkroniserer automatisk med Freicoin-netværket, når en forbindelse etableres, men denne proces er ikke gennemført endnu.</translation>
     </message>
     <message>
         <location line="-124"/>
@@ -1059,7 +1073,7 @@ Adresse: %4
         <translation>Summen af transaktioner, der endnu ikke er bekræftet og endnu ikke er inkluderet i den nuværende saldo</translation>
     </message>
     <message>
-        <location filename="../overviewpage.cpp" line="+116"/>
+        <location filename="../overviewpage.cpp" line="+117"/>
         <location line="+1"/>
         <source>out of sync</source>
         <translation>ikke synkroniseret</translation>
@@ -1069,8 +1083,8 @@ Adresse: %4
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
-        <translation>Kan ikke starte bitcoin: click-to-pay-håndtering</translation>
+        <source>Cannot start freicoin: click-to-pay handler</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1219,8 +1233,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the Bitcoin-Qt help message to get a list with possible Bitcoin command-line options.</source>
-        <translation>Vis Bitcoin-Qt-hjælpebeskeden for at få en liste over de tilgængelige Bitcoin-kommandolinjeindstillinger.</translation>
+        <source>Show the Freicoin-Qt help message to get a list with possible Freicoin command-line options.</source>
+        <translation>Vis Freicoin-Qt-hjælpebeskeden for at få en liste over de tilgængelige Freicoin-kommandolinjeindstillinger.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1239,13 +1253,13 @@ Adresse: %4
     </message>
     <message>
         <location line="-104"/>
-        <source>Bitcoin - Debug window</source>
-        <translation>Bitcoin - Fejlsøgningsvindue</translation>
+        <source>Freicoin - Debug window</source>
+        <translation>Freicoin - Fejlsøgningsvindue</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin Core</source>
+        <translation>Freicoin Core</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1254,8 +1268,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Bitcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Åbn Bitcoin-fejlsøgningslogfilen fra det nuværende datakatalog. Dette kan tage nogle få sekunder for en store logfiler.</translation>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Åbn Freicoin-fejlsøgningslogfilen fra det nuværende datakatalog. Dette kan tage nogle få sekunder for en store logfiler.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1264,8 +1278,8 @@ Adresse: %4
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-30"/>
-        <source>Welcome to the Bitcoin RPC console.</source>
-        <translation>Velkommen til Bitcoin RPC-konsollen</translation>
+        <source>Welcome to the Freicoin RPC console.</source>
+        <translation>Velkommen til Freicoin RPC-konsollen</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1282,7 +1296,7 @@ Adresse: %4
     <name>SendCoinsDialog</name>
     <message>
         <location filename="../forms/sendcoinsdialog.ui" line="+14"/>
-        <location filename="../sendcoinsdialog.cpp" line="+124"/>
+        <location filename="../sendcoinsdialog.cpp" line="+127"/>
         <location line="+5"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -1319,8 +1333,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+10"/>
-        <source>123.456 BTC</source>
-        <translation>123,456 BTC</translation>
+        <source>123.456 FRC</source>
+        <translation>123,456 FRC</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1408,7 +1422,7 @@ Adresse: %4
     <message>
         <location line="+34"/>
         <source>The address to send the payment to (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Bitcoin-adressen som betalingen skal sendes til (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Freicoin-adressen som betalingen skal sendes til (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -1448,8 +1462,8 @@ Adresse: %4
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Indtast en Bitcoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Indtast en Freicoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1467,12 +1481,12 @@ Adresse: %4
     <message>
         <location line="+6"/>
         <source>You can sign messages with your addresses to prove you own them. Be careful not to sign anything vague, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation>Du kan underskrive beskeder med dine Bitcoin-adresser for at bevise, at de tilhører dig. Pas på ikke at underskrive noget vagt, da phisingangreb kan narre dig til at overdrage din identitet. Underskriv kun fuldt detaljerede udsagn, du er enig i.</translation>
+        <translation>Du kan underskrive beskeder med dine Freicoin-adresser for at bevise, at de tilhører dig. Pas på ikke at underskrive noget vagt, da phisingangreb kan narre dig til at overdrage din identitet. Underskriv kun fuldt detaljerede udsagn, du er enig i.</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>The address to sign the message with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Bitcoin-adressen som beskeden skal underskrives med (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Freicoin-adressen som beskeden skal underskrives med (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1513,8 +1527,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Bitcoin address</source>
-        <translation>Underskriv denne besked for at bevise, at Bitcoin-adressen tilhører dig</translation>
+        <source>Sign the message to prove you own this Freicoin address</source>
+        <translation>Underskriv denne besked for at bevise, at Freicoin-adressen tilhører dig</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1545,12 +1559,12 @@ Adresse: %4
     <message>
         <location line="+21"/>
         <source>The address the message was signed with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Bitcoin-adressen som beskeden er underskrevet med (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Freicoin-adressen som beskeden er underskrevet med (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation>Efterprøv beskeden for at sikre, at den er underskrevet med den angivne Bitcoin-adresse</translation>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Efterprøv beskeden for at sikre, at den er underskrevet med den angivne Freicoin-adresse</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1565,8 +1579,8 @@ Adresse: %4
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Indtast en Bitcoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Indtast en Freicoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -1575,8 +1589,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Bitcoin signature</source>
-        <translation>Indtast Bitcoin-underskriften</translation>
+        <source>Enter Freicoin signature</source>
+        <translation>Indtast Freicoin-underskriften</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -1649,8 +1663,8 @@ Adresse: %4
     <name>SplashScreen</name>
     <message>
         <location filename="../splashscreen.cpp" line="+22"/>
-        <source>The Bitcoin developers</source>
-        <translation>Bitcoin-udviklerne</translation>
+        <source>The Freicoin developers</source>
+        <translation>Freicoin-udviklerne</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1688,7 +1702,10 @@ Adresse: %4
     <message numerus="yes">
         <location line="+7"/>
         <source>, broadcast through %n node(s)</source>
-        <translation><numerusform>, transmitteret igennem %n knude(r)</numerusform><numerusform>, transmitteret igennem %n knude(r)</numerusform></translation>
+        <translation>
+            <numerusform>, transmitteret igennem %n knude(r)</numerusform>
+            <numerusform>, transmitteret igennem %n knude(r)</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1734,14 +1751,17 @@ Adresse: %4
         <location line="+12"/>
         <location line="+45"/>
         <location line="+17"/>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Credit</source>
         <translation>Kredit</translation>
     </message>
     <message numerus="yes">
-        <location line="-102"/>
+        <location line="-104"/>
         <source>matures in %n more block(s)</source>
-        <translation><numerusform>modner efter yderligere %n blok(ke)</numerusform><numerusform>modner efter yderligere %n blok(ke)</numerusform></translation>
+        <translation>
+            <numerusform>modner efter yderligere %n blok(ke)</numerusform>
+            <numerusform>modner efter yderligere %n blok(ke)</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1752,12 +1772,12 @@ Adresse: %4
         <location line="+44"/>
         <location line="+8"/>
         <location line="+15"/>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Debit</source>
         <translation>Debet</translation>
     </message>
     <message>
-        <location line="-39"/>
+        <location line="-41"/>
         <source>Transaction fee</source>
         <translation>Transaktionsgebyr</translation>
     </message>
@@ -1775,6 +1795,11 @@ Adresse: %4
         <location line="+2"/>
         <source>Comment</source>
         <translation>Kommentar</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Reference Height</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1817,14 +1842,17 @@ Adresse: %4
         <translation>falsk</translation>
     </message>
     <message>
-        <location line="-209"/>
+        <location line="-211"/>
         <source>, has not been successfully broadcast yet</source>
         <translation>, er ikke blevet transmitteret endnu</translation>
     </message>
     <message numerus="yes">
         <location line="-35"/>
         <source>Open for %n more block(s)</source>
-        <translation><numerusform>Åben %n blok yderligere</numerusform><numerusform>Åben %n blokke yderligere</numerusform></translation>
+        <translation>
+            <numerusform>Åben %n blok yderligere</numerusform>
+            <numerusform>Åben %n blokke yderligere</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+70"/>
@@ -1848,7 +1876,7 @@ Adresse: %4
 <context>
     <name>TransactionTableModel</name>
     <message>
-        <location filename="../transactiontablemodel.cpp" line="+225"/>
+        <location filename="../transactiontablemodel.cpp" line="+226"/>
         <source>Date</source>
         <translation>Dato</translation>
     </message>
@@ -1867,10 +1895,18 @@ Adresse: %4
         <source>Amount</source>
         <translation>Beløb</translation>
     </message>
+    <message>
+        <location line="+0"/>
+        <source>Ref-height</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
         <location line="+57"/>
         <source>Open for %n more block(s)</source>
-        <translation><numerusform>Åben %n blok(ke) yderligere</numerusform><numerusform>Åben %n blok(ke) yderligere</numerusform></translation>
+        <translation>
+            <numerusform>Åben %n blok(ke) yderligere</numerusform>
+            <numerusform>Åben %n blok(ke) yderligere</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1895,7 +1931,10 @@ Adresse: %4
     <message numerus="yes">
         <location line="+8"/>
         <source>Mined balance will be available when it matures in %n more block(s)</source>
-        <translation><numerusform>Udvunden saldo, som vil være tilgængelig, når den modner efter yderligere %n blok(ke)</numerusform><numerusform>Udvunden saldo, som vil være tilgængelig, når den modner efter yderligere %n blok(ke)</numerusform></translation>
+        <translation>
+            <numerusform>Udvunden saldo, som vil være tilgængelig, når den modner efter yderligere %n blok(ke)</numerusform>
+            <numerusform>Udvunden saldo, som vil være tilgængelig, når den modner efter yderligere %n blok(ke)</numerusform>
+        </translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1938,7 +1977,7 @@ Adresse: %4
         <translation>(n/a)</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+223"/>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
         <translation>Transaktionsstatus. Hold musen over dette felt for at vise antallet af bekræftelser.</translation>
     </message>
@@ -1961,6 +2000,11 @@ Adresse: %4
         <location line="+2"/>
         <source>Amount removed from or added to balance.</source>
         <translation>Beløb fjernet eller tilføjet balance.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Reference block number that amount is pegged to.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2037,6 +2081,11 @@ Adresse: %4
         <translation>Minimumsbeløb</translation>
     </message>
     <message>
+        <location line="+13"/>
+        <source>Min height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+34"/>
         <source>Copy address</source>
         <translation>Kopier adresse</translation>
@@ -2067,7 +2116,7 @@ Adresse: %4
         <translation>Vis transaktionsdetaljer</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+147"/>
         <source>Export Transaction Data</source>
         <translation>Eksporter transaktionsdata</translation>
     </message>
@@ -2135,7 +2184,7 @@ Adresse: %4
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+193"/>
+        <location filename="../walletmodel.cpp" line="+197"/>
         <source>Send Coins</source>
         <translation>Send bitcoins</translation>
     </message>
@@ -2186,22 +2235,17 @@ Adresse: %4
 <context>
     <name>bitcoin-core</name>
     <message>
-        <location filename="../bitcoinstrings.cpp" line="+94"/>
-        <source>Bitcoin version</source>
-        <translation>Bitcoin-version</translation>
+        <location filename="../bitcoinstrings.cpp" line="+131"/>
+        <source>Freicoin version</source>
+        <translation>Freicoin-version</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+66"/>
         <source>Usage:</source>
         <translation>Anvendelse:</translation>
     </message>
     <message>
-        <location line="-29"/>
-        <source>Send command to -server or bitcoind</source>
-        <translation>Send kommando til -server eller bitcoind</translation>
-    </message>
-    <message>
-        <location line="-23"/>
+        <location line="-52"/>
         <source>List commands</source>
         <translation>Liste over kommandoer</translation>
     </message>
@@ -2216,17 +2260,7 @@ Adresse: %4
         <translation>Indstillinger:</translation>
     </message>
     <message>
-        <location line="+24"/>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Angiv konfigurationsfil (standard: bitcoin.conf)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Angiv pid-fil (default: bitcoind.pid)</translation>
-    </message>
-    <message>
-        <location line="-1"/>
+        <location line="+26"/>
         <source>Specify data directory</source>
         <translation>Angiv datakatalog</translation>
     </message>
@@ -2237,8 +2271,8 @@ Adresse: %4
     </message>
     <message>
         <location line="-28"/>
-        <source>Listen for connections on &lt;port&gt; (default: 8333 or testnet: 18333)</source>
-        <translation>Lyt til forbindelser på &lt;port&gt; (standard: 8333 eller testnetværk: 18333)</translation>
+        <source>Listen for connections on &lt;port&gt; (default: 8639 or testnet: 18639)</source>
+        <translation>Lyt til forbindelser på &lt;port&gt; (standard: 8639 eller testnetværk: 18639)</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2246,12 +2280,12 @@ Adresse: %4
         <translation>Oprethold højest &lt;n&gt; forbindelser til andre i netværket (standard: 125)</translation>
     </message>
     <message>
-        <location line="-48"/>
+        <location line="-49"/>
         <source>Connect to a node to retrieve peer addresses, and disconnect</source>
         <translation>Forbind til en knude for at modtage adresse, og afbryd</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+83"/>
         <source>Specify your own public address</source>
         <translation>Angiv din egen offentlige adresse</translation>
     </message>
@@ -2272,8 +2306,8 @@ Adresse: %4
     </message>
     <message>
         <location line="+27"/>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8332 or testnet: 18332)</source>
-        <translation>Lyt til JSON-RPC-forbindelser på &lt;port&gt; (standard: 8332 eller testnetværk: 18332)</translation>
+        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: 8638 or testnet: 18638)</source>
+        <translation>Lyt til JSON-RPC-forbindelser på &lt;port&gt; (standard: 8638 eller testnetværk: 18638)</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -2296,32 +2330,7 @@ Adresse: %4
         <translation>Accepter forbindelser udefra (standard: 1 hvis hverken -proxy eller -connect)</translation>
     </message>
     <message>
-        <location line="-80"/>
-        <source>%s, you must set a rpcpassword in the configuration file:
-%s
-It is recommended you use the following random password:
-rpcuser=bitcoinrpc
-rpcpassword=%s
-(you do not need to remember this password)
-The username and password MUST NOT be the same.
-If the file does not exist, create it with owner-readable-only file permissions.
-It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
-</source>
-        <translation>%s, du skal angive en RPC-adgangskode i konfigurationsfilen:
-%s
-Det anbefales, at du bruger nedenstående, tilfældige adgangskode:
-rpcuser=bitcoinrpc
-rpcpassword=%s
-(du behøver ikke huske denne adgangskode)
-Brugernavnet og adgangskode MÅ IKKE være det samme.
-Hvis filen ikke eksisterer, opret den og giv ingen andre end ejeren læserettighed.
-Det anbefales også at angive alertnotify, så du påmindes om problemer;
-f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
-</translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="-63"/>
         <source>An error occurred while setting up the RPC port %u for listening on IPv6, falling back to IPv4: %s</source>
         <translation>Der opstod en fejl ved angivelse af RPC-porten %u til at lytte på IPv6, falder tilbage til IPv4: %s</translation>
     </message>
@@ -2332,8 +2341,8 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Bitcoin is probably already running.</source>
-        <translation>Kan ikke opnå lås på datakatalog %s. Bitcoin er sandsynligvis allerede startet.</translation>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
+        <translation>Kan ikke opnå lås på datakatalog %s. Freicoin er sandsynligvis allerede startet.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2377,8 +2386,8 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
-        <translation>Advarsel: Undersøg venligst, at din computers dato og klokkeslæt er korrekt indstillet! Hvis der er fejl i disse, vil Bitcoin ikke fungere korrekt.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Advarsel: Undersøg venligst, at din computers dato og klokkeslæt er korrekt indstillet! Hvis der er fejl i disse, vil Freicoin ikke fungere korrekt.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2396,7 +2405,7 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Forsøg at genskabe private nøgler fra ødelagt wallet.dat</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Block creation options:</source>
         <translation>Blokoprettelsestilvalg:</translation>
     </message>
@@ -2516,7 +2525,7 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Find ligeværdige ved DNS-opslag (standard: 1 hvis ikke -connect)</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Generate coins (default: 0)</source>
         <translation>Generer bitcoins (standard: 0)</translation>
     </message>
@@ -2541,12 +2550,27 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Genbyg blokkædeindeks fra nuværende blk000??.dat filer</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+6"/>
+        <source>Send command to -server or freicoind</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Set the number of threads to service RPC calls (default: 4)</source>
         <translation>Angiv antallet af tråde til at håndtere RPC-kald (standard: 4)</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+3"/>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Verifying blocks...</source>
         <translation>Efterprøver blokke...</translation>
     </message>
@@ -2561,7 +2585,22 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Importerer blokke fra ekstern blk000??.dat fil</translation>
     </message>
     <message>
-        <location line="-76"/>
+        <location line="-127"/>
+        <source>%s, you must set a rpcpassword in the configuration file:
+%s
+It is recommended you use the following random password:
+rpcuser=freicoinrpc
+rpcpassword=%s
+(you do not need to remember this password)
+The username and password MUST NOT be the same.
+If the file does not exist, create it with owner-readable-only file permissions.
+It is also recommended to set alertnotify so you are notified of problems;
+for example: alertnotify=echo %%s | mail -s &quot;Freicoin Alert&quot; admin@foo.com
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+51"/>
         <source>Set the number of script verification threads (up to 16, 0 = auto, &lt;0 = leave that many cores free, default: 0)</source>
         <translation>Angiv nummeret af skriptefterprøvningstråde (op til 16, 0 = automatisk, &lt;0 = efterlad det antal kerner tilgængelige, standard: 0)</translation>
     </message>
@@ -2627,8 +2666,8 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="+5"/>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>SSL-indstillinger: (se Bitcoin Wiki for SSL-opsætningsinstruktioner)</translation>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>SSL-indstillinger: (se Freicoin Wiki for SSL-opsætningsinstruktioner)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2796,12 +2835,12 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Kunne ikke tildele %s på denne computer (bind returnerede fejl %d, %s)</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-92"/>
         <source>Connect through socks proxy</source>
         <translation>Tilslut via SOCKS-proxy</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="-9"/>
         <source>Allow DNS lookups for -addnode, -seednode and -connect</source>
         <translation>Tillad DNS-opslag for -addnode, -seednode og -connect</translation>
     </message>
@@ -2811,27 +2850,27 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Indlæser adresser...</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-36"/>
         <source>Error loading wallet.dat: Wallet corrupted</source>
         <translation>Fejl ved indlæsning af wallet.dat: Tegnebog ødelagt</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation>Fejl ved indlæsning af wallet.dat: Tegnebog kræver en nyere version af Bitcoin</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Fejl ved indlæsning af wallet.dat: Tegnebog kræver en nyere version af Freicoin</translation>
     </message>
     <message>
-        <location line="+93"/>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Det var nødvendigt at genskrive tegnebogen: genstart Bitcoin for at gennemføre</translation>
+        <location line="+94"/>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Det var nødvendigt at genskrive tegnebogen: genstart Freicoin for at gennemføre</translation>
     </message>
     <message>
-        <location line="-95"/>
+        <location line="-96"/>
         <source>Error loading wallet.dat</source>
         <translation>Fejl ved indlæsning af wallet.dat</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <source>Invalid -proxy address: &apos;%s&apos;</source>
         <translation>Ugyldig -proxy adresse: &apos;%s&apos;</translation>
     </message>
@@ -2846,7 +2885,7 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Ukendt -socks proxy-version: %i</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-97"/>
         <source>Cannot resolve -bind address: &apos;%s&apos;</source>
         <translation>Kan ikke finde -bind adressen: &apos;%s&apos;</translation>
     </message>
@@ -2856,7 +2895,7 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Kan ikke finde -externalip adressen: &apos;%s&apos;</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+45"/>
         <source>Invalid amount for -paytxfee=&lt;amount&gt;: &apos;%s&apos;</source>
         <translation>Ugyldigt beløb for -paytxfee=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
@@ -2882,21 +2921,21 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
     </message>
     <message>
         <location line="-25"/>
-        <source>Unable to bind to %s on this computer. Bitcoin is probably already running.</source>
-        <translation>Kunne ikke tildele %s på denne computer. Bitcoin kører sikkert allerede.</translation>
+        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
+        <translation>Kunne ikke tildele %s på denne computer. Freicoin kører sikkert allerede.</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>Fee per KB to add to transactions you send</source>
         <translation>Gebyr pr. kB, som skal tilføjes til transaktioner, du sender</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Loading wallet...</source>
         <translation>Indlæser tegnebog...</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-53"/>
         <source>Cannot downgrade wallet</source>
         <translation>Kan ikke nedgradere tegnebog</translation>
     </message>
@@ -2906,27 +2945,27 @@ f.eks.: alertnotify=echo %%s | mail -s &quot;Bitcoin Alert&quot; admin@foo.com
         <translation>Kan ikke skrive standardadresse</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+65"/>
         <source>Rescanning...</source>
         <translation>Genindlæser...</translation>
     </message>
     <message>
-        <location line="-57"/>
+        <location line="-58"/>
         <source>Done loading</source>
         <translation>Indlæsning gennemført</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+83"/>
         <source>To use the %s option</source>
         <translation>For at bruge %s mulighed</translation>
     </message>
     <message>
-        <location line="-74"/>
+        <location line="-75"/>
         <source>Error</source>
         <translation>Fejl</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-30"/>
         <source>You must set rpcpassword=&lt;password&gt; in the configuration file:
 %s
 If the file does not exist, create it with owner-readable-only file permissions.</source>
