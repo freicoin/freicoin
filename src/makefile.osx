@@ -58,6 +58,10 @@ endif
 
 DEFS=-DMAC_OSX -DMSG_NOSIGNAL=0 -DBOOST_SPIRIT_THREADSAFE
 
+# SSLv2 has been removed from some distributions; we should remove it anyway
+# as there are some security concerns.
+DEFS += -DOPENSSL_NO_SSL2=1
+
 ifdef RELEASE
 # Compile for maximum compatibility and smallest size.
 # This requires that dependencies are compiled
