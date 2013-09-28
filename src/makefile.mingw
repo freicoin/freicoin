@@ -51,6 +51,10 @@ LDFLAGS=-Wl,--dynamicbase -Wl,--nxcompat -Wl,--large-address-aware
 
 TESTDEFS = -DTEST_DATA_DIR=$(abspath test/data)
 
+# SSLv2 has been removed from some distributions; we should remove it anyway
+# as there are some security concerns.
+DEFS += -DOPENSSL_NO_SSL2=1
+
 ifndef USE_UPNP
 	override USE_UPNP = -
 endif
