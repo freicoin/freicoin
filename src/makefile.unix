@@ -15,6 +15,10 @@ LINK:=$(CXX)
 
 DEFS=-DBOOST_SPIRIT_THREADSAFE -D_FILE_OFFSET_BITS=64
 
+# SSLv2 has been removed from some distributions; we should remove it anyway
+# as there are some security concerns.
+DEFS += -DOPENSSL_NO_SSL2=1
+
 DEFS += $(addprefix -I,$(CURDIR) $(CURDIR)/obj $(BOOST_INCLUDE_PATH) $(BDB_INCLUDE_PATH) $(OPENSSL_INCLUDE_PATH))
 LIBS = $(addprefix -L,$(BOOST_LIB_PATH) $(BDB_LIB_PATH) $(OPENSSL_LIB_PATH))
 
