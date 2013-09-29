@@ -199,7 +199,7 @@ class CTransaction
 public:
     static int64_t nMinTxFee;
     static int64_t nMinRelayTxFee;
-    static const int CURRENT_VERSION=1;
+    static const int CURRENT_VERSION=2;
     int nVersion;
     std::vector<CTxIn> vin;
     std::vector<CTxOut> vout;
