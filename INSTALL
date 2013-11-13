@@ -1,9 +1,9 @@
-Building Bitcoin
+Building FreiCoin
 
-See doc/readme-qt.rst for instructions on building Bitcoin-Qt,
+See doc/readme-qt.rst for instructions on building FreiCoin-Qt,
 the intended-for-end-users, nice-graphical-interface, reference
-implementation of Bitcoin.
+implementation of FreiCoin.
 
 See doc/build-*.txt for instructions on building bitcoind,
 the intended-for-services, no-graphical-interface, reference
-implementation of Bitcoin.
+implementation of FreiCoin.
