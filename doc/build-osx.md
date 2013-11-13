@@ -79,7 +79,7 @@ Installing the dependencies using MacPorts is very straightforward.
         git clone git@github.com:freicoin/freicoin.git freicoin
         cd freicoin
 
-2.  Build bitcoind:
+2.  Build freicoind:
 
         cd src
         make -f makefile.osx
@@ -122,7 +122,7 @@ Rerunning "openssl version" should now return the correct version.
 
         patch -p1 < contrib/homebrew/makefile.osx.patch
 
-3.  Build bitcoind:
+3.  Build freicoind:
 
         cd src
         make -f makefile.osx
@@ -172,7 +172,7 @@ directory. We have to first create the RPC configuration file, though.
 Run `./freicoind` to get the filename where it should be put, or just try these
 commands:
 
-    echo -e "rpcuser=bitcoinrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Freicoin/freicoin.conf"
+    echo -e "rpcuser=freicoinrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Freicoin/freicoin.conf"
     chmod 600 "/Users/${USER}/Library/Application Support/Freicoin/Freicoin.conf"
 
 When next you run it, it will start downloading the blockchain, but it won't
@@ -181,5 +181,5 @@ output anything while it's doing this. This process may take several hours.
 Other commands:
 
     ./freicoind --help  # for a list of command-line options.
-    ./freicoind -daemon # to start the bitcoin daemon.
+    ./freicoind -daemon # to start the freicoin daemon.
     ./freicoind help    # When the daemon is running, to get a list of RPC commands
