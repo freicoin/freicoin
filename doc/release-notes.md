@@ -34,7 +34,7 @@ with code that automatically calculates and suggests appropriate fees in the
 0.9 release and note that if you set a fee policy significantly different from
 the rest of the network your transactions may never confirm.
 
-Bitcoin-Qt changes
+FreiCoin-Qt changes
 ------------------
 
 - New icon and splash screen
@@ -49,7 +49,7 @@ Bitcoin-Qt changes
 
 MacOSX:
 
-- OSX support for click-to-pay (bitcoin:) links
+- OSX support for click-to-pay (freicoin:) links
 - Fix GUI disappearing problem on MacOSX (issue #1522)
 
 Linux/Unix:
