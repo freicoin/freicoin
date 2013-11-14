@@ -80,8 +80,3 @@ Large changes should have a test plan, and should be tested by somebody other
 than the developer who wrote the code.
 
 See https://github.com/bitcoin/QA/ for how to create a test plan.
-
-What's different?
--------
-Upgraded branding issues from bitcoin to freicoin in how to folders for ease of use.
-increased max connections allowed to 25 as per suggestion of Mark Freidenbach
