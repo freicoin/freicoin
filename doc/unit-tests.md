@@ -1,4 +1,4 @@
-Compiling/running bitcoind unit tests
+Compiling/running freicoind unit tests
 ------------------------------------
 
 bitcoind unit tests are in the `src/test/` directory; they
@@ -7,8 +7,8 @@ use the Boost::Test unit-testing framework.
 To compile and run the tests:
 
 	cd src
-	make -f makefile.unix test_bitcoin  # Replace makefile.unix if you're not on unix
-	./test_bitcoin   # Runs the unit tests
+	make -f makefile.unix test_freicoin  # Replace makefile.unix if you're not on unix
+	./test_freicoin   # Runs the unit tests
 
 If all tests succeed the last line of output will be:
 `*** No errors detected`
@@ -16,13 +16,13 @@ If all tests succeed the last line of output will be:
 To add more tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
 .cpp files in the test/ directory or add new .cpp files that
 implement new BOOST_AUTO_TEST_SUITE sections (the makefiles are
-set up to add test/*.cpp to test_bitcoin automatically).
+set up to add test/*.cpp to test_freicoin automatically).
 
 
-Compiling/running Bitcoin-Qt unit tests
+Compiling/running FreiCoin-Qt unit tests
 ---------------------------------------
 
-Bitcoin-Qt unit tests are in the src/qt/test/ directory; they
+FreiCoin-Qt unit tests are in the src/qt/test/ directory; they
 use the Qt unit-testing framework.
 
 To compile and run the tests:
