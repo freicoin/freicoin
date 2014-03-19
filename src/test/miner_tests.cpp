@@ -46,6 +46,7 @@ struct {
     {2, 0xbbbeb305}, {2, 0xfe1c810a},
 };
 
+#if 0
 // NOTE: These tests rely on CreateNewBlock doing its own self-validation!
 BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
 {
@@ -256,6 +257,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
         delete tx;
 
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(sha256transform_equality)
 {
