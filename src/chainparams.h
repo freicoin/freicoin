@@ -65,6 +65,7 @@ public:
     const vector<CDNSSeedData>& DNSSeeds() const { return vSeeds; }
     const std::vector<unsigned char> &Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
     int FIRDiffFilterThreshold() const { return nFIRDiffFilterThreshold; }
+    mpq HostDemurrageRate() const { return qHostDemurrageRate; }
     virtual const vector<CAddress>& FixedSeeds() const = 0;
     int RPCPort() const { return nRPCPort; }
 protected:
@@ -82,6 +83,7 @@ protected:
     vector<CDNSSeedData> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
     int nFIRDiffFilterThreshold;
+    mpq qHostDemurrageRate;
 };
 
 /**

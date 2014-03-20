@@ -114,6 +114,8 @@ public:
         nSubsidyHalvingInterval = 210000;
         /** FIR difficulty filter parameters */
         nFIRDiffFilterThreshold = std::numeric_limits<int>::max();
+        /** Demurrage for Freicoin host currency */
+        qHostDemurrageRate = mpq("-1/1048576");
 
         // Build the genesis block. Note that the output of the genesis coinbase cannot
         // be spent as it did not originally exist in the database.
