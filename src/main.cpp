@@ -1166,7 +1166,7 @@ CBudget GetInitialDistributionBudget(int nHeight)
 
 mpq GetPerpetualSubsidyAmount(int nHeight)
 {
-    return 0;
+    return MPQ_MAX_MONEY * -Params().HostDemurrageRate();
 }
 
 CBudget GetPerpetualSubsidyBudget(int nHeight)
