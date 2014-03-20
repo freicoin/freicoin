@@ -130,6 +130,26 @@ AC_ARG_WITH([gmp],
             fi
             ])
 
+AC_ARG_WITH([mpfr_include],
+            [AC_HELP_STRING([--with-mpfr-include=DIR],
+                            [MPFR include directory])],
+            [CPPFLAGS="-I$withval $CPPFLAGS"])
+AC_ARG_WITH([mpfr_lib],
+            [AC_HELP_STRING([--with-mpfr-lib=DIR],
+                            [MPFR lib directory])],
+            [LDFLAGS="-L$withval $LDFLAGS"])
+AC_ARG_WITH([mpfr],
+            [AC_HELP_STRING([--with-mpfr=DIR],
+                           [MPFR install directory])],
+            [
+            if test -z "$with_mpfr_lib" -a -z "$with_mpfr_include" ; then
+               CPPFLAGS="-I$withval/include $CPPFLAGS"
+               LDFLAGS="-L$withval/lib $LDFLAGS"
+            else
+               AC_MSG_FAILURE([Do not use --with-mpfr and --with-mpfr-include/--with-mpfr-lib options simultaneously.])
+            fi
+            ])
+
 
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([src/bitcoin-config.h])
@@ -499,6 +519,19 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
 AC_CHECK_LIB([gmp], [__gmpz_init],
              [LIBS="-lgmp -lgmpxx $LIBS"],
              [AC_MSG_ERROR([libgmp not found or uses a different ABI.])])
+
+# Check MPFR Header
+AC_MSG_CHECKING(for mpfr.h)
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+#include "mpfr.h"
+]])],[AC_MSG_RESULT(yes)],[
+ AC_MSG_RESULT(no)
+ AC_MSG_ERROR([mpfr.h cannot be found or is unusable.])
+])
+
+AC_CHECK_LIB([mpfr], [mpfr_init],
+             [LIBS="-lmpfr $LIBS"],
+             [AC_MSG_ERROR([libmpfr not found or uses a different ABI.])])
 
 AC_ARG_WITH([cli],
   [AS_HELP_STRING([--with-cli],
