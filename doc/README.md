@@ -44,3 +44,4 @@ Other Pages
 - [Multiwallet Qt Development](multiwallet-qt.md)
 - [Unit Tests](unit-tests.md)
 - [Translation Process](translation_process.md)
+- [Systemd](systemd.md)
