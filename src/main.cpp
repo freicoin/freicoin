@@ -1025,8 +1025,8 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState &state, const CTransa
         // Don't accept it if it can't get into a block
         CAmount txMinFee = GetMinRelayFee(tx, nSize, true);
         if (fLimitFree && nFees < txMinFee)
-            return state.DoS(0, error("AcceptToMemoryPool : not enough fees %s, %d < %d",
-                                      hash.ToString(), nFees, txMinFee),
+            return state.DoS(0, error("AcceptToMemoryPool : not enough fees %s, %s < %s",
+                                      hash.ToString(), AmountToString(nFees), AmountToString(txMinFee)),
                              REJECT_INSUFFICIENTFEE, "insufficient fee");
 
         // Require that free transactions have sufficient priority to be mined in the next block.
@@ -1059,9 +1059,10 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState &state, const CTransa
         }
 
         if (fRejectInsaneFee && nFees > ::minRelayTxFee.GetFee(nSize) * 10000)
-            return error("AcceptToMemoryPool: : insane fees %s, %d > %d",
+            return error("AcceptToMemoryPool: : insane fees %s, %s > %s",
                          hash.ToString(),
-                         nFees, ::minRelayTxFee.GetFee(nSize) * 10000);
+                         AmountToString(nFees), 
+                         AmountToString(::minRelayTxFee.GetFee(nSize) * 10000));
 
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
@@ -1751,9 +1752,10 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
     if (block.vtx[0].GetValueOut() > GetBlockValue(pindex->nHeight, nFees))
         return state.DoS(100,
-                         error("ConnectBlock() : coinbase pays too much (actual=%d vs limit=%d)",
-                               block.vtx[0].GetValueOut(), GetBlockValue(pindex->nHeight, nFees)),
-                               REJECT_INVALID, "bad-cb-amount");
+                         error("ConnectBlock() : coinbase pays too much (actual=%s vs limit=%s)",
+                               AmountToString(block.vtx[0].GetValueOut()), 
+                               AmountToString(GetBlockValue(pindex->nHeight, nFees))),
+                         REJECT_INVALID, "bad-cb-amount");
 
     if (!control.Wait())
         return state.DoS(100, false);

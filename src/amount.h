@@ -13,6 +13,8 @@
 
 typedef int64_t CAmount;
 
+std::string AmountToString(const CAmount& n);
+
 static const CAmount COIN = 100000000;
 static const CAmount CENT = 1000000;
 

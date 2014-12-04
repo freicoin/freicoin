@@ -7,6 +7,11 @@
 
 #include "tinyformat.h"
 
+std::string AmountToString(const CAmount& n)
+{
+    return strprintf("%d", n);
+}
+
 CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nSize)
 {
     if (nSize > 0)
