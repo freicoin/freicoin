@@ -1425,7 +1425,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, CAmount> >& vecSend,
                     int age = pcoin.first->GetDepthInMainChain();
                     if (age != 0)
                         age += 1;
-                    dPriority += (double)nCredit * age;
+                    dPriority += AmountToDouble(nCredit) * age;
                 }
 
                 CAmount nChange = nValueIn - nValue - nFeeRet;

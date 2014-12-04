@@ -12,6 +12,11 @@ std::string AmountToString(const CAmount& n)
     return strprintf("%d", n);
 }
 
+double AmountToDouble(const CAmount& n)
+{
+    return (double)n;
+}
+
 CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nSize)
 {
     if (nSize > 0)

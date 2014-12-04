@@ -97,7 +97,7 @@ CAmount AmountFromValue(const Value& value)
     double dAmount = value.get_real();
     if (dAmount <= 0.0 || dAmount > 21000000.0)
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount");
-    CAmount nAmount = roundint64(dAmount * COIN);
+    CAmount nAmount = roundint64(dAmount * AmountToDouble(COIN));
     if (!MoneyRange(nAmount))
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount");
     return nAmount;
@@ -105,7 +105,7 @@ CAmount AmountFromValue(const Value& value)
 
 Value ValueFromAmount(const CAmount& amount)
 {
-    return (double)amount / (double)COIN;
+    return AmountToDouble(amount) / AmountToDouble(COIN);
 }
 
 uint256 ParseHashV(const Value& v, string strName)
