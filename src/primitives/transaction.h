@@ -123,13 +123,13 @@ public:
 
     void SetNull()
     {
-        nValue = -1;
+        nValue = NULL_AMOUNT;
         scriptPubKey.clear();
     }
 
     bool IsNull() const
     {
-        return (nValue == -1);
+        return (nValue == NULL_AMOUNT);
     }
 
     uint256 GetHash() const;

@@ -48,6 +48,7 @@ static const CAmount CENT = 1000000;
 /** No amount larger than this (in satoshi) is valid */
 static const CAmount MAX_MONEY = 21000000 * COIN;
 inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+static const CAmount NULL_AMOUNT = -1;
 
 /** Type-safe wrapper class to for fee rates
  * (how much to pay based on transaction size, unit is satoshis-per-1,000-bytes)
