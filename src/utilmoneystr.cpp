@@ -58,7 +58,7 @@ bool ParseMoney(const string& str, CAmount& nRet)
 bool ParseMoney(const char* pszIn, CAmount& nRet)
 {
     string strWhole;
-    int64_t nUnits = 0;
+    CAmount nUnits = 0;
     const char* p = pszIn;
     while (isspace(*p))
         p++;
@@ -67,7 +67,7 @@ bool ParseMoney(const char* pszIn, CAmount& nRet)
         if (*p == '.')
         {
             p++;
-            int64_t nMult = CENT*10;
+            CAmount nMult = CENT*10;
             while (isdigit(*p) && (nMult > 0))
             {
                 nUnits += nMult * (*p++ - '0');
