@@ -142,7 +142,7 @@ bool CScriptCompressor::Decompress(unsigned int nSize, const std::vector<unsigne
 uint64_t CTxOutCompressor::CompressAmount(const CAmount& _n)
 {
     // Cast from CAmount (int64_t) to uint64_t
-    uint64_t n = _n;
+    uint64_t n = _n.ToValue();
     if (n == 0)
         return 0;
     int e = 0;

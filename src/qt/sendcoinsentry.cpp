@@ -183,7 +183,7 @@ void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
         {
             ui->payTo_is->setText(recipient.address);
             ui->memoTextLabel_is->setText(recipient.message);
-            ui->payAmount_is->setValue(recipient.amount);
+            ui->payAmount_is->setValue(recipient.amount.ToValue());
             ui->payAmount_is->setReadOnly(true);
             setCurrentWidget(ui->SendCoins_InsecurePaymentRequest);
         }
@@ -191,7 +191,7 @@ void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
         {
             ui->payTo_s->setText(recipient.authenticatedMerchant);
             ui->memoTextLabel_s->setText(recipient.message);
-            ui->payAmount_s->setValue(recipient.amount);
+            ui->payAmount_s->setValue(recipient.amount.ToValue());
             ui->payAmount_s->setReadOnly(true);
             setCurrentWidget(ui->SendCoins_SecurePaymentRequest);
         }
@@ -207,7 +207,7 @@ void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
         ui->payTo->setText(recipient.address); // this may set a label from addressbook
         if (!recipient.label.isEmpty()) // if a label had been set from the addressbook, dont overwrite with an empty label
             ui->addAsLabel->setText(recipient.label);
-        ui->payAmount->setValue(recipient.amount);
+        ui->payAmount->setValue(recipient.amount.ToValue());
     }
 }
 

@@ -25,11 +25,11 @@ std::string FormatAmount(const CAmount& n, int nDecimals, bool fPlus)
 {
     // Note: not using straight sprintf here because we do NOT want
     // localized number formatting.
-    CAmount n_abs = (n > 0 ? n : -n);
+    CAmount n_abs = abs(n);
     CAmount coin = Factor(nDecimals);
     CAmount quotient = n_abs / coin;
     CAmount remainder = n_abs % coin;
-    string str = strprintf("%d.%0*d", quotient, nDecimals, remainder);
+    string str = strprintf("%d.%0*d", quotient.ToValue(), nDecimals, remainder.ToValue());
 
     // Right-trim excess zeros before the decimal point:
     int nTrim = 0;

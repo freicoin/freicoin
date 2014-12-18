@@ -93,7 +93,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
     if (!settings.contains("nSmartFeeSliderPosition"))
         settings.setValue("nSmartFeeSliderPosition", 0);
     if (!settings.contains("nTransactionFee"))
-        settings.setValue("nTransactionFee", (qint64)DEFAULT_TRANSACTION_FEE);
+        settings.setValue("nTransactionFee", (qint64)DEFAULT_TRANSACTION_FEE.ToValue());
     if (!settings.contains("fPayOnlyMinFee"))
         settings.setValue("fPayOnlyMinFee", false);
     if (!settings.contains("fSendFreeTransactions"))
@@ -164,7 +164,7 @@ void SendCoinsDialog::setModel(WalletModel *model)
         connect(ui->checkBoxMinimumFee, SIGNAL(stateChanged(int)), this, SLOT(coinControlUpdateLabels()));
         connect(ui->checkBoxFreeTx, SIGNAL(stateChanged(int)), this, SLOT(updateGlobalFeeVariables()));
         connect(ui->checkBoxFreeTx, SIGNAL(stateChanged(int)), this, SLOT(coinControlUpdateLabels()));
-        ui->customFee->setSingleStep(CWallet::minTxFee.GetFeePerK());
+        ui->customFee->setSingleStep(CWallet::minTxFee.GetFeePerK().ToValue());
         updateFeeSectionControls();
         updateMinFeeLabel();
         updateSmartFeeLabel();
@@ -179,7 +179,7 @@ SendCoinsDialog::~SendCoinsDialog()
     settings.setValue("nFeeRadio", ui->groupFee->checkedId());
     settings.setValue("nCustomFeeRadio", ui->groupCustomFee->checkedId());
     settings.setValue("nSmartFeeSliderPosition", ui->sliderSmartFee->value());
-    settings.setValue("nTransactionFee", (qint64)ui->customFee->value());
+    settings.setValue("nTransactionFee", (qint64)ui->customFee->value().ToValue());
     settings.setValue("fPayOnlyMinFee", ui->checkBoxMinimumFee->isChecked());
     settings.setValue("fSendFreeTransactions", ui->checkBoxFreeTx->isChecked());
 
@@ -557,7 +557,7 @@ void SendCoinsDialog::on_buttonMinimizeFee_clicked()
 void SendCoinsDialog::setMinimumFee()
 {
     ui->radioCustomPerKilobyte->setChecked(true);
-    ui->customFee->setValue(CWallet::minTxFee.GetFeePerK());
+    ui->customFee->setValue(CWallet::minTxFee.GetFeePerK().ToValue());
 }
 
 void SendCoinsDialog::updateFeeSectionControls()
