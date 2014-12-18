@@ -11,14 +11,25 @@
 
 using namespace std;
 
-string FormatMoney(const CAmount& n, bool fPlus)
+static const int COIN_DECIMALS = 8;
+
+CAmount Factor(int decimals)
+{
+    CAmount factor = 1;
+    for ( ; decimals > 0 ; decimals--)
+        factor *= 10;
+    return factor;
+}
+
+std::string FormatAmount(const CAmount& n, int nDecimals, bool fPlus)
 {
     // Note: not using straight sprintf here because we do NOT want
     // localized number formatting.
-    int64_t n_abs = (n > 0 ? n : -n);
-    int64_t quotient = n_abs/COIN;
-    int64_t remainder = n_abs%COIN;
-    string str = strprintf("%d.%08d", quotient, remainder);
+    CAmount n_abs = (n > 0 ? n : -n);
+    CAmount coin = Factor(nDecimals);
+    CAmount quotient = n_abs / coin;
+    CAmount remainder = n_abs % coin;
+    string str = strprintf("%d.%0*d", quotient, nDecimals, remainder);
 
     // Right-trim excess zeros before the decimal point:
     int nTrim = 0;
@@ -34,6 +45,10 @@ string FormatMoney(const CAmount& n, bool fPlus)
     return str;
 }
 
+string FormatMoney(const CAmount& n, bool fPlus)
+{
+    return FormatAmount(n, COIN_DECIMALS, fPlus);
+}
 
 bool ParseMoney(const string& str, CAmount& nRet)
 {
