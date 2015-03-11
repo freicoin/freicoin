@@ -612,45 +612,4 @@ inline bool operator>=(const CBigNum& a, const CBigNum& b) { return (BN_cmp(&a, 
 inline bool operator<(const CBigNum& a, const CBigNum& b)  { return (BN_cmp(&a, &b) < 0); }
 inline bool operator>(const CBigNum& a, const CBigNum& b)  { return (BN_cmp(&a, &b) > 0); }
 
-inline unsigned int GetSerializeSize(const mpz& a, int nType, int nVersion)
-{
-    return CBigNum(a).GetSerializeSize(nType, nVersion);
-}
-template<typename Stream>
-inline void Serialize(Stream& s, const mpz& a, int nType, int nVersion)
-{
-    CBigNum(a).Serialize(s, nType, nVersion);
-}
-template<typename Stream>
-inline void Unserialize(Stream& s, mpz& a, int nType, int nVersion)
-{
-    CBigNum bn;
-    bn.Unserialize(s, nType, nVersion);
-    a = bn.get_mpz();
-}
-
-inline unsigned int GetSerializeSize(const mpq& a, int nType, int nVersion)
-{
-    mpq q(a);
-    q.canonicalize();
-    return GetSerializeSize(q.get_num(), nType, nVersion) +
-           GetSerializeSize(q.get_den(), nType, nVersion);
-}
-template<typename Stream>
-inline void Serialize(Stream& s, const mpq& a, int nType, int nVersion)
-{
-    mpq q(a);
-    q.canonicalize();
-    Serialize(s, q.get_num(), nType, nVersion);
-    Serialize(s, q.get_den(), nType, nVersion);
-}
-template<typename Stream>
-inline void Unserialize(Stream& s, mpq& a, int nType, int nVersion)
-{
-    mpq r;
-    Unserialize(s, r.get_num(), nType, nVersion);
-    Unserialize(s, r.get_den(), nType, nVersion);
-    r.canonicalize(); a = r;
-}
-
 #endif
