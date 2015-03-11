@@ -1118,7 +1118,7 @@ void ApplyBudget(const mpq& qAmount, const CBudget& budget,
     std::map<CTxDestination, mpq>::iterator itr = mapBudgetRet.begin();
     while (itr != mapBudgetRet.end())
         if (itr->second <= 0)
-            mapBudgetRet.erase(itr++);
+            mapBudgetRet.erase((itr++)->first);
         else
             ++itr;
 }
