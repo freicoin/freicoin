@@ -5,7 +5,7 @@ SetCompressor /SOLID lzma
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.8.6.1
+!define VERSION 0.8.6.2
 !define COMPANY "Freicoin project"
 !define URL http://freico.in/
 
@@ -45,13 +45,13 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile freicoin-0.8.6.1-win32-setup.exe
+OutFile freicoin-0.8.6.2-win32-setup.exe
 InstallDir $PROGRAMFILES\Freicoin
 CRCCheck on
 XPStyle on
 BrandingText " "
 ShowInstDetails show
-VIProductVersion 0.8.6.1
+VIProductVersion 0.8.6.2
 VIAddVersionKey ProductName Freicoin
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"

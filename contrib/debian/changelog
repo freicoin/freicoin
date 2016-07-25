@@ -1,3 +1,11 @@
+freicoin (0.8.6~precise1) precise; urgency=high
+
+  [Mark Friedenbach]
+    * Rebase against bitcoin/0.8 stable branch of the bitcoin source tree. The
+      primary feature this grabs is the BIP 66 soft-fork.
+
+ -- Mark Friedenbach <mark@friedenbach.org>  Mon, 25 Jul 2016 12:00:00 -0000
+
 freicoin (0.8.3~precise9) precise; urgency=high
 
   [Mark Friedenbach]
