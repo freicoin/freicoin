@@ -7,6 +7,7 @@ architectures:
 packages:
 - "faketime"
 - "xz-utils"
+- "unzip"
 - "zip"
 reference_datetime: "2012-07-01 00:00:00"
 remotes: []

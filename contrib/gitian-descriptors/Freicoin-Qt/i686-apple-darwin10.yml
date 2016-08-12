@@ -9,6 +9,7 @@ packages:
 - "libqt4-dev"
 - "qt4-linguist-tools"
 - "qt4-qmake"
+- "unzip"
 - "zip"
 reference_datetime: "2012-07-01 00:00:00"
 remotes: []

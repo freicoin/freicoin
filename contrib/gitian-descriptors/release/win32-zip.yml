@@ -6,6 +6,7 @@ architectures:
 - "i386"
 packages:
 - "faketime"
+- "unzip"
 - "zip"
 reference_datetime: "2012-07-01 00:00:00"
 remotes: []
