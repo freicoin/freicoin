@@ -38,8 +38,8 @@ REQUIREMENTS := $(SHELL) bzip2 cut diff $(GREP) gzip $(MAKE) openssl $(PATCH) \
 
 BUILD_MANIFEST = cd '$(shell dirname '$(MAKEFILE)')'/../.. && \
 	find $(1) -print0 | \
-	xargs -0 -n1 openssl sha256 2>/dev/null | \
-	openssl sha256 | \
+	xargs -0 -n1 openssl dgst -sha256 2>/dev/null | \
+	openssl dgst -sha256 | \
 	$(SED) -n 's,^.*\([0-9a-f]\{64\}\),\1,p'
 
 VALIDATE_MANIFEST = \
@@ -371,7 +371,7 @@ check-requirements: .stamp-check-requirements.h
 download: $(addprefix download-,$(PKGS))
 
 PKG_CHECKSUM = \
-	openssl sha256 '$(HOST_CACHE_DIR)/$(1)' 2>/dev/null | $(SED) -n 's,^.*\([0-9a-f]\{64\}\)$$,\1,p'
+	openssl dgst -sha256 '$(HOST_CACHE_DIR)/$(1)' 2>/dev/null | $(SED) -n 's,^.*\([0-9a-f]\{64\}\)$$,\1,p'
 
 CHECK_PKG_ARCHIVE = \
 	[ x'$($(1)_CHECKSUM)' == x"`$$(call PKG_CHECKSUM,$(1))`" ]
