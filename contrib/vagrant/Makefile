@@ -451,7 +451,7 @@ host-vm: .stamp-host-vm.manifest
 # ===----------------------------------------------------------------------===
 
 GITIAN_VM_FILES    := contrib/vagrant/Makefile \
-                      contrib/vagrant/patch/gitian-builder-69bd6a53.patch
+                      contrib/vagrant/patch/gitian-builder-ee1b69d.patch
 GITIAN_VM_FILES    := $(sort $(GITIAN_VM_FILES))
 GITIAN_VM_MANIFEST := $(shell $(call BUILD_MANIFEST,$(GITIAN_VM_FILES)))
 
@@ -476,9 +476,9 @@ gitian-guest-vm: .stamp-gitian-guest-vm.manifest
 	vagrant ssh --command "\
 	    git clone 'https://github.com/devrandom/gitian-builder' ~/gitian-builder"
 	vagrant ssh --command "cd ~/gitian-builder && \
-	    git checkout 69bd6a53"
+	    git checkout ee1b69d"
 	vagrant ssh --command "cd ~/gitian-builder && \
-	    patch -p1 < /vagrant/patch/gitian-builder-69bd6a53.patch"
+	    patch -p1 < /vagrant/patch/gitian-builder-ee1b69d.patch"
 	vagrant ssh --command "cd ~/gitian-builder && \
 	    ln -s $(GUEST_CACHE_DIR) inputs"
 	
@@ -487,9 +487,8 @@ gitian-guest-vm: .stamp-gitian-guest-vm.manifest
 	    if [ -e $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) ]; then \
 	        rsync -av $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST)/base-* . || exit 1; \
 	    else \
-	        bin/make-base-vm --lxc --suite precise --arch i386  || exit 1; \
-	        bin/make-base-vm --lxc --suite lucid   --arch i386  || exit 1; \
-	        bin/make-base-vm --lxc --suite lucid   --arch amd64 || exit 1; \
+	        GITIAN_HOST_IP=10.0.2.15 bin/make-base-vm --lxc --suite lucid --arch i386  || exit 1; \
+	        GITIAN_HOST_IP=10.0.2.15 bin/make-base-vm --lxc --suite lucid --arch amd64 || exit 1; \
 	        echo base-* | xargs -n1 gzip --fast; \
 	        mkdir -p $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) || exit 1; \
 	        rsync -av base-* $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) || \
