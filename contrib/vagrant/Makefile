@@ -54,7 +54,7 @@ CACHE_DIR       := cache
 HOST_CACHE_DIR  := $(CACHE_DIR)
 GUEST_CACHE_DIR := /vagrant/$(CACHE_DIR)
 
-SOURCEFORGE_MIRROR := hivelocity.dl.sourceforge.net
+SOURCEFORGE_MIRROR := downloads.sourceforge.net
 
 PKG             := Tatsh-xchain-ab41b58.tar.gz
 $(PKG)_CHECKSUM := f004c27dc636c791c28f8d8224deace00e7ea3bbd71a6ca0c7931ce9284ffe07
@@ -148,19 +148,19 @@ PKGS            += $(PKG)
 
 PKG             := gmp-5.0.2.tar.bz2
 $(PKG)_CHECKSUM := dbc2db76fdd4e99f85d5e35aa378ed62c283e0d586b91bd8703aff75a7804c28
-$(PKG)_URL      := ftp://ftp.gmplib.org/pub/gmp-5.0.2/$(PKG)
+$(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
 $(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := gmp-5.0.4.tar.bz2
 $(PKG)_CHECKSUM := 35d4aade3e4bdf0915c944599b10d23f108ffedf6c3188aeec52221c5cf9a06f
-$(PKG)_URL      := ftp://ftp.gmplib.org/pub/gmp-5.0.2/$(PKG)
+$(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
 $(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := gmp-5.1.2.tar.xz
 $(PKG)_CHECKSUM := c7d943a6eceb4f0d3d3ab1176aec37853831cdfa281e012f8a344ba3ceefcbc2
-$(PKG)_URL      := ftp://ftp.gmplib.org/pub/gmp-5.1.2/$(PKG)
+$(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
 $(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
 PKGS            += $(PKG)
 
@@ -172,7 +172,7 @@ PKGS            += $(PKG)
 
 PKG             := libpng-1.6.3.tar.gz
 $(PKG)_CHECKSUM := 907db613a7a068baab594f761a1b6c6b3fa19829c0ed5eb482d194801830859d
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/libpng16/1.6.3/$(PKG)
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/libpng16/older-releases/1.6.3/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := libtool-2.2.6b.tar.lzma
@@ -210,7 +210,7 @@ PKGS            += $(PKG)
 
 PKG             := mingwrt-3.20-mingw32-dev.tar.gz
 $(PKG)_CHECKSUM := a41717c319093e2508a3034e384aaebbc0f94278f4d59d9d0681dd1c2f2828f2
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/mingw/MinGW/Base/mingw-rt/mingwrt-3.20/$(PKG)
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/mingw/MinGW/Base/mingwrt/mingwrt-3.20/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := miniupnpc-1.8.tar.gz
@@ -259,14 +259,12 @@ PKGS            += $(PKG)
 
 PKG             := qt-everywhere-opensource-src-4.8.3.tar.gz
 $(PKG)_CHECKSUM := f1f72974f924861be04019f49f07cd43ab3c95056db2ba8f34b283487cccc728
-$(PKG)_URL      := http://releases.qt-project.org/qt4/source/$(PKG)
-$(PKG)_URL_2    := http://get.qt.nokia.com/qt/source/$(PKG)
+$(PKG)_URL      := http://download.qt.io/archive/qt/4.8/4.8.3/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := qt-mac-opensource-4.8.2.dmg
 $(PKG)_CHECKSUM := 058459800a9e58e4e8a48fda58036133c6033480f49817db50e936fd644e2692
-$(PKG)_URL      := http://releases.qt-project.org/qt4/source/$(PKG)
-$(PKG)_URL_2    := http://get.qt.nokia.com/qt/source/$(PKG)
+$(PKG)_URL      := http://download.qt.io/archive/qt/4.8/4.8.2/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := tonytheodore-mxe-1213449.tar.gz
