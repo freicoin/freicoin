@@ -1,7 +1,7 @@
 ---
 name: "qt"
 suites:
-- "precise"
+- "lucid"
 architectures:
 - "i386"
 packages:

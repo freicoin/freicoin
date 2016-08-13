@@ -1,7 +1,7 @@
 ---
 name: "mpfr"
 suites:
-- "precise"
+- "lucid"
 architectures:
 - "i386"
 packages:

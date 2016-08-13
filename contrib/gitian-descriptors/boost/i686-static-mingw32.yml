@@ -1,7 +1,7 @@
 ---
 name: "boost"
 suites:
-- "precise"
+- "lucid"
 architectures:
 - "i386"
 packages:
