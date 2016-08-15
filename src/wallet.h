@@ -68,7 +68,7 @@ public:
 class CWallet : public CCryptoKeyStore
 {
 private:
-    bool SelectCoins(const mpq& nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1) const;
+    bool SelectCoins(const mpq& nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, bool fTruncateInputs=true) const;
 
     CWalletDB *pwalletdbEncryption;
 
@@ -125,7 +125,7 @@ public:
     bool CanSupportFeature(enum WalletFeature wf) { return nWalletMaxVersion >= wf; }
 
     void AvailableCoins(std::vector<COutput>& vCoins, int nRefHeight=-1, bool fOnlyConfirmed=true) const;
-    bool SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1) const;
+    bool SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, bool fTruncateInputs=true) const;
     bool IsLockedCoin(uint256 hash, unsigned int n) const;
     void LockCoin(COutPoint& output);
     void UnlockCoin(COutPoint& output);
