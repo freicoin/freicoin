@@ -1194,6 +1194,7 @@ static const char *strMainNetDNSSeed[][2] = {
     {"node.freico.in", "seed.freico.in"},
     {"abacus.freico.in", "fledge.freico.in"},
     {"mainnet.freicoin.pw", "seed.mainnet.freicoin.pw"},
+    {"seed.sicanet.net", "dnsseed.sicanet.net"},
     {NULL, NULL}
 };
 
