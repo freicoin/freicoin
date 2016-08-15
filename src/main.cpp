@@ -998,7 +998,7 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState &state, const CTransa
 
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
-        if (!CheckInputs(tx, state, view, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC | SCRIPT_VERIFY_DERSIG))
+        if (!CheckInputs(tx, state, view, 0, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC | SCRIPT_VERIFY_DERSIG))
         {
             return error("AcceptToMemoryPool: : ConnectInputs failed %s", hash.ToString());
         }
@@ -1655,7 +1655,7 @@ bool VerifySignature(const CCoins& txFrom, const CTransaction& txTo, unsigned in
     return CScriptCheck(txFrom, txTo, nIn, flags, nHashType)();
 }
 
-bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCache &inputs, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks)
+bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCache &inputs, int per_input_adjustment, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks)
 {
     if (!tx.IsCoinBase())
     {
@@ -1694,7 +1694,7 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
                                  REJECT_INVALID, "bad-txns-non-monotonic-refheight");
 
             // Check for negative or overflow input values
-            nInput = coins.GetPresentValueOfOutput(prevout.n, tx.refheight);
+            nInput = coins.GetPresentValueOfOutput(prevout.n, tx.refheight) + per_input_adjustment;
             nValueIn += nInput;
             if (!MoneyRange(nInput) || !MoneyRange(nValueIn))
                 return state.DoS(100, error("CheckInputs() : txin values out of range"),
@@ -1921,13 +1921,18 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
     int64_t nBIP16SwitchTime = 1333238400;
     bool fStrictPayToScriptHash = (pindex->nTime >= nBIP16SwitchTime);
 
+    // Whether fractional inputs should be summed or ignored. Bundled as part of the
+    // BIP66 soft-fork in Freicoin.
+    bool truncate_inputs = false;
+
     unsigned int flags = SCRIPT_VERIFY_NOCACHE |
                          (fStrictPayToScriptHash ? SCRIPT_VERIFY_P2SH : SCRIPT_VERIFY_NONE);
 
     if (block.nVersion >= 3 &&
         ((!TestNet() && CBlockIndex::IsSuperMajority(3, pindex->pprev, 750, 1000)) ||
-            (TestNet() && CBlockIndex::IsSuperMajority(3, pindex->pprev, 51, 100)))) {
+          (TestNet() && CBlockIndex::IsSuperMajority(3, pindex->pprev, 51, 100)))) {
         flags |= SCRIPT_VERIFY_DERSIG;
+        truncate_inputs = true;
     }
 
     CBlockUndo blockundo;
@@ -1972,10 +1977,11 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
                 return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.refheight"),
                                  REJECT_INVALID, "bad-tx-refheight-gt-blk-height");
 
-            nFees += GetTimeAdjustedValue(view.GetValueIn(tx)-tx.GetValueOut(), pindex->nHeight-tx.refheight);
+            int64_t fee = (view.GetValueIn(tx)-tx.GetValueOut()) + (truncate_inputs? 0: tx.vin.size());
+            nFees += GetTimeAdjustedValue(fee, pindex->nHeight-tx.refheight);
 
             std::vector<CScriptCheck> vChecks;
-            if (!CheckInputs(tx, state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
+            if (!CheckInputs(tx, state, view, !truncate_inputs, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
                 return false;
             control.Add(vChecks);
         }
