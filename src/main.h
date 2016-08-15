@@ -683,7 +683,7 @@ public:
     // Check whether all inputs of this transaction are valid (no double spends, scripts & sigs, amounts)
     // This does not modify the UTXO set. If pvChecks is not NULL, script checks are pushed onto it
     // instead of being performed inline.
-    bool CheckInputs(CValidationState &state, CCoinsViewCache &view, bool fScriptChecks = true,
+    bool CheckInputs(CValidationState &state, CCoinsViewCache &view, int nPerInputAdjustment, bool fScriptChecks = true,
                      unsigned int flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC,
                      std::vector<CScriptCheck> *pvChecks = NULL) const;
 
