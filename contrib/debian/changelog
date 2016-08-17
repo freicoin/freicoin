@@ -3,6 +3,12 @@ freicoin (0.8.6~precise1) precise; urgency=high
   [Mark Friedenbach]
     * Rebase against bitcoin/0.8 stable branch of the bitcoin source tree. The
       primary feature this grabs is the BIP 66 soft-fork.
+    * Add soft-fork to truncate input amounts rather than accumulate fractional
+      kria. This allows for a refactoring of the code that will make future
+      maintenance much easier. Packaged to deploy as part of the BIP 66
+      soft-fork.
+    * Update bootstrap peers and DNS seed.
+    * Add checkpoint for block #153720.
 
  -- Mark Friedenbach <mark@friedenbach.org>  Mon, 25 Jul 2016 12:00:00 -0000
 
