@@ -1041,7 +1041,7 @@ static void ApproximateBestSubset(vector<pair<mpq, pair<const CWalletTx*,unsigne
 }
 
 bool CWallet::SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, vector<COutput> vCoins,
-                                 set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight) const
+                                 set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight, bool fTruncateInputs) const
 {
     const mpq nTargetValuePlusCent = nTargetValue + CENT;
 
@@ -1072,6 +1072,8 @@ bool CWallet::SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nCo
 
         int i = output.i;
         mpq n = GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight);
+        if (fTruncateInputs)
+            n = RoundAbsolute(n, ROUND_TOWARD_NEGATIVE);
 
         pair<mpq,pair<const CWalletTx*,unsigned int> > coin = make_pair(n,make_pair(pcoin, i));
 
@@ -1147,7 +1149,7 @@ bool CWallet::SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nCo
     return true;
 }
 
-bool CWallet::SelectCoins(const mpq& nTargetValue, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight) const
+bool CWallet::SelectCoins(const mpq& nTargetValue, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight, bool fTruncateInputs) const
 {
     if (nRefHeight < 0)
         nRefHeight = nBestHeight;
@@ -1155,9 +1157,9 @@ bool CWallet::SelectCoins(const mpq& nTargetValue, set<pair<const CWalletTx*,uns
     vector<COutput> vCoins;
     AvailableCoins(vCoins, nRefHeight);
 
-    return (SelectCoinsMinConf(nTargetValue, 1, 6, vCoins, setCoinsRet, nValueRet, nRefHeight) ||
-            SelectCoinsMinConf(nTargetValue, 1, 1, vCoins, setCoinsRet, nValueRet, nRefHeight) ||
-            SelectCoinsMinConf(nTargetValue, 0, 1, vCoins, setCoinsRet, nValueRet, nRefHeight));
+    return (SelectCoinsMinConf(nTargetValue, 1, 6, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs) ||
+            SelectCoinsMinConf(nTargetValue, 1, 1, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs) ||
+            SelectCoinsMinConf(nTargetValue, 0, 1, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs));
 }
 
 
@@ -1184,6 +1186,11 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, mpq> >& vecSend, int 
 
     if (nRefHeight < 0)
         nRefHeight = nBestHeight;
+
+    // As a matter of safety, fee calculation will always be done with
+    // truncated inputs so that we never create a transaction that will
+    // be invalid after the input-truncation soft-fork activation.
+    const bool fTruncateInputs = true;
 
     wtxNew.BindWallet(this);
 
@@ -1217,7 +1224,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, mpq> >& vecSend, int 
                 // Choose coins to use
                 set<pair<const CWalletTx*,unsigned int> > setCoins;
                 mpq nValueIn = 0;
-                if (!SelectCoins(nTotalValue, setCoins, nValueIn, wtxNew.nRefHeight))
+                if (!SelectCoins(nTotalValue, setCoins, nValueIn, wtxNew.nRefHeight, fTruncateInputs))
                 {
                     strFailReason = _("Insufficient funds");
                     return false;
@@ -1225,6 +1232,8 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, mpq> >& vecSend, int 
                 BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
                 {
                     mpq nCredit = GetPresentValue(*pcoin.first, pcoin.first->vout[pcoin.second], wtxNew.nRefHeight);
+                    if (fTruncateInputs)
+                        nCredit = RoundAbsolute(nCredit, ROUND_TOWARD_NEGATIVE);
                     //The priority after the next block (depth+1) is used instead of the current,
                     //reflecting an assumption the user would accept a bit more delay for
                     //a chance at a free transaction.

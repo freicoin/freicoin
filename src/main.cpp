@@ -760,11 +760,15 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
         if (!tx.AreInputsStandard(view) && !fTestNet)
             return error("CTxMemPool::accept() : nonstandard transaction input");
 
+        // Input truncation is a scheduled soft-fork change, but it is enabled
+        // right away as policy.
+        const bool fTruncateInputs = true;
+
         // Note: if you modify this code to accept non-standard transactions, then
         // you should add code here to check that the transaction does a
         // reasonable number of ECDSA signature verifications.
 
-        mpq nFees = tx.GetValueIn(view)-tx.GetValueOut();
+        mpq nFees = tx.GetValueIn(view, fTruncateInputs)-tx.GetValueOut();
         unsigned int nSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
 
         // Don't accept it if it can't get into a block
@@ -1887,7 +1891,7 @@ mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeig
     return GetTimeAdjustedValue(output.nValue, nBlockHeight-tx.nRefHeight);
 }
 
-mpq CTransaction::GetValueIn(CCoinsViewCache& inputs) const
+mpq CTransaction::GetValueIn(CCoinsViewCache& inputs, bool fTruncateInputs) const
 {
     if (IsCoinBase())
         return 0;
@@ -1898,6 +1902,8 @@ mpq CTransaction::GetValueIn(CCoinsViewCache& inputs) const
         const CTxOut& txOut = coins.vout[vin[i].prevout.n];
 
         nInput = GetPresentValue(coins, txOut, nRefHeight);
+        if (fTruncateInputs)
+            nInput = RoundAbsolute(nInput, ROUND_TOWARD_NEGATIVE);
         nResult += nInput;
 
         if (!MoneyRange(nInput) || !MoneyRange(nResult))
@@ -1971,7 +1977,7 @@ bool VerifySignature(const CCoins& txFrom, const CTransaction& txTo, unsigned in
     return CScriptCheck(txFrom, txTo, nIn, flags, nHashType)();
 }
 
-bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks) const
+bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs, bool fTruncateInputs, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks) const
 {
     if (!IsCoinBase())
     {
@@ -2005,7 +2011,7 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         // Check for negative or overflow input values
         mpq nValueIn;
         try {
-            nValueIn = GetValueIn(inputs);
+            nValueIn = GetValueIn(inputs, fTruncateInputs);
         } catch (std::runtime_error &e) {
             return state.DoS(100, error("CheckInputs() : %s %s", GetHash().ToString().c_str(), e.what()));
         }
@@ -2220,6 +2226,10 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     int64 nBIP16SwitchTime = 1333238400;
     bool fStrictPayToScriptHash = (pindex->nTime >= nBIP16SwitchTime);
 
+    // Whether fractional inputs should be summed or ignored. Bundled as part of the
+    // BIP66 soft-fork in Freicoin.
+    bool fTruncateInputs = false;
+
     unsigned int flags = SCRIPT_VERIFY_NOCACHE |
                          (fStrictPayToScriptHash ? SCRIPT_VERIFY_P2SH : SCRIPT_VERIFY_NONE);
 
@@ -2227,6 +2237,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
         ((!fTestNet && CBlockIndex::IsSuperMajority(3, pindex->pprev, 750, 1000)) ||
             (fTestNet && CBlockIndex::IsSuperMajority(3, pindex->pprev, 51, 100)))) {
         flags |= SCRIPT_VERIFY_DERSIG;
+        fTruncateInputs = true;
     }
 
     CBlockUndo blockundo;
@@ -2267,11 +2278,11 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
             if (pindex->nHeight < tx.nRefHeight)
                 return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.nRefHeight"));
 
-            mpq qNet = tx.GetValueIn(view) - tx.GetValueOut();
+            mpq qNet = tx.GetValueIn(view, fTruncateInputs) - tx.GetValueOut();
             nFees += GetTimeAdjustedValue(qNet, pindex->nHeight - tx.nRefHeight);
 
             std::vector<CScriptCheck> vChecks;
-            if (!tx.CheckInputs(state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
+            if (!tx.CheckInputs(state, view, fTruncateInputs, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
                 return false;
             control.Add(vChecks);
         }
@@ -4923,6 +4934,9 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
         return NULL;
     CBlock *pblock = &pblocktemplate->block; // pointer for convenience
 
+    // If set, fractional fees are not aggregated into the coinbase.
+    const bool fTruncateInputs = true;
+
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = GetArg("-blockmaxsize", DEFAULT_BLOCK_MAX_SIZE);
     // Limit to betweeen 1K and MAX_BLOCK_SIZE-1K for sanity:
@@ -5038,7 +5052,10 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
                     const CTransaction &txPrevIn = mempool.mapTx[txin.prevout.hash];
-                    nTotalIn += GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight);
+                    mpq nValueIn = GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight);
+                    if (fTruncateInputs)
+                        nValueIn = RoundAbsolute(nValueIn, ROUND_TOWARD_NEGATIVE);
+                    nTotalIn += nValueIn;
                     continue;
                 }
                 const CCoins &coins = view.GetCoins(txin.prevout.hash);
@@ -5046,6 +5063,8 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                 int nConf = nHeight - coins.nHeight;
 
                 mpq nValueIn = GetPresentValue(coins, coins.vout[txin.prevout.n], tx.nRefHeight);
+                if (fTruncateInputs)
+                    nValueIn = RoundAbsolute(nValueIn, ROUND_TOWARD_NEGATIVE);
                 nTotalIn += nValueIn;
 
                 dPriority += nValueIn.get_d() * nConf;
@@ -5121,7 +5140,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             if (!tx.HaveInputs(view))
                 continue;
 
-            mpq nNet = tx.GetValueIn(view)-tx.GetValueOut();
+            mpq nNet = tx.GetValueIn(view, fTruncateInputs)-tx.GetValueOut();
             mpq nTxFees = GetTimeAdjustedValue(nNet, nHeight-tx.nRefHeight);
 
             nTxSigOps += tx.GetP2SHSigOpCount(view);

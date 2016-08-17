@@ -649,10 +649,11 @@ public:
         Note that lightweight clients may not know anything besides the hash of previous transactions,
         so may not be able to calculate this.
 
-        @param[in] mapInputs	Map of previous transactions that have outputs we're spending
+        @param[in] mapInputs		Map of previous transactions that have outputs we're spending
+        @param[in] fTruncateInputs	If set, each input is truncated [floor()] to the nearest kria after present value adjustment, making the result an integer number of the smallest representable units.
         @return	Sum of value of all inputs (scriptSigs)
      */
-    mpq GetValueIn(CCoinsViewCache& mapInputs) const;
+    mpq GetValueIn(CCoinsViewCache& mapInputs, bool fTruncateInputs) const;
 
     static bool AllowFree(double dPriority)
     {
@@ -707,7 +708,8 @@ public:
     // Check whether all inputs of this transaction are valid (no double spends, scripts & sigs, amounts)
     // This does not modify the UTXO set. If pvChecks is not NULL, script checks are pushed onto it
     // instead of being performed inline.
-    bool CheckInputs(CValidationState &state, CCoinsViewCache &view, bool fScriptChecks = true,
+    bool CheckInputs(CValidationState &state, CCoinsViewCache &view, bool fTruncateInputs,
+                     bool fScriptChecks = true,
                      unsigned int flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC,
                      std::vector<CScriptCheck> *pvChecks = NULL) const;
 
