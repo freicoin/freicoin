@@ -71,9 +71,12 @@ void OptionsModel::Init()
     // by command-line and show this in the UI.
 
     // Main
+
 #ifdef ENABLE_WALLET
     if (!settings.contains("nTransactionFee"))
-        settings.setValue("nTransactionFee", QString::fromStdString(FormatMoney(0)));
+        settings.setValue("nTransactionFee", QString::fromStdString(FormatMoney(0)).toLongLong());
+          //settings.setValue("nTransactionFee", (qint64)DEFAULT_TRANSACTION_FEE);
+    //nTransactionFee = settings.value("nTransactionFee").toLongLong();
     ParseMoney(settings.value("nTransactionFee").toString().toStdString(), nTransactionFee); // if -paytxfee is set, this will be overridden later in init.cpp
     if (mapArgs.count("-paytxfee"))
         strOverriddenByCommandLine += "-paytxfee ";
@@ -100,7 +103,7 @@ void OptionsModel::Init()
         settings.setValue("fUseUPnP", true);
 #else
         settings.setValue("fUseUPnP", false);
-#endif	
+#endif
     if (!SoftSetBoolArg("-upnp", settings.value("fUseUPnP").toBool()))
         strOverriddenByCommandLine += "-upnp ";
 
@@ -189,7 +192,8 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
                 settings.setValue("nTransactionFee", QString::fromStdString(nTransactionFee.get_str()));
             // Todo: Consider to revert back to use just nTransactionFee here, if we don't want
             // -paytxfee to update our QSettings!
-            return QVariant(mpz_to_i64(nTransactionFee.get_num() / nTransactionFee.get_den()));
+            return QVariant::fromValue(mpz_to_i64(nTransactionFee.get_num() / nTransactionFee.get_den()));
+            //return 0;
         case SpendZeroConfChange:
             return settings.value("bSpendZeroConfChange");
 #endif
@@ -278,9 +282,9 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
 #ifdef ENABLE_WALLET
         case Fee: // core option - can be changed on-the-fly
             // Todo: Add is valid check  and warn via message, if not
-            nTransactionFee = i64_to_mpq(value.toLongLong());
+            nTransactionFee = i64_to_mpq(value.toULongLong());
             settings.setValue("nTransactionFee",
-                mpz_to_i64(nTransactionFee.get_num() / nTransactionFee.get_den()));
+                QVariant::fromValue(mpz_to_i64(nTransactionFee.get_num() / nTransactionFee.get_den())));
             emit transactionFeeChanged(nTransactionFee);
             break;
         case SpendZeroConfChange:
