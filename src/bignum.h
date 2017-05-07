@@ -156,7 +156,7 @@ public:
 
         if (sn < (int64_t)0)
         {
-            // Since the minimum signed integer cannot be represented as positive so long as its type is signed, 
+            // Since the minimum signed integer cannot be represented as positive so long as its type is signed,
             // and it's not well-defined what happens if you make it unsigned before negating it,
             // we instead increment the negative integer by 1, convert it, then increment the (now positive) unsigned integer by 1 to compensate
             n = -(sn + 1);
@@ -611,5 +611,46 @@ inline bool operator<=(const CBigNum& a, const CBigNum& b) { return (BN_cmp(&a, 
 inline bool operator>=(const CBigNum& a, const CBigNum& b) { return (BN_cmp(&a, &b) >= 0); }
 inline bool operator<(const CBigNum& a, const CBigNum& b)  { return (BN_cmp(&a, &b) < 0); }
 inline bool operator>(const CBigNum& a, const CBigNum& b)  { return (BN_cmp(&a, &b) > 0); }
+
+inline unsigned int GetSerializeSize(const mpz& a, int nType, int nVersion)
+ {
+     return CBigNum(a).GetSerializeSize(nType, nVersion);
+ }
+ template<typename Stream>
+ inline void Serialize(Stream& s, const mpz& a, int nType, int nVersion)
+ {
+     CBigNum(a).Serialize(s, nType, nVersion);
+ }
+ template<typename Stream>
+ inline void Unserialize(Stream& s, mpz& a, int nType, int nVersion)
+ {
+     CBigNum bn;
+     bn.Unserialize(s, nType, nVersion);
+     a = bn.get_mpz();
+ }
+
+ inline unsigned int GetSerializeSize(const mpq& a, int nType, int nVersion)
+ {
+     mpq q(a);
+     q.canonicalize();
+     return GetSerializeSize(q.get_num(), nType, nVersion) +
+            GetSerializeSize(q.get_den(), nType, nVersion);
+ }
+ template<typename Stream>
+ inline void Serialize(Stream& s, const mpq& a, int nType, int nVersion)
+ {
+     mpq q(a);
+     q.canonicalize();
+     Serialize(s, q.get_num(), nType, nVersion);
+     Serialize(s, q.get_den(), nType, nVersion);
+ }
+ template<typename Stream>
+ inline void Unserialize(Stream& s, mpq& a, int nType, int nVersion)
+ {
+     mpq r;
+     Unserialize(s, r.get_num(), nType, nVersion);
+     Unserialize(s, r.get_den(), nType, nVersion);
+     r.canonicalize(); a = r;
+ }
 
 #endif
