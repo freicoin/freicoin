@@ -255,6 +255,7 @@ Let this be the awaited dawn.";
         vSeeds.push_back(CDNSSeedData("node.freico.in", "seed.freico.in"));
         vSeeds.push_back(CDNSSeedData("abacus.freico.in", "fledge.freico.in"));
         vSeeds.push_back(CDNSSeedData("mainnet.freicoin.pw", "seed.mainnet.freicoin.pw"));
+        vSeeds.push_back(CDNSSeedData("seed.sicanet.net", "dnsseed.sicanet.net"));
 
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
