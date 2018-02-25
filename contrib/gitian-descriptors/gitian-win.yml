@@ -16,7 +16,8 @@ packages:
 - "automake"
 - "pkg-config"
 - "bsdmainutils"
-
+- "libgmp-dev"
+- "libmpfr-dev"
 reference_datetime: "2013-06-01 00:00:00"
 remotes:
 - "url": "https://github.com/eddef/freicoin.git"
@@ -80,7 +81,7 @@ script: |
     ./configure --enable-upnp-default --bindir=$BINDIR --prefix=$STAGING --host=$HOST --with-qt-plugindir=$STAGING/plugins  --with-qt-incdir=$STAGING/include --with-qt-bindir=$STAGING/host/bin --with-boost=$STAGING --disable-maintainer-mode --with-protoc-bindir=$STAGING/host/bin --disable-dependency-tracking CPPFLAGS="-I$STAGING/include ${OPTFLAGS}" LDFLAGS="-L$STAGING/lib ${OPTFLAGS}" CXXFLAGS="-frandom-seed=freicoin ${OPTFLAGS}"
     export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
     export FAKETIME=$REFERENCE_DATETIME
-    make -j8 $MAKEOPTS
+    make -j8 
     make -j8 deploy
     make -j8 install-strip
     cp -f freicoin-*setup*.exe $BINDIR/

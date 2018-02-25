@@ -11,6 +11,9 @@ packages:
 - "zip"
 - "faketime"
 - "psmisc"
+- "libgmp-dev"
+- "libmpfr-dev"
+- "m4"
 reference_datetime: "2011-01-30 00:00:00"
 remotes: []
 files:
@@ -20,6 +23,8 @@ files:
 - "zlib-1.2.8.tar.gz"
 - "libpng-1.6.8.tar.gz"
 - "qrencode-3.4.3.tar.bz2"
+- "mpfr-3.1.2.tar.gz"
+- "gmp-5.1.2.tar.bz2"
 script: |
   #
   export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
@@ -94,7 +99,7 @@ script: |
     tar xzf $INDIR/zlib-1.2.8.tar.gz
     cd zlib-1.2.8
     CROSS_PREFIX=$HOST- ./configure --prefix=$INSTALLPREFIX --static
-    make
+    make -j8
     make install
     cd ..
     #
@@ -105,13 +110,26 @@ script: |
     make $MAKEOPTS
     make install
     cd ..
+    
+    tar xjf $INDIR/gmp-5.1.2.tar.bz2
+    cd gmp-5.1.2
+    ./configure --prefix=$INSTALLPREFIX --disable-shared --enable-cxx --enable-static --host=$HOST
+    make 
+    make install
+    cd ..
+    tar xzf $INDIR/mpfr-3.1.2.tar.gz
+    cd mpfr-3.1.2
+    ./configure CFLAGS='-g -O2' CXXFLAGS='-g -O2' --prefix=$INSTALLPREFIX --disable-shared --enable-static --host=$HOST --with-gmp=$INSTALLPREFIX
+    make 
+    make install
+    cd ..
     #
     tar xjf $INDIR/qrencode-3.4.3.tar.bz2
     cd qrencode-3.4.3
     png_CFLAGS="-I$INSTALLPREFIX/include" png_LIBS="-L$INSTALLPREFIX/lib -lpng" ./configure --prefix=$INSTALLPREFIX --host=$HOST --enable-static --disable-shared --without-tools --disable-dependency-tracking
     # Workaround to prevent re-configuring by make (resulting in missing m4 error); make all files have a date in the past
     find . -print0 | xargs -r0 touch -t 200001010000
-    make
+    make -j8
     make install
     cd ..
     # post-process all generated libraries to be deterministic

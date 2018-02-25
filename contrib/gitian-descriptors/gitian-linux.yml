@@ -15,6 +15,8 @@ packages:
 - "automake"
 - "faketime"
 - "bsdmainutils"
+- "libgmp-dev"
+- "libmpfr-dev"
 reference_datetime: "2013-06-01 00:00:00"
 remotes:
 - "url": "https://github.com/eddef/freicoin.git"
@@ -42,14 +44,14 @@ script: |
   cd freicoin
   ./autogen.sh
   ./configure --prefix=$STAGING --bindir=$BINDIR --with-protoc-bindir=$STAGING/host/bin --with-boost=$STAGING --disable-maintainer-mode --disable-dependency-tracking PKG_CONFIG_PATH="$STAGING/lib/pkgconfig" CPPFLAGS="-I$STAGING/include ${OPTFLAGS}" LDFLAGS="-L$STAGING/lib ${OPTFLAGS}" CXXFLAGS="-frandom-seed=freicoin ${OPTFLAGS}" BOOST_CHRONO_EXTRALIBS="-lrt"
-  make dist
+  make -j8 dist
   DISTNAME=`echo freicoin-*.tar.gz`
   mkdir -p distsrc
   cd distsrc
   tar --strip-components=1 -xf ../$DISTNAME
   ./configure --enable-upnp-default --prefix=$STAGING --bindir=$BINDIR --with-protoc-bindir=$STAGING/host/bin --with-boost=$STAGING --disable-maintainer-mode --disable-dependency-tracking PKG_CONFIG_PATH="$STAGING/lib/pkgconfig" CPPFLAGS="-I$STAGING/include ${OPTFLAGS}" LDFLAGS="-L$STAGING/lib ${OPTFLAGS}" CXXFLAGS="-frandom-seed=freicoin ${OPTFLAGS}" BOOST_CHRONO_EXTRALIBS="-lrt"
-  make -j8 $MAKEOPTS
-  make -j8 $MAKEOPTS install-strip
+  make -j8 
+  make -j8 install-strip
   
   # sort distribution tar file and normalize user/group/mtime information for deterministic output
   mkdir -p $OUTDIR/src
