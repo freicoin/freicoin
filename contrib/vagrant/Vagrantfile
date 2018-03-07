@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#
+# Copyright © 2013-2018 The Freicoin developers.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of version 3 of the GNU Affero General Public
+# License as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public
+# License along with this program.  If not, see
+# <https://www.gnu.org/licenses/>.
+#
+
+Vagrant::configure("2") do |config|
+    # All Vagrant configuration is done here. The most common configuration
+    # options are documented and commented below. For a complete reference,
+    # please see the online documentation at vagrantup.com.
+
+    # Every Vagrant virtual environment requires a box to build off of.
+    config.vm.box = "gitian-host-xenial64"
+
+    config.vm.provider :virtualbox do |vb|
+        # Set RAM to 2.5GB
+        vb.memory = 2560
+
+        # Set CPUs to 2 for faster compilation
+        vb.cpus = 2
+    end
+end
+
+#
+# End of File
+#
