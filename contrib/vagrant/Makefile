@@ -85,7 +85,7 @@ VAGRANT_DESTROY = \
 # ===----------------------------------------------------------------------===
 
 .PHONY: all
-all: linux osx win
+all: linux win32
 
 .PHONY: mostlyclean
 mostlyclean:
@@ -151,7 +151,7 @@ check-requirements: .stamp-check-requirements.h
 # ===----------------------------------------------------------------------===
 
 .PHONY: download
-download: $(addprefix download-,$(PKGS)) download-depends
+download: $(addprefix download-,$(PKGS))
 
 .PHONY: download-depends
 download-depends: .stamp-download-depends.h
@@ -427,9 +427,6 @@ DEPLOY_SOURCE_BUNDLE = \
 	vagrant ssh --command "cd ~/'$(1)' && \
 	    tar -xf $(GUEST_CACHE_DIR)/src-local.tar.xz" || exit 1; \
 	vagrant ssh --command "cd ~/'$(1)' && \
-	    grep -v 'contrib/vagrant/Makefile' configure.ac >.configure.ac.2 && \
-	    mv .configure.ac.2 configure.ac'"; \
-	vagrant ssh --command "cd ~/'$(1)' && \
 	    git init" || exit 1; \
 	vagrant ssh --command "cd ~/'$(1)' && \
 	    git config user.name 'Gitian Builder'" || exit 1; \
@@ -452,7 +449,7 @@ $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT): \
 	.stamp-lxc-base.manifest \
 	$(HOST_CACHE_DIR)/src-local.manifest \
 	$(foreach TARGET,$($(1)_DEPS),$(TARGET)) \
-	$(foreach PACKAGE,$($(1)_PKGS),$(HOST_CACHE_DIR)/$(PACKAGE)) \
+	$(foreach PACKAGE,$($(1)_PKGS),$(HOST_CACHE_DIR)/$(PACKAGE))
 	
 	mkdir -p $(HOST_OUTPUT_DIR)
 	
