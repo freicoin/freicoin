@@ -234,6 +234,8 @@ gitian-host: .stamp-gitian-host.manifest
 	
 	-$(call VAGRANT_HALT)
 	
+	rm -f .stamp-lxc-base.manifest
+	
 	echo $(GITIAN_HOST_MANIFEST) > "$@"
 
 # ===----------------------------------------------------------------------===
