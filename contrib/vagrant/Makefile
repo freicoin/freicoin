@@ -265,7 +265,24 @@ lxc-base: .stamp-lxc-base.manifest
 	vagrant ssh --command "\
 	    git clone 'https://github.com/devrandom/gitian-builder' ~/gitian-builder"
 	vagrant ssh --command "cd ~/gitian-builder && \
-	    git checkout e2172de8"
+	    git checkout ee1b69d6949810069453d5540af7a0b3ca63ea8d"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:archive.ubuntu.com:old-releases.ubuntu.com:g' \
+	        bin/make-base-vm target-bin/bootstrap-fixup.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:security.ubuntu.com:old-releases.ubuntu.com:g' \
+	        bin/make-base-vm target-bin/bootstrap-fixup.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.autodev = 0' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = c 108:0 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = b 7:0 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = c 10:200 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:grep /lxc/gitian /proc/1/cgroup > /dev/null:true:g' \
+	        target-bin/bootstrap-fixup.in"
 	vagrant ssh --command "cd ~/gitian-builder && \
 	    ln -s $(GUEST_CACHE_DIR) inputs"
 	
