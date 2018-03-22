@@ -283,8 +283,9 @@ lxc-base: .stamp-lxc-base.manifest
 	        rsync -av --remove-source-files base-vm.tar.gz $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST); \
 	        tar -tf $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz || \
 	            rm -rf $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST); \
-	    fi; \
-	    tar -Sxzvf $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz"
+	    fi"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    tar -Sxzvf '$(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz'"
 	
 ifdef VAGRANT_CYCLE
 	-$(call VAGRANT_HALT)
