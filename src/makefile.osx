@@ -40,8 +40,8 @@ LIBS += \
  $(DEPSDIR)/lib/libssl.a \
  $(DEPSDIR)/lib/libcrypto.a \
  $(DEPSDIR)/lib/libmpfr.a \
- $(DEPSDIR)/lib/libgmp.a \
  $(DEPSDIR)/lib/libgmpxx.a \
+ $(DEPSDIR)/lib/libgmp.a \
  -lz
 else
 TESTLIBS += \
@@ -56,8 +56,8 @@ LIBS += \
  -lssl \
  -lcrypto \
  -lmpfr \
- -lgmp \
  -lgmpxx \
+ -lgmp \
  -lz
 TESTDEFS += -DBOOST_TEST_DYN_LINK
 endif
