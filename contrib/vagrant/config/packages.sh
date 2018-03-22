@@ -12,6 +12,8 @@ python-vm-builder
 ruby
 qemu-utils
 lxc
+binfmt-support
+wine1.4-i386
 "
 
 export DEBIAN_FRONTEND=noninteractive

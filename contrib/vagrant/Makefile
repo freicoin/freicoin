@@ -265,15 +265,34 @@ lxc-base: .stamp-lxc-base.manifest
 	vagrant ssh --command "\
 	    git clone 'https://github.com/devrandom/gitian-builder' ~/gitian-builder"
 	vagrant ssh --command "cd ~/gitian-builder && \
-	    git checkout e2172de8"
+	    git checkout ee1b69d6949810069453d5540af7a0b3ca63ea8d"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:archive.ubuntu.com:old-releases.ubuntu.com:g' \
+	        bin/make-base-vm target-bin/bootstrap-fixup.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:security.ubuntu.com:old-releases.ubuntu.com:g' \
+	        bin/make-base-vm target-bin/bootstrap-fixup.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.autodev = 0' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = c 108:0 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = b 7:0 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = c 10:200 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:grep /lxc/gitian /proc/1/cgroup > /dev/null:true:g' \
+	        target-bin/bootstrap-fixup.in"
 	vagrant ssh --command "cd ~/gitian-builder && \
 	    ln -s $(GUEST_CACHE_DIR) inputs"
 	
 	vagrant ssh --command "\
 	    cd ~/gitian-builder; \
 	    if [ ! -f $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz ]; then \
-	        env LXC_BRIDGE=lxcbr0 LXC_GUEST_IP=10.0.3.2 _HOST_IP=10.0.3.1 \
-	            bin/make-base-vm --lxc --suite trusty --arch amd64 || exit 1; \
+	        env LXC_BRIDGE=lxcbr0 LXC_GUEST_IP=10.0.3.2 GITIAN_HOST_IP=10.0.3.1 \
+	            bin/make-base-vm --lxc --suite lucid --arch i386 || exit 1; \
+	        env LXC_BRIDGE=lxcbr0 LXC_GUEST_IP=10.0.3.2 GITIAN_HOST_IP=10.0.3.1 \
+	            bin/make-base-vm --lxc --suite lucid --arch amd64 || exit 1; \
 	        for vm in base-*; do \
 	            tar -Srvf base-vm.tar $$vm || exit 1; \
 	            rm -f $$vm; \
