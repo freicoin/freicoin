@@ -442,57 +442,74 @@ GUEST_OUTPUT_DIR   := /vagrant/$(OUTPUT_DIR)
 
 TARGETS            :=
 
-PLATFORM           := linux
-TARGET             := ${PLATFORM}
+TARGET             := linux
 $(TARGET)_NAME     := $(TARGET)-$(SERIES)
-$(TARGET)_VERSION  := $(SERIES)
-$(TARGET)_OUTPUT   := $(PROJECT)-$(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := $(HOST_CACHE_DIR)/src-local.tar.xz \
-                      .stamp-download-depends.h
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian.yml
+$(TARGET)_PKGS     := miniupnpc-1.6.tar.gz \
+                      qrencode-3.2.0.tar.bz2
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
                       contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/$(HOST_CACHE_DIR)/$(PACKAGE))
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-PLATFORM           := osx
-TARGET             := ${PLATFORM}
-$(TARGET)_NAME     := $(TARGET)-$(SERIES)
-$(TARGET)_VERSION  := $(SERIES)
-$(TARGET)_OUTPUT   := $(PROJECT)-$(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
-$(TARGET)_PKGS     := osslsigncode-1.7.1.tar.gz \
-                      osslsigncode-Backports-to-1.7.1.patch
-$(TARGET)_DEPS     := $(HOST_CACHE_DIR)/src-local.tar.xz \
-                      .stamp-download-depends.h
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/$(HOST_CACHE_DIR)/$(PACKAGE))
+PLATFORM := win32
+
+TARGET             := boost-$(PLATFORM)
+$(TARGET)_VERSION  := 1.50.0-gitian2
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := boost_1_50_0.tar.bz2
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-PLATFORM           := win
-TARGET             := ${PLATFORM}
+TARGET             := deps-$(PLATFORM)
+$(TARGET)_VERSION  := 0.0.5
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz \
+                      gmp-5.1.2.tar.xz \
+                      libpng-1.5.9.tar.gz \
+                      miniupnpc-1.6.tar.gz \
+                      mpfr-3.1.2.tar.xz \
+                      openssl-1.0.1c.tar.gz \
+                      qrencode-3.2.0.tar.bz2 \
+                      zlib-1.2.6.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := qt-$(PLATFORM)
+$(TARGET)_VERSION  := 4.8.3-gitian-r1
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := qt-everywhere-opensource-src-4.8.3.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := $(PLATFORM)
 $(TARGET)_NAME     := $(TARGET)-$(SERIES)
-$(TARGET)_VERSION  := $(SERIES)
-$(TARGET)_OUTPUT   := $(PROJECT)-$(TARGET)-$($(TARGET)_VERSION)-gitian.zip
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
 $(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := $(HOST_CACHE_DIR)/src-local.tar.xz \
-                      .stamp-download-depends.h
+$(TARGET)_PKGS     := boost-win32-1.50.0-gitian2.zip \
+                      deps-win32-0.0.5.zip \
+                      qt-win32-4.8.3-gitian-r1.zip
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
                       contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/$(HOST_CACHE_DIR)/$(PACKAGE))
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
@@ -554,26 +571,20 @@ $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT): \
 	        mv build/out/$($(1)_OUTPUT) \
 	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`/" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
-	        mv result/$(PROJECT)-$($(1)_NAME)-res.yml \
-	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(PROJECT)-$($(1)_NAME)-gitian-res.yml'" || exit 1; \
+	        mv result/*-res.yml \
+	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-res.yml'" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
 	        mv var/build.log \
-	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(PROJECT)-$($(1)_NAME)-gitian-build.log'" || exit 1; \
+	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-build.log'" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
 	        mv var/install.log \
-	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(PROJECT)-$($(1)_NAME)-gitian-install.log'" || exit 1; \
+	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-install.log'" || exit 1; \
 	fi
 	
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_OUTPUT)' \
-	   '$(HOST_CACHE_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_OUTPUT)' \
-	   '$(HOST_OUTPUT_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(PROJECT)-$($(1)_NAME)-gitian-res.yml' \
-	   '$(HOST_OUTPUT_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(PROJECT)-$($(1)_NAME)-gitian-build.log' \
-	   '$(HOST_OUTPUT_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(PROJECT)-$($(1)_NAME)-gitian-install.log' \
-	   '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_OUTPUT)' '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-res.yml' '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-build.log' '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-install.log' '$(HOST_OUTPUT_DIR)/'
 	
 	rm -f .$(1).manifest
 	
