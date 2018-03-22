@@ -53,14 +53,119 @@ GUEST_CACHE_DIR := /vagrant/$(CACHE_DIR)
 
 SOURCEFORGE_MIRROR := downloads.sourceforge.net
 
+PKG             := 10cc648683617cca8bcbeae507888099b41b530c.tar.gz
+$(PKG)_CHECKSUM := 2ce3841eafd80de37d04d8626eb2885fe758536eab438d65e187e9437148edd3f1931cb4997872cd29e4ca5ce528b3d9343c1f44ce6e64cb909b957140956c6e
+$(PKG)_URL      := https://github.com/mingwandroid/toolchain4/archive/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := boost_1_55_0.tar.bz2
+$(PKG)_CHECKSUM := dc606477f4c303e8f40de2586c16394b6d758e198b35bf3a7d3e576a2f49171aadc4f95e8d685fa731bc4e61e19869d5a24e1e816febfca9de078d66e096e041
+$(PKG)_URL      := https://$(SOURCEFORGE_MIRROR)/project/boost/boost/1.55.0/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := boost-mingw-gas-cross-compile-2013-03-03.patch
+$(PKG)_CHECKSUM := 9d30298e395936dcffc3547186488858441ba6328e8a3ae7df9040f966ba7ebe56220a71898bb200edcd68a620e94a28903f975511fb64688f1b146560d8c291
+$(PKG)_URL      := https://svn.boost.org/trac/boost/raw-attachment/ticket/7262/boost-mingw.patch
+PKGS            += $(PKG)
+
+PKG             := cctools-809.tar.gz
+$(PKG)_CHECKSUM := 1349b3e6b3b48d9fa88dade187c05c80f161c3895fc6451a530880a256eb82dc93376b3cfd0f4d65e83f5fe00dc2baab386c5f78ce5b096f2c69fe53e1a55e24
+$(PKG)_URL      := https://www.opensource.apple.com/tarballs/cctools/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := cdrkit-1.1.11.tar.gz
+$(PKG)_CHECKSUM := e5afcd2cb68d39aeff680a0d5b0a7877f94cf6de111b3cb7388261c665fbd3209ce98a20a01911875af7d6b832a156801b1fa46a4481f7c8ba60b22eac0a5b05
+$(PKG)_URL      := http://cdn-fastly.deb.debian.org/debian/pool/main/c/cdrkit/cdrkit_1.1.11.orig.tar.gz
+PKGS            += $(PKG)
+
+PKG             := cdrkit-deterministic.patch
+$(PKG)_CHECKSUM := d936b1574747052a18d8ede786204fd5dfc83a824be6c2a0857b254095f3bd3d95cef909fcfe95876a2fe2cc016a0ae0b1fc5a52d2be38cf93d36f96ee032ba3
+$(PKG)_URL      := https://raw.githubusercontent.com/theuni/osx-cross-depends/master/patches/cdrtools/genisoimage.diff
+PKGS            += $(PKG)
+
+PKG             := clang-llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
+$(PKG)_CHECKSUM := 48d13c49d4155a5f54dbb1284152027c5cb69b4318c94bad9863abc80a1af6eb9593fe534f0d4028272f5b8f9cefeb96e2f8cda05efe3e5b2e0315e518abdefc
+$(PKG)_URL      := https://llvm.org/releases/3.2/clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
+PKGS            += $(PKG)
+
+PKG             := db-4.8.30.NC.tar.gz
+$(PKG)_CHECKSUM := 8d313f1f896e0b0c05cc510c0313324743de3fb660a0bd948c957d5a2d50f1625d8a9a36ec4e6fea09daf1d682dbe1ffccd5c3ec5f066eef72f7525343d0194c
+$(PKG)_URL      := https://download.oracle.com/berkeley-db/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := dyld-195.5.tar.gz
+$(PKG)_CHECKSUM := f316d32f3e417cf0898a8e231df66572d3424765831375863799d3ff30f8e28342ca692426d0ece7a8d069b341a3b9ca79c625edc322d90e3f26f528ea555324
+$(PKG)_URL      := https://www.opensource.apple.com/tarballs/dyld/dyld-195.5.tar.gz
+PKGS            += $(PKG)
+
+PKG             := ld64-127.2.tar.gz
+$(PKG)_CHECKSUM := a87181eca9307518aa21fc52a4d665c11ad51106c318c229d7f08650228f771484fd0b8c01c63639d577503aa9bc86d0792a3524643dc18cff19c3754aed9fc8
+$(PKG)_URL      := https://www.opensource.apple.com/tarballs/ld64/ld64-127.2.tar.gz
+PKGS            += $(PKG)
+
+PKG             := libdmg-hfsplus-v0.1.tar.gz
+$(PKG)_CHECKSUM := 761f1802cd0e98a87ce4f81c62eacb02e0ab968addfc68bfb25b088ddba3b393ab11aa90d16b17769fd457a3f353ce38bcfa0afea3e76cdcb883e23917bd1b9d
+$(PKG)_URL      := https://github.com/theuni/libdmg-hfsplus/archive/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := libpng-1.6.8.tar.gz
+$(PKG)_CHECKSUM := 1b0de10acf39b300e22fd02fd6a0766a358a02358d081989e9d4f0619918c7ab5be830a232bd58c67a1eb1b592ed0d956588c5dcf489885320c499bb0bd35a74
+$(PKG)_URL      := ftp://ftp.simplesystems.org/pub/png/src/history/libpng16/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := MacOSX10.7.sdk.tar.gz
+$(PKG)_CHECKSUM := d6d816d6505a92b5434af78d8e8863fb7c6efedb18b2928821b50eb4fc152b30a7eb851eaa6dd237c14c7c0168bbf9e88aa11a1f8e0e0c2adf4cc89bd1cf278e
+$(PKG)_URL      := https://people.torproject.org/~mikeperry/mirrors/sources/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := miniupnpc-1.9.20140701.tar.gz
+$(PKG)_CHECKSUM := ad7962aee76e89bd7414e3f5d40b324bf176e4b900fb9774151c286560cd915602f53e301fabaa12d6800a45225d48d4711124a6f227c543ac7faa9c3efa6993
+$(PKG)_URL      := https://z.cash/depends-sources/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := openssl-1.0.1k.tar.gz
+$(PKG)_CHECKSUM := 8b000fbd1bf919d9913a314f99aedd48a69f6caa4ccf43237889e73e08cbe0d82bfc27e9c7c4cade09fc459f91d6c4a831a9b3fc8bca0344fb864eadd7d1e8e8
+$(PKG)_URL      := https://www.openssl.org/source/$(PKG)
+PKGS            += $(PKG)
+
 PKG             := osslsigncode-1.7.1.tar.gz
 $(PKG)_CHECKSUM := cc5a7e0c5baa2a98db93f1d2cc9d86e732e2a8a55fc20bf8e6aa67e2120af37c6be857dfe4b8eb8c82fd40604dbb3c845190b59c7e6b4147f06b710a256b877f
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/osslsigncode/osslsigncode/$(PKG)
+$(PKG)_URL      := https://$(SOURCEFORGE_MIRROR)/project/osslsigncode/osslsigncode/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := osslsigncode-Backports-to-1.7.1.patch
 $(PKG)_CHECKSUM := 182127638206492a609b4f909465b702f7fa89b3cd69f08f86a2efde86dbe597081fb0fd862560fac89e85baf74976c9bcb6b56d17f0e9015ea0c7e33cae1e3a
-$(PKG)_URL      := http://bitcoincore.org/cfields/osslsigncode-Backports-to-1.7.1.patch
+$(PKG)_URL      := https://bitcoincore.org/cfields/osslsigncode-Backports-to-1.7.1.patch
+PKGS            += $(PKG)
+
+PKG             := protobuf-2.5.0.tar.bz2
+$(PKG)_CHECKSUM := 5994b3669808b82fef5c860ecad36358c0767f84acac877e7bfcf722e59d972835a955714149bdd4158fbd1328a51d01397a563991d26475351ee72be48142ee
+$(PKG)_URL      := https://github.com/google/protobuf/releases/download/v2.5.0/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := qrencode-3.4.3.tar.bz2
+$(PKG)_CHECKSUM := eba9d6220d0d5e08da614bd05904a08e11c45b7b293c45aa8417345c3267eae8790e83d9338b6cbadbd3fe15ac4579e0fb9e4e23b4f7e1d56e5fb3729afb9cf5
+$(PKG)_URL      := https://fukuchi.org/works/qrencode/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := qt-everywhere-opensource-src-4.6.4.tar.gz
+$(PKG)_CHECKSUM := 3441b74bd7c0f981bed4886abef8934a6193ab9d0a6d31a7d850ea8ff49172295a6d9c8b26893d88748d6f8759e8e0305b8242230e5e8519ffd35b641566621f
+$(PKG)_URL      := https://mirror.csclub.uwaterloo.ca/qtproject/archive/qt/4.6/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := qt-everywhere-opensource-src-5.2.0.tar.gz
+$(PKG)_CHECKSUM := 4108edc16e48202f5fe45afcd84f2c13c9930e57a81b894696ccaf00aa3221be884d5489b53c2af5b20932eb6b239614a265793e91be05c6b637f5a9b462f272
+$(PKG)_URL      := https://mirror.csclub.uwaterloo.ca/qtproject/archive/qt/5.2/5.2.0/single/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := qt-everywhere-opensource-src-5.2.1.tar.gz
+$(PKG)_CHECKSUM := c594c5aebd991d93028fc4345fbc710388dc1937709001d104db936db4ae78039ef6c0fb36d78740958601aec67e41c91b244fa6a9fb729539de2321a443c1ac
+$(PKG)_URL      := https://mirror.csclub.uwaterloo.ca/qtproject/archive/qt/5.2/5.2.1/single/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := zlib-1.2.8.tar.gz
+$(PKG)_CHECKSUM := ece209d4c7ec0cb58ede791444dc754e0d10811cbbdebe3df61c0fd9f9f9867c1c3ccd5f1827f847c005e24eef34fb5bf87b5d3f894d75da04f1797538290e4a
+$(PKG)_URL      := https://$(SOURCEFORGE_MIRROR)/project/libpng/zlib/1.2.8/$(PKG)
 PKGS            += $(PKG)
 
 # ===----------------------------------------------------------------------===
@@ -80,7 +185,7 @@ VAGRANT_DESTROY = \
 # ===----------------------------------------------------------------------===
 
 .PHONY: all
-all: linux win32
+all: linux osx win
 
 .PHONY: mostlyclean
 mostlyclean:
@@ -371,57 +476,223 @@ GUEST_OUTPUT_DIR   := /vagrant/$(OUTPUT_DIR)
 
 TARGETS            :=
 
-PLATFORM           := linux
-TARGET             := ${PLATFORM}
-$(TARGET)_NAME     := $(TARGET)-$(SERIES)
-$(TARGET)_VERSION  := $(SERIES)
-$(TARGET)_OUTPUT   := $(PROJECT)-$(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := $(HOST_CACHE_DIR)/src-local.tar.xz \
-                      .stamp-download-depends.h
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/$(HOST_CACHE_DIR)/$(PACKAGE))
+PLATFORM := linux
+.PHONY: $(PLATFORM)
+$(PLATFORM): $(PROJECT)-$(PLATFORM)
+
+TARGET             := boost-$(PLATFORM)
+$(TARGET)_VERSION  := 1.55.0-gitian-r1
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).zip \
+                      $(TARGET)64-$($(TARGET)_VERSION).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := boost_1_55_0.tar.bz2
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-PLATFORM           := osx
-TARGET             := ${PLATFORM}
-$(TARGET)_NAME     := $(TARGET)-$(SERIES)
-$(TARGET)_VERSION  := $(SERIES)
-$(TARGET)_OUTPUT   := $(PROJECT)-$(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
-$(TARGET)_PKGS     := osslsigncode-1.7.1.tar.gz \
-                      osslsigncode-Backports-to-1.7.1.patch
-$(TARGET)_DEPS     := $(HOST_CACHE_DIR)/src-local.tar.xz \
-                      .stamp-download-depends.h
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/$(HOST_CACHE_DIR)/$(PACKAGE))
+TARGET             := deps-$(PLATFORM)
+$(TARGET)_VERSION  := gitian-r9
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).zip \
+                      $(TARGET)64-$($(TARGET)_VERSION).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz \
+                      miniupnpc-1.9.20140701.tar.gz \
+                      openssl-1.0.1k.tar.gz \
+                      protobuf-2.5.0.tar.bz2 \
+                      qrencode-3.4.3.tar.bz2
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-PLATFORM           := win
-TARGET             := ${PLATFORM}
+TARGET             := qt-$(PLATFORM)
+$(TARGET)_VERSION  := 4.6.4-gitian-r1
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).tar.gz \
+                      $(TARGET)64-$($(TARGET)_VERSION).tar.gz
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := qt-everywhere-opensource-src-4.6.4.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := $(PROJECT)-$(PLATFORM)
 $(TARGET)_NAME     := $(TARGET)-$(SERIES)
-$(TARGET)_VERSION  := $(SERIES)
-$(TARGET)_OUTPUT   := $(PROJECT)-$(TARGET)-$($(TARGET)_VERSION)-gitian.zip
+$(TARGET)_DISTFILE := $(PROJECT)-\`cat ../version\`-$(PLATFORM)-gitian.zip
+$(TARGET)_CLOSURE  := zip -r $($(TARGET)_DISTFILE) *
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(PLATFORM).yml
+$(TARGET)_PKGS     := boost-linux32-1.55.0-gitian-r1.zip \
+                      boost-linux64-1.55.0-gitian-r1.zip \
+                      deps-linux32-gitian-r9.zip \
+                      deps-linux64-gitian-r9.zip \
+                      qt-linux32-4.6.4-gitian-r1.tar.gz \
+                      qt-linux64-4.6.4-gitian-r1.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $(SOURCE_FILES)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+PLATFORM := osx
+.PHONY: $(PLATFORM)
+$(PLATFORM): $(PROJECT)-$(PLATFORM)
+
+TARGET             := $(PLATFORM)-depends
+$(TARGET)_VERSION  := r8
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $($(TARGET)_NAME).tar.gz
 $(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := $(HOST_CACHE_DIR)/src-local.tar.xz \
-                      .stamp-download-depends.h
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/$(HOST_CACHE_DIR)/$(PACKAGE))
+$(TARGET)_PKGS     := boost_1_55_0.tar.bz2 \
+                      db-4.8.30.NC.tar.gz \
+                      MacOSX10.7.sdk.tar.gz \
+                      miniupnpc-1.9.20140701.tar.gz \
+                      openssl-1.0.1k.tar.gz \
+                      osx-native-depends-r3.tar.gz \
+                      protobuf-2.5.0.tar.bz2 \
+                      qrencode-3.4.3.tar.bz2
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := $(PLATFORM)-native
+$(TARGET)_VERSION  := r3
+$(TARGET)_NAME     := $(TARGET)-depends-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $($(TARGET)_NAME).tar.gz
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
+$(TARGET)_PKGS     := 10cc648683617cca8bcbeae507888099b41b530c.tar.gz \
+                      cctools-809.tar.gz \
+                      cdrkit-1.1.11.tar.gz \
+                      cdrkit-deterministic.patch \
+                      clang-llvm-3.2-x86-linux-ubuntu-12.04.tar.gz \
+                      dyld-195.5.tar.gz \
+                      ld64-127.2.tar.gz \
+                      libdmg-hfsplus-v0.1.tar.gz \
+                      MacOSX10.7.sdk.tar.gz \
+                      protobuf-2.5.0.tar.bz2
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := $(PLATFORM)-qt
+$(TARGET)_VERSION  := 5.2.1-r7
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(PLATFORM)-depends-qt-$($(TARGET)_VERSION).tar.gz
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
+$(TARGET)_PKGS     := MacOSX10.7.sdk.tar.gz \
+                      osx-depends-r8.tar.gz \
+                      osx-native-depends-r3.tar.gz \
+                      qt-everywhere-opensource-src-5.2.1.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := $(PROJECT)-$(PLATFORM)
+$(TARGET)_NAME     := $(TARGET)-$(SERIES)
+$(TARGET)_DISTFILE := $(PROJECT)-\`cat ../version\`-$(PLATFORM).dmg
+$(TARGET)_CLOSURE  := mv $(PROJECT)-qt.dmg $($(TARGET)_DISTFILE)
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(PLATFORM)-$(PROJECT).yml
+$(TARGET)_PKGS     := MacOSX10.7.sdk.tar.gz \
+                      osx-depends-qt-5.2.1-r7.tar.gz \
+                      osx-depends-r8.tar.gz \
+                      osx-native-depends-r3.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $(SOURCE_FILES)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+PLATFORM := win
+.PHONY: $(PLATFORM)
+$(PLATFORM): $(PROJECT)-$(PLATFORM)
+
+TARGET             := boost-$(PLATFORM)
+$(TARGET)_VERSION  := 1.55.0-gitian-r6
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).zip \
+                      $(TARGET)64-$($(TARGET)_VERSION).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := boost_1_55_0.tar.bz2 \
+                      boost-mingw-gas-cross-compile-2013-03-03.patch
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := deps-$(PLATFORM)
+$(TARGET)_VERSION  := gitian-r16
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).zip \
+                      $(TARGET)64-$($(TARGET)_VERSION).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz \
+                      libpng-1.6.8.tar.gz \
+                      miniupnpc-1.9.20140701.tar.gz \
+                      openssl-1.0.1k.tar.gz \
+                      qrencode-3.4.3.tar.bz2 \
+                      zlib-1.2.8.tar.gz
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := protobuf-$(PLATFORM)
+$(TARGET)_VERSION  := 2.5.0-gitian-r4
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).zip \
+                      $(TARGET)64-$($(TARGET)_VERSION).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := protobuf-2.5.0.tar.bz2
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := qt-$(PLATFORM)
+$(TARGET)_VERSION  := 5.2.0-gitian-r3
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUTS  := $(TARGET)32-$($(TARGET)_VERSION).zip \
+                      $(TARGET)64-$($(TARGET)_VERSION).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := qt-everywhere-opensource-src-5.2.0.tar.gz \
+                      deps-win32-gitian-r16.zip \
+                      deps-win64-gitian-r16.zip
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
+$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
+$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
+TARGETS            += $(TARGET)
+
+TARGET             := $(PROJECT)-$(PLATFORM)
+$(TARGET)_NAME     := $(TARGET)-$(SERIES)
+$(TARGET)_DISTFILE := $(PROJECT)-\`cat ../version\`-$(PLATFORM)-gitian.zip
+$(TARGET)_CLOSURE  := zip -r $($(TARGET)_DISTFILE) *
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(PLATFORM).yml
+$(TARGET)_PKGS     := boost-win32-1.55.0-gitian-r6.zip \
+                      boost-win64-1.55.0-gitian-r6.zip \
+                      deps-win32-gitian-r16.zip \
+                      deps-win64-gitian-r16.zip \
+                      protobuf-win32-2.5.0-gitian-r4.zip \
+                      protobuf-win64-2.5.0-gitian-r4.zip \
+                      qt-win32-5.2.0-gitian-r3.zip \
+                      qt-win64-5.2.0-gitian-r3.zip
+$(TARGET)_DEPS     :=
+$(TARGET)_FILES    := $(SOURCE_FILES)
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
@@ -536,7 +807,6 @@ $(foreach OUTPUT,$($(1)_OUTPUTS),$(eval $(call OUTPUT_RULE,$(OUTPUT),$(1))))
 	touch .stamp-$(1).manifest
 	
 	vagrant ssh --command "rm -rf ~/$(PROJECT)"
-	
 ifdef VAGRANT_CYCLE
 	-$(call VAGRANT_HALT)
 endif
