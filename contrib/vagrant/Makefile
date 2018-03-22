@@ -58,6 +58,48 @@ GUEST_CACHE_DIR := /vagrant/$(CACHE_DIR)
 
 SOURCEFORGE_MIRROR := downloads.sourceforge.net
 
+PKG             := qt-everywhere-opensource-src-4.8.3.tar.gz
+$(PKG)_CHECKSUM := 3791ffbea5e1e308d97339ca13638f3b48062119678158edd9fd2b8dc683ae915a9f158ab8ccde6a70c83a15453857cb093355a3087bb529a2556a79743c56d4
+$(PKG)_URL      := http://mirror.csclub.uwaterloo.ca/qtproject/archive/qt/4.8/4.8.3/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := db-4.8.30.NC.tar.gz
+$(PKG)_CHECKSUM := 8d313f1f896e0b0c05cc510c0313324743de3fb660a0bd948c957d5a2d50f1625d8a9a36ec4e6fea09daf1d682dbe1ffccd5c3ec5f066eef72f7525343d0194c
+$(PKG)_URL      := http://download.oracle.com/berkeley-db/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := boost_1_50_0.tar.bz2
+$(PKG)_CHECKSUM := 5909a2eca520a28af31de6a36c51f57b11fddcc0a51493a1e500ade00d9c4e78175c4892c04857ee385f3874f96e561b74b6427e1a155102e926421067d889fe
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/boost/boost/1.50.0/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := gmp-5.1.2.tar.xz
+$(PKG)_CHECKSUM := 2c135bb6be908e93e63fe8828b2128b4e22e8ba29adf3cc917493ab66b42d54654dad7f101f902105e854731a69a202c38e34f119f642828fa5568ef21075c5a
+$(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
+$(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := libpng-1.5.9.tar.gz
+$(PKG)_CHECKSUM := 490e26139d4f1411e489fc8c777a237699d9a20cd7ad2bac4b9c3e69e1a1637d048edfc3ebeb9a4bad2e1e9ecf5c0bca5312ca5175c500955043073be99cc7ae
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/libpng15/older-releases/1.5.9/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := miniupnpc-1.6.tar.gz
+$(PKG)_CHECKSUM := c635057e40aa2826fb07db51c474a335cbcecbf7bba09773826b1aff4a01024dced8a6122e2b90db544540ae499b687006392d6041f7605467b73111ccb368a8
+$(PKG)_URL      := http://miniupnp.free.fr/files/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := mpfr-3.1.2.tar.xz
+$(PKG)_CHECKSUM := 8d594206afb2637ed39ad564d42c8c4d02b042b95925f5c6ec891e5cb87f7155195559c7ff477256a088ecaaa3c2b0d35a9d11a74ed526a1080d49b2950e5587
+$(PKG)_URL      := http://ftp.gnu.org/pub/gnu/mpfr/$(PKG)
+$(PKG)_URL_2    := http://www.mpfr.org/mpfr-3.1.2/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := openssl-1.0.1c.tar.gz
+$(PKG)_CHECKSUM := 14f766daab0828a2f07c65d6da8469a4a5a2b839ff3da188538c4e2db3e3e2f37217fb37e269617fb438463b75fb77dab0b155f36831ff48edbc9e7f2903ebd3
+$(PKG)_URL      := http://www.openssl.org/source/$(PKG)
+PKGS            += $(PKG)
+
 PKG             := osslsigncode-1.7.1.tar.gz
 $(PKG)_CHECKSUM := cc5a7e0c5baa2a98db93f1d2cc9d86e732e2a8a55fc20bf8e6aa67e2120af37c6be857dfe4b8eb8c82fd40604dbb3c845190b59c7e6b4147f06b710a256b877f
 $(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/osslsigncode/osslsigncode/$(PKG)
@@ -66,6 +108,16 @@ PKGS            += $(PKG)
 PKG             := osslsigncode-Backports-to-1.7.1.patch
 $(PKG)_CHECKSUM := 182127638206492a609b4f909465b702f7fa89b3cd69f08f86a2efde86dbe597081fb0fd862560fac89e85baf74976c9bcb6b56d17f0e9015ea0c7e33cae1e3a
 $(PKG)_URL      := http://bitcoincore.org/cfields/osslsigncode-Backports-to-1.7.1.patch
+PKGS            += $(PKG)
+
+PKG             := qrencode-3.2.0.tar.bz2
+$(PKG)_CHECKSUM := 64f1e2ccf143f5e2654fcc2f8d41b184acbb91e83269abb01dc71a7b27b395f33a5f5302cba1eb0fb6fac86bea8d92ebcd5fd29b245a60416b4533e3e6c741ca
+$(PKG)_URL      := http://fukuchi.org/works/qrencode/$(PKG)
+PKGS            += $(PKG)
+
+PKG             := zlib-1.2.6.tar.gz
+$(PKG)_CHECKSUM := f812ab3049fc2920a8da4649f6e60340ac365d58a0e76ace5219426aeb0759c0a474cfb2b9902cd0471158fa32a4d2c35692309d266e66013444bdced8ed00d9
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/zlib/1.2.6/$(PKG)
 PKGS            += $(PKG)
 
 # ===----------------------------------------------------------------------===
@@ -372,15 +424,17 @@ $(HOST_CACHE_DIR)/src-local.tar.xz: \
 
 # ===----------------------------------------------------------------------===
 
-rightparen=)
-CLIENT_VERSION_MAJOR := $(shell $(GREP) _CLIENT_VERSION_MAJOR ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
-CLIENT_VERSION_MINOR := $(shell $(GREP) _CLIENT_VERSION_MINOR ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
-CLIENT_VERSION_REVISION := $(shell $(GREP) _CLIENT_VERSION_REVISION ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
-ifeq ($(CLIENT_VERSION_REVISION), 99)
-SERIES := $(CLIENT_VERSION_MAJOR).$(shell expr 1 + $(CLIENT_VERSION_MINOR))
-else
-SERIES := $(CLIENT_VERSION_MAJOR).$(CLIENT_VERSION_MINOR)
-endif
+# rightparen=)
+# CLIENT_VERSION_MAJOR := $(shell $(GREP) _CLIENT_VERSION_MAJOR ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
+# CLIENT_VERSION_MINOR := $(shell $(GREP) _CLIENT_VERSION_MINOR ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
+# CLIENT_VERSION_REVISION := $(shell $(GREP) _CLIENT_VERSION_REVISION ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
+# ifeq ($(CLIENT_VERSION_REVISION), 99)
+# SERIES := $(CLIENT_VERSION_MAJOR).$(shell expr 1 + $(CLIENT_VERSION_MINOR))
+# else
+# SERIES := $(CLIENT_VERSION_MAJOR).$(CLIENT_VERSION_MINOR)
+# endif
+
+SERIES := 0.8.6-2
 
 OUTPUT_DIR         := output
 HOST_OUTPUT_DIR    := $(OUTPUT_DIR)
