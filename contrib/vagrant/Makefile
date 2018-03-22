@@ -260,7 +260,7 @@ lxc-base: .stamp-lxc-base.manifest
 	
 	vagrant ssh --command "\
 	    if [ -d ~/gitian-builder ]; then \
-	        rm -rf ~/gitian-builder; \
+	        sudo rm -rf ~/gitian-builder; \
 	    fi"
 	vagrant ssh --command "\
 	    git clone 'https://github.com/devrandom/gitian-builder' ~/gitian-builder"
