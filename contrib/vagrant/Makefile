@@ -1,5 +1,5 @@
 #
-# Copyright © 2011-2018 Bitcoin Developers.
+# Copyright © 2011-2018 Freicoin Developers.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 MAKEFILE := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 
-PROJECT  := bitcoin
+PROJECT  := freicoin
 
 SHELL    := $(shell bash --help >/dev/null 2>&1 && echo ba)sh
 
