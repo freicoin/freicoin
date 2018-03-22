@@ -521,6 +521,8 @@ DEPLOY_SOURCE_BUNDLE = \
 define TARGET_RULE
 .PHONY: $(1)
 $(1): $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT)
+$(HOST_CACHE_DIR)/$($(1)_OUTPUT): $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT)
+	cp '$(HOST_OUTPUT_DIR)/$($(1)_OUTPUT)' '$(HOST_CACHE_DIR)/$($(1)_OUTPUT)'
 $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT): \
 	.stamp-lxc-base.manifest \
 	$(HOST_CACHE_DIR)/src-local.manifest \
