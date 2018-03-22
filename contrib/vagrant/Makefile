@@ -40,9 +40,9 @@ REQUIREMENTS := $(AWK) $(SHELL) diff find $(GREP) gzip $(MAKE) openssl	\
 
 BUILD_MANIFEST = cd '$(shell dirname '$(MAKEFILE)')'/../.. && \
 	find $(1) -print0 | \
-	xargs -0 -n1 openssl sha256 2>/dev/null | \
-	openssl sha256 | \
-	$(SED) -n 's,^.*\([0-9a-f]\{64\}\),\1,p'
+	xargs -0 -n1 openssl sha512 2>/dev/null | \
+	openssl sha512 | \
+	$(SED) -n 's,^.*\([0-9a-f]\{128\}\),\1,p'
 
 VALIDATE_MANIFEST = \
 	if [ -f "$(1)" ] && echo "$(2)" | diff "$(1)" - 2>&1 >/dev/null; then \
