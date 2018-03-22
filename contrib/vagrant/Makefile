@@ -334,10 +334,10 @@ $(HOST_CACHE_DIR)/src-local.tar.xz: \
 	    COPYFILE_DISABLE=1 tar -C ../.. -rf '$(HOST_CACHE_DIR)'/src-local.tar $(SOURCE_FILES); \
 	fi
 	xz '$(HOST_CACHE_DIR)'/src-local.tar
-	echo "Gitian Builder" >> '$(HOST_CACHE_DIR)'/src-local.committer-name
-	echo "vagrant@vagrant" >> '$(HOST_CACHE_DIR)'/src-local.committer-email
-	echo "Gitian Builder <vagrant@vagrant>" >> '$(HOST_CACHE_DIR)'/src-local.author
-	echo date >> '$(HOST_CACHE_DIR)'/src-local.committer-date
+	echo "Gitian Builder" > '$(HOST_CACHE_DIR)'/src-local.committer-name
+	echo "vagrant@vagrant" > '$(HOST_CACHE_DIR)'/src-local.committer-email
+	echo "Gitian Builder <vagrant@vagrant>" > '$(HOST_CACHE_DIR)'/src-local.author
+	echo `date` > '$(HOST_CACHE_DIR)'/src-local.committer-date
 	cp '$(HOST_CACHE_DIR)'/src-local.committer-date '$(HOST_CACHE_DIR)'/src-local.author-date
 	if git log -1 2>&1 >> /dev/null; then \
 	    if [ -z "$(shell git status --untracked-files=no --porcelain)" ]; then \
@@ -347,7 +347,7 @@ $(HOST_CACHE_DIR)/src-local.tar.xz: \
 	        git show --format=format:"%an, <%ae>" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.author; \
 	        git show --format=format:"%ad" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.author-date; \
 	    else \
-	        echo `git config user.name`, '<'`git config user.email`'>' >> '$(HOST_CACHE_DIR)'/src-local.author; \
+	        echo `git config user.name`, '<'`git config user.email`'>' > '$(HOST_CACHE_DIR)'/src-local.author; \
 	    fi; \
 	fi
 
