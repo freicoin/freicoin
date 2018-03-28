@@ -176,7 +176,7 @@ std::string GetWarnings(std::string strFor);
 /** Retrieve a transaction (from memory pool, or from disk, if possible) */
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock, bool fAllowSlow = false);
 /** Adjust to present value by subtracting demurrage */
-int64 GetTimeAdjustedValue(int64 nInitialValue, unsigned nRelativeDepth);
+int64 GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth);
 /** Calculate value of an output at the specified block height */
 int64 GetPresentValue(const CCoins& coins, const CTxOut& output, int nHeight);
 int64 GetPresentValue(const CTransaction& tx, const CTxOut& output, int nHeight);
