@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 # Copyright (c) 2014 The Bitcoin Core developers
-# Distributed under the MIT/X11 software license, see the accompanying
-# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+# Copyright (c) 2018 The Freicoin developers.
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the conjunctive terms of BOTH version 3 of the GNU
+# Affero General Public License as published by the Free Software
+# Foundation AND the MIT/X11 software license.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License and the MIT/X11 software license for
+# more details.
+#
+# You should have received a copy of both licenses along with this
+# program.  If not, see <https://www.gnu.org/licenses/> and
+# <http://www.opensource.org/licenses/mit-license.php>
 
 # Test wallet backup / dump / restore functionality
 
@@ -38,6 +52,8 @@ if [ $# -lt 1 ]; then
         echo "e.g. $0 ../../src"
         exit 1
 fi
+
+set -f
 
 BITCOIND=${1}/bitcoind
 CLI=${1}/bitcoin-cli
@@ -140,12 +156,18 @@ WaitBlocks
 $CLI $B4ARGS setgenerate true 100
 WaitBlocks
 
-CheckBalance "$B1ARGS" 50
-CheckBalance "$B2ARGS" 50
-CheckBalance "$B3ARGS" 50
+CheckBalance "$B1ARGS" 50 "*"
+CheckBalance "$B1ARGS" 49.99508881
+CheckBalance "$B2ARGS" 50 "*"
+CheckBalance "$B2ARGS" 49.99513649
+CheckBalance "$B3ARGS" 50 "*"
+CheckBalance "$B3ARGS" 49.99518417
 CheckBalance "$B4ARGS" 0
 
 echo "Creating transactions..."
+
+FEE=0
+DEM=0
 
 function S {
   TXID=$( $CLI -datadir=${D}/node${1} sendtoaddress ${2} "${3}" 0 )
@@ -154,6 +176,14 @@ function S {
       echo -n "node${1} balance: "
       $CLI -datadir=${D}/node${1} getbalance "*" 0
       exit 1
+  fi
+  tmp=$( $CLI -datadir=${D}/node${1} gettransaction ${TXID} | grep \"fee\" | head -n 1 | cut -d":" -f2 | cut -d"," -f1 )
+  if [[ x"$tmp" != "x" ]] ; then
+      FEE=$( dc -e "${FEE} ${tmp} + p" )
+  fi
+  tmp=$( $CLI -datadir=${D}/node${1} gettransaction ${TXID} | grep \"demurrage\" | head -n 1 | cut -d":" -f2 | cut -d"," -f1 )
+  if [[ x"$tmp" != "x" ]] ; then
+      DEM=$( dc -e "${DEM} ${tmp} + p" )
   fi
 }
 
@@ -208,14 +238,14 @@ WaitMemPools
 # mature
 $CLI "$B4ARGS" setgenerate true 101
 
-BALANCE1=$( $CLI "$B1ARGS" getbalance )
-BALANCE2=$( $CLI "$B2ARGS" getbalance )
-BALANCE3=$( $CLI "$B3ARGS" getbalance )
-BALANCE4=$( $CLI "$B4ARGS" getbalance )
+BALANCE1=$( $CLI "$B1ARGS" getbalance "*" )
+BALANCE2=$( $CLI "$B2ARGS" getbalance "*" )
+BALANCE3=$( $CLI "$B3ARGS" getbalance "*" )
+BALANCE4=$( $CLI "$B4ARGS" getbalance "*" )
 
-TOTAL=$( dc -e "$BALANCE1 $BALANCE2 $BALANCE3 $BALANCE4 + + + p" )
+TOTAL=$( dc -e "$BALANCE1 $BALANCE2 + $BALANCE3 + $DEM + $FEE + p" )
 
-AssertEqual $TOTAL 5700.00000000
+AssertEqual $TOTAL 150.00000000
 
 function StopThree {
   $CLI $B1ARGS stop > /dev/null 2>&1
@@ -256,9 +286,9 @@ cp $D3/wallet.bak $D3/regtest/wallet.dat
 StartThree
 WaitBlocks
 
-AssertEqual $BALANCE1 $( $CLI "$B1ARGS" getbalance )
-AssertEqual $BALANCE2 $( $CLI "$B2ARGS" getbalance )
-AssertEqual $BALANCE3 $( $CLI "$B3ARGS" getbalance )
+AssertEqual $BALANCE1 $( $CLI "$B1ARGS" getbalance "*" )
+AssertEqual $BALANCE2 $( $CLI "$B2ARGS" getbalance "*" )
+AssertEqual $BALANCE3 $( $CLI "$B3ARGS" getbalance "*" )
 
 echo "Restoring using dumped wallet"
 
@@ -272,9 +302,9 @@ rm -rf $D3/regtest/database
 
 StartThree
 
-AssertEqual 0 $( $CLI "$B1ARGS" getbalance )
-AssertEqual 0 $( $CLI "$B2ARGS" getbalance )
-AssertEqual 0 $( $CLI "$B3ARGS" getbalance )
+AssertEqual 0 $( $CLI "$B1ARGS" getbalance "*" )
+AssertEqual 0 $( $CLI "$B2ARGS" getbalance "*" )
+AssertEqual 0 $( $CLI "$B3ARGS" getbalance "*" )
 
 $CLI "$B1ARGS" importwallet $D1/wallet.dump
 $CLI "$B2ARGS" importwallet $D2/wallet.dump
@@ -282,9 +312,9 @@ $CLI "$B3ARGS" importwallet $D3/wallet.dump
 
 WaitBlocks
 
-AssertEqual $BALANCE1 $( $CLI "$B1ARGS" getbalance )
-AssertEqual $BALANCE2 $( $CLI "$B2ARGS" getbalance )
-AssertEqual $BALANCE3 $( $CLI "$B3ARGS" getbalance )
+AssertEqual $BALANCE1 $( $CLI "$B1ARGS" getbalance "*" )
+AssertEqual $BALANCE2 $( $CLI "$B2ARGS" getbalance "*" )
+AssertEqual $BALANCE3 $( $CLI "$B3ARGS" getbalance "*" )
 
 StopThree
 $CLI $B4ARGS stop > /dev/null 2>&1

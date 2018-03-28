@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 # Copyright (c) 2014 The Bitcoin Core developers
-# Distributed under the MIT/X11 software license, see the accompanying
-# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+# Copyright (c) 2018 The Freicoin developers.
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the conjunctive terms of BOTH version 3 of the GNU
+# Affero General Public License as published by the Free Software
+# Foundation AND the MIT/X11 software license.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License and the MIT/X11 software license for
+# more details.
+#
+# You should have received a copy of both licenses along with this
+# program.  If not, see <https://www.gnu.org/licenses/> and
+# <http://www.opensource.org/licenses/mit-license.php>
 
 # Test marking of spent outputs
 
@@ -90,7 +104,9 @@ WaitBlocks
 $CLI $B2ARGS setgenerate true 100
 WaitBlocks
 
-CheckBalance "$B1ARGS" 100
+CheckBalance "$B1ARGS" 100 "*"
+CheckBalance "$B1ARGS" 99.99032066
+CheckBalance "$B2ARGS" 0 "*"
 CheckBalance "$B2ARGS" 0
 
 # restart B2 with no connection
@@ -103,10 +119,10 @@ B1ADDRESS=$( $CLI $B1ARGS getnewaddress )
 B2ADDRESS=$( $CLI $B2ARGS getnewaddress )
 
 # Transaction C: send-to-self, spend A
-TXID_C=$( $CLI $B1ARGS sendtoaddress $B1ADDRESS 50.0)
+TXID_C=$( $CLI $B1ARGS sendtoaddress $B1ADDRESS 49.99516033)
 
 # Transaction D: spends B and C
-TXID_D=$( $CLI $B1ARGS sendtoaddress $B2ADDRESS 100.0)
+TXID_D=$( $CLI $B1ARGS sendtoaddress $B2ADDRESS 99.99022066)
 
 CheckBalance "$B1ARGS" 0
 
@@ -134,7 +150,8 @@ WaitBlocks
 
 # B1 should still be able to spend 100, because D is conflicted
 # so does not count as a spend of B
-CheckBalance "$B1ARGS" 100
+CheckBalance "$B1ARGS" 99.99032066 "*"
+CheckBalance "$B1ARGS" 99.99022530
 
 $CLI $B2ARGS stop > /dev/null 2>&1
 wait $B2PID

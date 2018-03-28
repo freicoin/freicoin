@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 # Copyright (c) 2013-2014 The Bitcoin Core developers
-# Distributed under the MIT/X11 software license, see the accompanying
-# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+# Copyright (c) 2018 The Freicoin developers.
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the conjunctive terms of BOTH version 3 of the GNU
+# Affero General Public License as published by the Free Software
+# Foundation AND the MIT/X11 software license.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License and the MIT/X11 software license for
+# more details.
+#
+# You should have received a copy of both licenses along with this
+# program.  If not, see <https://www.gnu.org/licenses/> and
+# <http://www.opensource.org/licenses/mit-license.php>
 
 # Test block generation and basic wallet sending
 
@@ -65,8 +79,10 @@ WaitBlocks
 $CLI $B2ARGS setgenerate true 101
 WaitBlocks
 
-CheckBalance "$B1ARGS" 50
-CheckBalance "$B2ARGS" 50
+CheckBalance "$B1ARGS" 50 "*"
+CheckBalance "$B1ARGS" 49.99513649
+CheckBalance "$B2ARGS" 50 "*"
+CheckBalance "$B2ARGS" 49.99518417
 
 # Send 21 XBT from 1 to 3. Second
 # transaction will be child of first, and
@@ -85,8 +101,10 @@ WaitBlocks
 
 # B1 should end up with 100 XBT in block rewards plus fees,
 # minus the 21 XBT sent to B3:
-CheckBalance "$B1ARGS" "100-21"
-CheckBalance "$B3ARGS" "21"
+CheckBalance "$B1ARGS" 78.99513649 "*"
+CheckBalance "$B1ARGS" 78.98752794
+CheckBalance "$B3ARGS" 21 "*"
+CheckBalance "$B3ARGS" 20.99797734
 
 # B1 should have two unspent outputs; create a couple
 # of raw transactions to send them to B3, submit them through
@@ -101,9 +119,11 @@ $CLI $B2ARGS setgenerate true 1
 WaitBlocks
 
 # Check balances after confirmation
+CheckBalance "$B1ARGS" 0 "*"
 CheckBalance "$B1ARGS" 0
-CheckBalance "$B3ARGS" 100
-CheckBalance "$B3ARGS" "100-21" "from1"
+CheckBalance "$B3ARGS" 99.98752794 "*"
+CheckBalance "$B3ARGS" 99.98540992
+CheckBalance "$B3ARGS" 78.98752794 "from1"
 
 $CLI $B3ARGS stop > /dev/null 2>&1
 wait $B3PID

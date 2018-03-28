@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 # Copyright (c) 2014 The Bitcoin Core developers
-# Distributed under the MIT/X11 software license, see the accompanying
-# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+# Copyright (c) 2018 The Freicoin developers.
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the conjunctive terms of BOTH version 3 of the GNU
+# Affero General Public License as published by the Free Software
+# Foundation AND the MIT/X11 software license.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License and the MIT/X11 software license for
+# more details.
+#
+# You should have received a copy of both licenses along with this
+# program.  If not, see <https://www.gnu.org/licenses/> and
+# <http://www.opensource.org/licenses/mit-license.php>
 
 # Test proper accounting with malleable transactions
 
@@ -79,7 +93,9 @@ WaitBlocks
 $CLI $B2ARGS setgenerate true 100
 WaitBlocks
 
-CheckBalance "$B1ARGS" 50
+CheckBalance "$B1ARGS" 50 "*"
+CheckBalance "$B1ARGS" 49.99518417
+CheckBalance "$B2ARGS" 0 "*"
 CheckBalance "$B2ARGS" 0
 
 # restart B2 with no connection
@@ -132,13 +148,14 @@ WaitBlocks
 # B1 should have 49 BTC; the 2 BTC send is
 # conflicted, and should not count in
 # balances.
-CheckBalance "$B1ARGS" 49
-CheckBalance "$B1ARGS" 49 "*"
-CheckBalance "$B1ARGS" 9 "foo"
+CheckBalance "$B1ARGS" 48.99518417 "*"
+CheckBalance "$B1ARGS" 48.99513744
+CheckBalance "$B1ARGS"  8.99518417 "foo"
 CheckBalance "$B1ARGS" 10 "bar"
 
 # B2 should have 51 BTC
-CheckBalance "$B2ARGS" 51
+CheckBalance "$B2ARGS" 51 "*"
+CheckBalance "$B2ARGS" 50.99518321
 CheckBalance "$B2ARGS" 1 "from1"
 
 $CLI $B2ARGS stop > /dev/null 2>&1

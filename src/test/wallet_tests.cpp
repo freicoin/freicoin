@@ -162,10 +162,7 @@ BOOST_AUTO_TEST_CASE(coin_selection_tests)
         BOOST_CHECK(!wallet.SelectCoinsMinConf(72 * CENT, refheight, 1, 1, vCoins, setCoinsRet, nValueRet));
 
         // at a higher reference height we don't have 71 anymore
-        BOOST_CHECK( wallet.SelectCoinsMinConf(71 * CENT, refheight+1, 1, 1, vCoins, setCoinsRet, nValueRet));
-        //      --> ! <--
-        // FIXME: The above check should be negated after demurrage
-        //        code is added.
+        BOOST_CHECK(!wallet.SelectCoinsMinConf(71 * CENT, refheight+1, 1, 1, vCoins, setCoinsRet, nValueRet));
 
         // now try making 16 cents.  the best smaller coins can do is 6+7+8 = 21; not as good at the next biggest coin, 20
         BOOST_CHECK( wallet.SelectCoinsMinConf(16 * CENT, refheight, 1, 1, vCoins, setCoinsRet, nValueRet));
