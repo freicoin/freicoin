@@ -1,15 +1,16 @@
 Automated Gitian builds with Vagrant
 ====================================
 
-This directory contains platform-independent scripts for building freicoind
-and Freicoin-QT using the deterministic Gitian build process.
+This directory contains platform-independent scripts for building
+bitcoind and Bitcoin-Qt using the deterministic Gitian build process.
 
 Dependencies
 ------------
 
-These build scripts depend on a UNIX-like build environment, the freely
-available open-source release of VirtualBox, and the Vagrant ruby gem. The
-makefile will complain if any of the required tools are not found. Use the
+These build scripts depend on a UNIX-like build environment, the
+freely available open-source release of Oracle VirtualBox, and
+HashiCorp's vagrant and packer VM-creation utilities. The makefile
+will complain if any of the required tools are not found. Use the
 makefile to find out which requirements are missing:
 
     $ cd contrib/vagrant
@@ -28,9 +29,10 @@ for setting up an appropriate build environment.
 Mac OS X
 --------
 
-Install the latest versions of VirtualBox and Vagrant. The scripts are known
-to work with VirtualBox 4.1.16 r78094 and Vagrant 1.0.3 on Mac OS X 10.7 Lion
-with XCode 4.3.2 and the command-line developer tools installed.
+Install the latest versions of VirtualBox and Vagrant. The scripts are
+known to work with VirtualBox 5.2.8 r121009, Vagrant 2.0.1, and Packer
+1.1.3 on Mac OS X 10.13.3 High Sierra with XCode 9.2 (9C40b) and the
+command-line developer tools installed.
 
 VirtualBox binaries are available from the VirtualBox website:
 
@@ -38,7 +40,15 @@ VirtualBox binaries are available from the VirtualBox website:
 
 The Vagrant installer for Mac OS X works:
 
-    http://vagrantup.com/
+    https://www.vagrantup.com/downloads.html
+
+Be sure to install the VirtualBox plugin:
+
+    $ vagrant plugin install vagrant-vbguest
+
+And the Packer binary needs to be placed in your path:
+
+    https://www.packer.io
 
 Use MacPorts or homebrew to install any missing dependencies, for example:
 
@@ -52,17 +62,25 @@ Then use GNU make to initiate the build:
 Linux
 -----
 
-Existing binaries for VirtualBox, Vagrant, git, and the various UNIX
-dependencies provided by your distribution should work. Use the makefile to
-find out which requirements are missing:
+Existing binaries for VirtualBox, Vagrant, Packer, git, and the
+various UNIX dependencies provided by your distribution should
+work. Use the makefile to find out which requirements are missing:
 
     $ cd contrib/vagrant
     $ make check-requirements
 
-If you cannot find `vagrant` in your distribution's package repositories, you
-can install it using ruby gems:
+If you cannot find `vagrant` in your distribution's package
+repositories, you can install a binary release from here:
 
-    $ sudo gem install vagrant
+    https://www.vagrantup.com/downloads.html
+
+Be sure to install the VirtualBox plugin:
+
+    $ vagrant plugin install vagrant-vbguest
+
+And for Packer:
+
+    https://www.packer.io/downloads.html
 
 Once the dependencies are met, use GNU make to initiate the build:
 
@@ -96,13 +114,21 @@ Install Virtualbox (extension pack not required):
 
     https://www.virtualbox.org/wiki/Downloads
 
+Install the VirtualBox plugin for vagrant:
+
+    $ vagrant plugin install vagrant-vbguest
+
 Install mingw + msys environment:
 
     http://www.mingw.org/wiki/Getting_Started
 
-Install Vagrant via gem:
+Install Vagrant via the installer:
 
-    $ gem install vagrant
+    https://www.vagrantup.com/downloads.html
+
+Install Packer into your path:
+
+    https://www.packer.io/downloads.html
 
 Use mingw-get to install other required packages.
 

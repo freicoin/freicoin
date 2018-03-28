@@ -46,8 +46,8 @@ LIBS += \
    -l ssl \
    -l crypto \
    -l mpfr \
-   -l gmp \
-   -l gmpxx
+   -l gmpxx \
+   -l gmp
 
 TESTLIBS += \
  -Wl,-B$(LMODE) \

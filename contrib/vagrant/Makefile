@@ -1,5 +1,5 @@
 #
-# Copyright © 2011-2013 Bitcoin Developers.
+# Copyright © 2011-2018 Freicoin Developers.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,25 +22,27 @@
 
 MAKEFILE := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 
-VERSION  := 0.8.6-2
+PROJECT  := freicoin
 
 SHELL    := $(shell bash --help >/dev/null 2>&1 && echo ba)sh
 
+AWK      := $(shell gawk --help >/dev/null 2>&1 && echo g)awk
 GREP     := $(shell egrep --help >/dev/null 2>&1 && echo e)grep
 PATCH    := $(shell gpatch --help >/dev/null 2>&1 && echo g)patch
 SED      := $(shell gsed --help >/dev/null 2>&1 && echo g)sed
 WGET     := wget --no-check-certificate \
                  --user-agent=$(shell wget --version | \
-                 $(SED) -n 's,GNU \(Wget\) \([0-9.]*\).*,\1/\2,p')
+            $(SED) -n 's,GNU \(Wget\) \([0-9.]*\).*,\1/\2,p')
 
-REQUIREMENTS := $(SHELL) bzip2 cut diff $(GREP) gzip $(MAKE) openssl $(PATCH) \
-                ruby $(SED) sort tar vagrant wget xargs xz
+REQUIREMENTS := $(AWK) $(SHELL) diff find $(GREP) gzip $(MAKE) openssl	\
+                packer $(PATCH) $(SED) sort tar vagrant xargs xz	\
+                $(word 1,$(WGET))
 
 BUILD_MANIFEST = cd '$(shell dirname '$(MAKEFILE)')'/../.. && \
 	find $(1) -print0 | \
-	xargs -0 -n1 openssl dgst -sha256 2>/dev/null | \
-	openssl dgst -sha256 | \
-	$(SED) -n 's,^.*\([0-9a-f]\{64\}\),\1,p'
+	xargs -0 -n1 openssl sha512 2>/dev/null | \
+	openssl sha512 | \
+	$(SED) -n 's,^.*\([0-9a-f]\{128\}\),\1,p'
 
 VALIDATE_MANIFEST = \
 	if [ -f "$(1)" ] && echo "$(2)" | diff "$(1)" - 2>&1 >/dev/null; then \
@@ -56,235 +58,66 @@ GUEST_CACHE_DIR := /vagrant/$(CACHE_DIR)
 
 SOURCEFORGE_MIRROR := downloads.sourceforge.net
 
-PKG             := Tatsh-xchain-ab41b58.tar.gz
-$(PKG)_CHECKSUM := f004c27dc636c791c28f8d8224deace00e7ea3bbd71a6ca0c7931ce9284ffe07
-$(PKG)_URL      := https://github.com/Tatsh/xchain/tarball/ab41b58
-PKGS            += $(PKG)
-
-PKG             := autoconf-2.65.tar.xz
-$(PKG)_CHECKSUM := 3e07179feb2ba724ae557872d0cb5878655c58b49b6eaea068210c0bf22661f5
-$(PKG)_URL      := http://ftp.gnu.org/gnu/autoconf/$(PKG)
-$(PKG)_URL_2    := http://mirrors.usc.edu/pub/gnu/autoconf/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := automake-1.11.1.tar.bz2
-$(PKG)_CHECKSUM := 5b159d3c0e0a1f87de71b68bcb9f1a1c49e9e71749c9b723f17e2e1e0295c7ae
-$(PKG)_URL      := http://ftp.gnu.org/gnu/automake/$(PKG)
-$(PKG)_URL_2    := http://mirrors.usc.edu/pub/gnu/automake/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := binutils-2.21.1a.tar.bz2
-$(PKG)_CHECKSUM := cdecfa69f02aa7b05fbcdf678e33137151f361313b2f3e48aba925f64eabf654
-$(PKG)_URL      := http://ftp.gnu.org/gnu/binutils/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := binutils-2.22.tar.bz2
-$(PKG)_CHECKSUM := 6c7af8ed1c8cf9b4b9d6e6fe09a3e1d3d479fe63984ba8b9b26bf356b6313ca9
-$(PKG)_URL      := http://ftp.gnu.org/gnu/binutils/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := boost_1_50_0.tar.bz2
-$(PKG)_CHECKSUM := c9ace2b8c81fa6703d1d17c7e478de3bc51101c5adbdeb3f6cb72cf3045a8529
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/boost/boost/1.50.0/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := cctools-806.tar.gz
-$(PKG)_CHECKSUM := 6116c06920112c634f6df2fa8b2f171ee3b90ff2176137da5856336695a6a676
-$(PKG)_URL      := http://opensource.apple.com/tarballs/cctools/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := cloog-ppl-0.15.11.tar.gz
-$(PKG)_CHECKSUM := 7cd634d0b2b401b04096b545915ac67f883556e9a524e8e803a6bf6217a84d5f
-$(PKG)_URL      := http://gcc.cybermirror.org/infrastructure/$(PKG)
-$(PKG)_URL_2    := http://www.netgull.com/gcc/infrastructure/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := crosstool-ng-1.15.2.tar.bz2
-$(PKG)_CHECKSUM := 58efdc97cc9e51c743d3f83c049ee1c1ca1f4cf8160ca7fc28d1480760ec5b4e
-$(PKG)_URL      := http://crosstool-ng.org/download/crosstool-ng/$(PKG)
+PKG             := qt-everywhere-opensource-src-4.8.3.tar.gz
+$(PKG)_CHECKSUM := 3791ffbea5e1e308d97339ca13638f3b48062119678158edd9fd2b8dc683ae915a9f158ab8ccde6a70c83a15453857cb093355a3087bb529a2556a79743c56d4
+$(PKG)_URL      := http://mirror.csclub.uwaterloo.ca/qtproject/archive/qt/4.8/4.8.3/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := db-4.8.30.NC.tar.gz
-$(PKG)_CHECKSUM := 12edc0df75bf9abd7f82f821795bcee50f42cb2e5f76a6a281b85732798364ef
+$(PKG)_CHECKSUM := 8d313f1f896e0b0c05cc510c0313324743de3fb660a0bd948c957d5a2d50f1625d8a9a36ec4e6fea09daf1d682dbe1ffccd5c3ec5f066eef72f7525343d0194c
 $(PKG)_URL      := http://download.oracle.com/berkeley-db/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := dbus-1.5.12.tar.gz
-$(PKG)_CHECKSUM := 5d3e09a831259ca64b15357cfa1c60a5a7ab06ef469d5b82c2308de9cadf1094
-$(PKG)_URL      := http://dbus.freedesktop.org/releases/dbus/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := dbus-1.7.4.tar.gz
-$(PKG)_CHECKSUM := f9421a54a15d858f6a394b520c8d8645e484887210d082a83e0f6ead7945549e
-$(PKG)_URL      := http://dbus.freedesktop.org/releases/dbus/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := expat-2.1.0.tar.gz
-$(PKG)_CHECKSUM := 823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/expat/expat/2.1.0/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := gcc-4.5.2.tar.bz2
-$(PKG)_CHECKSUM := 1d9362275ffd9d19fd41f1c3dae0805d6e3991c4d5aa80851f2eaf1bbaa21f88
-$(PKG)_URL      := http://ftp.gnu.org/gnu/gcc/gcc-4.5.2/$(PKG)
-$(PKG)_URL_2    := http://gcc.fyxm.net/releases/gcc-4.5.2/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := gcc-4.7.0.tar.bz2
-$(PKG)_CHECKSUM := a680083e016f656dab7acd45b9729912e70e71bbffcbf0e3e8aa1cccf19dc9a5
-$(PKG)_URL      := http://ftp.gnu.org/gnu/gcc/gcc-4.7.0/$(PKG)
-$(PKG)_URL_2    := http://gcc.fyxm.net/releases/gcc-4.7.0/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := gcc-5666.3.tar.gz
-$(PKG)_CHECKSUM := 6c46f4376d11ada5be0cfc3894b9296edf574af3c616ab71803ea78edfd7015b
-$(PKG)_URL      := http://opensource.apple.com/tarballs/gcc/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := glibc-2.11.tar.bz2
-$(PKG)_CHECKSUM := 9ef10e498fac4acc458029898fd8fa76c3cedee1f63d23fedf0c579c505ed62c
-$(PKG)_URL      := http://ftp.gnu.org/gnu/libc/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := gmp-5.0.2.tar.bz2
-$(PKG)_CHECKSUM := dbc2db76fdd4e99f85d5e35aa378ed62c283e0d586b91bd8703aff75a7804c28
-$(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
-$(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := gmp-5.0.4.tar.bz2
-$(PKG)_CHECKSUM := 35d4aade3e4bdf0915c944599b10d23f108ffedf6c3188aeec52221c5cf9a06f
-$(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
-$(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
+PKG             := boost_1_50_0.tar.bz2
+$(PKG)_CHECKSUM := 5909a2eca520a28af31de6a36c51f57b11fddcc0a51493a1e500ade00d9c4e78175c4892c04857ee385f3874f96e561b74b6427e1a155102e926421067d889fe
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/boost/boost/1.50.0/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := gmp-5.1.2.tar.xz
-$(PKG)_CHECKSUM := c7d943a6eceb4f0d3d3ab1176aec37853831cdfa281e012f8a344ba3ceefcbc2
+$(PKG)_CHECKSUM := 2c135bb6be908e93e63fe8828b2128b4e22e8ba29adf3cc917493ab66b42d54654dad7f101f902105e854731a69a202c38e34f119f642828fa5568ef21075c5a
 $(PKG)_URL      := http://ftp.gnu.org/gnu/gmp/$(PKG)
 $(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/gmp/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := libelf-0.8.13.tar.gz
-$(PKG)_CHECKSUM := 591a9b4ec81c1f2042a97aa60564e0cb79d041c52faa7416acb38bc95bd2c76d
-$(PKG)_URL      := http://fossies.org/linux/misc/$(PKG)
-$(PKG)_URL_2    := http://www.mr511.de/software/$(PKG)
+PKG             := libpng-1.5.9.tar.gz
+$(PKG)_CHECKSUM := 490e26139d4f1411e489fc8c777a237699d9a20cd7ad2bac4b9c3e69e1a1637d048edfc3ebeb9a4bad2e1e9ecf5c0bca5312ca5175c500955043073be99cc7ae
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/libpng15/older-releases/1.5.9/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := libpng-1.6.3.tar.gz
-$(PKG)_CHECKSUM := 907db613a7a068baab594f761a1b6c6b3fa19829c0ed5eb482d194801830859d
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/libpng16/older-releases/1.6.3/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := libtool-2.2.6b.tar.lzma
-$(PKG)_CHECKSUM := 66ebad3c02e5cb6672bfbda1183fb6fc919d33d676eb8be4b7834aa7c3b8b7ae
-$(PKG)_URL      := http://ftp.gnu.org/gnu/libtool/$(PKG)
-$(PKG)_URL_2    := http://mirrors.usc.edu/pub/gnu/libtool/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := linux-2.6.27.62.tar.bz2
-$(PKG)_CHECKSUM := 0424ddc6289471e849aec434d88aacb14c6b4c109fc036d429a9d97828afb32a
-$(PKG)_URL      := http://www.kernel.org/pub/linux/kernel/v2.6/longterm/v2.6.27/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := llvmgcc42-2335.15.tar.gz
-$(PKG)_CHECKSUM := 45a8f91a82872208c5ce9c0e173954c75d7039008460e11c193ae30e6582cf65
-$(PKG)_URL      := http://opensource.apple.com/tarballs/llvmgcc42/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := m4-1.4.13.tar.xz
-$(PKG)_CHECKSUM := a69ce082cdbd732204c36059c18b2a671c5eb92f4453bcc5ea1ab12dc6f88ed0
-$(PKG)_URL      := http://ftp.gnu.org/gnu/m4/$(PKG)
-$(PKG)_URL_2    := http://mirror.anl.gov/pub/gnu/m4/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := make-3.81.tar.bz2
-$(PKG)_CHECKSUM := f3e69023771e23908f5d5592954d8271d3d6af09693cecfd29cee6fde8550dc8
-$(PKG)_URL      := http://ftp.gnu.org/gnu/make/$(PKG)
-$(PKG)_URL_2    := http://mirrors.usc.edu/pub/gnu/make/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := mingw-w64-v2.0.3.tar.gz
-$(PKG)_CHECKSUM := e5cac81a2a7fc80cd5f2e52ee7cd666f59ba059ccc583793ee373990be997210
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/mingw-w64/mingw-w64/mingw-w64-release/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := mingwrt-3.20-mingw32-dev.tar.gz
-$(PKG)_CHECKSUM := a41717c319093e2508a3034e384aaebbc0f94278f4d59d9d0681dd1c2f2828f2
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/mingw/MinGW/Base/mingwrt/mingwrt-3.20/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := miniupnpc-1.8.tar.gz
-$(PKG)_CHECKSUM := bc5f73c7b0056252c1888a80e6075787a1e1e9112b808f863a245483ff79859c
+PKG             := miniupnpc-1.6.tar.gz
+$(PKG)_CHECKSUM := c635057e40aa2826fb07db51c474a335cbcecbf7bba09773826b1aff4a01024dced8a6122e2b90db544540ae499b687006392d6041f7605467b73111ccb368a8
 $(PKG)_URL      := http://miniupnp.free.fr/files/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := mpc-0.9.tar.gz
-$(PKG)_CHECKSUM := fd3efe422f0d454592059e80f2c00d1a2e381bf2beda424c5094abd4deb049ac
-$(PKG)_URL      := http://www.multiprecision.org/mpc/download/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := mpfr-3.1.0.tar.bz2
-$(PKG)_CHECKSUM := 74a7bbbad168dd1cc414f1c9210b8fc16ccfc8e422d34b3371a8978e31eab680
-$(PKG)_URL      := http://www.mpfr.org/mpfr-3.1.0/$(PKG)
-$(PKG)_URL_2    := http://ftp.gnu.org/gnu/mpfr/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := mpfr-3.1.0.tar.xz
-$(PKG)_CHECKSUM := 84fdb2d65e7323ae717f82ebf524280afe076393188e83ebc278a6bd91cf4ed0
-$(PKG)_URL      := http://www.mpfr.org/mpfr-3.1.0/$(PKG)
-$(PKG)_URL_2    := http://ftp.gnu.org/gnu/mpfr/$(PKG)
-PKGS            += $(PKG)
-
 PKG             := mpfr-3.1.2.tar.xz
-$(PKG)_CHECKSUM := 399d0f47ef6608cc01d29ed1b99c7faff36d9994c45f36f41ba250147100453b
-$(PKG)_URL      := ftp://ftp.gnu.org/pub/gnu/$(PKG)/$(PKG)
+$(PKG)_CHECKSUM := 8d594206afb2637ed39ad564d42c8c4d02b042b95925f5c6ec891e5cb87f7155195559c7ff477256a088ecaaa3c2b0d35a9d11a74ed526a1080d49b2950e5587
+$(PKG)_URL      := http://ftp.gnu.org/pub/gnu/mpfr/$(PKG)
 $(PKG)_URL_2    := http://www.mpfr.org/mpfr-3.1.2/$(PKG)
 PKGS            += $(PKG)
 
 PKG             := openssl-1.0.1c.tar.gz
-$(PKG)_CHECKSUM := 2a9eb3cd4e8b114eb9179c0d3884d61658e7d8e8bf4984798a5f5bd48e325ebe
+$(PKG)_CHECKSUM := 14f766daab0828a2f07c65d6da8469a4a5a2b839ff3da188538c4e2db3e3e2f37217fb37e269617fb438463b75fb77dab0b155f36831ff48edbc9e7f2903ebd3
 $(PKG)_URL      := http://www.openssl.org/source/$(PKG)
-$(PKG)_URL_2    := ftp://ftp.openssl.org/source/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := ppl-0.11.2.tar.lzma
-$(PKG)_CHECKSUM := 5012c05dd7af7f61c6cb2214b2caf6f3817d8f024949a78414a5babac9822f4e
-$(PKG)_URL      := http://bugseng.com/products/ppl/download/ftp/releases/0.11.2/$(PKG)
+PKG             := osslsigncode-1.7.1.tar.gz
+$(PKG)_CHECKSUM := cc5a7e0c5baa2a98db93f1d2cc9d86e732e2a8a55fc20bf8e6aa67e2120af37c6be857dfe4b8eb8c82fd40604dbb3c845190b59c7e6b4147f06b710a256b877f
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/osslsigncode/osslsigncode/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := qrencode-3.4.2.tar.bz2
-$(PKG)_CHECKSUM := fc492a506a1460c1ce850ff6137db55cb2e3d466f4c559108aae3a96d623c1b1
+PKG             := osslsigncode-Backports-to-1.7.1.patch
+$(PKG)_CHECKSUM := 182127638206492a609b4f909465b702f7fa89b3cd69f08f86a2efde86dbe597081fb0fd862560fac89e85baf74976c9bcb6b56d17f0e9015ea0c7e33cae1e3a
+$(PKG)_URL      := http://bitcoincore.org/cfields/osslsigncode-Backports-to-1.7.1.patch
+PKGS            += $(PKG)
+
+PKG             := qrencode-3.2.0.tar.bz2
+$(PKG)_CHECKSUM := 64f1e2ccf143f5e2654fcc2f8d41b184acbb91e83269abb01dc71a7b27b395f33a5f5302cba1eb0fb6fac86bea8d92ebcd5fd29b245a60416b4533e3e6c741ca
 $(PKG)_URL      := http://fukuchi.org/works/qrencode/$(PKG)
 PKGS            += $(PKG)
 
-PKG             := qt-everywhere-opensource-src-4.8.3.tar.gz
-$(PKG)_CHECKSUM := f1f72974f924861be04019f49f07cd43ab3c95056db2ba8f34b283487cccc728
-$(PKG)_URL      := http://download.qt.io/archive/qt/4.8/4.8.3/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := qt-mac-opensource-4.8.2.dmg
-$(PKG)_CHECKSUM := 058459800a9e58e4e8a48fda58036133c6033480f49817db50e936fd644e2692
-$(PKG)_URL      := http://download.qt.io/archive/qt/4.8/4.8.2/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := tonytheodore-mxe-1213449.tar.gz
-$(PKG)_CHECKSUM := 01c2dc636403e7e5f638e349d56866899d823015d5573b89c404a320e5437475
-$(PKG)_URL      := https://github.com/tonytheodore/mxe/tarball/1213449
-PKGS            += $(PKG)
-
-PKG             := w32api-3.17-2-mingw32-dev.tar.lzma
-$(PKG)_CHECKSUM := 672b60779bedb13b44aa519c4378394b04fca32f926056596bd439628819090a
-$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/mingw/MinGW/Base/w32api/w32api-3.17/$(PKG)
-PKGS            += $(PKG)
-
-PKG             := xcode322_2148_developerdvd.dmg
-$(PKG)_CHECKSUM := 5c92607aec9b9f9e9dd76c5040cf18bd301b458229fed0caf51f415ae89ec7a0
-PKGS            += $(PKG)
-
-PKG             := zlib-1.2.8.tar.gz
-$(PKG)_CHECKSUM := 36658cb768a54c1d4dec43c3116c27ed893e88b02ecfcb44f2166f9c0b7f2a0d
-$(PKG)_URL      := http://zlib.net/$(PKG)
-$(PKG)_URL_2    := http://$(SOURCEFORGE_MIRROR)/project/libpng/zlib/1.2.8/$(PKG)
+PKG             := zlib-1.2.6.tar.gz
+$(PKG)_CHECKSUM := f812ab3049fc2920a8da4649f6e60340ac365d58a0e76ace5219426aeb0759c0a474cfb2b9902cd0471158fa32a4d2c35692309d266e66013444bdced8ed00d9
+$(PKG)_URL      := http://$(SOURCEFORGE_MIRROR)/project/libpng/zlib/1.2.6/$(PKG)
 PKGS            += $(PKG)
 
 # ===----------------------------------------------------------------------===
@@ -304,20 +137,24 @@ VAGRANT_DESTROY = \
 # ===----------------------------------------------------------------------===
 
 .PHONY: all
-all: freicoind Freicoin-Qt
+all: linux win32
 
 .PHONY: mostlyclean
 mostlyclean:
 
 .PHONY: clean
 clean: mostlyclean
+	-rm -rf box
 	-rm -rf output
 	-rm -f .stamp-*
 	-$(call VAGRANT_DESTROY)
+	-rm -rf .vagrant
 
 .PHONY: distclean
 distclean: clean
 	-rm -rf cache
+	-rm -rf output-gitian-host-xenial64
+	-rm -rf packer_cache
 
 .PHONY: maintainer-clean
 maintainer-clean: distclean
@@ -360,7 +197,7 @@ check-requirements: .stamp-check-requirements.h
 .stamp-check-requirements.h: $(MAKEFILE)
 	@echo '[check requirements]'
 	$(foreach REQUIREMENT,$(REQUIREMENTS),$(call CHECK_REQUIREMENT,$(REQUIREMENT)))
-	$(call CHECK_REQUIREMENT_VERSION,vagrant,1\.[0-9]\.[0-9])
+	$(call CHECK_REQUIREMENT_VERSION,vagrant,[2-9]\.[0-9]\.[0-9])
 	@touch "$@"
 
 # ===----------------------------------------------------------------------===
@@ -368,8 +205,15 @@ check-requirements: .stamp-check-requirements.h
 .PHONY: download
 download: $(addprefix download-,$(PKGS))
 
+.PHONY: download-depends
+download-depends: .stamp-download-depends.h
+.stamp-download-depends.h: $(HOST_CACHE_DIR)/src-local.manifest
+	mkdir -p cache/gitian/cache/common
+	make -C ../../depends download SOURCES_PATH="`pwd`/cache/gitian/cache/common"
+	@touch "$@"
+
 PKG_CHECKSUM = \
-	openssl dgst -sha256 '$(HOST_CACHE_DIR)/$(1)' 2>/dev/null | $(SED) -n 's,^.*\([0-9a-f]\{64\}\)$$,\1,p'
+	openssl sha512 '$(HOST_CACHE_DIR)/$(1)' 2>/dev/null | $(SED) -n 's,^.*\([0-9a-f]\{128\}\)$$,\1,p'
 
 CHECK_PKG_ARCHIVE = \
 	[ x'$($(1)_CHECKSUM)' == x"`$$(call PKG_CHECKSUM,$(1))`" ]
@@ -403,106 +247,122 @@ $(foreach PKG,$(PKGS),$(eval $(call PKG_RULE,$(PKG))))
 
 # ===----------------------------------------------------------------------===
 
-HOST_VM_FILES    := contrib/vagrant/Makefile \
-                    contrib/vagrant/Vagrantfile \
-                    contrib/vagrant/patch/host-vm-etc-network-interfaces-100-add_lxc_br0.patch \
-                    contrib/vagrant/patch/host-vm-etc-sysctl.conf-100-enable_ipv4_forward.patch
-HOST_VM_FILES    := $(sort $(HOST_VM_FILES))
-HOST_VM_MANIFEST := $(shell $(call BUILD_MANIFEST,$(HOST_VM_FILES)))
+GITIAN_HOST_FILES    := contrib/vagrant/Makefile \
+                        contrib/vagrant/gitian-host.json \
+                        contrib/vagrant/config/preseed.cfg \
+                        contrib/vagrant/config/vagrant.sh \
+                        contrib/vagrant/config/sshd.sh \
+                        contrib/vagrant/config/packages.sh \
+                        contrib/vagrant/config/cleanup.sh \
+                        contrib/vagrant/Vagrantfile
+GITIAN_HOST_FILES    := $(sort $(GITIAN_HOST_FILES))
+GITIAN_HOST_MANIFEST := $(shell $(call BUILD_MANIFEST,$(GITIAN_HOST_FILES)))
 
 _ := $(shell $(call \
 	VALIDATE_MANIFEST, \
-	.stamp-host-vm.manifest, \
-	$(HOST_VM_MANIFEST) \
+	.stamp-gitian-host.manifest, \
+	$(GITIAN_HOST_MANIFEST) \
 ))
 
-.PHONY: host-vm
-host-vm: .stamp-host-vm.manifest
-.stamp-host-vm.manifest: \
+.PHONY: gitian-host
+gitian-host: .stamp-gitian-host.manifest
+.stamp-gitian-host.manifest: \
 	.stamp-check-requirements.h \
-	$(foreach FILE,$(HOST_VM_FILES),$(shell echo $(FILE) | $(SED) 's:^contrib/vagrant/::g'))
+	$(foreach FILE,$(GITIAN_HOST_FILES),$(shell echo $(FILE) | $(SED) 's:^contrib/vagrant/::g'))
 	
 	-$(call VAGRANT_DESTROY)
 	
+	# Remove any temporary files from interupted builds that would
+	# interfere if present.
+	if [ -e output-gitian-host-xenial64 ]; then \
+	    rm -rf output-gitian-host-xenial64; \
+	fi
+	
+	packer build gitian-host.json
+	vagrant box add --name gitian-host-xenial64 --force box/virtualbox/gitian-host-xenial64-0.box
+	-rm -rf box
+	
 	$(call VAGRANT_UP)
-	
-	vagrant ssh --command "echo 'grub-common hold' | sudo dpkg --set-selections"
-	
-	vagrant ssh --command "sudo apt-get update"
-	vagrant ssh --command "sudo apt-get upgrade -y"
-	$(call VAGRANT_RELOAD)
-	
-	vagrant ssh --command "sudo apt-get install -y \
-	    debootstrap git lxc python-vm-builder ruby patch zip"
-	
-	vagrant ssh --command "sudo apt-get install -y bridge-utils"
-	vagrant ssh --command "sudo brctl addbr br0"
-	vagrant ssh --command "sudo $(SHELL) -c 'cd /etc/network && \
-	    patch -p1 < /vagrant/patch/host-vm-etc-network-interfaces-100-add_lxc_br0.patch'"
-	vagrant ssh --command "sudo $(SHELL) -c 'cd /etc && \
-	    patch -p1 < /vagrant/patch/host-vm-etc-sysctl.conf-100-enable_ipv4_forward.patch'"
-	
-	vagrant ssh --command "sudo apt-get install -y apt-cacher-ng"
 	
 	-$(call VAGRANT_HALT)
 	
-	echo $(HOST_VM_MANIFEST) > "$@"
+	rm -f .stamp-lxc-base.manifest
+	
+	echo $(GITIAN_HOST_MANIFEST) > "$@"
 
 # ===----------------------------------------------------------------------===
 
-GITIAN_VM_FILES    := contrib/vagrant/Makefile \
-                      contrib/vagrant/patch/gitian-builder-ee1b69d.patch
-GITIAN_VM_FILES    := $(sort $(GITIAN_VM_FILES))
-GITIAN_VM_MANIFEST := $(shell $(call BUILD_MANIFEST,$(GITIAN_VM_FILES)))
+LXC_BASE_FILES    := contrib/vagrant/Makefile
+LXC_BASE_FILES    := $(sort $(LXC_BASE_FILES))
+LXC_BASE_MANIFEST := $(shell $(call BUILD_MANIFEST,$(LXC_BASE_FILES)))
 
 _ := $(shell $(call \
 	VALIDATE_MANIFEST, \
-	.stamp-gitian-guest-vm.manifest, \
-	$(GITIAN_VM_MANIFEST) \
+	.stamp-lxc-base.manifest, \
+	$(LXC_BASE_MANIFEST) \
 ))
 
-.PHONY: gitian-guest-vm
-gitian-guest-vm: .stamp-gitian-guest-vm.manifest
-.stamp-gitian-guest-vm.manifest: \
-	.stamp-host-vm.manifest \
-	$(foreach FILE,$(GITIAN_VM_FILES),$(shell echo $(FILE) | $(SED) 's:^contrib/vagrant/::g'))
+.PHONY: lxc-base
+lxc-base: .stamp-lxc-base.manifest
+.stamp-lxc-base.manifest: \
+	.stamp-gitian-host.manifest \
+	$(foreach FILE,$(LXC_BASE_FILES),$(shell echo $(FILE) | $(SED) 's:^contrib/vagrant/::g'))
 	
 	$(call VAGRANT_UP)
 	
 	vagrant ssh --command "\
 	    if [ -d ~/gitian-builder ]; then \
-	        rm -rf ~/gitian-builder; \
+	        sudo rm -rf ~/gitian-builder; \
 	    fi"
 	vagrant ssh --command "\
 	    git clone 'https://github.com/devrandom/gitian-builder' ~/gitian-builder"
 	vagrant ssh --command "cd ~/gitian-builder && \
-	    git checkout ee1b69d"
+	    git checkout ee1b69d6949810069453d5540af7a0b3ca63ea8d"
 	vagrant ssh --command "cd ~/gitian-builder && \
-	    patch -p1 < /vagrant/patch/gitian-builder-ee1b69d.patch"
+	    sed -i 's:archive.ubuntu.com:old-releases.ubuntu.com:g' \
+	        bin/make-base-vm target-bin/bootstrap-fixup.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:security.ubuntu.com:old-releases.ubuntu.com:g' \
+	        bin/make-base-vm target-bin/bootstrap-fixup.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.autodev = 0' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = c 108:0 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = b 7:0 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    echo 'lxc.cgroup.devices.allow = c 10:200 rwm' >> etc/lxc.config.in"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    sed -i 's:grep /lxc/gitian /proc/1/cgroup > /dev/null:true:g' \
+	        target-bin/bootstrap-fixup.in"
 	vagrant ssh --command "cd ~/gitian-builder && \
 	    ln -s $(GUEST_CACHE_DIR) inputs"
 	
 	vagrant ssh --command "\
 	    cd ~/gitian-builder; \
-	    if [ -e $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) ]; then \
-	        rsync -av $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST)/base-* . || exit 1; \
-	    else \
-	        GITIAN_HOST_IP=10.0.2.15 bin/make-base-vm --lxc --suite lucid --arch i386  || exit 1; \
-	        GITIAN_HOST_IP=10.0.2.15 bin/make-base-vm --lxc --suite lucid --arch amd64 || exit 1; \
-	        echo base-* | xargs -n1 gzip --fast; \
-	        mkdir -p $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) || exit 1; \
-	        rsync -av base-* $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) || \
-	            rm -rf $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST); \
-	        [ -e $(GUEST_CACHE_DIR)/gitian-guest-vm/$(GITIAN_VM_MANIFEST) ] || \
-	            exit 1; \
-	    fi; \
-	    echo base-*.gz | xargs -n1 gunzip"
+	    if [ ! -f $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz ]; then \
+	        env LXC_BRIDGE=lxcbr0 LXC_GUEST_IP=10.0.3.2 GITIAN_HOST_IP=10.0.3.1 \
+	            bin/make-base-vm --lxc --suite lucid --arch i386 || exit 1; \
+	        env LXC_BRIDGE=lxcbr0 LXC_GUEST_IP=10.0.3.2 GITIAN_HOST_IP=10.0.3.1 \
+	            bin/make-base-vm --lxc --suite lucid --arch amd64 || exit 1; \
+	        for vm in base-*; do \
+	            tar -Srvf base-vm.tar $$vm || exit 1; \
+	            rm -f $$vm; \
+	        done; \
+	        gzip --fast base-vm.tar || exit 1; \
+	        mkdir -p $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST) || exit 1; \
+	        rsync -av --remove-source-files base-vm.tar.gz $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST); \
+	        tar -tf $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz || \
+	            rm -rf $(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST); \
+	    fi"
+	vagrant ssh --command "cd ~/gitian-builder && \
+	    tar -Sxzvf '$(GUEST_CACHE_DIR)/lxc-base/$(LXC_BASE_MANIFEST)/base-vm.tar.gz'"
 	
 ifdef VAGRANT_CYCLE
 	-$(call VAGRANT_HALT)
 endif
 	
-	echo $(GITIAN_VM_MANIFEST) > "$@"
+	echo $(LXC_BASE_MANIFEST) > "$@"
 
 # ===----------------------------------------------------------------------===
 
@@ -531,1818 +391,177 @@ _ := $(shell $(call \
 .PHONY: bundle-source
 bundle-source: $(HOST_CACHE_DIR)/src-local.manifest
 $(HOST_CACHE_DIR)/src-local.manifest: $(HOST_CACHE_DIR)/src-local.tar.xz
-	echo $(SOURCE_MANIFEST) >'$@'
+	@echo $(SOURCE_MANIFEST) >'$@'
 $(HOST_CACHE_DIR)/src-local.tar.xz: \
 	$(foreach FILE,$(SOURCE_FILES),$(shell echo $(FILE) | $(SED) 's:^:../../:g'))
 	
 	mkdir -p '$(HOST_CACHE_DIR)'
 	rm -f '$(HOST_CACHE_DIR)'/src-local.{tar,tar.xz}
-	COPYFILE_DISABLE=1 tar -C ../.. -rf '$(HOST_CACHE_DIR)'/src-local.tar $(SOURCE_FILES)
+	if git log -1 2>&1 >> /dev/null && [ -z "$(shell git status --untracked-files=no --porcelain)" ]; then \
+	    pushd ../../; \
+	    git archive HEAD --format tar --output contrib/vagrant/'$(HOST_CACHE_DIR)'/src-local.tar; \
+	    popd; \
+	else \
+	    COPYFILE_DISABLE=1 tar -C ../.. -rf '$(HOST_CACHE_DIR)'/src-local.tar $(SOURCE_FILES); \
+	fi
 	xz '$(HOST_CACHE_DIR)'/src-local.tar
+	echo "Gitian Builder" > '$(HOST_CACHE_DIR)'/src-local.committer-name
+	echo "vagrant@vagrant" > '$(HOST_CACHE_DIR)'/src-local.committer-email
+	echo "Gitian Builder <vagrant@vagrant>" > '$(HOST_CACHE_DIR)'/src-local.author
+	echo `date` > '$(HOST_CACHE_DIR)'/src-local.committer-date
+	cp '$(HOST_CACHE_DIR)'/src-local.committer-date '$(HOST_CACHE_DIR)'/src-local.author-date
+	if git log -1 2>&1 >> /dev/null; then \
+	    if [ -z "$(shell git status --untracked-files=no --porcelain)" ]; then \
+	        git show --format=format:"%cn" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.committer-name; \
+	        git show --format=format:"%ce" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.committer-email; \
+	        git show --format=format:"%cd" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.committer-date; \
+	        git show --format=format:"%an, <%ae>" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.author; \
+	        git show --format=format:"%ad" | head -n 1 | tee '$(HOST_CACHE_DIR)'/src-local.author-date; \
+	    else \
+	        echo `git config user.name`, '<'`git config user.email`'>' > '$(HOST_CACHE_DIR)'/src-local.author; \
+	    fi; \
+	fi
 
 # ===----------------------------------------------------------------------===
+
+# rightparen=)
+# CLIENT_VERSION_MAJOR := $(shell $(GREP) _CLIENT_VERSION_MAJOR ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
+# CLIENT_VERSION_MINOR := $(shell $(GREP) _CLIENT_VERSION_MINOR ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
+# CLIENT_VERSION_REVISION := $(shell $(GREP) _CLIENT_VERSION_REVISION ../../configure.ac | head -n 1 | $(AWK) -F'[ $(rightparen)]' '{print $$2}')
+# ifeq ($(CLIENT_VERSION_REVISION), 99)
+# SERIES := $(CLIENT_VERSION_MAJOR).$(shell expr 1 + $(CLIENT_VERSION_MINOR))
+# else
+# SERIES := $(CLIENT_VERSION_MAJOR).$(CLIENT_VERSION_MINOR)
+# endif
+
+SERIES := 0.8.6-2
 
 OUTPUT_DIR         := output
 HOST_OUTPUT_DIR    := $(OUTPUT_DIR)
 GUEST_OUTPUT_DIR   := /vagrant/$(OUTPUT_DIR)
-PATCH_DIR          := patch
-HOST_PATCH_DIR     := $(PATCH_DIR)
-GUEST_PATCH_DIR    := /vagrant/$(PATCH_DIR)
 
 TARGETS            :=
 
-Freicoin-Qt: Freicoin-Qt-i686-pc-linux-gnu \
-             Freicoin-Qt-x86_64-pc-linux-gnu \
-             Freicoin-Qt-i686-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := Freicoin-Qt-$(ARCH)
-$(TARGET)_NAME     := Freicoin-Qt
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      dbus-$(ARCH) \
-                      expat-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      qt-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
+TARGET             := linux
+$(TARGET)_NAME     := $(TARGET)-$(SERIES)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian.yml
+$(TARGET)_PKGS     := miniupnpc-1.6.tar.gz \
+                      qrencode-3.2.0.tar.bz2
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
+                      contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := Freicoin-Qt-$(ARCH)
-$(TARGET)_NAME     := Freicoin-Qt
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      dbus-$(ARCH) \
-                      expat-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      qt-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
+PLATFORM := win32
 
-ARCH               := i686-apple-darwin10
-TARGET             := Freicoin-Qt-$(ARCH)
-$(TARGET)_NAME     := Freicoin-Qt
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := Freicoin-Qt-$(ARCH)
-$(TARGET)_NAME     := Freicoin-Qt
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := Freicoin-Qt-$(ARCH)
-$(TARGET)_NAME     := Freicoin-Qt
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      qt-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := Freicoin-Qt-$(ARCH)
-$(TARGET)_NAME     := Freicoin-Qt
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      qt-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-boost: boost-i686-pc-linux-gnu \
-       boost-x86_64-pc-linux-gnu \
-       boost-i686-apple-darwin10 \
-       boost-x86_64-apple-darwin10 \
-       boost-i686-static-mingw32 \
-       boost-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := boost-$(ARCH)
-$(TARGET)_NAME     := boost
-$(TARGET)_VERSION  := 1_50_0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
+TARGET             := boost-$(PLATFORM)
+$(TARGET)_VERSION  := 1.50.0-gitian2
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
 $(TARGET)_PKGS     := boost_1_50_0.tar.bz2
-$(TARGET)_DEPS     := toolchain-$(ARCH)
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := boost-$(ARCH)
-$(TARGET)_NAME     := boost
-$(TARGET)_VERSION  := 1_50_0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := boost_1_50_0.tar.bz2
-$(TARGET)_DEPS     := toolchain-$(ARCH)
+TARGET             := deps-$(PLATFORM)
+$(TARGET)_VERSION  := 0.0.5
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
+$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz \
+                      gmp-5.1.2.tar.xz \
+                      libpng-1.5.9.tar.gz \
+                      miniupnpc-1.6.tar.gz \
+                      mpfr-3.1.2.tar.xz \
+                      openssl-1.0.1c.tar.gz \
+                      qrencode-3.2.0.tar.bz2 \
+                      zlib-1.2.6.tar.gz
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-ARCH               := i686-apple-darwin10
-TARGET             := boost-$(ARCH)
-$(TARGET)_NAME     := boost
-$(TARGET)_VERSION  := 1_50_0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := boost_1_50_0.tar.bz2
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := boost-$(ARCH)
-$(TARGET)_NAME     := boost
-$(TARGET)_VERSION  := 1_50_0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := boost_1_50_0.tar.bz2
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := boost-$(ARCH)
-$(TARGET)_NAME     := boost
-$(TARGET)_VERSION  := 1_50_0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := boost_1_50_0.tar.bz2
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := boost-$(ARCH)
-$(TARGET)_NAME     := boost
-$(TARGET)_VERSION  := 1_50_0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := boost_1_50_0.tar.bz2
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-db: db-i686-pc-linux-gnu \
-    db-x86_64-pc-linux-gnu \
-    db-i686-apple-darwin10 \
-    db-x86_64-apple-darwin10 \
-    db-i686-static-mingw32 \
-    db-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := db-$(ARCH)
-$(TARGET)_NAME     := db
-$(TARGET)_VERSION  := 4.8.30.NC
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := db-$(ARCH)
-$(TARGET)_NAME     := db
-$(TARGET)_VERSION  := 4.8.30.NC
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := db-$(ARCH)
-$(TARGET)_NAME     := db
-$(TARGET)_VERSION  := 4.8.30.NC
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := db-$(ARCH)
-$(TARGET)_NAME     := db
-$(TARGET)_VERSION  := 4.8.30.NC
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := db-$(ARCH)
-$(TARGET)_NAME     := db
-$(TARGET)_VERSION  := 4.8.30.NC
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := db-$(ARCH)
-$(TARGET)_NAME     := db
-$(TARGET)_VERSION  := 4.8.30.NC
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := db-4.8.30.NC.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-dbus: dbus-i686-pc-linux-gnu \
-      dbus-x86_64-pc-linux-gnu \
-      dbus-i686-apple-darwin10 \
-      dbus-x86_64-apple-darwin10 \
-      dbus-i686-static-mingw32 \
-      dbus-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := dbus-$(ARCH)
-$(TARGET)_NAME     := dbus
-$(TARGET)_VERSION  := 1.7.4
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := dbus-1.7.4.tar.gz
-$(TARGET)_DEPS     := expat-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := dbus-$(ARCH)
-$(TARGET)_NAME     := dbus
-$(TARGET)_VERSION  := 1.7.4
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := dbus-1.7.4.tar.gz
-$(TARGET)_DEPS     := expat-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := dbus-$(ARCH)
-$(TARGET)_NAME     := dbus
-$(TARGET)_VERSION  := 1.7.4
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := dbus-1.7.4.tar.gz
-$(TARGET)_DEPS     := expat-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := dbus-$(ARCH)
-$(TARGET)_NAME     := dbus
-$(TARGET)_VERSION  := 1.7.4
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := dbus-1.7.4.tar.gz
-$(TARGET)_DEPS     := expat-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := dbus-$(ARCH)
-$(TARGET)_NAME     := dbus
-$(TARGET)_VERSION  := 1.7.4
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := dbus-1.7.4.tar.gz
-$(TARGET)_DEPS     := expat-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := dbus-$(ARCH)
-$(TARGET)_NAME     := dbus
-$(TARGET)_VERSION  := 1.7.4
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := dbus-1.7.4.tar.gz
-$(TARGET)_DEPS     := expat-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-expat: expat-i686-pc-linux-gnu \
-       expat-x86_64-pc-linux-gnu \
-       expat-i686-apple-darwin10 \
-       expat-x86_64-apple-darwin10 \
-       expat-i686-static-mingw32 \
-       expat-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := expat-$(ARCH)
-$(TARGET)_NAME     := expat
-$(TARGET)_VERSION  := 2.1.0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := expat-2.1.0.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := expat-$(ARCH)
-$(TARGET)_NAME     := expat
-$(TARGET)_VERSION  := 2.1.0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := expat-2.1.0.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := expat-$(ARCH)
-$(TARGET)_NAME     := expat
-$(TARGET)_VERSION  := 2.1.0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := expat-2.1.0.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := expat-$(ARCH)
-$(TARGET)_NAME     := expat
-$(TARGET)_VERSION  := 2.1.0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := expat-2.1.0.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := expat-$(ARCH)
-$(TARGET)_NAME     := expat
-$(TARGET)_VERSION  := 2.1.0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := expat-2.1.0.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := expat-$(ARCH)
-$(TARGET)_NAME     := expat
-$(TARGET)_VERSION  := 2.1.0
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := expat-2.1.0.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-freicoind: freicoind-i686-pc-linux-gnu \
-           freicoind-x86_64-pc-linux-gnu \
-           freicoind-i686-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := freicoind-$(ARCH)
-$(TARGET)_NAME     := freicoind
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := freicoind-$(ARCH)
-$(TARGET)_NAME     := freicoind
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := freicoind-$(ARCH)
-$(TARGET)_NAME     := freicoind
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := freicoind-$(ARCH)
-$(TARGET)_NAME     := freicoind
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := freicoind-$(ARCH)
-$(TARGET)_NAME     := freicoind
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := freicoind-$(ARCH)
-$(TARGET)_NAME     := freicoind
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := boost-$(ARCH) \
-                      db-$(ARCH) \
-                      gmp-$(ARCH) \
-                      libpng-$(ARCH) \
-                      miniupnpc-$(ARCH) \
-                      mpfr-$(ARCH) \
-                      openssl-$(ARCH) \
-                      qrencode-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-gmp: gmp-i686-pc-linux-gnu \
-     gmp-x86_64-pc-linux-gnu \
-     gmp-i686-apple-darwin10 \
-     gmp-x86_64-apple-darwin10 \
-     gmp-i686-static-mingw32 \
-     gmp-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := gmp-$(ARCH)
-$(TARGET)_NAME     := gmp
-$(TARGET)_VERSION  := 5.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := gmp-5.1.2.tar.xz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := gmp-$(ARCH)
-$(TARGET)_NAME     := gmp
-$(TARGET)_VERSION  := 5.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := gmp-5.1.2.tar.xz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := gmp-$(ARCH)
-$(TARGET)_NAME     := gmp
-$(TARGET)_VERSION  := 5.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := gmp-5.1.2.tar.xz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := gmp-$(ARCH)
-$(TARGET)_NAME     := gmp
-$(TARGET)_VERSION  := 5.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := gmp-5.1.2.tar.xz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := gmp-$(ARCH)
-$(TARGET)_NAME     := gmp
-$(TARGET)_VERSION  := 5.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := gmp-5.1.2.tar.xz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := gmp-$(ARCH)
-$(TARGET)_NAME     := gmp
-$(TARGET)_VERSION  := 5.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := gmp-5.1.2.tar.xz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-libpng: libpng-i686-pc-linux-gnu \
-        libpng-x86_64-pc-linux-gnu \
-        libpng-i686-apple-darwin10 \
-        libpng-x86_64-apple-darwin10 \
-        libpng-i686-static-mingw32 \
-        libpng-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := libpng-$(ARCH)
-$(TARGET)_NAME     := libpng
-$(TARGET)_VERSION  := 1.6.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := libpng-1.6.3.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := libpng-$(ARCH)
-$(TARGET)_NAME     := libpng
-$(TARGET)_VERSION  := 1.6.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := libpng-1.6.3.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := libpng-$(ARCH)
-$(TARGET)_NAME     := libpng
-$(TARGET)_VERSION  := 1.6.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := libpng-1.6.3.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := libpng-$(ARCH)
-$(TARGET)_NAME     := libpng
-$(TARGET)_VERSION  := 1.6.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := libpng-1.6.3.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := libpng-$(ARCH)
-$(TARGET)_NAME     := libpng
-$(TARGET)_VERSION  := 1.6.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := libpng-1.6.3.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := libpng-$(ARCH)
-$(TARGET)_NAME     := libpng
-$(TARGET)_VERSION  := 1.6.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := libpng-1.6.3.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-miniupnpc: miniupnpc-i686-pc-linux-gnu \
-           miniupnpc-x86_64-pc-linux-gnu \
-           miniupnpc-i686-apple-darwin10 \
-           miniupnpc-x86_64-apple-darwin10 \
-           miniupnpc-i686-static-mingw32 \
-           miniupnpc-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := miniupnpc-$(ARCH)
-$(TARGET)_NAME     := miniupnpc
-$(TARGET)_VERSION  := 1.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := miniupnpc-1.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := miniupnpc-$(ARCH)
-$(TARGET)_NAME     := miniupnpc
-$(TARGET)_VERSION  := 1.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := miniupnpc-1.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := miniupnpc-$(ARCH)
-$(TARGET)_NAME     := miniupnpc
-$(TARGET)_VERSION  := 1.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := miniupnpc-1.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := miniupnpc-$(ARCH)
-$(TARGET)_NAME     := miniupnpc
-$(TARGET)_VERSION  := 1.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := miniupnpc-1.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := miniupnpc-$(ARCH)
-$(TARGET)_NAME     := miniupnpc
-$(TARGET)_VERSION  := 1.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := miniupnpc-1.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := miniupnpc-$(ARCH)
-$(TARGET)_NAME     := miniupnpc
-$(TARGET)_VERSION  := 1.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := miniupnpc-1.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-mpfr: mpfr-i686-pc-linux-gnu \
-      mpfr-x86_64-pc-linux-gnu \
-      mpfr-i686-apple-darwin10 \
-      mpfr-x86_64-apple-darwin10 \
-      mpfr-i686-static-mingw32 \
-      mpfr-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := mpfr-$(ARCH)
-$(TARGET)_NAME     := mpfr
-$(TARGET)_VERSION  := 3.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := mpfr-3.1.2.tar.xz
-$(TARGET)_DEPS     := gmp-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := mpfr-$(ARCH)
-$(TARGET)_NAME     := mpfr
-$(TARGET)_VERSION  := 3.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := mpfr-3.1.2.tar.xz
-$(TARGET)_DEPS     := gmp-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := mpfr-$(ARCH)
-$(TARGET)_NAME     := mpfr
-$(TARGET)_VERSION  := 3.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := mpfr-3.1.2.tar.xz
-$(TARGET)_DEPS     := gmp-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := mpfr-$(ARCH)
-$(TARGET)_NAME     := mpfr
-$(TARGET)_VERSION  := 3.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := mpfr-3.1.2.tar.xz
-$(TARGET)_DEPS     := gmp-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := mpfr-$(ARCH)
-$(TARGET)_NAME     := mpfr
-$(TARGET)_VERSION  := 3.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := mpfr-3.1.2.tar.xz
-$(TARGET)_DEPS     := gmp-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := mpfr-$(ARCH)
-$(TARGET)_NAME     := mpfr
-$(TARGET)_VERSION  := 3.1.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := mpfr-3.1.2.tar.xz
-$(TARGET)_DEPS     := gmp-$(ARCH) toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-openssl: openssl-i686-pc-linux-gnu \
-         openssl-x86_64-pc-linux-gnu \
-         openssl-i686-apple-darwin10 \
-         openssl-x86_64-apple-darwin10 \
-         openssl-i686-static-mingw32 \
-         openssl-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := openssl-$(ARCH)
-$(TARGET)_NAME     := openssl
-$(TARGET)_VERSION  := 1.0.1c
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := openssl-1.0.1c.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := openssl-$(ARCH)
-$(TARGET)_NAME     := openssl
-$(TARGET)_VERSION  := 1.0.1c
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := openssl-1.0.1c.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := openssl-$(ARCH)
-$(TARGET)_NAME     := openssl
-$(TARGET)_VERSION  := 1.0.1c
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := openssl-1.0.1c.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := openssl-$(ARCH)
-$(TARGET)_NAME     := openssl
-$(TARGET)_VERSION  := 1.0.1c
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := openssl-1.0.1c.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := openssl-$(ARCH)
-$(TARGET)_NAME     := openssl
-$(TARGET)_VERSION  := 1.0.1c
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := openssl-1.0.1c.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := openssl-$(ARCH)
-$(TARGET)_NAME     := openssl
-$(TARGET)_VERSION  := 1.0.1c
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := openssl-1.0.1c.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-qrencode: qrencode-i686-pc-linux-gnu \
-          qrencode-x86_64-pc-linux-gnu \
-          qrencode-i686-apple-darwin10 \
-          qrencode-x86_64-apple-darwin10 \
-          qrencode-i686-static-mingw32 \
-          qrencode-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := qrencode-$(ARCH)
-$(TARGET)_NAME     := qrencode
-$(TARGET)_VERSION  := 3.4.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qrencode-3.4.2.tar.bz2
-$(TARGET)_DEPS     := libpng-$(ARCH) toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := qrencode-$(ARCH)
-$(TARGET)_NAME     := qrencode
-$(TARGET)_VERSION  := 3.4.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qrencode-3.4.2.tar.bz2
-$(TARGET)_DEPS     := libpng-$(ARCH) toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := qrencode-$(ARCH)
-$(TARGET)_NAME     := qrencode
-$(TARGET)_VERSION  := 3.4.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qrencode-3.4.2.tar.bz2
-$(TARGET)_DEPS     := libpng-$(ARCH) toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := qrencode-$(ARCH)
-$(TARGET)_NAME     := qrencode
-$(TARGET)_VERSION  := 3.4.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qrencode-3.4.2.tar.bz2
-$(TARGET)_DEPS     := libpng-$(ARCH) toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := qrencode-$(ARCH)
-$(TARGET)_NAME     := qrencode
-$(TARGET)_VERSION  := 3.4.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qrencode-3.4.2.tar.bz2
-$(TARGET)_DEPS     := libpng-$(ARCH) toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := qrencode-$(ARCH)
-$(TARGET)_NAME     := qrencode
-$(TARGET)_VERSION  := 3.4.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qrencode-3.4.2.tar.bz2
-$(TARGET)_DEPS     := libpng-$(ARCH) toolchain-$(ARCH) zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-qt: qt-i686-pc-linux-gnu \
-    qt-x86_64-pc-linux-gnu \
-    qt-i686-static-mingw32 \
-    qt-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := qt-$(ARCH)
-$(TARGET)_NAME     := qt
-$(TARGET)_VERSION  := 4.8.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
+TARGET             := qt-$(PLATFORM)
+$(TARGET)_VERSION  := 4.8.3-gitian-r1
+$(TARGET)_NAME     := $(TARGET)-$($(TARGET)_VERSION)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$(TARGET).yml
 $(TARGET)_PKGS     := qt-everywhere-opensource-src-4.8.3.tar.gz
-$(TARGET)_DEPS     := dbus-$(ARCH) \
-                      expat-$(ARCH) \
-                      libpng-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := qt-$(ARCH)
-$(TARGET)_NAME     := qt
-$(TARGET)_VERSION  := 4.8.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qt-everywhere-opensource-src-4.8.3.tar.gz
-$(TARGET)_DEPS     := dbus-$(ARCH) \
-                      expat-$(ARCH) \
-                      libpng-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := qt-$(ARCH)
-$(TARGET)_NAME     := qt
-$(TARGET)_VERSION  := 4.8.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qt-everywhere-opensource-src-4.8.3.tar.gz
-$(TARGET)_DEPS     := libpng-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := qt-$(ARCH)
-$(TARGET)_NAME     := qt
-$(TARGET)_VERSION  := 4.8.3
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := qt-everywhere-opensource-src-4.8.3.tar.gz
-$(TARGET)_DEPS     := libpng-$(ARCH) \
-                      toolchain-$(ARCH) \
-                      zlib-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-release: release-linux-tar-xz \
-         release-win32-setup \
-         release-win32-zip
-
-ARCH               := linux-tar-xz
-TARGET             := release-$(ARCH)
-$(TARGET)_NAME     := release
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := freicoin-$($(TARGET)_VERSION)-linux.tar.xz
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := freicoind-i686-pc-linux-gnu \
-                      freicoind-x86_64-pc-linux-gnu \
-                      Freicoin-Qt-i686-pc-linux-gnu \
-                      Freicoin-Qt-x86_64-pc-linux-gnu
+TARGET             := $(PLATFORM)
+$(TARGET)_NAME     := $(TARGET)-$(SERIES)
+$(TARGET)_OUTPUT   := $($(TARGET)_NAME).zip
+$(TARGET)_SCRIPT   := contrib/gitian-descriptors/gitian-$(TARGET).yml
+$(TARGET)_PKGS     := boost-win32-1.50.0-gitian2.zip \
+                      deps-win32-0.0.5.zip \
+                      qt-win32-4.8.3-gitian-r1.zip
+$(TARGET)_DEPS     :=
 $(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := win32-setup
-TARGET             := release-$(ARCH)
-$(TARGET)_NAME     := release
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := freicoin-$($(TARGET)_VERSION)-win32-setup.exe
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := freicoind-i686-static-mingw32 \
-                      Freicoin-Qt-i686-static-mingw32
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz \
-                      share/setup.nsi
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := win32-zip
-TARGET             := release-$(ARCH)
-$(TARGET)_NAME     := release
-$(TARGET)_VERSION  := $(VERSION)
-$(TARGET)_OUTPUT   := freicoin-$($(TARGET)_VERSION)-win32.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     :=
-$(TARGET)_DEPS     := freicoind-i686-static-mingw32 \
-                      Freicoin-Qt-i686-static-mingw32
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT) \
-                      contrib/vagrant/cache/src-local.tar.xz
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-toolchain: toolchain-i686-pc-linux-gnu \
-           toolchain-x86_64-pc-linux-gnu \
-           toolchain-i686-apple-darwin10 \
-           toolchain-x86_64-apple-darwin10 \
-           toolchain-i686-static-mingw32 \
-           toolchain-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := toolchain-$(ARCH)
-$(TARGET)_NAME     := toolchain
-$(TARGET)_VERSION  := 1.15.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := autoconf-2.65.tar.xz \
-                      automake-1.11.1.tar.bz2 \
-                      binutils-2.21.1a.tar.bz2 \
-                      cloog-ppl-0.15.11.tar.gz \
-                      crosstool-ng-1.15.2.tar.bz2 \
-                      gcc-4.5.2.tar.bz2 \
-                      glibc-2.11.tar.bz2 \
-                      gmp-5.0.2.tar.bz2 \
-                      libelf-0.8.13.tar.gz \
-                      libtool-2.2.6b.tar.lzma \
-                      linux-2.6.27.62.tar.bz2 \
-                      m4-1.4.13.tar.xz \
-                      make-3.81.tar.bz2 \
-                      mpc-0.9.tar.gz \
-                      mpfr-3.1.0.tar.xz \
-                      ppl-0.11.2.tar.lzma
-$(TARGET)_DEPS     :=
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := toolchain-$(ARCH)
-$(TARGET)_NAME     := toolchain
-$(TARGET)_VERSION  := 1.15.2
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := autoconf-2.65.tar.xz \
-                      automake-1.11.1.tar.bz2 \
-                      binutils-2.21.1a.tar.bz2 \
-                      cloog-ppl-0.15.11.tar.gz \
-                      crosstool-ng-1.15.2.tar.bz2 \
-                      gcc-4.5.2.tar.bz2 \
-                      glibc-2.11.tar.bz2 \
-                      gmp-5.0.2.tar.bz2 \
-                      libelf-0.8.13.tar.gz \
-                      libtool-2.2.6b.tar.lzma \
-                      linux-2.6.27.62.tar.bz2 \
-                      m4-1.4.13.tar.xz \
-                      make-3.81.tar.bz2 \
-                      mpc-0.9.tar.gz \
-                      mpfr-3.1.0.tar.xz \
-                      ppl-0.11.2.tar.lzma
-$(TARGET)_DEPS     :=
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := toolchain-$(ARCH)
-$(TARGET)_NAME     := toolchain
-$(TARGET)_VERSION  := 20120119
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := Tatsh-xchain-ab41b58.tar.gz \
-                      cctools-806.tar.gz \
-                      gcc-5666.3.tar.gz \
-                      llvmgcc42-2335.15.tar.gz \
-                      qt-mac-opensource-4.8.2.dmg \
-                      xcode322_2148_developerdvd.dmg
-$(TARGET)_DEPS     :=
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := toolchain-$(ARCH)
-$(TARGET)_NAME     := toolchain
-$(TARGET)_VERSION  := 20120119
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := Tatsh-xchain-ab41b58.tar.gz \
-                      cctools-806.tar.gz \
-                      gcc-5666.3.tar.gz \
-                      llvmgcc42-2335.15.tar.gz \
-                      qt-mac-opensource-4.8.2.dmg \
-                      xcode322_2148_developerdvd.dmg
-$(TARGET)_DEPS     :=
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := toolchain-$(ARCH)
-$(TARGET)_NAME     := toolchain
-$(TARGET)_VERSION  := 1213449
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := binutils-2.22.tar.bz2 \
-                      dbus-1.5.12.tar.gz \
-                      expat-2.1.0.tar.gz \
-                      gcc-4.7.0.tar.bz2 \
-                      gmp-5.0.4.tar.bz2 \
-                      mingw-w64-v2.0.3.tar.gz \
-                      mingwrt-3.20-mingw32-dev.tar.gz \
-                      mpc-0.9.tar.gz \
-                      mpfr-3.1.0.tar.bz2 \
-                      tonytheodore-mxe-1213449.tar.gz \
-                      w32api-3.17-2-mingw32-dev.tar.lzma
-$(TARGET)_DEPS     :=
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := toolchain-$(ARCH)
-$(TARGET)_NAME     := toolchain
-$(TARGET)_VERSION  := 1213449
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := binutils-2.22.tar.bz2 \
-                      dbus-1.5.12.tar.gz \
-                      expat-2.1.0.tar.gz \
-                      gcc-4.7.0.tar.bz2 \
-                      gmp-5.0.4.tar.bz2 \
-                      mingw-w64-v2.0.3.tar.gz \
-                      mingwrt-3.20-mingw32-dev.tar.gz \
-                      mpc-0.9.tar.gz \
-                      mpfr-3.1.0.tar.bz2 \
-                      tonytheodore-mxe-1213449.tar.gz \
-                      w32api-3.17-2-mingw32-dev.tar.lzma
-$(TARGET)_DEPS     :=
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-zlib: zlib-i686-pc-linux-gnu \
-      zlib-x86_64-pc-linux-gnu \
-      zlib-i686-apple-darwin10 \
-      zlib-x86_64-apple-darwin10 \
-      zlib-i686-static-mingw32 \
-      zlib-x86_64-static-mingw32
-
-ARCH               := i686-pc-linux-gnu
-TARGET             := zlib-$(ARCH)
-$(TARGET)_NAME     := zlib
-$(TARGET)_VERSION  := 1.2.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := zlib-1.2.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-pc-linux-gnu
-TARGET             := zlib-$(ARCH)
-$(TARGET)_NAME     := zlib
-$(TARGET)_VERSION  := 1.2.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := zlib-1.2.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-apple-darwin10
-TARGET             := zlib-$(ARCH)
-$(TARGET)_NAME     := zlib
-$(TARGET)_VERSION  := 1.2.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := zlib-1.2.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-apple-darwin10
-TARGET             := zlib-$(ARCH)
-$(TARGET)_NAME     := zlib
-$(TARGET)_VERSION  := 1.2.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := zlib-1.2.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := i686-static-mingw32
-TARGET             := zlib-$(ARCH)
-$(TARGET)_NAME     := zlib
-$(TARGET)_VERSION  := 1.2.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := zlib-1.2.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
-$(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
-$(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
-TARGETS            += $(TARGET)
-
-ARCH               := x86_64-static-mingw32
-TARGET             := zlib-$(ARCH)
-$(TARGET)_NAME     := zlib
-$(TARGET)_VERSION  := 1.2.8
-$(TARGET)_OUTPUT   := $(TARGET)-$($(TARGET)_VERSION)-gitian.zip
-$(TARGET)_SCRIPT   := contrib/gitian-descriptors/$($(TARGET)_NAME)/$(ARCH).yml
-$(TARGET)_PKGS     := zlib-1.2.8.tar.gz
-$(TARGET)_DEPS     := toolchain-$(ARCH)
-$(TARGET)_FILES    := $($(TARGET)_SCRIPT)
-$(TARGET)_FILES    += $(foreach PACKAGE, \
-                                $($(TARGET)_PKGS), \
-                                contrib/vagrant/cache/$(PACKAGE))
+                      contrib/vagrant/$(HOST_CACHE_DIR)/src-local.tar.xz
 $(TARGET)_FILES    := $(sort $($(TARGET)_FILES))
 $(TARGET)_MANIFEST := $(call BUILD_MANIFEST,$($(TARGET)_FILES))
 TARGETS            += $(TARGET)
 
 DEPLOY_SOURCE_BUNDLE = \
 	vagrant ssh --command "rm -rf ~/'$(1)' || true"; \
-	vagrant ssh --command "mkdir -p ~/'$(1)'"; \
+	vagrant ssh --command "mkdir -p ~/'$(1)'" || exit 1; \
 	vagrant ssh --command "cd ~/'$(1)' && \
-	    tar -xf $(GUEST_CACHE_DIR)/src-local.tar.xz"
+	    tar -xf $(GUEST_CACHE_DIR)/src-local.tar.xz" || exit 1; \
+	vagrant ssh --command "cd ~/'$(1)' && \
+	    git init" || exit 1; \
+	vagrant ssh --command "cd ~/'$(1)' && \
+	    git config user.name 'Gitian Builder'" || exit 1; \
+	vagrant ssh --command "cd ~/'$(1)' && \
+	    git config user.email 'vagrant@vagrant'" || exit 1; \
+	vagrant ssh --command "cd ~/'$(1)' && \
+	    find . -not \\( -path ./.git -prune \\) -type f -print0 | xargs -0 git add -f" || exit 1; \
+	vagrant ssh --command "cd ~/'$(1)' && \
+	    env GIT_COMMITTER_NAME='`cat '$(HOST_CACHE_DIR)'/src-local.committer-name`' \
+	        GIT_COMMITTER_EMAIL='`cat '$(HOST_CACHE_DIR)'/src-local.committer-email`' \
+	        GIT_COMMITTER_DATE='`cat '$(HOST_CACHE_DIR)'/src-local.committer-date`' \
+	    git commit --author='`cat '$(HOST_CACHE_DIR)'/src-local.author`' \
+	               --date='`cat '$(HOST_CACHE_DIR)'/src-local.author-date`' \
+	               -m tip" || exit 1
 
 define TARGET_RULE
 .PHONY: $(1)
 $(1): $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT)
+$(HOST_CACHE_DIR)/$($(1)_OUTPUT): $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT)
+	cp '$(HOST_OUTPUT_DIR)/$($(1)_OUTPUT)' '$(HOST_CACHE_DIR)/$($(1)_OUTPUT)'
 $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT): \
-	.stamp-gitian-guest-vm.manifest \
+	.stamp-lxc-base.manifest \
 	$(HOST_CACHE_DIR)/src-local.manifest \
-	$(foreach TARGET,$($(1)_DEPS),$(HOST_OUTPUT_DIR)/$($(TARGET)_OUTPUT)) \
+	$(foreach TARGET,$($(1)_DEPS),$(TARGET)) \
 	$(foreach PACKAGE,$($(1)_PKGS),$(HOST_CACHE_DIR)/$(PACKAGE))
 	
 	mkdir -p $(HOST_OUTPUT_DIR)
 	
 	$(call VAGRANT_UP)
 	
-	$(call DEPLOY_SOURCE_BUNDLE,freicoin)
+	$(call DEPLOY_SOURCE_BUNDLE,$(PROJECT))
 	
 	echo `$($(1)_MANIFEST)` > .$(1).manifest
 	
 	if [ ! -f $(HOST_CACHE_DIR)/$(1)/`cat .$(1).manifest`/$($(1)_OUTPUT) ]; then \
+	    vagrant ssh --command "rm -f ~/gitian-builder/cache"; \
+	    vagrant ssh --command "mkdir -p '$(GUEST_CACHE_DIR)/gitian/cache'" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
-	        USE_LXC=1 ./bin/gbuild ../freicoin/$($(1)_SCRIPT)" || exit 1; \
+	        ln -s '$(GUEST_CACHE_DIR)/gitian/cache' cache" || exit 1; \
+	    vagrant ssh --command "cd ~/gitian-builder && \
+	        env LXC_BRIDGE=lxcbr0 LXC_GUEST_IP=10.0.3.2 GITIAN_HOST_IP=10.0.3.1 USE_LXC=1 \
+	            bin/gbuild ../$(PROJECT)/$($(1)_SCRIPT) --memory 2000 --url $(PROJECT)=~/$(PROJECT) --commit $(PROJECT)=master" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder/build/out && \
 	        if [ ! -f $($(1)_OUTPUT) ]; then \
 	            zip -r $($(1)_OUTPUT) * || exit 1; \
@@ -2352,30 +571,24 @@ $(HOST_OUTPUT_DIR)/$($(1)_OUTPUT): \
 	        mv build/out/$($(1)_OUTPUT) \
 	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`/" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
-	        mv result/$($(1)_NAME)-res.yml \
-	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(1)-$($(1)_VERSION)-gitian-res.yml'" || exit 1; \
+	        mv result/*-res.yml \
+	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-res.yml'" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
 	        mv var/build.log \
-	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(1)-$($(1)_VERSION)-gitian-build.log'" || exit 1; \
+	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-build.log'" || exit 1; \
 	    vagrant ssh --command "cd ~/gitian-builder && \
 	        mv var/install.log \
-	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(1)-$($(1)_VERSION)-gitian-install.log'" || exit 1; \
+	           '$(GUEST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-install.log'" || exit 1; \
 	fi
 	
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_OUTPUT)' \
-	   '$(HOST_CACHE_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_OUTPUT)' \
-	   '$(HOST_OUTPUT_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(1)-$($(1)_VERSION)-gitian-res.yml' \
-	   '$(HOST_OUTPUT_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(1)-$($(1)_VERSION)-gitian-build.log' \
-	   '$(HOST_OUTPUT_DIR)/'
-	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$(1)-$($(1)_VERSION)-gitian-install.log' \
-	   '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_OUTPUT)' '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-res.yml' '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-build.log' '$(HOST_OUTPUT_DIR)/'
+	cp '$(HOST_CACHE_DIR)/$(1)/'`cat .$(1).manifest`'/$($(1)_NAME)-gitian-install.log' '$(HOST_OUTPUT_DIR)/'
 	
 	rm -f .$(1).manifest
 	
-	vagrant ssh --command "rm -rf ~/freicoin"
+	vagrant ssh --command "rm -rf ~/$(PROJECT)"
 	
 ifdef VAGRANT_CYCLE
 	-$(call VAGRANT_HALT)
