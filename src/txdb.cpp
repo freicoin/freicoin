@@ -146,7 +146,7 @@ bool CCoinsViewDB::GetStats(CCoinsStats &stats) {
                         stats.nTransactionOutputs++;
                         ss << VARINT(i+1);
                         ss << out;
-                        nTotalAmount += GetPresentValue(coins, out, coins.nHeight);
+                        nTotalAmount += i64_to_mpq(out.nValue);
                     }
                 }
                 stats.nSerializedSize += 32 + slValue.size();
