@@ -1848,7 +1848,7 @@ static int64_t GetTimeAdjustedValue_apu_inner(int64_t value, unsigned relative_d
      * Our lookup table does not go beyond 26 entries because a
      * relative_depth of 1<<26 (the would-be 27th entry) would cause
      * even MAX_MONEY (2^53 - 1) to decay to zero. */
-    static std::array<uint32_t, 2*26> k32 = {
+    static const uint32_t k32[2*26] = {
         0xfffff000UL, 0x00000000UL, /* 2^0 = 1 */
         0xffffe000UL, 0x01000000UL, /* 2^1 = 2 */
         0xffffc000UL, 0x05ffffc0UL, /* 2^2 = 4 */
@@ -1889,14 +1889,15 @@ static int64_t GetTimeAdjustedValue_apu_inner(int64_t value, unsigned relative_d
      * which are used both for the exponentiation to calcuate the
      * demurrage rate, and the final multiply at the end. */
     uint64_t sum, overflow;
-    auto shift32 = [&]() {
-        sum = (overflow << 32) + (sum >> 32);
-        overflow = 0;
-    };
-    auto term = [&](uint64_t val) {
-        overflow += (sum + val) < sum;
-        sum += val;
-    };
+    #define shift32() do { \
+        sum = (overflow << 32) + (sum >> 32); \
+        overflow = 0; \
+    } while (0)
+    #define term(_val) do { \
+        const uint64_t val = (_val); \
+        overflow += (sum + val) < sum; \
+        sum += val; \
+    } while (0)
 
     /* We calculate the first 64 fractional bits of the demurrage rate
      * for relative_depth by raising the per-block rate of (1 - 2^-20)
@@ -1910,7 +1911,7 @@ static int64_t GetTimeAdjustedValue_apu_inner(int64_t value, unsigned relative_d
      * most significant word first. Its initial value is
      * multiplicative identity, 1.0, for which the fractional bits are
      * zero. */
-    std::array<uint32_t, 2> w = { };
+    uint32_t w[2] = { 0 };
 
     /* The first multiplication has the accumulator set to 1.0, which
      * is the only time it has a value >= 1. This means that there are
