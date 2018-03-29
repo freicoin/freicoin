@@ -764,10 +764,10 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
         // right away as policy.
         const bool fTruncateInputs = true;
 
-        // APU demurrage calculation is a yet-to-be-scheduled
-        // soft-fork change to improve the performance of demurrage
-        // calculations.
-        const bool fUseAPU = false;
+        // APU demurrage calculation is a scheduled soft-fork change
+        // to improve the performance of demurrage calculations, but
+        // it is enabled immediately as policy.
+        const bool fUseAPU = true;
 
         // Note: if you modify this code to accept non-standard transactions, then
         // you should add code here to check that the transaction does a
@@ -5124,7 +5124,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
     // If set, fractional fees are not aggregated into the coinbase.
     const bool fTruncateInputs = true;
     // If set, APU arithmetic is used for demurrage calculations.
-    const bool fUseAPU = false;
+    const bool fUseAPU = true;
 
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = GetArg("-blockmaxsize", DEFAULT_BLOCK_MAX_SIZE);
