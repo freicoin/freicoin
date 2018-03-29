@@ -43,7 +43,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 TransactionRecord sub(hash, nTime);
                 CTxDestination address;
                 sub.idx = parts.size(); // sequence number
-                sub.credit = GetPresentValue(wtx, txout, wtx.nRefHeight);
+                sub.credit = i64_to_mpq(txout.nValue);
                 if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
                 {
                     // Received by Bitcoin Address
@@ -122,7 +122,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                     sub.address = mapValue["to"];
                 }
 
-                mpq nValue = GetPresentValue(wtx, txout, wtx.nRefHeight);
+                mpq nValue = i64_to_mpq(txout.nValue);
                 /* Add fee to first output */
                 if (nTxFee > 0)
                 {

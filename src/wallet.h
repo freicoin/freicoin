@@ -722,7 +722,7 @@ public:
 
     std::string ToString() const
     {
-        return strprintf("COutput(%s, %d, %d) [%s]", tx->GetHash().ToString().c_str(), i, nDepth, FormatMoney(GetPresentValue(*tx, tx->vout[i], 0)).c_str());
+        return strprintf("COutput(%s, %d, %d) [%s]", tx->GetHash().ToString().c_str(), i, nDepth, FormatMoney(i64_to_mpq(tx->vout[i].nValue)).c_str());
     }
 
     void print() const
