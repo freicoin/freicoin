@@ -1,3 +1,8 @@
+  [Mark Friedenbach]
+    * Change behavior of the '{get,list}receivedby{address,account}'
+      RPCs to show output value / sum totals calculated at refheight
+      rather than at the present block height.
+
 freicoin (0.8.6~precise1) precise; urgency=high
 
   [Mark Friedenbach]

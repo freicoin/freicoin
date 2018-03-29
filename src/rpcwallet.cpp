@@ -384,6 +384,13 @@ Value verifymessage(const Array& params, bool fHelp)
 }
 
 
+mpq GetReceivedValue(const CWalletTx &wtx, const CTxOut &txout)
+{
+    CBlockIndex *pBlockIndex;
+    int nBlockDepth = wtx.GetDepthInMainChain(pBlockIndex);
+    return GetPresentValue(wtx, txout, nBestHeight + 1 - nBlockDepth - wtx.nRefHeight);
+}
+
 Value getreceivedbyaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
@@ -416,7 +423,7 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
         BOOST_FOREACH(const CTxOut& txout, wtx.vout)
             if (txout.scriptPubKey == scriptPubKey)
                 if (wtx.GetDepthInMainChain() >= nMinDepth)
-                    nAmount += GetPresentValue(wtx, txout, nBestHeight);
+                    nAmount += GetReceivedValue(wtx, txout);
     }
 
     return  ValueFromAmount(nAmount);
@@ -464,7 +471,7 @@ Value getreceivedbyaccount(const Array& params, bool fHelp)
             CTxDestination address;
             if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*pwalletMain, address) && setAddress.count(address))
                 if (wtx.GetDepthInMainChain() >= nMinDepth)
-                    nAmount += GetPresentValue(wtx, txout, nBestHeight);
+                    nAmount += GetReceivedValue(wtx, txout);
         }
     }
 
@@ -861,7 +868,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
                 continue;
 
             tallyitem& item = mapTally[address];
-            item.nAmount += GetPresentValue(wtx, txout, nBestHeight);
+            item.nAmount += GetReceivedValue(wtx, txout);
             item.nConf = min(item.nConf, nDepth);
         }
     }
