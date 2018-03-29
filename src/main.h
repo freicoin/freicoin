@@ -61,6 +61,7 @@ static const mpq TITHE_RATIO = mpq("4/5");
 static const mpq TITHE_AMOUNT = MPQ_MAX_MONEY * TITHE_RATIO / EQ_HEIGHT;
 static const mpq INITIAL_SUBSIDY = mpq("15916928404");
 static const int DEMURRAGE_RATE = 1048576;
+static const int APU_ACTIVATION_HEIGHT = 229376;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
@@ -1343,7 +1344,7 @@ class CBlockHeader
 {
 public:
     // header
-    static const int CURRENT_VERSION=3;
+    static const int CURRENT_VERSION=0x30000000;
     int nVersion;
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
@@ -1859,6 +1860,8 @@ public:
      */
     static bool IsSuperMajority(int minVersion, const CBlockIndex* pstart,
                                 unsigned int nRequired, unsigned int nToCheck);
+    static bool IsSuperMajorityBit(int bit, const CBlockIndex* pstart,
+                                   unsigned int nRequired, unsigned int nToCheck);
 
     std::string ToString() const
     {

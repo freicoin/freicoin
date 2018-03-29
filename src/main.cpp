@@ -2421,6 +2421,18 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
         fTruncateInputs = true;
     }
 
+    // Whether APU arithmetic should be used for demurrage
+    // calculations.
+    bool fUseAPU = false;
+
+    if ((pindex->nHeight >= APU_ACTIVATION_HEIGHT) ||
+        (((nVersion >> 28) == 3) &&
+         ((!fTestNet && CBlockIndex::IsSuperMajorityBit(28, pindex->pprev, 750, 1000)) ||
+          (fTestNet && CBlockIndex::IsSuperMajorityBit(28, pindex->pprev, 51, 100)))))
+    {
+        fUseAPU = true;
+    }
+
     CBlockUndo blockundo;
 
     CCheckQueueControl<CScriptCheck> control(fScriptChecks && nScriptCheckThreads ? &scriptcheckqueue : NULL);
@@ -3009,6 +3021,16 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
                 return state.Invalid(error("AcceptBlock() : rejected nVersion=2 block"));
             }
         }
+        // Reject non-signaling blocks when 95% (75% on testnet) of
+        // the network has upgraded (until timeout activation):
+        if ((nHeight < APU_ACTIVATION_HEIGHT) && ((nVersion >> 28) != 3))
+        {
+            if ((!fTestNet && CBlockIndex::IsSuperMajorityBit(28, pindexPrev, 950, 1000)) ||
+                (fTestNet && CBlockIndex::IsSuperMajorityBit(28, pindexPrev, 75, 100)))
+            {
+                return state.Invalid(error("AcceptBlock() : rejected non-APU block before activation timeout"));
+            }
+        }
         // Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
         if (nVersion >= 2)
         {
@@ -3060,6 +3082,18 @@ bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, uns
     for (unsigned int i = 0; i < nToCheck && nFound < nRequired && pstart != NULL; i++)
     {
         if (pstart->nVersion >= minVersion)
+            ++nFound;
+        pstart = pstart->pprev;
+    }
+    return (nFound >= nRequired);
+}
+
+bool CBlockIndex::IsSuperMajorityBit(int bit, const CBlockIndex* pstart, unsigned int nRequired, unsigned int nToCheck)
+{
+    unsigned int nFound = 0;
+    for (unsigned int i = 0; i < nToCheck && nFound < nRequired && pstart != NULL; i++)
+    {
+        if (((pstart->nVersion >> 29) == 1) && (pstart->nVersion & (1 << bit)))
             ++nFound;
         pstart = pstart->pprev;
     }
