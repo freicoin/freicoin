@@ -216,7 +216,7 @@ Value gettxout(const Array& params, bool fHelp)
         ret.push_back(Pair("confirmations", 0));
     else
         ret.push_back(Pair("confirmations", pcoinsTip->GetBestBlock()->nHeight - coins.nHeight + 1));
-    ret.push_back(Pair("value", ValueFromAmount(GetPresentValue(coins, coins.vout[n], nBlockHeight))));
+    ret.push_back(Pair("value", ValueFromAmount(GetPresentValue(coins, coins.vout[n], nBlockHeight, false))));
     Object o;
     ScriptPubKeyToJSON(coins.vout[n].scriptPubKey, o);
     ret.push_back(Pair("scriptPubKey", o));

@@ -2,6 +2,11 @@
     * Change behavior of the '{get,list}receivedby{address,account}'
       RPCs to show output value / sum totals calculated at refheight
       rather than at the present block height.
+    * Add soft-fork to switch demurrage calculation logic to an integer math
+      implementation, which sometimes differs from an exact calculation by as
+      much as 1 kria. This results in an order of magnitude increase in speed
+      of calculation, and allows for the future removal of the GMP and MPFR
+      library dependencies.
 
 freicoin (0.8.6~precise1) precise; urgency=high
 

@@ -560,7 +560,7 @@ mpq CWallet::GetDebit(const CTxIn &txin, int nBlockHeight) const
             const CWalletTx& prev = (*mi).second;
             if (txin.prevout.n < prev.vout.size())
                 if (IsMine(prev.vout[txin.prevout.n]))
-                    return GetPresentValue(prev, prev.vout[txin.prevout.n], nBlockHeight);
+                    return GetPresentValue(prev, prev.vout[txin.prevout.n], nBlockHeight, false);
         }
     }
     return 0;
@@ -644,7 +644,7 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, mpq> >& listReceived,
     mpq nDebit = GetDebit(nBlockHeight);
     if (nDebit > 0) // debit>0 means we signed/sent this transaction
     {
-        mpq nValueOut = GetTimeAdjustedValue(GetValueOut(), nBlockHeight-nRefHeight);
+        mpq nValueOut = GetTimeAdjustedValue_mpfr(GetValueOut(), nBlockHeight-nRefHeight);
         nFee = nDebit - nValueOut;
     }
 
@@ -664,10 +664,10 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, mpq> >& listReceived,
             continue;
 
         if (nDebit > 0)
-            listSent.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight)));
+            listSent.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight, false)));
 
         if (pwallet->IsMine(txout))
-            listReceived.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight)));
+            listReceived.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight, false)));
     }
 
 }
@@ -987,7 +987,7 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, int nRefHeight, bool fOnly
 
             for (unsigned int i = 0; i < pcoin->vout.size(); i++) {
                 if (!(pcoin->IsSpent(i)) && IsMine(pcoin->vout[i]) &&
-                    !IsLockedCoin((*it).first, i) && GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight) > 0)
+                    !IsLockedCoin((*it).first, i) && GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight, false) > 0)
                     vCoins.push_back(COutput(pcoin, i, pcoin->GetDepthInMainChain()));
             }
         }
@@ -1041,7 +1041,7 @@ static void ApproximateBestSubset(vector<pair<mpq, pair<const CWalletTx*,unsigne
 }
 
 bool CWallet::SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, vector<COutput> vCoins,
-                                 set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight, bool fTruncateInputs) const
+                                 set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight, bool fTruncateInputs, bool fUseAPU) const
 {
     const mpq nTargetValuePlusCent = nTargetValue + CENT;
 
@@ -1071,7 +1071,7 @@ bool CWallet::SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nCo
             continue;
 
         int i = output.i;
-        mpq n = GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight);
+        mpq n = GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight, fUseAPU);
         if (fTruncateInputs)
             n = RoundAbsolute(n, ROUND_TOWARD_NEGATIVE);
 
@@ -1149,7 +1149,7 @@ bool CWallet::SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nCo
     return true;
 }
 
-bool CWallet::SelectCoins(const mpq& nTargetValue, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight, bool fTruncateInputs) const
+bool CWallet::SelectCoins(const mpq& nTargetValue, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight, bool fTruncateInputs, bool fUseAPU) const
 {
     if (nRefHeight < 0)
         nRefHeight = nBestHeight;
@@ -1157,9 +1157,9 @@ bool CWallet::SelectCoins(const mpq& nTargetValue, set<pair<const CWalletTx*,uns
     vector<COutput> vCoins;
     AvailableCoins(vCoins, nRefHeight);
 
-    return (SelectCoinsMinConf(nTargetValue, 1, 6, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs) ||
-            SelectCoinsMinConf(nTargetValue, 1, 1, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs) ||
-            SelectCoinsMinConf(nTargetValue, 0, 1, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs));
+    return (SelectCoinsMinConf(nTargetValue, 1, 6, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs, fUseAPU) ||
+            SelectCoinsMinConf(nTargetValue, 1, 1, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs, fUseAPU) ||
+            SelectCoinsMinConf(nTargetValue, 0, 1, vCoins, setCoinsRet, nValueRet, nRefHeight, fTruncateInputs, fUseAPU));
 }
 
 
@@ -1191,6 +1191,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, mpq> >& vecSend, int 
     // truncated inputs so that we never create a transaction that will
     // be invalid after the input-truncation soft-fork activation.
     const bool fTruncateInputs = true;
+    const bool fUseAPU = false;
 
     wtxNew.BindWallet(this);
 
@@ -1224,14 +1225,14 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, mpq> >& vecSend, int 
                 // Choose coins to use
                 set<pair<const CWalletTx*,unsigned int> > setCoins;
                 mpq nValueIn = 0;
-                if (!SelectCoins(nTotalValue, setCoins, nValueIn, wtxNew.nRefHeight, fTruncateInputs))
+                if (!SelectCoins(nTotalValue, setCoins, nValueIn, wtxNew.nRefHeight, fTruncateInputs, fUseAPU))
                 {
                     strFailReason = _("Insufficient funds");
                     return false;
                 }
                 BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
                 {
-                    mpq nCredit = GetPresentValue(*pcoin.first, pcoin.first->vout[pcoin.second], wtxNew.nRefHeight);
+                    mpq nCredit = GetPresentValue(*pcoin.first, pcoin.first->vout[pcoin.second], wtxNew.nRefHeight, fUseAPU);
                     if (fTruncateInputs)
                         nCredit = RoundAbsolute(nCredit, ROUND_TOWARD_NEGATIVE);
                     //The priority after the next block (depth+1) is used instead of the current,
@@ -1724,7 +1725,7 @@ std::map<CTxDestination, mpq> CWallet::GetAddressBalances(int nBlockHeight)
                 if(!ExtractDestination(pcoin->vout[i].scriptPubKey, addr))
                     continue;
 
-                mpq n = pcoin->IsSpent(i) ? 0 : GetPresentValue(*pcoin, pcoin->vout[i], nBlockHeight);
+                mpq n = pcoin->IsSpent(i) ? 0 : GetPresentValue(*pcoin, pcoin->vout[i], nBlockHeight, false);
 
                 if (!balances.count(addr))
                     balances[addr] = 0;

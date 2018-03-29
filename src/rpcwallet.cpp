@@ -388,7 +388,7 @@ mpq GetReceivedValue(const CWalletTx &wtx, const CTxOut &txout)
 {
     CBlockIndex *pBlockIndex;
     int nBlockDepth = wtx.GetDepthInMainChain(pBlockIndex);
-    return GetPresentValue(wtx, txout, nBestHeight + 1 - nBlockDepth - wtx.nRefHeight);
+    return GetPresentValue(wtx, txout, nBestHeight + 1 - nBlockDepth - wtx.nRefHeight, false);
 }
 
 Value getreceivedbyaddress(const Array& params, bool fHelp)
@@ -1139,7 +1139,7 @@ Value listaccounts(const Array& params, bool fHelp)
     list<CAccountingEntry> acentries;
     CWalletDB(pwalletMain->strWalletFile).ListAccountCreditDebit("*", acentries);
     BOOST_FOREACH(const CAccountingEntry& entry, acentries)
-        mapAccountBalances[entry.strAccount] += GetTimeAdjustedValue(entry.nCreditDebit, nHeight - entry.nRefHeight);
+        mapAccountBalances[entry.strAccount] += GetTimeAdjustedValue_mpfr(entry.nCreditDebit, nHeight - entry.nRefHeight);
 
     Object ret;
     BOOST_FOREACH(const PAIRTYPE(string, mpq)& accountBalance, mapAccountBalances) {

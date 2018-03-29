@@ -764,11 +764,16 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
         // right away as policy.
         const bool fTruncateInputs = true;
 
+        // APU demurrage calculation is a yet-to-be-scheduled
+        // soft-fork change to improve the performance of demurrage
+        // calculations.
+        const bool fUseAPU = false;
+
         // Note: if you modify this code to accept non-standard transactions, then
         // you should add code here to check that the transaction does a
         // reasonable number of ECDSA signature verifications.
 
-        mpq nFees = tx.GetValueIn(view, fTruncateInputs)-tx.GetValueOut();
+        mpq nFees = tx.GetValueIn(view, fTruncateInputs, fUseAPU)-tx.GetValueOut();
         unsigned int nSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
 
         // Don't accept it if it can't get into a block
@@ -804,7 +809,7 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
 
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
-        if (!tx.CheckInputs(state, view, fTruncateInputs, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC | SCRIPT_VERIFY_DERSIG))
+        if (!tx.CheckInputs(state, view, fTruncateInputs, fUseAPU, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC | SCRIPT_VERIFY_DERSIG))
         {
             return error("CTxMemPool::accept() : ConnectInputs failed %s", hash.ToString().c_str());
         }
@@ -1112,7 +1117,7 @@ void static ApplyBudget(const mpq& qAmount, const CBudget& budget,
 }
 
 bool static VerifyBudget(const std::map<CTxDestination, mpq>& mapBudget,
-                         const std::vector<CTransaction>& vtx, int nBlockHeight)
+                         const std::vector<CTransaction>& vtx, int nBlockHeight, bool fUseAPU)
 {
     std::map<CTxDestination, mpq> mapActuals;
 
@@ -1120,7 +1125,7 @@ bool static VerifyBudget(const std::map<CTxDestination, mpq>& mapBudget,
     BOOST_FOREACH(const CTransaction &tx, vtx)
         BOOST_FOREACH(const CTxOut &txout, tx.vout)
             if (ExtractDestination(txout.scriptPubKey, address))
-                mapActuals[address] += GetPresentValue(tx, txout, nBlockHeight);
+                mapActuals[address] += GetPresentValue(tx, txout, nBlockHeight, fUseAPU);
 
     std::map<CTxDestination, mpq>::const_iterator itr;
     for (itr = mapBudget.begin(); itr != mapBudget.end(); ++itr) {
@@ -1985,18 +1990,36 @@ static int64_t GetTimeAdjustedValue_apu_inner(int64_t value, unsigned relative_d
     return sum;
 }
 
-mpq GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth)
+mpq GetTimeAdjustedValue_apu(int64 nInitialValue, int nRelativeDepth)
 {
-    return GetTimeAdjustedValue(i64_to_mpq(nInitialValue), nRelativeDepth);
+    assert(nRelativeDepth >= 0);
+    return i64_to_mpq(GetTimeAdjustedValue_apu_inner(nInitialValue, nRelativeDepth));
 }
 
-mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth)
+mpq GetTimeAdjustedValue_apu(const mpz &zInitialValue, int nRelativeDepth)
 {
-    mpq initial_value(zInitialValue);
-    return GetTimeAdjustedValue(initial_value, nRelativeDepth);
+    int64_t nInitialValue = mpz_to_i64(zInitialValue);
+    return GetTimeAdjustedValue_apu(nInitialValue, nRelativeDepth);
 }
 
-mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
+mpq GetTimeAdjustedValue_apu(const mpq& qInitialValue, int nRelativeDepth)
+{
+    mpz zInitialValue = qInitialValue.get_num();
+    zInitialValue /= qInitialValue.get_den();
+    return GetTimeAdjustedValue_apu(zInitialValue, nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue_mpfr(int64 nInitialValue, int nRelativeDepth)
+{
+    return GetTimeAdjustedValue_mpfr(i64_to_mpq(nInitialValue), nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue_mpfr(const mpz &zInitialValue, int nRelativeDepth)
+{
+    return GetTimeAdjustedValue_mpfr(mpq(zInitialValue), nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValue_mpfr(const mpq& qInitialValue, int nRelativeDepth)
 {
     if ( 0 == nRelativeDepth )
         return qInitialValue;
@@ -2031,17 +2054,25 @@ mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
     return adjustment * qInitialValue;
 }
 
-mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
+mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight, bool fUseAPU)
 {
-    return GetTimeAdjustedValue(output.nValue, nBlockHeight-coins.nRefHeight);
+    if ((nBlockHeight >= APU_ACTIVATION_HEIGHT) || fUseAPU) {
+        return GetTimeAdjustedValue_apu(output.nValue, nBlockHeight-coins.nRefHeight);
+    } else {
+        return GetTimeAdjustedValue_mpfr(output.nValue, nBlockHeight-coins.nRefHeight);
+    }
 }
 
-mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight)
+mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight, bool fUseAPU)
 {
-    return GetTimeAdjustedValue(output.nValue, nBlockHeight-tx.nRefHeight);
+    if ((nBlockHeight >= APU_ACTIVATION_HEIGHT) || fUseAPU) {
+        return GetTimeAdjustedValue_apu(output.nValue, nBlockHeight-tx.nRefHeight);
+    } else {
+        return GetTimeAdjustedValue_mpfr(output.nValue, nBlockHeight-tx.nRefHeight);
+    }
 }
 
-mpq CTransaction::GetValueIn(CCoinsViewCache& inputs, bool fTruncateInputs) const
+mpq CTransaction::GetValueIn(CCoinsViewCache& inputs, bool fTruncateInputs, bool fUseAPU) const
 {
     if (IsCoinBase())
         return 0;
@@ -2051,7 +2082,7 @@ mpq CTransaction::GetValueIn(CCoinsViewCache& inputs, bool fTruncateInputs) cons
         const CCoins& coins = inputs.GetCoins(vin[i].prevout.hash);
         const CTxOut& txOut = coins.vout[vin[i].prevout.n];
 
-        nInput = GetPresentValue(coins, txOut, nRefHeight);
+        nInput = GetPresentValue(coins, txOut, nRefHeight, fUseAPU);
         if (fTruncateInputs)
             nInput = RoundAbsolute(nInput, ROUND_TOWARD_NEGATIVE);
         nResult += nInput;
@@ -2127,7 +2158,7 @@ bool VerifySignature(const CCoins& txFrom, const CTransaction& txTo, unsigned in
     return CScriptCheck(txFrom, txTo, nIn, flags, nHashType)();
 }
 
-bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs, bool fTruncateInputs, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks) const
+bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs, bool fTruncateInputs, bool fUseAPU, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks) const
 {
     if (!IsCoinBase())
     {
@@ -2161,7 +2192,7 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         // Check for negative or overflow input values
         mpq nValueIn;
         try {
-            nValueIn = GetValueIn(inputs, fTruncateInputs);
+            nValueIn = GetValueIn(inputs, fTruncateInputs, fUseAPU);
         } catch (std::runtime_error &e) {
             return state.DoS(100, error("CheckInputs() : %s %s", GetHash().ToString().c_str(), e.what()));
         }
@@ -2428,11 +2459,17 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
             if (pindex->nHeight < tx.nRefHeight)
                 return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.nRefHeight"));
 
-            mpq qNet = tx.GetValueIn(view, fTruncateInputs) - tx.GetValueOut();
-            nFees += GetTimeAdjustedValue(qNet, pindex->nHeight - tx.nRefHeight);
+            mpq qNet = tx.GetValueIn(view, fTruncateInputs, fUseAPU) - tx.GetValueOut();
+            if (qNet > 0) {
+                if (fUseAPU) {
+                    nFees += GetTimeAdjustedValue_apu(qNet, pindex->nHeight - tx.nRefHeight);
+                } else {
+                    nFees += GetTimeAdjustedValue_mpfr(qNet, pindex->nHeight - tx.nRefHeight);
+                }
+            }
 
             std::vector<CScriptCheck> vChecks;
-            if (!tx.CheckInputs(state, view, fTruncateInputs, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
+            if (!tx.CheckInputs(state, view, fTruncateInputs, fUseAPU, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
                 return false;
             control.Add(vChecks);
         }
@@ -2470,7 +2507,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     CBudget budgetTF = GetTransactionFeeBudget(pindex->nHeight);
     ApplyBudget(nFees, budgetTF, mapBudget);
 
-    if (!VerifyBudget(mapBudget, vtx, pindex->nHeight))
+    if (!VerifyBudget(mapBudget, vtx, pindex->nHeight, fUseAPU))
         return state.DoS(100, error("ConnectBlock() : %s block does not meet budget requirements", GetHash().ToString().c_str()));
 
     if (!control.Wait())
@@ -5086,6 +5123,8 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
 
     // If set, fractional fees are not aggregated into the coinbase.
     const bool fTruncateInputs = true;
+    // If set, APU arithmetic is used for demurrage calculations.
+    const bool fUseAPU = false;
 
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = GetArg("-blockmaxsize", DEFAULT_BLOCK_MAX_SIZE);
@@ -5202,7 +5241,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
                     const CTransaction &txPrevIn = mempool.mapTx[txin.prevout.hash];
-                    mpq nValueIn = GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight);
+                    mpq nValueIn = GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight, fUseAPU);
                     if (fTruncateInputs)
                         nValueIn = RoundAbsolute(nValueIn, ROUND_TOWARD_NEGATIVE);
                     nTotalIn += nValueIn;
@@ -5212,7 +5251,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
 
                 int nConf = nHeight - coins.nHeight;
 
-                mpq nValueIn = GetPresentValue(coins, coins.vout[txin.prevout.n], tx.nRefHeight);
+                mpq nValueIn = GetPresentValue(coins, coins.vout[txin.prevout.n], tx.nRefHeight, fUseAPU);
                 if (fTruncateInputs)
                     nValueIn = RoundAbsolute(nValueIn, ROUND_TOWARD_NEGATIVE);
                 nTotalIn += nValueIn;
@@ -5290,15 +5329,20 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             if (!tx.HaveInputs(view))
                 continue;
 
-            mpq nNet = tx.GetValueIn(view, fTruncateInputs)-tx.GetValueOut();
-            mpq nTxFees = GetTimeAdjustedValue(nNet, nHeight-tx.nRefHeight);
+            mpq nNet = tx.GetValueIn(view, fTruncateInputs, fUseAPU)-tx.GetValueOut();
+            mpq nTxFees = nNet;
+            if (fUseAPU) {
+                nTxFees = GetTimeAdjustedValue_apu(nTxFees, nHeight-tx.nRefHeight);
+            } else {
+                nTxFees = GetTimeAdjustedValue_mpfr(nTxFees, nHeight-tx.nRefHeight);
+            }
 
             nTxSigOps += tx.GetP2SHSigOpCount(view);
             if (nBlockSigOps + nTxSigOps >= MAX_BLOCK_SIGOPS)
                 continue;
 
             CValidationState state;
-            if (!tx.CheckInputs(state, view, fTruncateInputs, true, SCRIPT_VERIFY_P2SH))
+            if (!tx.CheckInputs(state, view, fTruncateInputs, fUseAPU, true, SCRIPT_VERIFY_P2SH))
                 continue;
 
             CTxUndo txundo;
