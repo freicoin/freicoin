@@ -69,6 +69,7 @@ public:
     const uint256& HashGenesisBlock() const { return hashGenesisBlock; }
     const MessageStartChars& MessageStart() const { return pchMessageStart; }
     int DiffAdjustThreshold() const { return diff_adjust_threshold; }
+    int AluActivationHeight() const { return alu_activation_height; }
     const vector<unsigned char>& AlertKey() const { return vAlertPubKey; }
     int GetDefaultPort() const { return nDefaultPort; }
     const CBigNum& ProofOfWorkLimit() const { return bnProofOfWorkLimit; }
@@ -86,6 +87,7 @@ protected:
 
     uint256 hashGenesisBlock;
     int diff_adjust_threshold;
+    int alu_activation_height;
     MessageStartChars pchMessageStart;
     // Raw pub key bytes for the broadcast alert signing key.
     vector<unsigned char> vAlertPubKey;
