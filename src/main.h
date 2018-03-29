@@ -56,6 +56,7 @@ static const int DEMURRAGE_RATE = 1048576;
 static const int64 EQUILIBRIUM_BASE = 10000000000000000LL; // 100,000,000.00000000fc
 static const int EQUILIBRIUM_HEIGHT = 161280;
 static const int64 INITIAL_SUBSIDY = 15916928404LL;
+static const int APU_ACTIVATION_HEIGHT = 229376;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
@@ -1313,7 +1314,7 @@ class CBlockHeader
 {
 public:
     // header
-    static const int CURRENT_VERSION=3;
+    static const int CURRENT_VERSION=0x30000000;
     int nVersion;
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
@@ -1829,6 +1830,8 @@ public:
      */
     static bool IsSuperMajority(int minVersion, const CBlockIndex* pstart,
                                 unsigned int nRequired, unsigned int nToCheck);
+    static bool IsSuperMajorityBit(int bit, const CBlockIndex* pstart,
+                                   unsigned int nRequired, unsigned int nToCheck);
 
     std::string ToString() const
     {
