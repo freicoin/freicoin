@@ -804,7 +804,7 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
 
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
-        if (!tx.CheckInputs(state, view, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC | SCRIPT_VERIFY_DERSIG))
+        if (!tx.CheckInputs(state, view, fTruncateInputs, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC | SCRIPT_VERIFY_DERSIG))
         {
             return error("CTxMemPool::accept() : ConnectInputs failed %s", hash.ToString().c_str());
         }
@@ -5148,7 +5148,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                 continue;
 
             CValidationState state;
-            if (!tx.CheckInputs(state, view, true, SCRIPT_VERIFY_P2SH))
+            if (!tx.CheckInputs(state, view, fTruncateInputs, true, SCRIPT_VERIFY_P2SH))
                 continue;
 
             CTxUndo txundo;
