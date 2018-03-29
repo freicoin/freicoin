@@ -560,7 +560,7 @@ mpq CWallet::GetDebit(const CTxIn &txin, int nBlockHeight) const
             const CWalletTx& prev = (*mi).second;
             if (txin.prevout.n < prev.vout.size())
                 if (IsMine(prev.vout[txin.prevout.n]))
-                    return GetPresentValue(prev, prev.vout[txin.prevout.n], nBlockHeight, false);
+                    return GetPresentValue(prev, prev.vout[txin.prevout.n], nBlockHeight, true);
         }
     }
     return 0;
@@ -644,7 +644,7 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, mpq> >& listReceived,
     mpq nDebit = GetDebit(nBlockHeight);
     if (nDebit > 0) // debit>0 means we signed/sent this transaction
     {
-        mpq nValueOut = GetTimeAdjustedValue_mpfr(GetValueOut(), nBlockHeight-nRefHeight);
+        mpq nValueOut = GetTimeAdjustedValue_apu(GetValueOut(), nBlockHeight-nRefHeight);
         nFee = nDebit - nValueOut;
     }
 
@@ -664,10 +664,10 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, mpq> >& listReceived,
             continue;
 
         if (nDebit > 0)
-            listSent.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight, false)));
+            listSent.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight, true)));
 
         if (pwallet->IsMine(txout))
-            listReceived.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight, false)));
+            listReceived.push_back(make_pair(address, GetPresentValue(*this, txout, nBlockHeight, true)));
     }
 
 }
@@ -987,7 +987,7 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, int nRefHeight, bool fOnly
 
             for (unsigned int i = 0; i < pcoin->vout.size(); i++) {
                 if (!(pcoin->IsSpent(i)) && IsMine(pcoin->vout[i]) &&
-                    !IsLockedCoin((*it).first, i) && GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight, false) > 0)
+                    !IsLockedCoin((*it).first, i) && GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight, true) > 0)
                     vCoins.push_back(COutput(pcoin, i, pcoin->GetDepthInMainChain()));
             }
         }
@@ -1191,7 +1191,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, mpq> >& vecSend, int 
     // truncated inputs so that we never create a transaction that will
     // be invalid after the input-truncation soft-fork activation.
     const bool fTruncateInputs = true;
-    const bool fUseAPU = false;
+    const bool fUseAPU = true;
 
     wtxNew.BindWallet(this);
 
@@ -1725,7 +1725,7 @@ std::map<CTxDestination, mpq> CWallet::GetAddressBalances(int nBlockHeight)
                 if(!ExtractDestination(pcoin->vout[i].scriptPubKey, addr))
                     continue;
 
-                mpq n = pcoin->IsSpent(i) ? 0 : GetPresentValue(*pcoin, pcoin->vout[i], nBlockHeight, false);
+                mpq n = pcoin->IsSpent(i) ? 0 : GetPresentValue(*pcoin, pcoin->vout[i], nBlockHeight, true);
 
                 if (!balances.count(addr))
                     balances[addr] = 0;

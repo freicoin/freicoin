@@ -68,7 +68,7 @@ public:
 class CWallet : public CCryptoKeyStore
 {
 private:
-    bool SelectCoins(const mpq& nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, bool fTruncateInputs=true, bool fUseAPU=false) const;
+    bool SelectCoins(const mpq& nTargetValue, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, bool fTruncateInputs=true, bool fUseAPU=true) const;
 
     CWalletDB *pwalletdbEncryption;
 
@@ -125,7 +125,7 @@ public:
     bool CanSupportFeature(enum WalletFeature wf) { return nWalletMaxVersion >= wf; }
 
     void AvailableCoins(std::vector<COutput>& vCoins, int nRefHeight=-1, bool fOnlyConfirmed=true) const;
-    bool SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, bool fTruncateInputs=true, bool fUseAPU=false) const;
+    bool SelectCoinsMinConf(const mpq& nTargetValue, int nConfMine, int nConfTheirs, std::vector<COutput> vCoins, std::set<std::pair<const CWalletTx*,unsigned int> >& setCoinsRet, mpq& nValueRet, int nRefHeight=-1, bool fTruncateInputs=true, bool fUseAPU=true) const;
     bool IsLockedCoin(uint256 hash, unsigned int n) const;
     void LockCoin(COutPoint& output);
     void UnlockCoin(COutPoint& output);
@@ -207,7 +207,7 @@ public:
     }
     mpq GetCredit(const CTransaction& tx, const CTxOut& txout, int nBlockHeight) const
     {
-        mpq nCredit = GetPresentValue(tx, txout, nBlockHeight, false);
+        mpq nCredit = GetPresentValue(tx, txout, nBlockHeight, true);
         if (!MoneyRange(nCredit))
             throw std::runtime_error("CWallet::GetCredit() : value out of range");
         return (IsMine(txout) ? nCredit : 0);
@@ -215,7 +215,7 @@ public:
     bool IsChange(const CTxOut& txout) const;
     mpq GetChange(const CTransaction& tx, const CTxOut& txout, int nBlockHeight) const
     {
-        mpq nChange = GetPresentValue(tx, txout, nBlockHeight, false);
+        mpq nChange = GetPresentValue(tx, txout, nBlockHeight, true);
         if (!MoneyRange(nChange))
             throw std::runtime_error("CWallet::GetChange() : value out of range");
         return (IsChange(txout) ? nChange : 0);

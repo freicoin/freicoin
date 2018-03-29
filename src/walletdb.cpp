@@ -60,7 +60,7 @@ mpq CWalletDB::GetAccountCreditDebit(const string& strAccount, int nBlockHeight)
 
     mpq nCreditDebit = 0;
     BOOST_FOREACH (const CAccountingEntry& entry, entries)
-        nCreditDebit += GetTimeAdjustedValue_mpfr(entry.nCreditDebit, nBlockHeight-entry.nRefHeight);
+        nCreditDebit += GetTimeAdjustedValue_apu(entry.nCreditDebit, nBlockHeight-entry.nRefHeight);
 
     return nCreditDebit;
 }

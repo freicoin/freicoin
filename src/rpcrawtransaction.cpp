@@ -221,7 +221,7 @@ Value listunspent(const Array& params, bool fHelp)
                 continue;
         }
 
-        mpq nValue = GetPresentValue(*out.tx, out.tx->vout[out.i], nBestHeight, false);
+        mpq nValue = GetPresentValue(*out.tx, out.tx->vout[out.i], nBestHeight, true);
         const CScript& pk = out.tx->vout[out.i].scriptPubKey;
         Object entry;
         entry.push_back(Pair("txid", out.tx->GetHash().GetHex()));
