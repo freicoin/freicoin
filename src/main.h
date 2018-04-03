@@ -61,6 +61,7 @@ static const mpq TITHE_RATIO = mpq("4/5");
 static const mpq TITHE_AMOUNT = MPQ_MAX_MONEY * TITHE_RATIO / EQ_HEIGHT;
 static const mpq INITIAL_SUBSIDY = mpq("15916928404");
 static const int DEMURRAGE_RATE = 1048576;
+static const int APU_ACTIVATION_HEIGHT = 229376;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
@@ -189,12 +190,15 @@ std::string GetWarnings(std::string strFor);
 /** Retrieve a transaction (from memory pool, or from disk, if possible) */
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock, bool fAllowSlow = false);
 /** Calculating present value after subtracting demurrage */
-mpq GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth);
-mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth);
-mpq GetTimeAdjustedValue(const mpq &qInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue_apu(int64 nInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue_apu(const mpz &zInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue_apu(const mpq &qInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue_mpfr(int64 nInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue_mpfr(const mpz &zInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValue_mpfr(const mpq &qInitialValue, int nRelativeDepth);
 /** Calculate value of an output at the specified block height */
-mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight);
-mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight);
+mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight, bool fUseAPU);
+mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight, bool fUseAPU);
 /** Connect/disconnect blocks until pindexNew is the new tip of the active block chain */
 bool SetBestChain(CValidationState &state, CBlockIndex* pindexNew);
 /** Find the best known block, and make it the tip of the block chain */
@@ -651,9 +655,10 @@ public:
 
         @param[in] mapInputs		Map of previous transactions that have outputs we're spending
         @param[in] fTruncateInputs	If set, each input is truncated [floor()] to the nearest kria after present value adjustment, making the result an integer number of the smallest representable units.
+        @param[in] fUseAPU              If set, demurrage calculation is done using integer fixed point
         @return	Sum of value of all inputs (scriptSigs)
      */
-    mpq GetValueIn(CCoinsViewCache& mapInputs, bool fTruncateInputs) const;
+    mpq GetValueIn(CCoinsViewCache& mapInputs, bool fTruncateInputs, bool fUseAPU) const;
 
     static bool AllowFree(double dPriority)
     {
@@ -708,7 +713,7 @@ public:
     // Check whether all inputs of this transaction are valid (no double spends, scripts & sigs, amounts)
     // This does not modify the UTXO set. If pvChecks is not NULL, script checks are pushed onto it
     // instead of being performed inline.
-    bool CheckInputs(CValidationState &state, CCoinsViewCache &view, bool fTruncateInputs,
+    bool CheckInputs(CValidationState &state, CCoinsViewCache &view, bool fTruncateInputs, bool fUseAPU,
                      bool fScriptChecks = true,
                      unsigned int flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC,
                      std::vector<CScriptCheck> *pvChecks = NULL) const;
@@ -1339,7 +1344,7 @@ class CBlockHeader
 {
 public:
     // header
-    static const int CURRENT_VERSION=3;
+    static const int CURRENT_VERSION=0x30000000;
     int nVersion;
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
@@ -1855,6 +1860,8 @@ public:
      */
     static bool IsSuperMajority(int minVersion, const CBlockIndex* pstart,
                                 unsigned int nRequired, unsigned int nToCheck);
+    static bool IsSuperMajorityBit(int bit, const CBlockIndex* pstart,
+                                   unsigned int nRequired, unsigned int nToCheck);
 
     std::string ToString() const
     {
