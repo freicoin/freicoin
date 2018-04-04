@@ -1,4 +1,4 @@
-freicoin (0.8.6~precise3) precise; urgency=high
+freicoin (0.8.6.1~precise4) precise; urgency=high
 
   [Mark Friedenbach]
     * Change behavior of the '{get,list}receivedby{address,account}'
@@ -10,7 +10,7 @@ freicoin (0.8.6~precise3) precise; urgency=high
       of calculation, and allows for the future removal of the GMP and MPFR
       library dependencies.
 
- -- Mark Friedenbach <mark@friedenbach.org>  Tue Apr  3 12:01:31 PDT 2018
+ -- Mark Friedenbach <mark@friedenbach.org>  Wed Apr  4 13:44:10 PDT 2018
 
 freicoin (0.8.6~precise1) precise; urgency=high
 
