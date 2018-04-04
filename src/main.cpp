@@ -1881,10 +1881,6 @@ static int64_t GetTimeAdjustedValue_apu_inner(int64_t value, unsigned relative_d
         0x000001e3UL, 0x54ca043cUL,
         0x00000000UL, 0x00039089UL };
 
-    /* The demurrage rate for a depth of 0, which is 1.0 exactly, has
-     * no representation in 0.64 fixed point. */
-    if (relative_depth == 0)
-        return value;
     /* Depth of (1<<26) and beyond are sufficient to decay even
      * MAX_MONEY to zero. */
     if (relative_depth >= (1<<26))
@@ -1992,8 +1988,16 @@ static int64_t GetTimeAdjustedValue_apu_inner(int64_t value, unsigned relative_d
 
 mpq GetTimeAdjustedValue_apu(int64 nInitialValue, int nRelativeDepth)
 {
-    assert(nRelativeDepth >= 0);
-    return i64_to_mpq(GetTimeAdjustedValue_apu_inner(nInitialValue, nRelativeDepth));
+    /* The demurrage rate for a depth of 0, which is 1.0 exactly, has
+     * no representation in 0.64 fixed point. Negative depths imply a
+     * refheight in the future, which is non-spendable, so returning
+     * the initial value also works in that case (as the inner
+     * calculation above does not handle negative exponents). */
+    if (nRelativeDepth <= 0) {
+        return i64_to_mpq(nInitialValue);
+    } else {
+        return i64_to_mpq(GetTimeAdjustedValue_apu_inner(nInitialValue, (unsigned)nRelativeDepth));
+    }
 }
 
 mpq GetTimeAdjustedValue_apu(const mpz &zInitialValue, int nRelativeDepth)
