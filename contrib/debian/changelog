@@ -1,3 +1,12 @@
+freicoin (0.8.6.2-precise5) precise; urgency=high
+
+  [Mark Friedenbach]
+    * Remove multi-precision logic entirely, thereby removing dependencies on
+      the external libraries GMP and MPFR. Integer math only is used for both
+      initial block download and sync at tip.
+
+ -- Mark Friedenbach <mark@friedenbach.org>  Mon Apr 30 10:17:01 PDT 2018
+
 freicoin (0.8.6.1~precise4) precise; urgency=high
 
   [Mark Friedenbach]

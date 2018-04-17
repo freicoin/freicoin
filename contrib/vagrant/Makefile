@@ -409,7 +409,7 @@ $(HOST_CACHE_DIR)/src-local.tar.xz: \
 # SERIES := $(CLIENT_VERSION_MAJOR).$(CLIENT_VERSION_MINOR)
 # endif
 
-SERIES := 0.8.6
+SERIES := 0.8.6.2-5
 
 OUTPUT_DIR         := output
 HOST_OUTPUT_DIR    := $(OUTPUT_DIR)
