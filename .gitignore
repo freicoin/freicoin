@@ -1,7 +1,7 @@
 src/*.exe
-src/bitcoin
-src/bitcoind
-src/test_bitcoin
+src/freicoin
+src/freicoind
+src/test_freicoin
 .*.swp
 *.*~*
 *.bak
@@ -9,7 +9,7 @@ src/test_bitcoin
 *.orig
 *.o
 *.patch
-.bitcoin
+.freicoin
 
 # Compilation and Qt preprocessor part
 *.qm
