@@ -243,6 +243,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
             std::pop_heap(vecPriority.begin(), vecPriority.end(), comparer);
             vecPriority.pop_back();
 
+            // Immature refheight
+            if (pindexPrev->nHeight + 1 < tx.refheight)
+                continue;
+
             // Size limits
             unsigned int nTxSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
             if (nBlockSize + nTxSize >= nBlockMaxSize)

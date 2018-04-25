@@ -603,10 +603,12 @@ bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 {
     AssertLockHeld(cs_main);
     // Time based nLockTime implemented in 0.1.6
-    if (tx.nLockTime == 0)
-        return true;
     if (nBlockHeight == 0)
         nBlockHeight = chainActive.Height();
+    if (tx.refheight > nBlockHeight)
+        return false;
+    if (tx.nLockTime == 0)
+        return true;
     if (nBlockTime == 0)
         nBlockTime = GetAdjustedTime();
     if ((int64_t)tx.nLockTime < ((int64_t)tx.nLockTime < LOCKTIME_THRESHOLD ? (int64_t)nBlockHeight : nBlockTime))
@@ -779,6 +781,11 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state)
         return state.DoS(100, error("CheckTransaction() : size limits failed"),
                          REJECT_INVALID, "bad-txns-oversize");
 
+    // Check for negative reference height
+    if (tx.refheight < 0)
+        return state.DoS(100, error("CheckTransaction() : refheight negative"),
+                         REJECT_INVALID, "bad-txns-refheight-neg");
+
     // Check for negative or overflow output values
     int64_t nValueOut = 0;
     BOOST_FOREACH(const CTxOut& txout, tx.vout)
@@ -866,6 +873,9 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState &state, const CTransa
 
     if (!CheckTransaction(tx, state))
         return error("AcceptToMemoryPool: : CheckTransaction failed");
+
+    if (tx.refheight > chainActive.Height() + 1)
+        return error("AcceptToMemoryPool: : tx.refheight (%d) beyond the block height (%d)", tx.refheight, chainActive.Height() + 1);
 
     // Coinbase is only valid in a block, not as a loose transaction
     if (tx.IsCoinBase())
@@ -1565,6 +1575,8 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
         // This is also true for mempool checks.
         CBlockIndex *pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
         int nSpendHeight = pindexPrev->nHeight + 1;
+        if (nSpendHeight < tx.refheight)
+            return state.Invalid(error("CheckInputs() : %s refheight greater than spend height", tx.GetHash().ToString()));
         int64_t nValueIn = 0;
         int64_t nFees = 0;
         for (unsigned int i = 0; i < tx.vin.size(); i++)
@@ -1858,6 +1870,10 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
                     return state.DoS(100, error("ConnectBlock() : too many sigops"),
                                      REJECT_INVALID, "bad-blk-sigops");
             }
+
+            if (pindex->nHeight < tx.refheight)
+                return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.refheight"),
+                                 REJECT_INVALID, "bad-tx-refheight-gt-blk-height");
 
             nFees += view.GetValueIn(tx)-tx.GetValueOut();
 
