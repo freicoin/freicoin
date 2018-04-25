@@ -28,6 +28,7 @@ public:
      */
     void setTypeFilter(quint32 modes);
     void setMinAmount(qint64 minimum);
+    void setMinRefHeight(quint32 minimum);
 
     /** Set maximum number of rows returned, -1 if unlimited. */
     void setLimit(int limit);
@@ -43,6 +44,7 @@ private:
     QString addrPrefix;
     quint32 typeFilter;
     qint64 minAmount;
+    quint32 minRefHeight;
     int limitRows;
 };
 

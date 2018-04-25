@@ -18,6 +18,7 @@ TransactionFilterProxy::TransactionFilterProxy(QObject *parent) :
     addrPrefix(),
     typeFilter(ALL_TYPES),
     minAmount(0),
+    minRefHeight(0),
     limitRows(-1)
 {
 }
@@ -31,6 +32,7 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
     QString address = index.data(TransactionTableModel::AddressRole).toString();
     QString label = index.data(TransactionTableModel::LabelRole).toString();
     qint64 amount = llabs(index.data(TransactionTableModel::AmountRole).toLongLong());
+    quint32 refheight = index.data(TransactionTableModel::RefHeightRole).toUInt();
 
     if(!(TYPE(type) & typeFilter))
         return false;
@@ -39,6 +41,8 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
     if (!address.contains(addrPrefix, Qt::CaseInsensitive) && !label.contains(addrPrefix, Qt::CaseInsensitive))
         return false;
     if(amount < minAmount)
+        return false;
+    if(refheight < minRefHeight)
         return false;
 
     return true;
@@ -66,6 +70,12 @@ void TransactionFilterProxy::setTypeFilter(quint32 modes)
 void TransactionFilterProxy::setMinAmount(qint64 minimum)
 {
     this->minAmount = minimum;
+    invalidateFilter();
+}
+
+void TransactionFilterProxy::setMinRefHeight(quint32 minimum)
+{
+    this->minRefHeight = minimum;
     invalidateFilter();
 }
 

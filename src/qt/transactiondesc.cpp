@@ -125,7 +125,7 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
             //
             int64 nUnmatured = 0;
             BOOST_FOREACH(const CTxOut& txout, wtx.vout)
-                nUnmatured += wallet->GetCredit(txout);
+                nUnmatured += wallet->GetCredit(wtx,txout);
             strHTML += "<b>" + tr("Credit") + ":</b> ";
             if (wtx.IsInMainChain())
                 strHTML += BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, nUnmatured)+ " (" + tr("matures in %n more block(s)", "", wtx.GetBlocksToMaturity()) + ")";
@@ -197,10 +197,10 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
                 //
                 BOOST_FOREACH(const CTxIn& txin, wtx.vin)
                     if (wallet->IsMine(txin))
-                        strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -wallet->GetDebit(txin)) + "<br>";
+                        strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -wallet->GetDebit(txin,wtx.nRefHeight)) + "<br>";
                 BOOST_FOREACH(const CTxOut& txout, wtx.vout)
                     if (wallet->IsMine(txout))
-                        strHTML += "<b>" + tr("Credit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, wallet->GetCredit(txout)) + "<br>";
+                        strHTML += "<b>" + tr("Credit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, wallet->GetCredit(wtx,txout)) + "<br>";
             }
         }
 
@@ -213,6 +213,8 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
             strHTML += "<br><b>" + tr("Message") + ":</b><br>" + GUIUtil::HtmlEscape(wtx.mapValue["message"], true) + "<br>";
         if (wtx.mapValue.count("comment") && !wtx.mapValue["comment"].empty())
             strHTML += "<br><b>" + tr("Comment") + ":</b><br>" + GUIUtil::HtmlEscape(wtx.mapValue["comment"], true) + "<br>";
+
+        strHTML += "<b>" + tr("Reference Height") + ":</b> " + QString("%1").arg(wtx.nRefHeight) + "<br>";
 
         strHTML += "<b>" + tr("Transaction ID") + ":</b> " + wtx.GetHash().ToString().c_str() + "<br>";
 
@@ -227,10 +229,10 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
             strHTML += "<hr><br>" + tr("Debug information") + "<br><br>";
             BOOST_FOREACH(const CTxIn& txin, wtx.vin)
                 if(wallet->IsMine(txin))
-                    strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -wallet->GetDebit(txin)) + "<br>";
+                    strHTML += "<b>" + tr("Debit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, -wallet->GetDebit(txin,wtx.nRefHeight)) + "<br>";
             BOOST_FOREACH(const CTxOut& txout, wtx.vout)
                 if(wallet->IsMine(txout))
-                    strHTML += "<b>" + tr("Credit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, wallet->GetCredit(txout)) + "<br>";
+                    strHTML += "<b>" + tr("Credit") + ":</b> " + BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, wallet->GetCredit(wtx,txout)) + "<br>";
 
             strHTML += "<br><b>" + tr("Transaction") + ":</b><br>";
             strHTML += GUIUtil::HtmlEscape(wtx.ToString(), true);

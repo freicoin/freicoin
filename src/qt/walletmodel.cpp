@@ -36,19 +36,19 @@ WalletModel::~WalletModel()
     unsubscribeFromCoreSignals();
 }
 
-qint64 WalletModel::getBalance() const
+qint64 WalletModel::getBalance(int nBlockHeight) const
 {
-    return wallet->GetBalance();
+    return wallet->GetBalance(nBlockHeight);
 }
 
-qint64 WalletModel::getUnconfirmedBalance() const
+qint64 WalletModel::getUnconfirmedBalance(int nBlockHeight) const
 {
-    return wallet->GetUnconfirmedBalance();
+    return wallet->GetUnconfirmedBalance(nBlockHeight);
 }
 
-qint64 WalletModel::getImmatureBalance() const
+qint64 WalletModel::getImmatureBalance(int nBlockHeight) const
 {
-    return wallet->GetImmatureBalance();
+    return wallet->GetImmatureBalance(nBlockHeight);
 }
 
 int WalletModel::getNumTransactions() const
@@ -83,9 +83,9 @@ void WalletModel::pollBalanceChanged()
 
 void WalletModel::checkBalanceChanged()
 {
-    qint64 newBalance = getBalance();
-    qint64 newUnconfirmedBalance = getUnconfirmedBalance();
-    qint64 newImmatureBalance = getImmatureBalance();
+    qint64 newBalance = getBalance(nBestHeight);
+    qint64 newUnconfirmedBalance = getUnconfirmedBalance(nBestHeight);
+    qint64 newImmatureBalance = getImmatureBalance(nBestHeight);
 
     if(cachedBalance != newBalance || cachedUnconfirmedBalance != newUnconfirmedBalance || cachedImmatureBalance != newImmatureBalance)
     {
@@ -124,7 +124,7 @@ bool WalletModel::validateAddress(const QString &address)
     return addressParsed.IsValid();
 }
 
-WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipient> &recipients)
+WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipient> &recipients, int nRefHeight)
 {
     qint64 total = 0;
     QSet<QString> setAddress;
@@ -156,12 +156,12 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         return DuplicateAddress;
     }
 
-    if(total > getBalance())
+    if(total > getBalance(nRefHeight))
     {
         return AmountExceedsBalance;
     }
 
-    if((total + nTransactionFee) > getBalance())
+    if((total + nTransactionFee) > getBalance(nRefHeight))
     {
         return SendCoinsReturn(AmountWithFeeExceedsBalance, nTransactionFee);
     }
@@ -182,11 +182,11 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(const QList<SendCoinsRecipie
         CReserveKey keyChange(wallet);
         int64 nFeeRequired = 0;
         std::string strFailReason;
-        bool fCreated = wallet->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, strFailReason);
+        bool fCreated = wallet->CreateTransaction(vecSend, nRefHeight, wtx, keyChange, nFeeRequired, strFailReason);
 
         if(!fCreated)
         {
-            if((total + nFeeRequired) > wallet->GetBalance())
+            if((total + nFeeRequired) > wallet->GetBalance(nRefHeight))
             {
                 return SendCoinsReturn(AmountWithFeeExceedsBalance, nFeeRequired);
             }

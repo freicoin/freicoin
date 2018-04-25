@@ -9,6 +9,7 @@
 #include "guiutil.h"
 #include "askpassphrasedialog.h"
 #include "base58.h"
+#include "main.h" // for nBestHeight
 
 #include <QMessageBox>
 #include <QTextDocument>
@@ -39,6 +40,8 @@ void SendCoinsDialog::setModel(WalletModel *model)
 {
     this->model = model;
 
+    int nBlockHeight = nBestHeight;
+
     for(int i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
@@ -49,7 +52,7 @@ void SendCoinsDialog::setModel(WalletModel *model)
     }
     if(model && model->getOptionsModel())
     {
-        setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance());
+        setBalance(model->getBalance(nBlockHeight), model->getUnconfirmedBalance(nBlockHeight), model->getImmatureBalance(nBlockHeight));
         connect(model, SIGNAL(balanceChanged(qint64, qint64, qint64)), this, SLOT(setBalance(qint64, qint64, qint64)));
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
     }
@@ -117,7 +120,7 @@ void SendCoinsDialog::on_sendButton_clicked()
         return;
     }
 
-    WalletModel::SendCoinsReturn sendstatus = model->sendCoins(recipients);
+    WalletModel::SendCoinsReturn sendstatus = model->sendCoins(recipients, nBestHeight+1);
     switch(sendstatus.status)
     {
     case WalletModel::InvalidAddress:
@@ -320,6 +323,6 @@ void SendCoinsDialog::updateDisplayUnit()
     if(model && model->getOptionsModel())
     {
         // Update labelBalance with the current balance and the current unit
-        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), model->getBalance()));
+        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), model->getBalance(nBestHeight)));
     }
 }

@@ -55,9 +55,9 @@ public:
     AddressTableModel *getAddressTableModel();
     TransactionTableModel *getTransactionTableModel();
 
-    qint64 getBalance() const;
-    qint64 getUnconfirmedBalance() const;
-    qint64 getImmatureBalance() const;
+    qint64 getBalance(int nBlockHeight) const;
+    qint64 getUnconfirmedBalance(int nBlockHeight) const;
+    qint64 getImmatureBalance(int nBlockHeight) const;
     int getNumTransactions() const;
     EncryptionStatus getEncryptionStatus() const;
 
@@ -77,7 +77,7 @@ public:
     };
 
     // Send coins to a list of recipients
-    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients);
+    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients, int nRefHeight);
 
     // Wallet encryption
     bool setWalletEncrypted(bool encrypted, const SecureString &passphrase);

@@ -24,6 +24,7 @@ static int column_alignments[] = {
         Qt::AlignLeft|Qt::AlignVCenter,
         Qt::AlignLeft|Qt::AlignVCenter,
         Qt::AlignLeft|Qt::AlignVCenter,
+        Qt::AlignRight|Qt::AlignVCenter,
         Qt::AlignRight|Qt::AlignVCenter
     };
 
@@ -222,7 +223,7 @@ TransactionTableModel::TransactionTableModel(CWallet* wallet, WalletModel *paren
         priv(new TransactionTablePriv(wallet, this)),
         cachedNumBlocks(0)
 {
-    columns << QString() << tr("Date") << tr("Type") << tr("Address") << tr("Amount");
+    columns << QString() << tr("Date") << tr("Type") << tr("Address") << tr("Amount") << tr("Refheight");
 
     priv->refreshWallet();
 
@@ -435,6 +436,11 @@ QString TransactionTableModel::formatTxAmount(const TransactionRecord *wtx, bool
     return QString(str);
 }
 
+QString TransactionTableModel::formatTxRefHeight(const TransactionRecord *wtx) const
+{
+    return QString("%1").arg(wtx->refheight);
+}
+
 QVariant TransactionTableModel::txStatusDecoration(const TransactionRecord *wtx) const
 {
     if(wtx->type == TransactionRecord::Generated)
@@ -519,6 +525,8 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
             return formatTxToAddress(rec, false);
         case Amount:
             return formatTxAmount(rec);
+        case RefHeight:
+            return formatTxRefHeight(rec);
         }
         break;
     case Qt::EditRole:
@@ -535,6 +543,8 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
             return formatTxToAddress(rec, true);
         case Amount:
             return rec->credit + rec->debit;
+        case RefHeight:
+            return rec->refheight;
         }
         break;
     case Qt::ToolTipRole:
@@ -568,6 +578,8 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         return walletModel->getAddressTableModel()->labelForAddress(QString::fromStdString(rec->address));
     case AmountRole:
         return rec->credit + rec->debit;
+    case RefHeightRole:
+        return rec->refheight;
     case TxIDRole:
         return QString::fromStdString(rec->getTxID());
     case ConfirmedRole:
@@ -605,6 +617,8 @@ QVariant TransactionTableModel::headerData(int section, Qt::Orientation orientat
                 return tr("Destination address of transaction.");
             case Amount:
                 return tr("Amount removed from or added to balance.");
+            case RefHeight:
+                return tr("Reference block height for demurrage calculations.");
             }
         }
     }
