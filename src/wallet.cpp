@@ -550,7 +550,7 @@ bool CWallet::IsMine(const CTxIn &txin) const
     return false;
 }
 
-int64 CWallet::GetDebit(const CTxIn &txin) const
+int64 CWallet::GetDebit(const CTxIn &txin, int nRefHeight) const
 {
     {
         LOCK(cs_wallet);
@@ -560,7 +560,7 @@ int64 CWallet::GetDebit(const CTxIn &txin) const
             const CWalletTx& prev = (*mi).second;
             if (txin.prevout.n < prev.vout.size())
                 if (IsMine(prev.vout[txin.prevout.n]))
-                    return prev.vout[txin.prevout.n].nValue;
+                    return GetPresentValue(prev, prev.vout[txin.prevout.n], nRefHeight);
         }
     }
     return 0;
@@ -916,7 +916,7 @@ void CWallet::ResendWalletTransactions()
 //
 
 
-int64 CWallet::GetBalance() const
+int64 CWallet::GetBalance(int nBlockHeight) const
 {
     int64 nTotal = 0;
     {
@@ -925,14 +925,14 @@ int64 CWallet::GetBalance() const
         {
             const CWalletTx* pcoin = &(*it).second;
             if (pcoin->IsConfirmed())
-                nTotal += pcoin->GetAvailableCredit();
+                nTotal += pcoin->GetAvailableCredit(nBlockHeight);
         }
     }
 
     return nTotal;
 }
 
-int64 CWallet::GetUnconfirmedBalance() const
+int64 CWallet::GetUnconfirmedBalance(int nBlockHeight) const
 {
     int64 nTotal = 0;
     {
@@ -941,13 +941,13 @@ int64 CWallet::GetUnconfirmedBalance() const
         {
             const CWalletTx* pcoin = &(*it).second;
             if (!pcoin->IsFinal() || !pcoin->IsConfirmed())
-                nTotal += pcoin->GetAvailableCredit();
+                nTotal += pcoin->GetAvailableCredit(nBlockHeight);
         }
     }
     return nTotal;
 }
 
-int64 CWallet::GetImmatureBalance() const
+int64 CWallet::GetImmatureBalance(int nBlockHeight) const
 {
     int64 nTotal = 0;
     {
@@ -955,7 +955,7 @@ int64 CWallet::GetImmatureBalance() const
         for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
         {
             const CWalletTx* pcoin = &(*it).second;
-            nTotal += pcoin->GetImmatureCredit();
+            nTotal += pcoin->GetImmatureCredit(nBlockHeight);
         }
     }
     return nTotal;
@@ -1036,7 +1036,7 @@ static void ApproximateBestSubset(vector<pair<int64, pair<const CWalletTx*,unsig
     }
 }
 
-bool CWallet::SelectCoinsMinConf(int64 nTargetValue, int nConfMine, int nConfTheirs, vector<COutput> vCoins,
+bool CWallet::SelectCoinsMinConf(int64 nTargetValue, int nRefHeight, int nConfMine, int nConfTheirs, vector<COutput> vCoins,
                                  set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64& nValueRet) const
 {
     setCoinsRet.clear();
@@ -1058,8 +1058,11 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, int nConfMine, int nConfThe
         if (output.nDepth < (pcoin->IsFromMe() ? nConfMine : nConfTheirs))
             continue;
 
+        if (pcoin->nRefHeight > nRefHeight)
+            continue;
+
         int i = output.i;
-        int64 n = pcoin->vout[i].nValue;
+        int64 n = GetPresentValue(*pcoin, pcoin->vout[i], nRefHeight);
 
         pair<int64,pair<const CWalletTx*,unsigned int> > coin = make_pair(n,make_pair(pcoin, i));
 
@@ -1135,20 +1138,20 @@ bool CWallet::SelectCoinsMinConf(int64 nTargetValue, int nConfMine, int nConfThe
     return true;
 }
 
-bool CWallet::SelectCoins(int64 nTargetValue, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64& nValueRet) const
+bool CWallet::SelectCoins(int64 nTargetValue, int nRefHeight, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64& nValueRet) const
 {
     vector<COutput> vCoins;
     AvailableCoins(vCoins);
 
-    return (SelectCoinsMinConf(nTargetValue, 1, 6, vCoins, setCoinsRet, nValueRet) ||
-            SelectCoinsMinConf(nTargetValue, 1, 1, vCoins, setCoinsRet, nValueRet) ||
-            SelectCoinsMinConf(nTargetValue, 0, 1, vCoins, setCoinsRet, nValueRet));
+    return (SelectCoinsMinConf(nTargetValue, nRefHeight, 1, 6, vCoins, setCoinsRet, nValueRet) ||
+            SelectCoinsMinConf(nTargetValue, nRefHeight, 1, 1, vCoins, setCoinsRet, nValueRet) ||
+            SelectCoinsMinConf(nTargetValue, nRefHeight, 0, 1, vCoins, setCoinsRet, nValueRet));
 }
 
 
 
 
-bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend,
+bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend, int nRefHeight,
                                 CWalletTx& wtxNew, CReserveKey& reservekey, int64& nFeeRet, std::string& strFailReason)
 {
     int64 nValue = 0;
@@ -1178,6 +1181,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend,
                 wtxNew.vin.clear();
                 wtxNew.vout.clear();
                 wtxNew.fFromMe = true;
+                wtxNew.nRefHeight = nRefHeight;
 
                 int64 nTotalValue = nValue + nFeeRet;
                 double dPriority = 0;
@@ -1196,14 +1200,14 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend,
                 // Choose coins to use
                 set<pair<const CWalletTx*,unsigned int> > setCoins;
                 int64 nValueIn = 0;
-                if (!SelectCoins(nTotalValue, setCoins, nValueIn))
+                if (!SelectCoins(nTotalValue, wtxNew.nRefHeight, setCoins, nValueIn))
                 {
                     strFailReason = _("Insufficient funds");
                     return false;
                 }
                 BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
                 {
-                    int64 nCredit = pcoin.first->vout[pcoin.second].nValue;
+                    int64 nCredit = GetPresentValue(*pcoin.first, pcoin.first->vout[pcoin.second], wtxNew.nRefHeight);
                     //The priority after the next block (depth+1) is used instead of the current,
                     //reflecting an assumption the user would accept a bit more delay for
                     //a chance at a free transaction.
@@ -1303,12 +1307,12 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend,
     return true;
 }
 
-bool CWallet::CreateTransaction(CScript scriptPubKey, int64 nValue,
+bool CWallet::CreateTransaction(CScript scriptPubKey, int64 nValue, int nRefHeight,
                                 CWalletTx& wtxNew, CReserveKey& reservekey, int64& nFeeRet, std::string& strFailReason)
 {
     vector< pair<CScript, int64> > vecSend;
     vecSend.push_back(make_pair(scriptPubKey, nValue));
-    return CreateTransaction(vecSend, wtxNew, reservekey, nFeeRet, strFailReason);
+    return CreateTransaction(vecSend, nRefHeight, wtxNew, reservekey, nFeeRet, strFailReason);
 }
 
 // Call after CreateTransaction unless you want to abort
@@ -1363,7 +1367,7 @@ bool CWallet::CommitTransaction(CWalletTx& wtxNew, CReserveKey& reservekey)
 
 
 
-string CWallet::SendMoney(CScript scriptPubKey, int64 nValue, CWalletTx& wtxNew, bool fAskFee)
+string CWallet::SendMoney(CScript scriptPubKey, int64 nValue, int nRefHeight, CWalletTx& wtxNew, bool fAskFee)
 {
     CReserveKey reservekey(this);
     int64 nFeeRequired;
@@ -1375,9 +1379,9 @@ string CWallet::SendMoney(CScript scriptPubKey, int64 nValue, CWalletTx& wtxNew,
         return strError;
     }
     string strError;
-    if (!CreateTransaction(scriptPubKey, nValue, wtxNew, reservekey, nFeeRequired, strError))
+    if (!CreateTransaction(scriptPubKey, nValue, nRefHeight, wtxNew, reservekey, nFeeRequired, strError))
     {
-        if (nValue + nFeeRequired > GetBalance())
+        if (nValue + nFeeRequired > GetBalance(nRefHeight))
             strError = strprintf(_("Error: This transaction requires a transaction fee of at least %s because of its amount, complexity, or use of recently received funds!"), FormatMoney(nFeeRequired).c_str());
         printf("SendMoney() : %s\n", strError.c_str());
         return strError;
@@ -1394,19 +1398,19 @@ string CWallet::SendMoney(CScript scriptPubKey, int64 nValue, CWalletTx& wtxNew,
 
 
 
-string CWallet::SendMoneyToDestination(const CTxDestination& address, int64 nValue, CWalletTx& wtxNew, bool fAskFee)
+string CWallet::SendMoneyToDestination(const CTxDestination& address, int64 nValue, int nRefHeight, CWalletTx& wtxNew, bool fAskFee)
 {
     // Check amount
     if (nValue <= 0)
         return _("Invalid amount");
-    if (nValue + nTransactionFee > GetBalance())
+    if (nValue + nTransactionFee > GetBalance(nRefHeight))
         return _("Insufficient funds");
 
     // Parse Bitcoin address
     CScript scriptPubKey;
     scriptPubKey.SetDestination(address);
 
-    return SendMoney(scriptPubKey, nValue, wtxNew, fAskFee);
+    return SendMoney(scriptPubKey, nValue, nRefHeight, wtxNew, fAskFee);
 }
 
 
@@ -1464,7 +1468,7 @@ void CWallet::PrintWallet(const CBlock& block)
         if (mapWallet.count(block.vtx[0].GetHash()))
         {
             CWalletTx& wtx = mapWallet[block.vtx[0].GetHash()];
-            printf("    mine:  %d  %d  %"PRI64d"", wtx.GetDepthInMainChain(), wtx.GetBlocksToMaturity(), wtx.GetCredit());
+            printf("    mine:  %d  %d  %"PRI64d" %d", wtx.GetDepthInMainChain(), wtx.GetBlocksToMaturity(), wtx.GetCredit(), wtx.nRefHeight);
         }
     }
     printf("\n");
@@ -1655,7 +1659,7 @@ int64 CWallet::GetOldestKeyPoolTime()
     return keypool.nTime;
 }
 
-std::map<CTxDestination, int64> CWallet::GetAddressBalances()
+std::map<CTxDestination, int64> CWallet::GetAddressBalances(int nBlockHeight)
 {
     map<CTxDestination, int64> balances;
 
@@ -1683,7 +1687,7 @@ std::map<CTxDestination, int64> CWallet::GetAddressBalances()
                 if(!ExtractDestination(pcoin->vout[i].scriptPubKey, addr))
                     continue;
 
-                int64 n = pcoin->IsSpent(i) ? 0 : pcoin->vout[i].nValue;
+                int64 n = pcoin->IsSpent(i) ? 0 : GetPresentValue(*pcoin, pcoin->vout[i], nBlockHeight);
 
                 if (!balances.count(addr))
                     balances[addr] = 0;

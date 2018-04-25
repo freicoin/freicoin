@@ -151,7 +151,7 @@ private:
     bool WriteAccountingEntry(const uint64 nAccEntryNum, const CAccountingEntry& acentry);
 public:
     bool WriteAccountingEntry(const CAccountingEntry& acentry);
-    int64 GetAccountCreditDebit(const std::string& strAccount);
+    int64 GetAccountCreditDebit(const std::string& strAccount, int nBlockHeight);
     void ListAccountCreditDebit(const std::string& strAccount, std::list<CAccountingEntry>& acentries);
 
     DBErrors ReorderTransactions(CWallet*);
