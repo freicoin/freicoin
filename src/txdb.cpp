@@ -137,6 +137,8 @@ bool CCoinsViewDB::GetStats(CCoinsStats &stats) {
                 ss << VARINT(coins.nVersion);
                 ss << (coins.fCoinBase ? 'c' : 'n'); 
                 ss << VARINT(coins.nHeight);
+                if (coins.nVersion == 2)
+                    ss << VARINT(coins.nRefHeight);
                 stats.nTransactions++;
                 for (unsigned int i=0; i<coins.vout.size(); i++) {
                     const CTxOut &out = coins.vout[i];
