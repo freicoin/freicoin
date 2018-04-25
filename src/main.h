@@ -109,6 +109,7 @@ class CReserveKey;
 class CCoinsDB;
 class CBlockTreeDB;
 struct CDiskBlockPos;
+class CTxOut;
 class CCoins;
 class CTxUndo;
 class CCoinsView;
@@ -174,6 +175,11 @@ bool IsInitialBlockDownload();
 std::string GetWarnings(std::string strFor);
 /** Retrieve a transaction (from memory pool, or from disk, if possible) */
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock, bool fAllowSlow = false);
+/** Adjust to present value by subtracting demurrage */
+int64 GetTimeAdjustedValue(int64 nInitialValue, unsigned nRelativeDepth);
+/** Calculate value of an output at the specified block height */
+int64 GetPresentValue(const CCoins& coins, const CTxOut& output, int nHeight);
+int64 GetPresentValue(const CTransaction& tx, const CTxOut& output, int nHeight);
 /** Connect/disconnect blocks until pindexNew is the new tip of the active block chain */
 bool SetBestChain(CValidationState &state, CBlockIndex* pindexNew);
 /** Find the best known block, and make it the tip of the block chain */

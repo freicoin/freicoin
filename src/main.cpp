@@ -1318,6 +1318,25 @@ const CTxOut &CTransaction::GetOutputFor(const CTxIn& input, CCoinsViewCache& vi
     return coins.vout[input.prevout.n];
 }
 
+int64 GetTimeAdjustedValue(int64 nInitialValue, unsigned nRelativeDepth)
+{
+    return nInitialValue;
+}
+
+int64 GetPresentValue(const CCoins& coins, const CTxOut& output, int nHeight)
+{
+    if (nHeight < coins.nRefHeight)
+        throw std::runtime_error("GetPresentValue() : destination height less than origin");
+    return GetTimeAdjustedValue(output.nValue, static_cast<unsigned>(nHeight-coins.nRefHeight));
+}
+
+int64 GetPresentValue(const CTransaction& tx, const CTxOut& output, int nHeight)
+{
+    if (nHeight < tx.nRefHeight)
+        throw std::runtime_error("GetPresentValue() : destination height less than origin");
+    return GetTimeAdjustedValue(output.nValue, static_cast<unsigned>(nHeight-tx.nRefHeight));
+}
+
 int64 CTransaction::GetValueIn(CCoinsViewCache& inputs) const
 {
     if (IsCoinBase())
@@ -1325,7 +1344,12 @@ int64 CTransaction::GetValueIn(CCoinsViewCache& inputs) const
 
     int64 nResult = 0;
     for (unsigned int i = 0; i < vin.size(); i++)
-        nResult += GetOutputFor(vin[i], inputs).nValue;
+    {
+        // Assumes inputs.HaveCoins(vin[i].prevout.hash)
+        const CCoins& coins = inputs.GetCoins(vin[i].prevout.hash);
+        const CTxOut& txout = coins.vout[vin[i].prevout.n];
+        nResult += GetPresentValue(coins, txout, nRefHeight);
+    }
 
     return nResult;
 }
@@ -1409,7 +1433,7 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         // While checking, GetBestBlock() refers to the parent block.
         // This is also true for mempool checks.
         int nSpendHeight = inputs.GetBestBlock()->nHeight + 1;
-        int64 nValueIn = 0;
+        int64 nValueIn = 0, nInput;
         int64 nFees = 0;
         for (unsigned int i = 0; i < vin.size(); i++)
         {
@@ -1422,9 +1446,10 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
                     return state.Invalid(error("CheckInputs() : tried to spend coinbase at depth %d", nSpendHeight - coins.nHeight));
             }
 
+            nInput = GetPresentValue(coins, coins.vout[prevout.n], nRefHeight);
             // Check for negative or overflow input values
-            nValueIn += coins.vout[prevout.n].nValue;
-            if (!MoneyRange(coins.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nValueIn += nInput;
+            if (!MoneyRange(nInput) || !MoneyRange(nValueIn))
                 return state.DoS(100, error("CheckInputs() : txin values out of range"));
 
         }
@@ -1687,7 +1712,8 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
                      return state.DoS(100, error("ConnectBlock() : too many sigops"));
             }
 
-            nFees += tx.GetValueIn(view)-tx.GetValueOut();
+            int64 fee = tx.GetValueIn(view)-tx.GetValueOut();
+            nFees += GetTimeAdjustedValue(fee, pindex->nHeight-tx.nRefHeight);
 
             std::vector<CScriptCheck> vChecks;
             if (!tx.CheckInputs(state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
@@ -4302,12 +4328,13 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                     }
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
-                    nTotalIn += mempool.mapTx[txin.prevout.hash].vout[txin.prevout.n].nValue;
+                    const CTransaction &txPrevIn = mempool.mapTx[txin.prevout.hash];
+                    nTotalIn += GetPresentValue(txPrevIn, txPrevIn.vout[txin.prevout.n], tx.nRefHeight);
                     continue;
                 }
                 const CCoins &coins = view.GetCoins(txin.prevout.hash);
 
-                int64 nValueIn = coins.vout[txin.prevout.n].nValue;
+                int64 nValueIn = GetPresentValue(coins, coins.vout[txin.prevout.n], tx.nRefHeight);
                 nTotalIn += nValueIn;
 
                 int nConf = pindexPrev->nHeight - coins.nHeight + 1;
@@ -4323,7 +4350,13 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             // This is a more accurate fee-per-kilobyte than is used by the client code, because the
             // client code rounds up the size to the nearest 1K. That's good, because it gives an
             // incentive to create smaller transactions.
-            double dFeePerKb =  double(nTotalIn-tx.GetValueOut()) / (double(nTxSize)/1000.0);
+            int64 nFee = nTotalIn-tx.GetValueOut();
+            // Ignore demurrage calculations if the refheight age is less than
+            // 1008 blocks (1 week), to speed up block template construction.
+            // This heuristic has an error of less than 0.1%.
+            if (tx.nRefHeight + 1008 < pindexPrev->nHeight)
+                nFee = GetTimeAdjustedValue(nFee, pindexPrev->nHeight+1-tx.nRefHeight);
+            double dFeePerKb = double(nFee) / (double(nTxSize)/1000.0);
 
             if (porphan)
             {
@@ -4380,7 +4413,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
             if (!tx.HaveInputs(view))
                 continue;
 
-            int64 nTxFees = tx.GetValueIn(view)-tx.GetValueOut();
+            int64 nTxFees = GetTimeAdjustedValue(tx.GetValueIn(view)-tx.GetValueOut(), pindexPrev->nHeight+1-tx.nRefHeight);
 
             nTxSigOps += tx.GetP2SHSigOpCount(view);
             if (nBlockSigOps + nTxSigOps >= MAX_BLOCK_SIGOPS)
