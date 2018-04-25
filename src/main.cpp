@@ -667,6 +667,9 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
     if (!tx.CheckTransaction(state))
         return error("CTxMemPool::accept() : CheckTransaction failed");
 
+    if (tx.nRefHeight > nBestHeight + 1)
+        return error("CTxMemPool::accept() : tx.nRefHeight (%d) beyond the block height (%d)", tx.nRefHeight, nBestHeight + 1);
+
     // Coinbase is only valid in a block, not as a loose transaction
     if (tx.IsCoinBase())
         return state.DoS(100, error("CTxMemPool::accept() : coinbase as individual tx"));
@@ -1437,6 +1440,8 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         // While checking, GetBestBlock() refers to the parent block.
         // This is also true for mempool checks.
         int nSpendHeight = inputs.GetBestBlock()->nHeight + 1;
+        if (nSpendHeight < nRefHeight)
+            return state.Invalid(error("CheckInputs() : %s refheight greater than spend height", GetHash().ToString().c_str()));
         int64 nValueIn = 0, nInput;
         int64 nFees = 0;
         for (unsigned int i = 0; i < vin.size(); i++)
@@ -1715,6 +1720,9 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
                 if (nSigOps > MAX_BLOCK_SIGOPS)
                      return state.DoS(100, error("ConnectBlock() : too many sigops"));
             }
+
+            if (pindex->nHeight < tx.nRefHeight)
+                return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.nRefHeight"));
 
             int64 fee = tx.GetValueIn(view)-tx.GetValueOut();
             nFees += GetTimeAdjustedValue(fee, pindex->nHeight-tx.nRefHeight);
@@ -4389,6 +4397,10 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
 
             std::pop_heap(vecPriority.begin(), vecPriority.end(), comparer);
             vecPriority.pop_back();
+
+            // Immature refheight
+            if (pindexPrev->nHeight + 1 < tx.nRefHeight)
+                continue;
 
             // Size limits
             unsigned int nTxSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
