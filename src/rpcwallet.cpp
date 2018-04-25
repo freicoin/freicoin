@@ -583,12 +583,12 @@ int64_t GetAccountBalance(CWalletDB& walletdb, const string& strAccount, int nMi
         if (!IsFinalTx(wtx, height) || wtx.GetBlocksToMaturity() > 0 || wtx.GetDepthInMainChain() < 0)
             continue;
 
-        int64_t nReceived, nSent, nFee;
-        wtx.GetAccountAmounts(strAccount, nReceived, nSent, nFee);
+        int64_t nReceived, nSent, nFee, demurrage;
+        wtx.GetAccountAmounts(strAccount, nReceived, nSent, nFee, demurrage);
 
         if (nReceived != 0 && wtx.GetDepthInMainChain() >= nMinDepth)
             nBalance += nReceived;
-        nBalance -= nSent + nFee;
+        nBalance -= (nSent + nFee + demurrage);
     }
 
     // Tally internal accounting entries
@@ -640,7 +640,10 @@ Value getbalance(const Array& params, bool fHelp)
 
     if (params[0].get_str() == "*") {
         // Calculate total balance a different way from GetBalance()
-        // (GetBalance() sums up all available unspent TxOuts)
+        // (GetBalance() sums up all available unspent TxOuts AND applies demurrage)
+        // getbalance and getbalance '*' 0 should NOT return the same number
+        // because demurrage is not applied in account views, even the '*'
+        // aggregate-account view.
         int64_t nBalance = 0;
         for (map<uint256, CWalletTx>::iterator it = pwalletMain->mapWallet.begin(); it != pwalletMain->mapWallet.end(); ++it)
         {
@@ -648,11 +651,11 @@ Value getbalance(const Array& params, bool fHelp)
             if (!wtx.IsTrusted() || wtx.GetBlocksToMaturity() > 0)
                 continue;
 
-            int64_t allFee;
+            int64_t allFee, all_demurrage;
             string strSentAccount;
             list<pair<CTxDestination, int64_t> > listReceived;
             list<pair<CTxDestination, int64_t> > listSent;
-            wtx.GetAmounts(listReceived, listSent, allFee, strSentAccount);
+            wtx.GetAmounts(listReceived, listSent, allFee, all_demurrage, strSentAccount);
             if (wtx.GetDepthInMainChain() >= nMinDepth)
             {
                 BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64_t)& r, listReceived)
@@ -660,7 +663,7 @@ Value getbalance(const Array& params, bool fHelp)
             }
             BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64_t)& r, listSent)
                 nBalance -= r.second;
-            nBalance -= allFee;
+            nBalance -= (allFee + all_demurrage);
         }
         return  ValueFromAmount(nBalance);
     }
@@ -1118,17 +1121,17 @@ static void MaybePushAddress(Object & entry, const CTxDestination &dest)
 
 void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDepth, bool fLong, Array& ret)
 {
-    int64_t nFee;
+    int64_t nFee, demurrage;
     string strSentAccount;
     list<pair<CTxDestination, int64_t> > listReceived;
     list<pair<CTxDestination, int64_t> > listSent;
 
-    wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount);
+    wtx.GetAmounts(listReceived, listSent, nFee, demurrage, strSentAccount);
 
     bool fAllAccounts = (strAccount == string("*"));
 
     // Sent
-    if ((!listSent.empty() || nFee != 0) && (fAllAccounts || strAccount == strSentAccount))
+    if ((!listSent.empty() || (nFee + demurrage) != 0) && (fAllAccounts || strAccount == strSentAccount))
     {
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64_t)& s, listSent)
         {
@@ -1138,6 +1141,7 @@ void ListTransactions(const CWalletTx& wtx, const string& strAccount, int nMinDe
             entry.push_back(Pair("category", "send"));
             entry.push_back(Pair("amount", ValueFromAmount(-s.second)));
             entry.push_back(Pair("fee", ValueFromAmount(-nFee)));
+            entry.push_back(Pair("demurrage", ValueFromAmount(-demurrage)));
             if (fLong)
                 WalletTxToJSON(wtx, entry);
             entry.push_back(Pair("refheight", wtx.refheight));
@@ -1342,15 +1346,15 @@ Value listaccounts(const Array& params, bool fHelp)
     for (map<uint256, CWalletTx>::iterator it = pwalletMain->mapWallet.begin(); it != pwalletMain->mapWallet.end(); ++it)
     {
         const CWalletTx& wtx = (*it).second;
-        int64_t nFee;
+        int64_t nFee, demurrage;
         string strSentAccount;
         list<pair<CTxDestination, int64_t> > listReceived;
         list<pair<CTxDestination, int64_t> > listSent;
         int nDepth = wtx.GetDepthInMainChain();
         if (wtx.GetBlocksToMaturity() > 0 || nDepth < 0)
             continue;
-        wtx.GetAmounts(listReceived, listSent, nFee, strSentAccount);
-        mapAccountBalances[strSentAccount] -= nFee;
+        wtx.GetAmounts(listReceived, listSent, nFee, demurrage, strSentAccount);
+        mapAccountBalances[strSentAccount] -= (nFee + demurrage);
         BOOST_FOREACH(const PAIRTYPE(CTxDestination, int64_t)& s, listSent)
             mapAccountBalances[strSentAccount] -= s.second;
         if (nDepth >= nMinDepth)
@@ -1500,12 +1504,17 @@ Value gettransaction(const Array& params, bool fHelp)
     int64_t nCredit = wtx.GetCredit();
     int64_t nDebit = wtx.GetDebit();
     int64_t nNet = nCredit - nDebit;
-    int64_t nFee = (wtx.IsFromMe() ? wtx.GetValueOut() - nDebit : 0);
+    int64_t nFee, value_in = 0, demurrage = 0;
+    pwalletMain->GetInputSplit(wtx, value_in, demurrage);
+    nFee = value_in - wtx.GetValueOut();
 
     entry.push_back(Pair("amount", ValueFromAmount(nNet - nFee)));
     entry.push_back(Pair("refheight", wtx.refheight));
     if (wtx.IsFromMe())
+    {
         entry.push_back(Pair("fee", ValueFromAmount(nFee)));
+        entry.push_back(Pair("demurrage", ValueFromAmount(demurrage)));
+    }
 
     WalletTxToJSON(wtx, entry);
 

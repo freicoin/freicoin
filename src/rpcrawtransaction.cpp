@@ -278,6 +278,7 @@ Value listunspent(const Array& params, bool fHelp)
     vector<COutput> vecOutputs;
     assert(pwalletMain != NULL);
     pwalletMain->AvailableCoins(vecOutputs, false);
+    const int height = chainActive.Height() + 1;
     BOOST_FOREACH(const COutput& out, vecOutputs)
     {
         if (out.nDepth < nMinDepth || out.nDepth > nMaxDepth)
@@ -294,6 +295,8 @@ Value listunspent(const Array& params, bool fHelp)
         }
 
         int64_t nValue = out.tx->vout[out.i].nValue;
+        if (out.tx->refheight < height)
+            nValue = GetTimeAdjustedValue(nValue, height-out.tx->refheight);
         const CScript& pk = out.tx->vout[out.i].scriptPubKey;
         Object entry;
         entry.push_back(Pair("txid", out.tx->GetHash().GetHex()));

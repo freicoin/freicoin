@@ -1,7 +1,21 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2011-2018 The Freicoin developers
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the conjunctive terms of BOTH version 3 of the GNU
+// Affero General Public License as published by the Free Software
+// Foundation AND the MIT/X11 software license.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Affero General Public License and the MIT/X11 software license for
+// more details.
+//
+// You should have received a copy of both licenses along with this
+// program.  If not, see <https://www.gnu.org/licenses/> and
+// <http://www.opensource.org/licenses/mit-license.php>
 
 #include "miner.h"
 
@@ -196,12 +210,12 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
                     }
                     mapDependers[txin.prevout.hash].push_back(porphan);
                     porphan->setDependsOn.insert(txin.prevout.hash);
-                    nTotalIn += mempool.mapTx[txin.prevout.hash].GetTx().vout[txin.prevout.n].nValue;
+                    nTotalIn += mempool.mapTx[txin.prevout.hash].GetTx().GetPresentValueOfOutput(txin.prevout.n, tx.refheight);
                     continue;
                 }
                 const CCoins &coins = view.GetCoins(txin.prevout.hash);
 
-                int64_t nValueIn = coins.vout[txin.prevout.n].nValue;
+                int64_t nValueIn = coins.GetPresentValueOfOutput(txin.prevout.n, tx.refheight);
                 nTotalIn += nValueIn;
 
                 int nConf = pindexPrev->nHeight - coins.nHeight + 1;
@@ -217,7 +231,13 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
             // This is a more accurate fee-per-kilobyte than is used by the client code, because the
             // client code rounds up the size to the nearest 1K. That's good, because it gives an
             // incentive to create smaller transactions.
-            double dFeePerKb =  double(nTotalIn-tx.GetValueOut()) / (double(nTxSize)/1000.0);
+            int64_t nFee = nTotalIn-tx.GetValueOut();
+            // Ignore demurrage calculations if the refheight age is less than
+            // 1008 blocks (1 week), to speed up block template construction.
+            // This heuristic has an error of less than 0.1%.
+            if (tx.refheight + 1008 < pindexPrev->nHeight)
+                nFee = GetTimeAdjustedValue(nFee, pindexPrev->nHeight+1-tx.refheight);
+            double dFeePerKb = double(nFee) / (double(nTxSize)/1000.0);
 
             if (porphan)
             {
@@ -278,7 +298,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn)
             if (!view.HaveInputs(tx))
                 continue;
 
-            int64_t nTxFees = view.GetValueIn(tx)-tx.GetValueOut();
+            int64_t nTxFees = GetTimeAdjustedValue(view.GetValueIn(tx)-tx.GetValueOut(), pindexPrev->nHeight+1-tx.refheight);
 
             nTxSigOps += GetP2SHSigOpCount(tx, view);
             if (nBlockSigOps + nTxSigOps >= MAX_BLOCK_SIGOPS)

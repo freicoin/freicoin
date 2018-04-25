@@ -1,6 +1,20 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2012-2018 The Freicoin developers
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the conjunctive terms of BOTH version 3 of the GNU
+// Affero General Public License as published by the Free Software
+// Foundation AND the MIT/X11 software license.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Affero General Public License and the MIT/X11 software license for
+// more details.
+//
+// You should have received a copy of both licenses along with this
+// program.  If not, see <https://www.gnu.org/licenses/> and
+// <http://www.opensource.org/licenses/mit-license.php>
 
 #include "walletmodel.h"
 
@@ -57,8 +71,10 @@ qint64 WalletModel::getBalance(const CCoinControl *coinControl) const
         qint64 nBalance = 0;
         std::vector<COutput> vCoins;
         wallet->AvailableCoins(vCoins, true, coinControl);
+        const int height = chainActive.Height() + 1;
         BOOST_FOREACH(const COutput& out, vCoins)
-            nBalance += out.tx->vout[out.i].nValue;
+            if (out.tx->refheight <= height)
+                nBalance += out.tx->GetPresentValueOfOutput(out.i, height);
 
         return nBalance;
     }

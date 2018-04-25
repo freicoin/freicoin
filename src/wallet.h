@@ -290,6 +290,7 @@ public:
 
     std::set<CTxDestination> GetAccountAddresses(std::string strAccount) const;
 
+    bool GetInputSplit(const CWalletTx& wtx, int64_t& value_in, int64_t& demurrage) const;
     bool IsMine(const CTxIn& txin) const;
     int64_t GetDebit(const CTxIn& txin) const;
     bool IsMine(const CTxOut& txout) const
@@ -670,10 +671,10 @@ public:
     }
 
     void GetAmounts(std::list<std::pair<CTxDestination, int64_t> >& listReceived,
-                    std::list<std::pair<CTxDestination, int64_t> >& listSent, int64_t& nFee, std::string& strSentAccount) const;
+                    std::list<std::pair<CTxDestination, int64_t> >& listSent, int64_t& nFee, int64_t& demurrage, std::string& strSentAccount) const;
 
     void GetAccountAmounts(const std::string& strAccount, int64_t& nReceived,
-                           int64_t& nSent, int64_t& nFee) const;
+                           int64_t& nSent, int64_t& nFee, int64_t& demurrage) const;
 
     bool IsFromMe() const
     {

@@ -31,6 +31,8 @@ class CTransaction;
 /** No amount larger than this (in satoshi) is valid */
 static const int64_t MAX_MONEY = 21000000 * COIN;
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+/** Adjust to present value by subtracting demurrage */
+int64_t GetTimeAdjustedValue(int64_t initial_value, int relative_depth);
 
 /** An outpoint - a combination of a transaction hash and an index n into its vout */
 class COutPoint
@@ -238,6 +240,9 @@ public:
 
     uint256 GetHash() const;
     bool IsNewerThan(const CTransaction& old) const;
+
+    // Calculate value of an output at the specified block height
+    int64_t GetPresentValueOfOutput(int n, int height) const;
 
     // Return sum of txouts.
     int64_t GetValueOut() const;

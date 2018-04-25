@@ -122,6 +122,9 @@ public:
         Cleanup();
     }
 
+    // calculate value of an output at the specified block height
+    int64_t GetPresentValueOfOutput(int n, int height) const;
+
     void swap(CCoins &to) {
         std::swap(to.fCoinBase, fCoinBase);
         to.vout.swap(vout);

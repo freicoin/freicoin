@@ -21,6 +21,11 @@
 
 #include "util.h"
 
+int64_t GetTimeAdjustedValue(int64_t initial_value, int relative_depth)
+{
+    return initial_value;
+}
+
 std::string COutPoint::ToString() const
 {
     return strprintf("COutPoint(%s, %u)", hash.ToString().substr(0,10), n);
@@ -118,6 +123,13 @@ bool CTransaction::IsNewerThan(const CTransaction& old) const
         }
     }
     return fNewer;
+}
+
+int64_t CTransaction::GetPresentValueOfOutput(int n, int height) const
+{
+    if (height < refheight)
+        throw std::runtime_error("CTransaction::GetPresentValueOfOutput() : destination height less than origin");
+    return GetTimeAdjustedValue(vout[n].nValue, height-refheight);
 }
 
 int64_t CTransaction::GetValueOut() const

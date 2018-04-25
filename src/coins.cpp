@@ -20,6 +20,13 @@
 
 #include <assert.h>
 
+int64_t CCoins::GetPresentValueOfOutput(int n, int height) const
+{
+    if (height < refheight)
+        throw std::runtime_error("CCoins::GetPresentValueOfOutput() : destination height less than origin");
+    return GetTimeAdjustedValue(vout[n].nValue, height-refheight);
+}
+
 // calculate number of bytes for the bitmask, and its number of non-zero bytes
 // each bit in the bitmask represents the availability of one output, but the
 // availabilities of the first two outputs are encoded separately
@@ -168,7 +175,11 @@ int64_t CCoinsViewCache::GetValueIn(const CTransaction& tx)
 
     int64_t nResult = 0;
     for (unsigned int i = 0; i < tx.vin.size(); i++)
-        nResult += GetOutputFor(tx.vin[i]).nValue;
+    {
+        // Assumes HaveCoins(tx.vin[i].prevout.hash)
+        const COutPoint &prevout = tx.vin[i].prevout;
+        nResult += GetCoins(prevout.hash).GetPresentValueOfOutput(prevout.n, tx.refheight);
+    }
 
     return nResult;
 }

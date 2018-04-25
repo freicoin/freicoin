@@ -664,6 +664,34 @@ void CWallet::EraseFromWallet(const uint256 &hash)
 }
 
 
+bool CWallet::GetInputSplit(const CWalletTx& wtx, int64_t& value_in, int64_t& demurrage) const
+{
+    int missing = 0;
+    value_in = demurrage = 0;
+    BOOST_FOREACH(const CTxIn& txin, wtx.vin)
+    {
+        const CWalletTx* prev = GetWalletTx(txin.prevout.hash);
+        if (prev == NULL)
+        {
+            ++missing;
+            continue;
+        }
+        if (txin.prevout.n < prev->vout.size())
+        {
+            const CTxOut& txout = prev->vout[txin.prevout.n];
+            int64_t amount = txout.nValue;
+            if (prev->refheight < wtx.refheight)
+            {
+                amount = GetTimeAdjustedValue(amount, wtx.refheight-prev->refheight);
+                if (IsMine(txout))
+                    demurrage += txout.nValue - amount;
+            }
+            value_in += amount;
+        }
+    }
+    return !!missing;
+}
+
 bool CWallet::IsMine(const CTxIn &txin) const
 {
     {
@@ -762,19 +790,20 @@ int CWalletTx::GetRequestCount() const
 }
 
 void CWalletTx::GetAmounts(list<pair<CTxDestination, int64_t> >& listReceived,
-                           list<pair<CTxDestination, int64_t> >& listSent, int64_t& nFee, string& strSentAccount) const
+                           list<pair<CTxDestination, int64_t> >& listSent, int64_t& nFee, int64_t& demurrage, string& strSentAccount) const
 {
-    nFee = 0;
+    nFee = demurrage = 0;
     listReceived.clear();
     listSent.clear();
     strSentAccount = strFromAccount;
 
-    // Compute fee:
+    // Compute fee and demurrage:
     int64_t nDebit = GetDebit();
     if (nDebit > 0) // debit>0 means we signed/sent this transaction
     {
-        int64_t nValueOut = GetValueOut();
-        nFee = nDebit - nValueOut;
+        int64_t value_in = 0;
+        pwallet->GetInputSplit(*this, value_in, demurrage);
+        nFee = value_in - GetValueOut();
     }
 
     // Sent/received.
@@ -815,21 +844,22 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, int64_t> >& listReceived,
 }
 
 void CWalletTx::GetAccountAmounts(const string& strAccount, int64_t& nReceived,
-                                  int64_t& nSent, int64_t& nFee) const
+                                  int64_t& nSent, int64_t& nFee, int64_t& demurrage) const
 {
-    nReceived = nSent = nFee = 0;
+    nReceived = nSent = nFee = demurrage = 0;
 
-    int64_t allFee;
+    int64_t allFee, all_demurrage;
     string strSentAccount;
     list<pair<CTxDestination, int64_t> > listReceived;
     list<pair<CTxDestination, int64_t> > listSent;
-    GetAmounts(listReceived, listSent, allFee, strSentAccount);
+    GetAmounts(listReceived, listSent, allFee, all_demurrage, strSentAccount);
 
     if (strAccount == strSentAccount)
     {
         BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64_t)& s, listSent)
             nSent += s.second;
         nFee = allFee;
+        demurrage = all_demurrage;
     }
     {
         LOCK(pwallet->cs_wallet);
@@ -1001,7 +1031,7 @@ int64_t CWallet::GetBalance() const
         {
             const CWalletTx* pcoin = &(*it).second;
             if (pcoin->IsTrusted() && pcoin->refheight <= height)
-                nTotal += pcoin->GetAvailableCredit();
+                nTotal += GetTimeAdjustedValue(pcoin->GetAvailableCredit(), height-pcoin->refheight);
         }
     }
 
@@ -1018,7 +1048,7 @@ int64_t CWallet::GetUnconfirmedBalance() const
         {
             const CWalletTx* pcoin = &(*it).second;
             if ((!IsFinalTx(*pcoin, height) || (!pcoin->IsTrusted() && pcoin->GetDepthInMainChain() == 0)) && pcoin->refheight <= height)
-                nTotal += pcoin->GetAvailableCredit();
+                nTotal += GetTimeAdjustedValue(pcoin->GetAvailableCredit(), height-pcoin->refheight);
         }
     }
     return nTotal;
@@ -1033,9 +1063,12 @@ int64_t CWallet::GetImmatureBalance() const
         for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
         {
             const CWalletTx* pcoin = &(*it).second;
-            nTotal += pcoin->GetImmatureCredit();
+            int64_t credit = pcoin->GetImmatureCredit();
             if (pcoin->refheight > height)
-                nTotal += pcoin->GetAvailableCredit();
+                credit += pcoin->GetAvailableCredit();
+            else
+                credit = GetTimeAdjustedValue(credit, height-pcoin->refheight);
+            nTotal += credit;
         }
     }
     return nTotal;
@@ -1149,7 +1182,7 @@ bool CWallet::SelectCoinsMinConf(int64_t nTargetValue, int refheight, int nConfM
             continue;
 
         int i = output.i;
-        int64_t n = pcoin->vout[i].nValue;
+        int64_t n = pcoin->GetPresentValueOfOutput(i, refheight);
 
         pair<int64_t,pair<const CWalletTx*,unsigned int> > coin = make_pair(n,make_pair(pcoin, i));
 
@@ -1304,7 +1337,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend,
                 }
                 BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
                 {
-                    int64_t nCredit = pcoin.first->vout[pcoin.second].nValue;
+                    int64_t nCredit = pcoin.first->GetPresentValueOfOutput(pcoin.second, wtxNew.refheight);
                     //The coin age after the next block (depth+1) is used instead of the current,
                     //reflecting an assumption the user would accept a bit more delay for
                     //a chance at a free transaction.

@@ -1577,7 +1577,7 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
         int nSpendHeight = pindexPrev->nHeight + 1;
         if (nSpendHeight < tx.refheight)
             return state.Invalid(error("CheckInputs() : %s refheight greater than spend height", tx.GetHash().ToString()));
-        int64_t nValueIn = 0;
+        int64_t nValueIn = 0, nInput;
         int64_t nFees = 0;
         for (unsigned int i = 0; i < tx.vin.size(); i++)
         {
@@ -1598,8 +1598,9 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
                                  REJECT_INVALID, "bad-txns-non-monotonic-refheight");
 
             // Check for negative or overflow input values
-            nValueIn += coins.vout[prevout.n].nValue;
-            if (!MoneyRange(coins.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nInput = coins.GetPresentValueOfOutput(prevout.n, tx.refheight);
+            nValueIn += nInput;
+            if (!MoneyRange(nInput) || !MoneyRange(nValueIn))
                 return state.DoS(100, error("CheckInputs() : txin values out of range"),
                                  REJECT_INVALID, "bad-txns-inputvalues-outofrange");
 
@@ -1875,7 +1876,7 @@ bool ConnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex, C
                 return state.DoS(100, error("ConnectBlock() : block.nHeight < tx.refheight"),
                                  REJECT_INVALID, "bad-tx-refheight-gt-blk-height");
 
-            nFees += view.GetValueIn(tx)-tx.GetValueOut();
+            nFees += GetTimeAdjustedValue(view.GetValueIn(tx)-tx.GetValueOut(), pindex->nHeight-tx.refheight);
 
             std::vector<CScriptCheck> vChecks;
             if (!CheckInputs(tx, state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
