@@ -559,6 +559,10 @@ bool CTransaction::CheckTransaction(CValidationState &state) const
     if (::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return state.DoS(100, error("CTransaction::CheckTransaction() : size limits failed"));
 
+    // Check for negative reference height
+    if (nRefHeight < 0)
+        return state.DoS(100, error("CTransaction::CheckTransaction() : nRefHeight negative"));
+
     // Check for negative or overflow output values
     int64 nValueOut = 0;
     BOOST_FOREACH(const CTxOut& txout, vout)
