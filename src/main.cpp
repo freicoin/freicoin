@@ -1455,6 +1455,10 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
                     return state.Invalid(error("CheckInputs() : tried to spend coinbase at depth %d", nSpendHeight - coins.nHeight));
             }
 
+            // Check that refheight is monotonically increasing
+            if (nRefHeight < coins.nRefHeight)
+                return state.DoS(100, error("CheckInputs() : input refheight less than output refheight"));
+
             nInput = GetPresentValue(coins, coins.vout[prevout.n], nRefHeight);
             // Check for negative or overflow input values
             nValueIn += nInput;
