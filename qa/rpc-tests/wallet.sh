@@ -79,10 +79,10 @@ WaitBlocks
 $CLI $B2ARGS setgenerate true 101
 WaitBlocks
 
-CheckBalance "$B1ARGS" 50 "*"
-CheckBalance "$B1ARGS" 49.99513649
-CheckBalance "$B2ARGS" 50 "*"
-CheckBalance "$B2ARGS" 49.99518417
+CheckBalance "$B1ARGS" 750.56747480 "*"
+CheckBalance "$B1ARGS" 750.49446702
+CheckBalance "$B2ARGS" 750.56648789 "*"
+CheckBalance "$B2ARGS" 750.49419594
 
 # Send 21 XBT from 1 to 3. Second
 # transaction will be child of first, and
@@ -101,8 +101,8 @@ WaitBlocks
 
 # B1 should end up with 100 XBT in block rewards plus fees,
 # minus the 21 XBT sent to B3:
-CheckBalance "$B1ARGS" 78.99513649 "*"
-CheckBalance "$B1ARGS" 78.98752794
+CheckBalance "$B1ARGS" 1479.96127673 "*"
+CheckBalance "$B1ARGS" 1479.81873201
 CheckBalance "$B3ARGS" 21 "*"
 CheckBalance "$B3ARGS" 20.99797734
 
@@ -121,9 +121,9 @@ WaitBlocks
 # Check balances after confirmation
 CheckBalance "$B1ARGS" 0 "*"
 CheckBalance "$B1ARGS" 0
-CheckBalance "$B3ARGS" 99.98752794 "*"
-CheckBalance "$B3ARGS" 99.98540992
-CheckBalance "$B3ARGS" 78.98752794 "from1"
+CheckBalance "$B3ARGS" 1500.81873201 "*"
+CheckBalance "$B3ARGS" 1500.81527804
+CheckBalance "$B3ARGS" "1500.81873201-21" "from1"
 
 $CLI $B3ARGS stop > /dev/null 2>&1
 wait $B3PID

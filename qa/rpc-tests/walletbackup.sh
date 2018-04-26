@@ -156,12 +156,12 @@ WaitBlocks
 $CLI $B4ARGS setgenerate true 100
 WaitBlocks
 
-CheckBalance "$B1ARGS" 50 "*"
-CheckBalance "$B1ARGS" 49.99508881
-CheckBalance "$B2ARGS" 50 "*"
-CheckBalance "$B2ARGS" 49.99513649
-CheckBalance "$B3ARGS" 50 "*"
-CheckBalance "$B3ARGS" 49.99518417
+CheckBalance "$B1ARGS" 750.56747480 "*"
+CheckBalance "$B1ARGS" 750.49375130
+CheckBalance "$B2ARGS" 750.56648789 "*"
+CheckBalance "$B2ARGS" 750.49348021
+CheckBalance "$B3ARGS" 750.56550098 "*"
+CheckBalance "$B3ARGS" 750.49320912
 CheckBalance "$B4ARGS" 0
 
 echo "Creating transactions..."
@@ -245,7 +245,7 @@ BALANCE4=$( $CLI "$B4ARGS" getbalance "*" )
 
 TOTAL=$( dc -e "$BALANCE1 $BALANCE2 + $BALANCE3 + $DEM + $FEE + p" )
 
-AssertEqual $TOTAL 150.00000000
+AssertEqual $TOTAL 2251.69946367
 
 function StopThree {
   $CLI $B1ARGS stop > /dev/null 2>&1

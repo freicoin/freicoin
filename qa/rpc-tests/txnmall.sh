@@ -93,8 +93,8 @@ WaitBlocks
 $CLI $B2ARGS setgenerate true 100
 WaitBlocks
 
-CheckBalance "$B1ARGS" 50 "*"
-CheckBalance "$B1ARGS" 49.99518417
+CheckBalance "$B1ARGS" 750.56747480 "*"
+CheckBalance "$B1ARGS" 750.49518275
 CheckBalance "$B2ARGS" 0 "*"
 CheckBalance "$B2ARGS" 0
 
@@ -148,14 +148,14 @@ WaitBlocks
 # B1 should have 49 BTC; the 2 BTC send is
 # conflicted, and should not count in
 # balances.
-CheckBalance "$B1ARGS" 48.99518417 "*"
-CheckBalance "$B1ARGS" 48.99513744
-CheckBalance "$B1ARGS"  8.99518417 "foo"
+CheckBalance "$B1ARGS" 749.49518275 "*"
+CheckBalance "$B1ARGS" 749.49446797
+CheckBalance "$B1ARGS" 8.92770795 "foo"
 CheckBalance "$B1ARGS" 10 "bar"
 
 # B2 should have 51 BTC
-CheckBalance "$B2ARGS" 51 "*"
-CheckBalance "$B2ARGS" 50.99518321
+CheckBalance "$B2ARGS" 751.56648789 "*"
+CheckBalance "$B2ARGS" 751.49419498
 CheckBalance "$B2ARGS" 1 "from1"
 
 $CLI $B2ARGS stop > /dev/null 2>&1

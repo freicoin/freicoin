@@ -104,8 +104,8 @@ WaitBlocks
 $CLI $B2ARGS setgenerate true 100
 WaitBlocks
 
-CheckBalance "$B1ARGS" 100 "*"
-CheckBalance "$B1ARGS" 99.99032066
+CheckBalance "$B1ARGS" 1501.13396269 "*"
+CheckBalance "$B1ARGS" 1500.98866296
 CheckBalance "$B2ARGS" 0 "*"
 CheckBalance "$B2ARGS" 0
 
@@ -119,10 +119,10 @@ B1ADDRESS=$( $CLI $B1ARGS getnewaddress )
 B2ADDRESS=$( $CLI $B2ARGS getnewaddress )
 
 # Transaction C: send-to-self, spend A
-TXID_C=$( $CLI $B1ARGS sendtoaddress $B1ADDRESS 49.99516033)
+TXID_C=$( $CLI $B1ARGS sendtoaddress $B1ADDRESS 750.49419594)
 
 # Transaction D: spends B and C
-TXID_D=$( $CLI $B1ARGS sendtoaddress $B2ADDRESS 99.99022066)
+TXID_D=$( $CLI $B1ARGS sendtoaddress $B2ADDRESS 1500.98866296)
 
 CheckBalance "$B1ARGS" 0
 
@@ -150,8 +150,8 @@ WaitBlocks
 
 # B1 should still be able to spend 100, because D is conflicted
 # so does not count as a spend of B
-CheckBalance "$B1ARGS" 99.99032066 "*"
-CheckBalance "$B1ARGS" 99.99022530
+CheckBalance "$B1ARGS" 1501.06167074 "*"
+CheckBalance "$B1ARGS" 1500.98723151
 
 $CLI $B2ARGS stop > /dev/null 2>&1
 wait $B2PID
