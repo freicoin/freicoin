@@ -7,7 +7,8 @@ Source: http://sourceforge.net/projects/bitcoin/files/
 
 Files: *
 Copyright: 2009-2012, Bitcoin Core Developers
-License: Expat
+           2011-2018, Freicoin Developers
+License: AGPL-3 and Expat
 Comment: The Bitcoin Core Developers encompasses the current developers listed on bitcoin.org,
          as well as the numerous contributors to the project.
 

@@ -10,17 +10,6 @@
         <translation>&lt;b&gt;جوهر البيت كوين&lt;/b&gt; إصدار</translation>
     </message>
     <message>
-        <source>
-This is experimental software.
-
-Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
-        <translation>هذا هو برنامج تجريبي .
- موزع تحت رخصة البرمجيات MIT / X11، انظر نسخ ملف أو المصاحب http://www.opensource.org/licenses/mit-license.php
- يشتمل هذا المنتج على برنامج تم تطويره من قبل بينسل مشروع للاستخدام في مجموعة أدوات OpenSSL (http://www.openssl.org/) وبرامج التشفير كتبه اريك يونغ (eay@cryptsoft.com) والبرمجيات بنب كتبه توماس برنارد.</translation>
-    </message>
-    <message>
         <source>Copyright</source>
         <translation>الحقوق محفوظة</translation>
     </message>

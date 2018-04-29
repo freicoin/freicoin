@@ -2,23 +2,6 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>
-This is experimental software.
-
-Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
-        <translation>
-Este es un software experimental.
-
-Distribuido bajo la licencia MIT/X11, vea el archivo adjunto
-COPYING o http://www.opensource.org/licenses/mit-license.php.
-
-Este producto incluye software desarrollado por OpenSSL Project para su uso en
-el OpenSSL Toolkit (http://www.openssl.org/), software criptográfico escrito por
-Eric Young (eay@cryptsoft.com) y UPnP software escrito por Thomas Bernard.</translation>
-    </message>
-    <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
     </message>

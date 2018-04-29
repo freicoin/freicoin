@@ -10,20 +10,6 @@
         <translation>Version de &lt;b&gt;Bitcoin Core&lt;/b&gt; </translation>
     </message>
     <message>
-        <source>
-This is experimental software.
-
-Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
-        <translation>
-Ce logiciel est expérimental.
-
-Distribué sous licence MIT/X11 d'utilisation d'un logiciel. Consultez le fichier joint COPYING ou http://www.opensource.org/licenses/mit-license.php.
-
-Ce produit comprend des logiciels développés par le projet OpenSSL afin d'être utilisés dans la boîte à outils OpenSSL (http://www.openssl.org/), un logiciel de chiffrement écrit par Eric Young (eay@cryptsoft.com) et un logiciel UPnP développé par Thomas Bernard.</translation>
-    </message>
-    <message>
         <source>Copyright</source>
         <translation>Tous droits réservés</translation>
     </message>

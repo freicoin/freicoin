@@ -2,6 +2,7 @@ Bitcoin 0.9.5 BETA
 =====================
 
 Copyright (c) 2009-2015 Bitcoin Developers
+Copyright (c) 2011-2018 Freicoin Developers
 
 
 Setup
@@ -71,6 +72,6 @@ The Bitcoin repo's [root README](https://github.com/bitcoin/bitcoin/blob/master/
 
 License
 ---------------------
-Distributed under the [MIT/X11 software license](http://www.opensource.org/licenses/mit-license.php).
+Distributed under the conjunctive terms of BOTH the [GNU Affero General Purpose License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) and the [MIT/X11 software license](http://www.opensource.org/licenses/mit-license.php).
 This product includes software developed by the OpenSSL Project for use in the [OpenSSL Toolkit](http://www.openssl.org/). This product includes
 cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cryptsoft.com)), and UPnP software written by Thomas Bernard.

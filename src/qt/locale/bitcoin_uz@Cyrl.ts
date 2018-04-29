@@ -10,20 +10,6 @@
         <translation>&lt;b&gt;Bitcoin Core&lt;/b&gt; версияси</translation>
     </message>
     <message>
-        <source>
-This is experimental software.
-
-Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
-        <translation>
-Бу синовдаги дастурий таъминот.
-
-MIT/X11 дастурий таъминот лицензияси остида тарқатилади, ҳамкорлик COPYING файлини ёки http://www.opensource.org/licenses/mit-license.php сайтини кўринг.
-
-Ушбу маҳсулотга "OpenSSL Toolkit"да фойдаланиш учун OpenSSL лойиҳаси (http://www.openssl.org/) ва Eric Young (eay@cryptsoft.com) томонидан ёзилган криптографик дастур ҳамда Thomas Bernard.томонидан тузилган UPnP дастури қўшилган.</translation>
-    </message>
-    <message>
         <source>Copyright</source>
         <translation>Муаллифлик ҳуқуқи</translation>
     </message>

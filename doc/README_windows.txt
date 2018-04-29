@@ -1,12 +1,14 @@
 Bitcoin 0.9.4 BETA
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
+Copyright (c) 2011-2018 Freicoin Developers
 
-Distributed under the MIT/X11 software license, see the accompanying
-file COPYING or http://www.opensource.org/licenses/mit-license.php.
-This product includes software developed by the OpenSSL Project for use in
-the OpenSSL Toolkit (http://www.openssl.org/).  This product includes
-cryptographic software written by Eric Young (eay@cryptsoft.com).
+Distributed under the conjunctive terms of BOTH the GNU Affero General
+Public License v3.0 and the MIT/X11 software license, see the
+accompanying file COPYING for details.  This product includes software
+developed by the OpenSSL Project for use in the OpenSSL Toolkit
+(http://www.openssl.org/).  This product includes cryptographic
+software written by Eric Young (eay@cryptsoft.com).
 
 
 Intro

@@ -10,20 +10,6 @@
         <translation>&lt;b&gt;비트코인 코어&lt;/b&gt; 버전</translation>
     </message>
     <message>
-        <source>
-This is experimental software.
-
-Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
-        <translation>
-이 프로그램은 시험용입니다.
-
-MIT/X11 프로그램 라이선스에 따라 배포합니다. COPYING 또는 http://www.opensource.org/licenses/mit-license.php를 참조하십시오.
-
-이 프로그램에는 OpenSSL 툴킷(http://www.openssl.org) 사용 목적으로 개발한 OpenSSL 프로젝트를 포함하고 있으며, 암호화 프로그램은 Eric Young(eay@cryptsoft.com)이, UPnP 프로그램은 Thomas Bernard가 작성했습니다.</translation>
-    </message>
-    <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
     </message>

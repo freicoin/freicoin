@@ -10,20 +10,6 @@
         <translation>&lt;b&gt;ליבת ביטקוין&lt;/b&gt; גרסה</translation>
     </message>
     <message>
-        <source>
-This is experimental software.
-
-Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.</source>
-        <translation>
-זוהי תוכנה ניסיונית.
-
-מופצת תחת רישיון התוכנה MIT/X11, ראה את הקובץ המצורף COPYING או http://www.opensource.org/licenses/mit-license.php.
-
-המוצר הזה כולל תוכנה שפותחה ע"י פרויקט OpenSSL לשימוש בתיבת הכלים OpenSSL (http://www.openssl.org/) ותוכנה קריפטוגרפית שנכתבה ע"י אריק יאנג (eay@cryptsoft.com) ותוכנת UPnP שנכתבה ע"י תומס ברנרד.</translation>
-    </message>
-    <message>
         <source>Copyright</source>
         <translation>זכויות יוצרים</translation>
     </message>

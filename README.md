@@ -20,8 +20,10 @@ the Bitcoin Core software, see http://www.bitcoin.org/en/download.
 License
 -------
 
-Bitcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
-information or see http://opensource.org/licenses/MIT.
+Bitcoin Core is released under the conjunctive terms of BOTH version 3
+of the GNU Affero General Public License as published by the Free
+Software Foundation AND the MIT/X11 software license. See
+[COPYING](COPYING) for more information.
 
 Development process
 -------------------
