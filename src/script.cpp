@@ -1138,6 +1138,9 @@ public:
              SerializeOutput(s, nOutput, nType, nVersion);
         // Serialie nLockTime
         ::Serialize(s, txTo.nLockTime, nType, nVersion);
+        // Serialize refheight
+        if (txTo.nVersion == 2)
+            ::Serialize(s, txTo.refheight, nType, nVersion);
     }
 };
 }

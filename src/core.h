@@ -1,7 +1,21 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2013 The Bitcoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2011-2018 The Freicoin developers
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the conjunctive terms of BOTH version 3 of the GNU
+// Affero General Public License as published by the Free Software
+// Foundation AND the MIT/X11 software license.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Affero General Public License and the MIT/X11 software license for
+// more details.
+//
+// You should have received a copy of both licenses along with this
+// program.  If not, see <https://www.gnu.org/licenses/> and
+// <http://www.opensource.org/licenses/mit-license.php>
 
 #ifndef BITCOIN_CORE_H
 #define BITCOIN_CORE_H
@@ -190,6 +204,7 @@ public:
     std::vector<CTxIn> vin;
     std::vector<CTxOut> vout;
     unsigned int nLockTime;
+    int refheight;
 
     CTransaction()
     {
@@ -203,6 +218,8 @@ public:
         READWRITE(vin);
         READWRITE(vout);
         READWRITE(nLockTime);
+        if (nVersion == 2)
+            READWRITE(refheight);
     )
 
     void SetNull()
@@ -211,6 +228,7 @@ public:
         vin.clear();
         vout.clear();
         nLockTime = 0;
+        refheight = 0;
     }
 
     bool IsNull() const
@@ -239,7 +257,8 @@ public:
         return (a.nVersion  == b.nVersion &&
                 a.vin       == b.vin &&
                 a.vout      == b.vout &&
-                a.nLockTime == b.nLockTime);
+                a.nLockTime == b.nLockTime &&
+                a.refheight == b.refheight);
     }
 
     friend bool operator!=(const CTransaction& a, const CTransaction& b)
@@ -291,14 +310,16 @@ public:
     bool fCoinBase;       // if the outpoint was the last unspent: whether it belonged to a coinbase
     unsigned int nHeight; // if the outpoint was the last unspent: its height
     int nVersion;         // if the outpoint was the last unspent: its version
+    int refheight;        // if the outpoint was the last unspent: its refheight
 
-    CTxInUndo() : txout(), fCoinBase(false), nHeight(0), nVersion(0) {}
-    CTxInUndo(const CTxOut &txoutIn, bool fCoinBaseIn = false, unsigned int nHeightIn = 0, int nVersionIn = 0) : txout(txoutIn), fCoinBase(fCoinBaseIn), nHeight(nHeightIn), nVersion(nVersionIn) { }
+    CTxInUndo() : txout(), fCoinBase(false), nHeight(0), nVersion(0), refheight(0) {}
+    CTxInUndo(const CTxOut &txoutIn, bool fCoinBaseIn = false, unsigned int nHeightIn = 0, int nVersionIn = 0, int refheightIn = 0) : txout(txoutIn), fCoinBase(fCoinBaseIn), nHeight(nHeightIn), nVersion(nVersionIn), refheight(refheightIn) { }
 
     unsigned int GetSerializeSize(int nType, int nVersion) const {
         return ::GetSerializeSize(VARINT(nHeight*2+(fCoinBase ? 1 : 0)), nType, nVersion) +
                (nHeight > 0 ? ::GetSerializeSize(VARINT(this->nVersion), nType, nVersion) : 0) +
-               ::GetSerializeSize(CTxOutCompressor(REF(txout)), nType, nVersion);
+               ::GetSerializeSize(CTxOutCompressor(REF(txout)), nType, nVersion) +
+               ((nHeight > 0 && this->nVersion == 2) ? ::GetSerializeSize(VARINT(refheight), nType, nVersion) : 0);
     }
 
     template<typename Stream>
@@ -307,6 +328,8 @@ public:
         if (nHeight > 0)
             ::Serialize(s, VARINT(this->nVersion), nType, nVersion);
         ::Serialize(s, CTxOutCompressor(REF(txout)), nType, nVersion);
+        if (nHeight > 0 && this->nVersion == 2)
+            ::Serialize(s, VARINT(refheight), nType, nVersion);
     }
 
     template<typename Stream>
@@ -318,6 +341,10 @@ public:
         if (nHeight > 0)
             ::Unserialize(s, VARINT(this->nVersion), nType, nVersion);
         ::Unserialize(s, REF(CTxOutCompressor(REF(txout))), nType, nVersion);
+        if (nHeight > 0 && this->nVersion == 2)
+            ::Unserialize(s, VARINT(refheight), nType, nVersion);
+        else
+            refheight = 0;
     }
 };
 

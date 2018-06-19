@@ -70,6 +70,7 @@ void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry)
     entry.push_back(Pair("txid", tx.GetHash().GetHex()));
     entry.push_back(Pair("version", tx.nVersion));
     entry.push_back(Pair("locktime", (int64_t)tx.nLockTime));
+    entry.push_back(Pair("refheight", (int64_t)tx.refheight));
     Array vin;
     BOOST_FOREACH(const CTxIn& txin, tx.vin)
     {
@@ -348,7 +349,9 @@ Value createrawtransaction(const Array& params, bool fHelp)
             "    {\n"
             "      \"address\": x.xxx   (numeric, required) The key is the bitcoin address, the value is the btc amount\n"
             "      ,...\n"
-            "    }\n"
+            "    },\n"
+            "3. refheight             (numeric, optional, default=tip+1) The reference height of the outputs.\n"
+            "                         If not specified, the height of the tip of the chian is used.\n"
 
             "\nResult:\n"
             "\"transaction\"            (string) hex string of the transaction\n"
@@ -363,7 +366,15 @@ Value createrawtransaction(const Array& params, bool fHelp)
     Array inputs = params[0].get_array();
     Object sendTo = params[1].get_obj();
 
+    int refheight = chainActive.Height()+1;
+    if (params.size() > 2 && params[2].type() != null_type)
+    {
+        const int value = params[2].get_int();
+        refheight = (value < 0) ? refheight + value : value;
+    }
+
     CTransaction rawTx;
+    rawTx.refheight = refheight;
 
     BOOST_FOREACH(const Value& input, inputs)
     {
@@ -421,6 +432,7 @@ Value decoderawtransaction(const Array& params, bool fHelp)
             "  \"txid\" : \"id\",        (string) The transaction id\n"
             "  \"version\" : n,          (numeric) The version\n"
             "  \"locktime\" : ttt,       (numeric) The lock time\n"
+            "  \"refheight\" : n,        (numeric) The reference height\n"
             "  \"vin\" : [               (array of json objects)\n"
             "     {\n"
             "       \"txid\": \"id\",    (string) The transaction id\n"

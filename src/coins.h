@@ -1,7 +1,21 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2013 The Bitcoin developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2011-2018 The Freicoin developers
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the conjunctive terms of BOTH version 3 of the GNU
+// Affero General Public License as published by the Free Software
+// Foundation AND the MIT/X11 software license.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Affero General Public License and the MIT/X11 software license for
+// more details.
+//
+// You should have received a copy of both licenses along with this
+// program.  If not, see <https://www.gnu.org/licenses/> and
+// <http://www.opensource.org/licenses/mit-license.php>
 #ifndef BITCOIN_COINS_H
 #define BITCOIN_COINS_H
 
@@ -81,13 +95,16 @@ public:
     // as new tx version will probably only be introduced at certain heights
     int nVersion;
 
+    // refheight of the CTransaction, or zero if nVersion!=2
+    int refheight;
+
     // construct a CCoins from a CTransaction, at a given height
-    CCoins(const CTransaction &tx, int nHeightIn) : fCoinBase(tx.IsCoinBase()), vout(tx.vout), nHeight(nHeightIn), nVersion(tx.nVersion) {
+    CCoins(const CTransaction &tx, int nHeightIn) : fCoinBase(tx.IsCoinBase()), vout(tx.vout), nHeight(nHeightIn), nVersion(tx.nVersion), refheight(tx.refheight) {
         ClearUnspendable();
     }
 
     // empty constructor
-    CCoins() : fCoinBase(false), vout(0), nHeight(0), nVersion(0) { }
+    CCoins() : fCoinBase(false), vout(0), nHeight(0), nVersion(0), refheight(0) { }
 
     // remove spent outputs at the end of vout
     void Cleanup() {
@@ -110,6 +127,7 @@ public:
         to.vout.swap(vout);
         std::swap(to.nHeight, nHeight);
         std::swap(to.nVersion, nVersion);
+        std::swap(to.refheight, refheight);
     }
 
     // equality test
@@ -120,6 +138,7 @@ public:
          return a.fCoinBase == b.fCoinBase &&
                 a.nHeight == b.nHeight &&
                 a.nVersion == b.nVersion &&
+                a.refheight == b.refheight &&
                 a.vout == b.vout;
     }
     friend bool operator!=(const CCoins &a, const CCoins &b) {
@@ -150,6 +169,9 @@ public:
         for (unsigned int i = 0; i < vout.size(); i++)
             if (!vout[i].IsNull())
                 nSize += ::GetSerializeSize(CTxOutCompressor(REF(vout[i])), nType, nVersion);
+        // refheight
+        if (this->nVersion == 2)
+            nSize += ::GetSerializeSize(VARINT(refheight), nType, nVersion);
         // height
         nSize += ::GetSerializeSize(VARINT(nHeight), nType, nVersion);
         return nSize;
@@ -180,6 +202,9 @@ public:
             if (!vout[i].IsNull())
                 ::Serialize(s, CTxOutCompressor(REF(vout[i])), nType, nVersion);
         }
+        // refheight
+        if (this->nVersion == 2)
+            ::Serialize(s, VARINT(refheight), nType, nVersion);
         // coinbase height
         ::Serialize(s, VARINT(nHeight), nType, nVersion);
     }
@@ -213,6 +238,11 @@ public:
             if (vAvail[i])
                 ::Unserialize(s, REF(CTxOutCompressor(vout[i])), nType, nVersion);
         }
+        // refheight
+        if (this->nVersion == 2)
+            ::Unserialize(s, VARINT(refheight), nType, nVersion);
+        else
+            refheight = 0;
         // coinbase height
         ::Unserialize(s, VARINT(nHeight), nType, nVersion);
         Cleanup();
