@@ -1580,6 +1580,11 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, CCoinsViewCach
                         REJECT_INVALID, "bad-txns-premature-spend-of-coinbase");
             }
 
+            // Check that refheight is monotonically increasing
+            if (tx.refheight < coins.refheight)
+                return state.DoS(100, error("CheckInputs() : input refheight less than output refheight"),
+                                 REJECT_INVALID, "bad-txns-non-monotonic-refheight");
+
             // Check for negative or overflow input values
             nValueIn += coins.vout[prevout.n].nValue;
             if (!MoneyRange(coins.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
