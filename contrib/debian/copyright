@@ -1,8 +1,8 @@
 Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=174
 Upstream-Name: Bitcoin
-Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
+Upstream-Contact: Mark Friedenbach <mark@friedenbach.org>
  irc://#bitcoin@freenode.net
-Source: http://sourceforge.net/projects/bitcoin/files/
+Source: https://github.com/bitcoin/bitcoin/releases
  https://github.com/bitcoin/bitcoin
 
 Files: *
