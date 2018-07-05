@@ -1,3 +1,7 @@
+freicoin (0.9.5.0-6) precise; urgency=high
+
+ -- Mark Friedenbach <mark@friedenbach.org>
+
 freicoin (0.8.6.2-precise5) precise; urgency=high
 
   [Mark Friedenbach]

@@ -1,4 +1,4 @@
-Freicoin 0.9.4 BETA
+Freicoin 0.9.5.0-6
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
 Copyright (c) 2011-2018 Freicoin Developers
