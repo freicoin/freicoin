@@ -1,6 +1,6 @@
 [Protocol]
-exec=bitcoin-qt '%u'
-protocol=bitcoin
+exec=freicoin-qt '%u'
+protocol=freicoin
 input=none
 output=none
 helper=true

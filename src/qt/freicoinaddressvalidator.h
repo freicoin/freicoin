@@ -2,34 +2,34 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOINADDRESSVALIDATOR_H
-#define BITCOINADDRESSVALIDATOR_H
+#ifndef FREICOINADDRESSVALIDATOR_H
+#define FREICOINADDRESSVALIDATOR_H
 
 #include <QValidator>
 
 /** Base58 entry widget validator, checks for valid characters and
  * removes some whitespace.
  */
-class BitcoinAddressEntryValidator : public QValidator
+class FreicoinAddressEntryValidator : public QValidator
 {
     Q_OBJECT
 
 public:
-    explicit BitcoinAddressEntryValidator(QObject *parent);
+    explicit FreicoinAddressEntryValidator(QObject *parent);
 
     State validate(QString &input, int &pos) const;
 };
 
-/** Bitcoin address widget validator, checks for a valid bitcoin address.
+/** Freicoin address widget validator, checks for a valid freicoin address.
  */
-class BitcoinAddressCheckValidator : public QValidator
+class FreicoinAddressCheckValidator : public QValidator
 {
     Q_OBJECT
 
 public:
-    explicit BitcoinAddressCheckValidator(QObject *parent);
+    explicit FreicoinAddressCheckValidator(QObject *parent);
 
     State validate(QString &input, int &pos) const;
 };
 
-#endif // BITCOINADDRESSVALIDATOR_H
+#endif // FREICOINADDRESSVALIDATOR_H

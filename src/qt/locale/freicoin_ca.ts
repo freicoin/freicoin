@@ -2,20 +2,20 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
-        <translation>Quant al Bitcoin Core</translation>
+        <source>About Freicoin</source>
+        <translation>Quant al Freicoin</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Bitcoin Core&lt;/b&gt; version</source>
-        <translation>Versió del &lt;b&gt;Bitcoin Core&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
+        <translation>Versió del &lt;b&gt;Freicoin&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Els desenvolupadors del Bitcoin Core</translation>
+        <source>The Freicoin developers</source>
+        <translation>Els desenvolupadors del Freicoin</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
@@ -89,12 +89,12 @@
         <translation>S'estan rebent les adreces</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Aquestes són les vostres adreces de Bitcoin per enviar els pagaments. Sempre reviseu l'import i l'adreça del destinatari abans de transferir monedes.</translation>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Aquestes són les vostres adreces de Freicoin per enviar els pagaments. Sempre reviseu l'import i l'adreça del destinatari abans de transferir monedes.</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Aquestes són les vostres adreces Bitcoin per rebre pagaments. Es recomana utilitzar una adreça nova de recepció per a cada transacció.</translation>
+        <source>These are your Freicoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Aquestes són les vostres adreces Freicoin per rebre pagaments. Es recomana utilitzar una adreça nova de recepció per a cada transacció.</translation>
     </message>
     <message>
         <source>Copy &amp;Label</source>
@@ -191,8 +191,8 @@
         <translation>Confirma l'encriptació del moneder</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>Avís: si encripteu el vostre moneder i perdeu la contrasenya, &lt;b&gt;PERDREU TOTS ELS VOSTRES BITCOINS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation>Avís: si encripteu el vostre moneder i perdeu la contrasenya, &lt;b&gt;PERDREU TOTS ELS VOSTRES FREICOINS&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -211,8 +211,8 @@
         <translation>Moneder encriptat</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Bitcoin es tancarà ara per acabar el procés d'encriptació. Recordeu que encriptar el moneder no protegeix completament els bitcoins de ser robats per programari maliciós instal·lat a l'ordinador.</translation>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation>Freicoin es tancarà ara per acabar el procés d'encriptació. Recordeu que encriptar el moneder no protegeix completament els freicoins de ser robats per programari maliciós instal·lat a l'ordinador.</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -244,7 +244,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Signa el &amp;missatge...</translation>
@@ -282,8 +282,8 @@
         <translation>Surt de l'aplicació</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Mostra informació sobre el Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Mostra informació sobre el Freicoin</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -330,12 +330,12 @@
         <translation>S'estan reindexant els blocs al disc...</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
-        <translation>Envia monedes a una adreça Bitcoin</translation>
+        <source>Send coins to a Freicoin address</source>
+        <translation>Envia monedes a una adreça Freicoin</translation>
     </message>
     <message>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>Modifica les opcions de configuració per bitcoin</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Modifica les opcions de configuració per freicoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -358,8 +358,8 @@
         <translation>&amp;Verifica el missatge...</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -386,12 +386,12 @@
         <translation>Encripta les claus privades pertanyents al moneder</translation>
     </message>
     <message>
-        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation>Signa el missatges amb la seva adreça de Bitcoin per provar que les poseeixes</translation>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
+        <translation>Signa el missatges amb la seva adreça de Freicoin per provar que les poseeixes</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation>Verifiqueu els missatges per assegurar-vos que han estat signats amb una adreça Bitcoin específica.</translation>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
+        <translation>Verifiqueu els missatges per assegurar-vos que han estat signats amb una adreça Freicoin específica.</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -414,16 +414,16 @@
         <translation>[testnet]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
-        <translation>Sol·licita pagaments (genera codis QR i bitcoin: URI)</translation>
+        <source>Request payments (generates QR codes and freicoin: URIs)</source>
+        <translation>Sol·licita pagaments (genera codis QR i freicoin: URI)</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
-        <translation>&amp;Quant al Bitcoin Core</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>&amp;Quant al Freicoin</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -434,24 +434,24 @@
         <translation>Mostra la llista d'adreces de recepció i etiquetes utilitzades</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
-        <translation>Obre una bitcoin: sol·licitud d'URI o pagament</translation>
+        <source>Open a freicoin: URI or payment request</source>
+        <translation>Obre una freicoin: sol·licitud d'URI o pagament</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>Opcions de la &amp;línia d'ordres</translation>
     </message>
     <message>
-        <source>Show the Bitcoin Core help message to get a list with possible Bitcoin command-line options</source>
-        <translation>Mostra el missatge d'ajuda del Bitcoin Core per obtenir una llista amb les possibles opcions de línia d'ordres de Bitcoin</translation>
+        <source>Show the Freicoin help message to get a list with possible Freicoin command-line options</source>
+        <translation>Mostra el missatge d'ajuda del Freicoin per obtenir una llista amb les possibles opcions de línia d'ordres de Freicoin</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
-        <translation>Client de Bitcoin</translation>
+        <source>Freicoin client</source>
+        <translation>Client de Freicoin</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n connexió activa a la xarxa Bitcoin</numerusform><numerusform>%n connexions actives a la xarxa Bitcoin</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation><numerusform>%n connexió activa a la xarxa Freicoin</numerusform><numerusform>%n connexions actives a la xarxa Freicoin</numerusform></translation>
     </message>
     <message>
         <source>No block source available...</source>
@@ -542,8 +542,8 @@ Address: %4
         <translation>El moneder està &lt;b&gt;encriptat&lt;/b&gt; i actualment &lt;b&gt;bloquejat&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Bitcoin can no longer continue safely and will quit.</source>
-        <translation>Ha tingut lloc un error fatal. Bitcoin no pot continuar executant-se de manera segura i es tancará.</translation>
+        <source>A fatal error occurred. Freicoin can no longer continue safely and will quit.</source>
+        <translation>Ha tingut lloc un error fatal. Freicoin no pot continuar executant-se de manera segura i es tancará.</translation>
     </message>
 </context>
 <context>
@@ -827,8 +827,8 @@ Address: %4
         <translation>L'adreça introduïda «%1» ja és present a la llibreta d'adreces.</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Bitcoin address.</source>
-        <translation>L'adreça introduïda «%1» no és una adreça de Bitcoin vàlida.</translation>
+        <source>The entered address "%1" is not a valid Freicoin address.</source>
+        <translation>L'adreça introduïda «%1» no és una adreça de Freicoin vàlida.</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -865,12 +865,12 @@ Address: %4
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core - Command-line options</source>
-        <translation>Bitcoin Core - opcions de línia d'ordres</translation>
+        <source>Freicoin - Command-line options</source>
+        <translation>Freicoin - opcions de línia d'ordres</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>version</source>
@@ -916,16 +916,16 @@ Address: %4
         <translation>Us donem la benviguda</translation>
     </message>
     <message>
-        <source>Welcome to Bitcoin Core.</source>
-        <translation>Us donem la benvinguda al Bitcoin Core.</translation>
+        <source>Welcome to Freicoin.</source>
+        <translation>Us donem la benvinguda al Freicoin.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Bitcoin Core will store its data.</source>
-        <translation>Atès que és la primera vegada que executeu el programa, podeu triar on emmagatzemarà el Bitcoin Core les dades.</translation>
+        <source>As this is the first time the program is launched, you can choose where Freicoin will store its data.</source>
+        <translation>Atès que és la primera vegada que executeu el programa, podeu triar on emmagatzemarà el Freicoin les dades.</translation>
     </message>
     <message>
-        <source>Bitcoin Core will download and store a copy of the Bitcoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>El Bitcoin Core descarregarà i emmagatzemarà una còpia de la cadena de blocs de Bitcoin. Com a mínim s'emmagatzemaran %1 GB de dades en aquest directori, que seguiran creixent gradualment. També s'hi emmagatzemarà el moneder.</translation>
+        <source>Freicoin will download and store a copy of the Freicoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>El Freicoin descarregarà i emmagatzemarà una còpia de la cadena de blocs de Freicoin. Com a mínim s'emmagatzemaran %1 GB de dades en aquest directori, que seguiran creixent gradualment. També s'hi emmagatzemarà el moneder.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -936,8 +936,8 @@ Address: %4
         <translation>Utilitza un directori de dades personalitzat:</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" can not be created.</source>
@@ -998,12 +998,12 @@ Address: %4
         <translation>Paga &amp;comissió de transacció</translation>
     </message>
     <message>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
-        <translation>Inicia automàticament el Bitcoin després de l'inici de sessió del sistema.</translation>
+        <source>Automatically start Freicoin after logging in to the system.</source>
+        <translation>Inicia automàticament el Freicoin després de l'inici de sessió del sistema.</translation>
     </message>
     <message>
-        <source>&amp;Start Bitcoin on system login</source>
-        <translation>&amp;Inicia el Bitcoin a l'inici de sessió del sistema.</translation>
+        <source>&amp;Start Freicoin on system login</source>
+        <translation>&amp;Inicia el Freicoin a l'inici de sessió del sistema.</translation>
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1018,8 +1018,8 @@ Address: %4
         <translation>Nombre de fils de &amp;verificació d'scripts</translation>
     </message>
     <message>
-        <source>Connect to the Bitcoin network through a SOCKS proxy.</source>
-        <translation>Connecta a la xarxa Bitcoin a través d'un proxy SOCKS.</translation>
+        <source>Connect to the Freicoin network through a SOCKS proxy.</source>
+        <translation>Connecta a la xarxa Freicoin a través d'un proxy SOCKS.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS proxy (default proxy):</source>
@@ -1078,8 +1078,8 @@ Address: %4
         <translation>&amp;Gasta el canvi sense confirmar</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Obre el port del client de Bitcoin al router de forma automàtica. Això només funciona quan el router implementa UPnP i l'opció està activada.</translation>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Obre el port del client de Freicoin al router de forma automàtica. Això només funciona quan el router implementa UPnP i l'opció està activada.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1134,8 +1134,8 @@ Address: %4
         <translation>&amp;Llengua de la interfície d'usuari:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
-        <translation>Aquí podeu definir la llengua de l'aplicació. Aquesta configuració tindrà efecte una vegada es reiniciï Bitcoin.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
+        <translation>Aquí podeu definir la llengua de l'aplicació. Aquesta configuració tindrà efecte una vegada es reiniciï Freicoin.</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1146,8 +1146,8 @@ Address: %4
         <translation>Selecciona la unitat de subdivisió per defecte per mostrar en la interfície quan s'envien monedes.</translation>
     </message>
     <message>
-        <source>Whether to show Bitcoin addresses in the transaction list or not.</source>
-        <translation>Si voleu mostrar o no adreces Bitcoin als llistats de transaccions.</translation>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
+        <translation>Si voleu mostrar o no adreces Freicoin als llistats de transaccions.</translation>
     </message>
     <message>
         <source>&amp;Display addresses in transaction list</source>
@@ -1201,8 +1201,8 @@ Address: %4
         <translation>Formulari</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>La informació mostrada pot no estar al día. El teu moneder es sincronitza automàticament amb la xarxa Bitcoin un cop s'ha establert connexió, però aquest proces no s'ha completat encara.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>La informació mostrada pot no estar al día. El teu moneder es sincronitza automàticament amb la xarxa Freicoin un cop s'ha establert connexió, però aquest proces no s'ha completat encara.</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -1256,8 +1256,8 @@ Address: %4
         <translation>Gestió d'URI</translation>
     </message>
     <message>
-        <source>URI can not be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation>l'URI no pot ser processat! Això pot ser causat per una adreça Bitcoin no vàlida o paràmetres URI malformats.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Freicoin address or malformed URI parameters.</source>
+        <translation>l'URI no pot ser processat! Això pot ser causat per una adreça Freicoin no vàlida o paràmetres URI malformats.</translation>
     </message>
     <message>
         <source>Requested payment amount of %1 is too small (considered dust).</source>
@@ -1268,8 +1268,8 @@ Address: %4
         <translation>Error en la sol·licitud de pagament</translation>
     </message>
     <message>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
-        <translation>No es pot iniciar bitcoin: gestor clica-per-pagar</translation>
+        <source>Cannot start freicoin: click-to-pay handler</source>
+        <translation>No es pot iniciar freicoin: gestor clica-per-pagar</translation>
     </message>
     <message>
         <source>Net manager warning</source>
@@ -1323,8 +1323,8 @@ Address: %4
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -1339,12 +1339,12 @@ Address: %4
         <translation>Error: combinació no vàlida de -regtest i -testnet.</translation>
     </message>
     <message>
-        <source>Bitcoin Core didn't yet exit safely...</source>
-        <translation>No es va tancar el Bitcoin Core de forma segura...</translation>
+        <source>Freicoin didn't yet exit safely...</source>
+        <translation>No es va tancar el Freicoin de forma segura...</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Introduïu una adreça de Bitcoin (p. ex. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Introduïu una adreça de Freicoin (p. ex. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1465,16 +1465,16 @@ Address: %4
         <translation>Fitxer de registre de depuració</translation>
     </message>
     <message>
-        <source>Open the Bitcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Obre el fitxer de registre de depuració de Bitcoin del directori de dades actual. Això pot trigar uns quants segons per a fitxers de registre grans.</translation>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Obre el fitxer de registre de depuració de Freicoin del directori de dades actual. Això pot trigar uns quants segons per a fitxers de registre grans.</translation>
     </message>
     <message>
         <source>Clear console</source>
         <translation>Neteja la consola</translation>
     </message>
     <message>
-        <source>Welcome to the Bitcoin RPC console.</source>
-        <translation>Us donem la benvinguda a la consola RPC de Bitcoin</translation>
+        <source>Welcome to the Freicoin RPC console.</source>
+        <translation>Us donem la benvinguda a la consola RPC de Freicoin</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
@@ -1536,8 +1536,8 @@ Address: %4
         <translation>R&amp;eutilitza una adreça de recepció anterior (no recomanat)</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
-        <translation>Un missatge opcional que s'adjuntarà a la sol·licitud de pagament, que es mostrarà quan s'obri la sol·licitud. Nota: El missatge no s'enviarà amb el pagament per la xarxa Bitcoin.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Freicoin network.</source>
+        <translation>Un missatge opcional que s'adjuntarà a la sol·licitud de pagament, que es mostrarà quan s'obri la sol·licitud. Nota: El missatge no s'enviarà amb el pagament per la xarxa Freicoin.</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -1849,8 +1849,8 @@ Address: %4
         <translation>S'ha rebutjat la transacció! Això pot passar si alguna de les monedes del vostre moneder ja s'han gastat; per exemple, si heu fet servir una còpia de seguretat del fitxer wallet.dat i s'haguessin gastat monedes de la còpia però sense marcar-les-hi com a gastades.</translation>
     </message>
     <message>
-        <source>Warning: Invalid Bitcoin address</source>
-        <translation>Avís: adreça Bitcoin no vàlida</translation>
+        <source>Warning: Invalid Freicoin address</source>
+        <translation>Avís: adreça Freicoin no vàlida</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1936,8 +1936,8 @@ Address: %4
         <translation>Introduïu una etiqueta per a aquesta adreça per afegir-la a la llista d'adreces utilitzades</translation>
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
-        <translation>Un missatge que s'ha adjuntat al bitcoin: URI que s'emmagatzemarà amb la transacció per a la vostra referència. Nota: el missatge no s'enviarà a través de la xarxa Bitcoin.</translation>
+        <source>A message that was attached to the freicoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Freicoin network.</source>
+        <translation>Un missatge que s'ha adjuntat al freicoin: URI que s'emmagatzemarà amb la transacció per a la vostra referència. Nota: el missatge no s'enviarà a través de la xarxa Freicoin.</translation>
     </message>
     <message>
         <source>This is an unverified payment request.</source>
@@ -1955,8 +1955,8 @@ Address: %4
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Bitcoin Core is shutting down...</source>
-        <translation>S'està aturant el Bitcoin Core...</translation>
+        <source>Freicoin is shutting down...</source>
+        <translation>S'està aturant el Freicoin...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -2010,8 +2010,8 @@ Address: %4
         <translation>Copia la signatura actual al porta-retalls del sistema</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Bitcoin address</source>
-        <translation>Signa el missatge per provar que ets propietari d'aquesta adreça Bitcoin</translation>
+        <source>Sign the message to prove you own this Freicoin address</source>
+        <translation>Signa el missatge per provar que ets propietari d'aquesta adreça Freicoin</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -2038,8 +2038,8 @@ Address: %4
         <translation>La adreça amb el que el missatge va ser signat (per exemple 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation>Verificar el missatge per assegurar-se que ha estat signat amb una adreça Bitcoin específica</translation>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Verificar el missatge per assegurar-se que ha estat signat amb una adreça Freicoin específica</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -2050,8 +2050,8 @@ Address: %4
         <translation>Neteja tots els camps de verificació de missatge</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Introduïu una adreça de Bitcoin (per exemple 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Introduïu una adreça de Freicoin (per exemple 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <source>Click "Sign Message" to generate signature</source>
@@ -2109,12 +2109,12 @@ Address: %4
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Els desenvolupadors del Bitcoin Core</translation>
+        <source>The Freicoin developers</source>
+        <translation>Els desenvolupadors del Freicoin</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -2574,7 +2574,7 @@ Address: %4
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Ús:</translation>
@@ -2592,12 +2592,12 @@ Address: %4
         <translation>Opcions:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Especifica un fitxer de configuració (per defecte: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>Especifica un fitxer de configuració (per defecte: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Especifica un fitxer pid (per defecte: bitcoind.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>Especifica un fitxer pid (per defecte: freicoind.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>
@@ -2640,8 +2640,8 @@ Address: %4
         <translation>Accepta la línia d'ordres i ordres JSON-RPC </translation>
     </message>
     <message>
-        <source>Bitcoin Core RPC client version</source>
-        <translation>Versió del client RPC del Bitcoin Core</translation>
+        <source>Freicoin RPC client version</source>
+        <translation>Versió del client RPC del Freicoin</translation>
     </message>
     <message>
         <source>Run in the background as a daemon and accept commands</source>
@@ -2659,24 +2659,24 @@ Address: %4
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=bitcoinrpc
+rpcuser=freicoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
+for example: alertnotify=echo %%s | mail -s "Freicoin Alert" admin@foo.com
 </source>
         <translation>%s, heu de establir una contrasenya RPC al fitxer de configuració: %s
 
 Es recomana que useu la següent contrasenya aleatòria:
-rpcuser=bitcoinrpc
+rpcuser=freicoinrpc
 rpcpassword=%s
 (no necesiteu recordar aquesta contrasenya)
 El nom d'usuari i la contrasenya NO HAN de ser els mateixos.
 Si el fitxer no existeix, crea'l amb els permisos de fitxer de només lectura per al propietari.
 També es recomana establir la notificació d'alertes i així sereu notificat de les incidències;
-per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
+per exemple: alertnotify=echo %%s | mail -s "Freicoin Alert" admin@foo.com
 </translation>
     </message>
     <message>
@@ -2748,8 +2748,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Aquesta és una versió de pre-llançament - utilitza-la sota la teva responsabilitat - No usar per a minería o aplicacions de compra-venda</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Bitcoin Core is probably already running.</source>
-        <translation>No es pot enllaçar %s a aquest ordinador. El Bitcoin Core probablement ja estigui executant-s'hi.</translation>
+        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
+        <translation>No es pot enllaçar %s a aquest ordinador. El Freicoin probablement ja estigui executant-s'hi.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: -proxy)</source>
@@ -2760,8 +2760,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Avís: el -paytxfee és molt elevat! Aquesta és la comissió de transacció que pagareu si envieu una transacció.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
-        <translation>Avís: comproveu que la data i l'hora del vostre ordinador siguin correctes! Si el rellotge està mal configurat, Bitcoin no funcionarà de manera apropiada.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Avís: comproveu que la data i l'hora del vostre ordinador siguin correctes! Si el rellotge està mal configurat, Freicoin no funcionarà de manera apropiada.</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -2796,8 +2796,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Intenta recuperar les claus privades d'un fitxer wallet.dat corrupte</translation>
     </message>
     <message>
-        <source>Bitcoin Core Daemon</source>
-        <translation>Dimoni del Bitcoin Core</translation>
+        <source>Freicoin Daemon</source>
+        <translation>Dimoni del Freicoin</translation>
     </message>
     <message>
         <source>Block creation options:</source>
@@ -3004,8 +3004,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Això es així per a eines de proves de regressió per al desenvolupament d'aplicacions.</translation>
     </message>
     <message>
-        <source>Usage (deprecated, use bitcoin-cli):</source>
-        <translation>Ús (obsolet, feu servir bitcoin-cli):</translation>
+        <source>Usage (deprecated, use freicoin-cli):</source>
+        <translation>Ús (obsolet, feu servir freicoin-cli):</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -3040,8 +3040,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Importa blocs de un fitxer blk000??.dat extern</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Bitcoin Core is probably already running.</source>
-        <translation>No es pot obtenir un bloqueig del directori de dades %s. El Bitcoin Core probablement ja s'estigui executant.</translation>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
+        <translation>No es pot obtenir un bloqueig del directori de dades %s. El Freicoin probablement ja s'estigui executant.</translation>
     </message>
     <message>
         <source>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</source>
@@ -3104,8 +3104,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Imprimeix l'arbre de blocs a l'inici (per defecte: 0)</translation>
     </message>
     <message>
-        <source>RPC SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>Opcions RPC SSL: (veieu el wiki del Bitcoin per a instruccions de configuració de l'SSL)</translation>
+        <source>RPC SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>Opcions RPC SSL: (veieu el wiki del Freicoin per a instruccions de configuració de l'SSL)</translation>
     </message>
     <message>
         <source>RPC server options:</source>
@@ -3124,12 +3124,12 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Executa un fil per buidar el moneder periòdicament (per defecte: 1)</translation>
     </message>
     <message>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>Opcions SSL: (veure la Wiki de Bitcoin per a instruccions de configuració SSL)</translation>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>Opcions SSL: (veure la Wiki de Freicoin per a instruccions de configuració SSL)</translation>
     </message>
     <message>
-        <source>Send command to Bitcoin Core</source>
-        <translation>Envia una ordre al Bitcoin Core</translation>
+        <source>Send command to Freicoin</source>
+        <translation>Envia una ordre al Freicoin</translation>
     </message>
     <message>
         <source>Send trace/debug info to console instead of debug.log file</source>
@@ -3164,8 +3164,8 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Especifica el temps limit per a un intent de connexió en mil·lisegons (per defecte: 5000)</translation>
     </message>
     <message>
-        <source>Start Bitcoin Core Daemon</source>
-        <translation>Inicia el dimoni del Bitcoin Core</translation>
+        <source>Start Freicoin Daemon</source>
+        <translation>Inicia el dimoni del Freicoin</translation>
     </message>
     <message>
         <source>System error: </source>
@@ -3280,12 +3280,12 @@ per exemple: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
         <translation>Error en carregar wallet.dat: Moneder corrupte</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation>Error en carregar wallet.dat: El moneder requereix una versió del Bitcoin més moderna</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Error en carregar wallet.dat: El moneder requereix una versió del Freicoin més moderna</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Cal reescriure el moneder: reinicieu el Bitcoin per a completar la tasca</translation>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Cal reescriure el moneder: reinicieu el Freicoin per a completar la tasca</translation>
     </message>
     <message>
         <source>Error loading wallet.dat</source>

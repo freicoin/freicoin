@@ -2,8 +2,8 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
-        <translation>Apie Bitcoin Core</translation>
+        <source>About Freicoin</source>
+        <translation>Apie Freicoin</translation>
     </message>
     <message>
         <source>Copyright</source>
@@ -151,8 +151,8 @@
         <translation>Patvirtinkite piniginės užšifravimą</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>Dėmesio: jei užšifruosite savo piniginę ir pamesite slaptafrazę, jūs&lt;b&gt;PRARASITE VISUS SAVO BITCOINUS&lt;/b&gt;! </translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation>Dėmesio: jei užšifruosite savo piniginę ir pamesite slaptafrazę, jūs&lt;b&gt;PRARASITE VISUS SAVO FREICOINUS&lt;/b&gt;! </translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -167,8 +167,8 @@
         <translation>Piniginė užšifruota</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Bitcoin dabar užsidarys šifravimo proceso pabaigai. Atminkite, kad piniginės šifravimas negali pilnai apsaugoti bitcoinų vagysčių kai tinkle esančios kenkėjiškos programos patenka į jūsų kompiuterį.</translation>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation>Freicoin dabar užsidarys šifravimo proceso pabaigai. Atminkite, kad piniginės šifravimas negali pilnai apsaugoti freicoinų vagysčių kai tinkle esančios kenkėjiškos programos patenka į jūsų kompiuterį.</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -200,7 +200,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Pasirašyti ži&amp;nutę...</translation>
@@ -238,8 +238,8 @@
         <translation>Išjungti programą</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Rodyti informaciją apie Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Rodyti informaciją apie Freicoin</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -282,12 +282,12 @@
         <translation>Blokai iš naujo indeksuojami...</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
-        <translation>Siųsti monetas Bitcoin adresui</translation>
+        <source>Send coins to a Freicoin address</source>
+        <translation>Siųsti monetas Freicoin adresui</translation>
     </message>
     <message>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>Keisti bitcoin konfigūracijos galimybes</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Keisti freicoin konfigūracijos galimybes</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -310,8 +310,8 @@
         <translation>&amp;Tikrinti žinutę...</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -358,20 +358,20 @@
         <translation>[testavimotinklas]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin branduolys</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin branduolys</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
-        <translation>&amp;Apie Bitcoin Core</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>&amp;Apie Freicoin</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
-        <translation>Bitcoin klientas</translation>
+        <source>Freicoin client</source>
+        <translation>Freicoin klientas</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n Bitcoin tinklo aktyvus ryšys</numerusform><numerusform>%n Bitcoin tinklo aktyvūs ryšiai</numerusform><numerusform>%n Bitcoin tinklo aktyvūs ryšiai</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation><numerusform>%n Freicoin tinklo aktyvus ryšys</numerusform><numerusform>%n Freicoin tinklo aktyvūs ryšiai</numerusform><numerusform>%n Freicoin tinklo aktyvūs ryšiai</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
@@ -626,8 +626,8 @@ Adresas: %4</translation>
         <translation>Įvestas adresas „%1“ jau yra adresų knygelėje.</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Bitcoin address.</source>
-        <translation>Įvestas adresas „%1“ nėra galiojantis Bitcoin adresas.</translation>
+        <source>The entered address "%1" is not a valid Freicoin address.</source>
+        <translation>Įvestas adresas „%1“ nėra galiojantis Freicoin adresas.</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -648,8 +648,8 @@ Adresas: %4</translation>
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin branduolys</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin branduolys</translation>
     </message>
     <message>
         <source>version</source>
@@ -683,12 +683,12 @@ Adresas: %4</translation>
         <translation>Sveiki</translation>
     </message>
     <message>
-        <source>Welcome to Bitcoin Core.</source>
-        <translation>Sveiki atvykę į Bitcoin Core.</translation>
+        <source>Welcome to Freicoin.</source>
+        <translation>Sveiki atvykę į Freicoin.</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -713,20 +713,20 @@ Adresas: %4</translation>
         <translation>&amp;Mokėti sandorio mokestį</translation>
     </message>
     <message>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
+        <source>Automatically start Freicoin after logging in to the system.</source>
         <translation>Automatiškai paleisti Bitkoin programą įjungus sistemą.</translation>
     </message>
     <message>
-        <source>&amp;Start Bitcoin on system login</source>
-        <translation>&amp;Paleisti Bitcoin programą su window sistemos paleidimu</translation>
+        <source>&amp;Start Freicoin on system login</source>
+        <translation>&amp;Paleisti Freicoin programą su window sistemos paleidimu</translation>
     </message>
     <message>
         <source>&amp;Network</source>
         <translation>&amp;Tinklas</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatiškai atidaryti Bitcoin kliento prievadą maršrutizatoriuje. Tai veikia tik tada, kai jūsų maršrutizatorius palaiko UPnP ir ji įjungta.</translation>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatiškai atidaryti Freicoin kliento prievadą maršrutizatoriuje. Tai veikia tik tada, kai jūsų maršrutizatorius palaiko UPnP ir ji įjungta.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -781,8 +781,8 @@ Adresas: %4</translation>
         <translation>Naudotojo sąsajos &amp;kalba:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
-        <translation>Čia gali būti nustatyta naudotojo sąsajos kalba. Šis nustatymas įsigalios iš naujo paleidus Bitcoin.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
+        <translation>Čia gali būti nustatyta naudotojo sąsajos kalba. Šis nustatymas įsigalios iš naujo paleidus Freicoin.</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -862,11 +862,11 @@ Adresas: %4</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Įveskite bitkoinų adresą (pvz. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
@@ -948,8 +948,8 @@ Adresas: %4</translation>
         <translation>Išvalyti konsolę</translation>
     </message>
     <message>
-        <source>Welcome to the Bitcoin RPC console.</source>
-        <translation>Sveiki atvykę į Bitcoin RPC konsolę.</translation>
+        <source>Welcome to the Freicoin RPC console.</source>
+        <translation>Sveiki atvykę į Freicoin RPC konsolę.</translation>
     </message>
     <message>
         <source>%1 B</source>
@@ -1225,7 +1225,7 @@ Adresas: %4</translation>
         <translation>Įveskite pranešimą, kurį norite pasirašyti čia</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Bitcoin address</source>
+        <source>Sign the message to prove you own this Freicoin address</source>
         <translation>Registruotis žinute įrodymuii, kad turite šį adresą</translation>
     </message>
     <message>
@@ -1245,11 +1245,11 @@ Adresas: %4</translation>
         <translation>Įveskite bitkoinų adresą (pvz. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation>Patikrinkite žinutę, jog įsitikintumėte, kad ją pasirašė nurodytas Bitcoin adresas</translation>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Patikrinkite žinutę, jog įsitikintumėte, kad ją pasirašė nurodytas Freicoin adresas</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Įveskite bitkoinų adresą (pvz. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
@@ -1300,8 +1300,8 @@ Adresas: %4</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin branduolys</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin branduolys</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -1673,7 +1673,7 @@ Adresas: %4</translation>
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Naudojimas:</translation>
@@ -1691,12 +1691,12 @@ Adresas: %4</translation>
         <translation>Parinktys:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Nurodyti konfigūracijos failą (pagal nutylėjimąt: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>Nurodyti konfigūracijos failą (pagal nutylėjimąt: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Nurodyti pid failą (pagal nutylėjimą: bitcoind.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>Nurodyti pid failą (pagal nutylėjimą: freicoind.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>
@@ -1743,8 +1743,8 @@ Adresas: %4</translation>
         <translation>Įspėjimas: -paytxfee yra nustatytas per didelis. Tai sandorio mokestis, kurį turėsite mokėti, jei siųsite sandorį.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
-        <translation>Įspėjimas: Patikrinkite, kad kompiuterio data ir laikas yra teisingi.Jei Jūsų laikrodis neteisingai nustatytas Bitcoin, veiks netinkamai.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Įspėjimas: Patikrinkite, kad kompiuterio data ir laikas yra teisingi.Jei Jūsų laikrodis neteisingai nustatytas Freicoin, veiks netinkamai.</translation>
     </message>
     <message>
         <source>Connect only to the specified node(s)</source>
@@ -1803,8 +1803,8 @@ Adresas: %4</translation>
         <translation>Maksimalus buferis siuntimo sujungimui &lt;n&gt;*1000 bitų (pagal nutylėjimą: 1000)</translation>
     </message>
     <message>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>SSL opcijos (žr.e Bitcoin Wiki for SSL setup instructions)</translation>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>SSL opcijos (žr.e Freicoin Wiki for SSL setup instructions)</translation>
     </message>
     <message>
         <source>Send trace/debug info to console instead of debug.log file</source>
@@ -1895,12 +1895,12 @@ Adresas: %4</translation>
         <translation> wallet.dat pakrovimo klaida,  wallet.dat sugadintas</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation> wallet.dat pakrovimo klaida,  wallet.dat reikalauja naujasnės Bitcoin versijos</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation> wallet.dat pakrovimo klaida,  wallet.dat reikalauja naujasnės Freicoin versijos</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Piniginė turi būti prrašyta: įvykdymui perkraukite Bitcoin</translation>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Piniginė turi būti prrašyta: įvykdymui perkraukite Freicoin</translation>
     </message>
     <message>
         <source>Error loading wallet.dat</source>

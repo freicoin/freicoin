@@ -2,30 +2,30 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOINUNITS_H
-#define BITCOINUNITS_H
+#ifndef FREICOINUNITS_H
+#define FREICOINUNITS_H
 
 #include <QAbstractListModel>
 #include <QString>
 
-/** Bitcoin unit definitions. Encapsulates parsing and formatting
+/** Freicoin unit definitions. Encapsulates parsing and formatting
    and serves as list model for drop-down selection boxes.
 */
-class BitcoinUnits: public QAbstractListModel
+class FreicoinUnits: public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    explicit BitcoinUnits(QObject *parent);
+    explicit FreicoinUnits(QObject *parent);
 
-    /** Bitcoin units.
+    /** Freicoin units.
       @note Source: https://en.bitcoin.it/wiki/Units . Please add only sensible ones
      */
     enum Unit
     {
-        BTC,
-        mBTC,
-        uBTC
+        FRC,
+        mFRC,
+        uFRC
     };
 
     //! @name Static API
@@ -68,8 +68,8 @@ public:
     ///@}
 
 private:
-    QList<BitcoinUnits::Unit> unitlist;
+    QList<FreicoinUnits::Unit> unitlist;
 };
-typedef BitcoinUnits::Unit BitcoinUnit;
+typedef FreicoinUnits::Unit FreicoinUnit;
 
-#endif // BITCOINUNITS_H
+#endif // FREICOINUNITS_H

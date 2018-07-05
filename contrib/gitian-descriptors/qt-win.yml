@@ -46,7 +46,7 @@ script: |
     #
     mkdir -p $INSTALLPREFIX $INSTALLPREFIX/host/bin $DEPSDIR $BUILDDIR
     #
-    # Need mingw-compiled openssl from bitcoin-deps:
+    # Need mingw-compiled openssl from freicoin-deps:
     cd $DEPSDIR
     unzip $INDIR/deps-win${BITS}-gitian-r16.zip
     #

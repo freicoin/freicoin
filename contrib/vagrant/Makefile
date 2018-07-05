@@ -17,7 +17,7 @@
 
 MAKEFILE := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 
-PROJECT  := bitcoin
+PROJECT  := freicoin
 
 SHELL    := $(shell bash --help >/dev/null 2>&1 && echo ba)sh
 

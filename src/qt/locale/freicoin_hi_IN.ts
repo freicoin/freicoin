@@ -136,7 +136,7 @@
     </message>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Synchronizing with network...</source>
         <translation>नेटवर्क से समकालिक (मिल) रहा है ...</translation>
@@ -167,7 +167,7 @@
         <translation>अप्लिकेशन से बाहर निकलना !</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
+        <source>Show information about Freicoin</source>
         <translation>बीटकोइन के बारे में जानकारी !</translation>
     </message>
     <message>
@@ -183,7 +183,7 @@
         <translation>पहचान शब्द/अक्षर जो वॉलेट एनक्रिपशन के लिए इस्तेमाल किया है उसे बदलिए!</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>बीटकोइन</translation>
     </message>
     <message>
@@ -211,7 +211,7 @@
         <translation>[टेस्टनेट]</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
+        <source>%n active connection(s) to Freicoin network</source>
         <translation><numerusform>%n सक्रिया संपर्क बीटकोइन नेटवर्क से</numerusform><numerusform>%n सक्रिया संपर्क बीटकोइन नेटवर्क से</numerusform></translation>
     </message>
     <message numerus="yes">
@@ -376,7 +376,7 @@ Address: %4
 <context>
     <name>Intro</name>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>बीटकोइन</translation>
     </message>
     <message>
@@ -423,12 +423,12 @@ Address: %4
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>बीटकोइन</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Bitcoin एड्रेस लिखें (उदाहरण: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Freicoin एड्रेस लिखें (उदाहरण: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -587,8 +587,8 @@ Address: %4
         <translation>हस्ताक्षर</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Bitcoin एड्रेस लिखें (उदाहरण: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Freicoin एड्रेस लिखें (उदाहरण: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     </context>
 <context>
@@ -879,7 +879,7 @@ Address: %4
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>खपत :</translation>
@@ -897,12 +897,12 @@ Address: %4
         <translation>विकल्प:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>configuraion की फाइल का विवरण दें (default: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>configuraion की फाइल का विवरण दें (default: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>pid फाइल का विवरण दें (default: bitcoin.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>pid फाइल का विवरण दें (default: freicoin.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>

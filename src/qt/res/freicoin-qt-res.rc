@@ -1,5 +1,5 @@
-IDI_ICON1 ICON DISCARDABLE "icons/bitcoin.ico"
-IDI_ICON2 ICON DISCARDABLE "icons/bitcoin_testnet.ico"
+IDI_ICON1 ICON DISCARDABLE "icons/freicoin.ico"
+IDI_ICON2 ICON DISCARDABLE "icons/freicoin_testnet.ico"
 
 #include <windows.h>             // needed for VERSIONINFO
 #include "../../clientversion.h" // holds the needed client version information
@@ -21,14 +21,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "Bitcoin"
-            VALUE "FileDescription",    "Bitcoin Core (OSS GUI client for Bitcoin)"
+            VALUE "CompanyName",        "Freicoin"
+            VALUE "FileDescription",    "Freicoin (OSS GUI client for Freicoin)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "bitcoin-qt"
+            VALUE "InternalName",       "freicoin-qt"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the conjunctive terms of BOTH the GNU Affero General Public License v3.0 and the MIT/X11 software license, see the accompanying file COPYING for details."
-            VALUE "OriginalFilename",   "bitcoin-qt.exe"
-            VALUE "ProductName",        "Bitcoin Core"
+            VALUE "OriginalFilename",   "freicoin-qt.exe"
+            VALUE "ProductName",        "Freicoin"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

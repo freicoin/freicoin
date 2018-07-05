@@ -2,9 +2,9 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "bitcoinamountfield.h"
+#include "freicoinamountfield.h"
 
-#include "bitcoinunits.h"
+#include "freicoinunits.h"
 #include "guiconstants.h"
 #include "qvaluecombobox.h"
 
@@ -14,12 +14,12 @@
 #include <QKeyEvent>
 #include <qmath.h> // for qPow()
 
-BitcoinAmountField::BitcoinAmountField(QWidget *parent) :
+FreicoinAmountField::FreicoinAmountField(QWidget *parent) :
     QWidget(parent),
     amount(0),
     currentUnit(-1)
 {
-    nSingleStep = 100000; // satoshis
+    nSingleStep = 100000; // kria
 
     amount = new QDoubleSpinBox(this);
     amount->setLocale(QLocale::c());
@@ -29,7 +29,7 @@ BitcoinAmountField::BitcoinAmountField(QWidget *parent) :
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(amount);
     unit = new QValueComboBox(this);
-    unit->setModel(new BitcoinUnits(this));
+    unit->setModel(new FreicoinUnits(this));
     layout->addWidget(unit);
     layout->addStretch(1);
     layout->setContentsMargins(0,0,0,0);
@@ -47,7 +47,7 @@ BitcoinAmountField::BitcoinAmountField(QWidget *parent) :
     unitChanged(unit->currentIndex());
 }
 
-void BitcoinAmountField::setText(const QString &text)
+void FreicoinAmountField::setText(const QString &text)
 {
     if (text.isEmpty())
         amount->clear();
@@ -55,20 +55,20 @@ void BitcoinAmountField::setText(const QString &text)
         amount->setValue(text.toDouble());
 }
 
-void BitcoinAmountField::clear()
+void FreicoinAmountField::clear()
 {
     amount->clear();
     unit->setCurrentIndex(0);
 }
 
-bool BitcoinAmountField::validate()
+bool FreicoinAmountField::validate()
 {
     bool valid = true;
     if (amount->value() == 0.0)
         valid = false;
-    else if (!BitcoinUnits::parse(currentUnit, text(), 0))
+    else if (!FreicoinUnits::parse(currentUnit, text(), 0))
         valid = false;
-    else if (amount->value() > BitcoinUnits::maxAmount(currentUnit))
+    else if (amount->value() > FreicoinUnits::maxAmount(currentUnit))
         valid = false;
 
     setValid(valid);
@@ -76,7 +76,7 @@ bool BitcoinAmountField::validate()
     return valid;
 }
 
-void BitcoinAmountField::setValid(bool valid)
+void FreicoinAmountField::setValid(bool valid)
 {
     if (valid)
         amount->setStyleSheet("");
@@ -84,7 +84,7 @@ void BitcoinAmountField::setValid(bool valid)
         amount->setStyleSheet(STYLE_INVALID);
 }
 
-QString BitcoinAmountField::text() const
+QString FreicoinAmountField::text() const
 {
     if (amount->text().isEmpty())
         return QString();
@@ -92,7 +92,7 @@ QString BitcoinAmountField::text() const
         return amount->text();
 }
 
-bool BitcoinAmountField::eventFilter(QObject *object, QEvent *event)
+bool FreicoinAmountField::eventFilter(QObject *object, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn)
     {
@@ -113,17 +113,17 @@ bool BitcoinAmountField::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-QWidget *BitcoinAmountField::setupTabChain(QWidget *prev)
+QWidget *FreicoinAmountField::setupTabChain(QWidget *prev)
 {
     QWidget::setTabOrder(prev, amount);
     QWidget::setTabOrder(amount, unit);
     return unit;
 }
 
-qint64 BitcoinAmountField::value(bool *valid_out) const
+qint64 FreicoinAmountField::value(bool *valid_out) const
 {
     qint64 val_out = 0;
-    bool valid = BitcoinUnits::parse(currentUnit, text(), &val_out);
+    bool valid = FreicoinUnits::parse(currentUnit, text(), &val_out);
     if (valid_out)
     {
         *valid_out = valid;
@@ -131,24 +131,24 @@ qint64 BitcoinAmountField::value(bool *valid_out) const
     return val_out;
 }
 
-void BitcoinAmountField::setValue(qint64 value)
+void FreicoinAmountField::setValue(qint64 value)
 {
-    setText(BitcoinUnits::format(currentUnit, value));
+    setText(FreicoinUnits::format(currentUnit, value));
 }
 
-void BitcoinAmountField::setReadOnly(bool fReadOnly)
+void FreicoinAmountField::setReadOnly(bool fReadOnly)
 {
     amount->setReadOnly(fReadOnly);
     unit->setEnabled(!fReadOnly);
 }
 
-void BitcoinAmountField::unitChanged(int idx)
+void FreicoinAmountField::unitChanged(int idx)
 {
     // Use description tooltip for current unit for the combobox
     unit->setToolTip(unit->itemData(idx, Qt::ToolTipRole).toString());
 
     // Determine new unit ID
-    int newUnit = unit->itemData(idx, BitcoinUnits::UnitRole).toInt();
+    int newUnit = unit->itemData(idx, FreicoinUnits::UnitRole).toInt();
 
     // Parse current value and convert to new unit
     bool valid = false;
@@ -157,9 +157,9 @@ void BitcoinAmountField::unitChanged(int idx)
     currentUnit = newUnit;
 
     // Set max length after retrieving the value, to prevent truncation
-    amount->setDecimals(BitcoinUnits::decimals(currentUnit));
-    amount->setMaximum(qPow(10, BitcoinUnits::amountDigits(currentUnit)) - qPow(10, -amount->decimals()));
-    amount->setSingleStep((double)nSingleStep / (double)BitcoinUnits::factor(currentUnit));
+    amount->setDecimals(FreicoinUnits::decimals(currentUnit));
+    amount->setMaximum(qPow(10, FreicoinUnits::amountDigits(currentUnit)) - qPow(10, -amount->decimals()));
+    amount->setSingleStep((double)nSingleStep / (double)FreicoinUnits::factor(currentUnit));
 
     if (valid)
     {
@@ -174,12 +174,12 @@ void BitcoinAmountField::unitChanged(int idx)
     setValid(true);
 }
 
-void BitcoinAmountField::setDisplayUnit(int newUnit)
+void FreicoinAmountField::setDisplayUnit(int newUnit)
 {
     unit->setValue(newUnit);
 }
 
-void BitcoinAmountField::setSingleStep(qint64 step)
+void FreicoinAmountField::setSingleStep(qint64 step)
 {
     nSingleStep = step;
     unitChanged(unit->currentIndex());

@@ -12,13 +12,13 @@ AM_CPPFLAGS =  $(INCLUDES) \
 AM_CPPFLAGS += $(LEVELDB_CPPFLAGS)
 AM_LDFLAGS = $(PTHREAD_CFLAGS)
 
-LIBBITCOIN_SERVER=$(top_builddir)/src/libbitcoin_server.a
-LIBBITCOIN_WALLET=$(top_builddir)/src/libbitcoin_wallet.a
-LIBBITCOIN_COMMON=$(top_builddir)/src/libbitcoin_common.a
-LIBBITCOIN_CLI=$(top_builddir)/src/libbitcoin_cli.a
-LIBBITCOINQT=$(top_builddir)/src/qt/libbitcoinqt.a
+LIBFREICOIN_SERVER=$(top_builddir)/src/libfreicoin_server.a
+LIBFREICOIN_WALLET=$(top_builddir)/src/libfreicoin_wallet.a
+LIBFREICOIN_COMMON=$(top_builddir)/src/libfreicoin_common.a
+LIBFREICOIN_CLI=$(top_builddir)/src/libfreicoin_cli.a
+LIBFREICOINQT=$(top_builddir)/src/qt/libfreicoinqt.a
 
-$(LIBBITCOIN):
+$(LIBFREICOIN):
 	$(MAKE) -C $(top_builddir)/src $(@F)
 
 if EMBEDDED_LEVELDB
@@ -26,7 +26,7 @@ $(LIBLEVELDB) $(LIBMEMENV):
 	$(MAKE) -C $(top_builddir)/src leveldb/$(@F)
 endif
 
-$(LIBBITCOINQT):
+$(LIBFREICOINQT):
 	$(MAKE) -C $(top_builddir)/src/qt $(@F)
 
 .mm.o:

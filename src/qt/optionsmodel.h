@@ -11,7 +11,7 @@ QT_BEGIN_NAMESPACE
 class QNetworkProxy;
 QT_END_NAMESPACE
 
-/** Interface from Qt to configuration data structure for Bitcoin client.
+/** Interface from Qt to configuration data structure for Freicoin client.
    To Qt, the options are presented as a list with the different options
    laid out vertically.
    This can be changed to a tree once the settings become sufficiently
@@ -34,7 +34,7 @@ public:
         ProxyPort,              // int
         ProxySocksVersion,      // int
         Fee,                    // qint64
-        DisplayUnit,            // BitcoinUnits::Unit
+        DisplayUnit,            // FreicoinUnits::Unit
         DisplayAddresses,       // bool
         ThirdPartyTxUrls,       // QString
         Language,               // QString

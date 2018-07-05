@@ -1,6 +1,6 @@
-usr/local/bin/bitcoin-qt usr/bin
-share/pixmaps/bitcoin32.xpm usr/share/pixmaps
-share/pixmaps/bitcoin16.xpm usr/share/pixmaps
-share/pixmaps/bitcoin128.png usr/share/pixmaps
-debian/bitcoin-qt.desktop usr/share/applications
-debian/bitcoin-qt.protocol usr/share/kde4/services/
+usr/local/bin/freicoin-qt usr/bin
+share/pixmaps/freicoin32.xpm usr/share/pixmaps
+share/pixmaps/freicoin16.xpm usr/share/pixmaps
+share/pixmaps/freicoin128.png usr/share/pixmaps
+debian/freicoin-qt.desktop usr/share/applications
+debian/freicoin-qt.protocol usr/share/kde4/services/

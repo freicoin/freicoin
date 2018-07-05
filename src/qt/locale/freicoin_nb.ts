@@ -2,20 +2,20 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
-        <translation>Om Bitcoin Core</translation>
+        <source>About Freicoin</source>
+        <translation>Om Freicoin</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Bitcoin Core&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Bitcoin Core&lt;/b&gt; versjon</translation>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Freicoin&lt;/b&gt; versjon</translation>
     </message>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Bitcoin Core utviklerne</translation>
+        <source>The Freicoin developers</source>
+        <translation>Freicoin utviklerne</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
@@ -89,12 +89,12 @@
         <translation>Mottaksadresser</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Dette er dine Bitcoin-adresser for å sende betalinger. Alltid sjekk beløp og mottakeradresse før sending av mynter.</translation>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Dette er dine Freicoin-adresser for å sende betalinger. Alltid sjekk beløp og mottakeradresse før sending av mynter.</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Dette er dine Bitcoin-adresser for å sende betalinger. Det er anbefalt å bruk en ny mottaksadresse for hver transaksjon.</translation>
+        <source>These are your Freicoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Dette er dine Freicoin-adresser for å sende betalinger. Det er anbefalt å bruk en ny mottaksadresse for hver transaksjon.</translation>
     </message>
     <message>
         <source>Copy &amp;Label</source>
@@ -191,8 +191,8 @@
         <translation>Bekreft kryptering av lommebok</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>Advarsel: Hvis du krypterer lommeboken og mister adgangsfrasen, så vil du &lt;b&gt;MISTE ALLE DINE BITCOINS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation>Advarsel: Hvis du krypterer lommeboken og mister adgangsfrasen, så vil du &lt;b&gt;MISTE ALLE DINE FREICOINS&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -211,8 +211,8 @@
         <translation>Lommebok kryptert</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Bitcoin vil nå lukkes for å fullføre krypteringsprosessen. Husk at kryptering av lommeboken ikke fullt ut kan beskytte dine bitcoins fra å bli stjålet om skadevare infiserer datamaskinen.</translation>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation>Freicoin vil nå lukkes for å fullføre krypteringsprosessen. Husk at kryptering av lommeboken ikke fullt ut kan beskytte dine freicoins fra å bli stjålet om skadevare infiserer datamaskinen.</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -244,7 +244,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Signer &amp;melding...</translation>
@@ -282,8 +282,8 @@
         <translation>Avslutt applikasjonen</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Vis informasjon om Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Vis informasjon om Freicoin</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -330,12 +330,12 @@
         <translation>Reindekserer blokker på harddisk...</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
-        <translation>Send til en Bitcoin-adresse</translation>
+        <source>Send coins to a Freicoin address</source>
+        <translation>Send til en Freicoin-adresse</translation>
     </message>
     <message>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>Endre oppsett for Bitcoin</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Endre oppsett for Freicoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -358,8 +358,8 @@
         <translation>&amp;Verifiser melding...</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -386,12 +386,12 @@
         <translation>Krypter de private nøklene som tilhører lommeboken din</translation>
     </message>
     <message>
-        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation>Signer en melding med Bitcoin-adressene dine for å bevise at du eier dem</translation>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
+        <translation>Signer en melding med Freicoin-adressene dine for å bevise at du eier dem</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation>Bekreft meldinger for å være sikker på at de ble signert av en angitt Bitcoin-adresse</translation>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
+        <translation>Bekreft meldinger for å være sikker på at de ble signert av en angitt Freicoin-adresse</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -414,16 +414,16 @@
         <translation>[testnett]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
-        <translation>Forespør betalinger (genererer QR-koder og bitcoin: URIer)</translation>
+        <source>Request payments (generates QR codes and freicoin: URIs)</source>
+        <translation>Forespør betalinger (genererer QR-koder og freicoin: URIer)</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
-        <translation>&amp;Om Bitcoin Core</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>&amp;Om Freicoin</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -434,24 +434,24 @@
         <translation>Vis listen over bruke mottaksadresser og merkelapper</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
-        <translation>Åpne en Bitcoin: URI eller betalingsetterspørring</translation>
+        <source>Open a freicoin: URI or payment request</source>
+        <translation>Åpne en Freicoin: URI eller betalingsetterspørring</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>&amp;Kommandolinjevalg</translation>
     </message>
     <message>
-        <source>Show the Bitcoin Core help message to get a list with possible Bitcoin command-line options</source>
-        <translation>Vis Bitcoin Core hjelpemeldingen for å få en liste med mulige kommandolinjevalg</translation>
+        <source>Show the Freicoin help message to get a list with possible Freicoin command-line options</source>
+        <translation>Vis Freicoin hjelpemeldingen for å få en liste med mulige kommandolinjevalg</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
-        <translation>Bitcoin-klienten</translation>
+        <source>Freicoin client</source>
+        <translation>Freicoin-klienten</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n aktiv forbindelse til Bitcoin-nettverket</numerusform><numerusform>%n aktive forbindelser til Bitcoin-nettverket</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation><numerusform>%n aktiv forbindelse til Freicoin-nettverket</numerusform><numerusform>%n aktive forbindelser til Freicoin-nettverket</numerusform></translation>
     </message>
     <message>
         <source>No block source available...</source>
@@ -546,8 +546,8 @@ Adresse: %4
         <translation>Lommeboken er &lt;b&gt;kryptert&lt;/b&gt; og for tiden &lt;b&gt;låst&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Bitcoin can no longer continue safely and will quit.</source>
-        <translation>En fatal feil har inntruffet. Det er ikke trygt å fortsette og Bitcoin må derfor avslutte.</translation>
+        <source>A fatal error occurred. Freicoin can no longer continue safely and will quit.</source>
+        <translation>En fatal feil har inntruffet. Det er ikke trygt å fortsette og Freicoin må derfor avslutte.</translation>
     </message>
 </context>
 <context>
@@ -831,8 +831,8 @@ Adresse: %4
         <translation>Den oppgitte adressen "%1" er allerede i adresseboken.</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Bitcoin address.</source>
-        <translation>Den angitte adressed "%1" er ikke en gyldig Bitcoin-adresse.</translation>
+        <source>The entered address "%1" is not a valid Freicoin address.</source>
+        <translation>Den angitte adressed "%1" er ikke en gyldig Freicoin-adresse.</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -869,12 +869,12 @@ Adresse: %4
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core - Command-line options</source>
-        <translation>Bitcoin Core - Kommandolinjevalg</translation>
+        <source>Freicoin - Command-line options</source>
+        <translation>Freicoin - Kommandolinjevalg</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>version</source>
@@ -920,16 +920,16 @@ Adresse: %4
         <translation>Velkommen</translation>
     </message>
     <message>
-        <source>Welcome to Bitcoin Core.</source>
-        <translation>Velkommen til Bitcoin Core.</translation>
+        <source>Welcome to Freicoin.</source>
+        <translation>Velkommen til Freicoin.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Bitcoin Core will store its data.</source>
-        <translation>Siden dette er første gang programmet starter, kan du nå velge hvor Bitcoin Core skal lagre sine data.</translation>
+        <source>As this is the first time the program is launched, you can choose where Freicoin will store its data.</source>
+        <translation>Siden dette er første gang programmet starter, kan du nå velge hvor Freicoin skal lagre sine data.</translation>
     </message>
     <message>
-        <source>Bitcoin Core will download and store a copy of the Bitcoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Bitcoin Core vil laste ned og lagre en kopi av Bitcoin sin blokkjede. Minst %1GB av data vil bli lagret i denne mappen, og det vil vokse over tid. Lommeboken vil også bli lagret i denne mappen.</translation>
+        <source>Freicoin will download and store a copy of the Freicoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Freicoin vil laste ned og lagre en kopi av Freicoin sin blokkjede. Minst %1GB av data vil bli lagret i denne mappen, og det vil vokse over tid. Lommeboken vil også bli lagret i denne mappen.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -940,8 +940,8 @@ Adresse: %4
         <translation>Bruk en egendefinert datamappe:</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" can not be created.</source>
@@ -1002,12 +1002,12 @@ Adresse: %4
         <translation>Betal &amp;transaksjonsgebyr</translation>
     </message>
     <message>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
-        <translation>Start Bitcoin automatisk etter innlogging.</translation>
+        <source>Automatically start Freicoin after logging in to the system.</source>
+        <translation>Start Freicoin automatisk etter innlogging.</translation>
     </message>
     <message>
-        <source>&amp;Start Bitcoin on system login</source>
-        <translation>&amp;Start Bitcoin ved systeminnlogging</translation>
+        <source>&amp;Start Freicoin on system login</source>
+        <translation>&amp;Start Freicoin ved systeminnlogging</translation>
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1022,8 +1022,8 @@ Adresse: %4
         <translation>Antall script &amp;verifikasjonstråder</translation>
     </message>
     <message>
-        <source>Connect to the Bitcoin network through a SOCKS proxy.</source>
-        <translation>Koble til Bitcoin-nettverket gjennom en SOCKS proxy.</translation>
+        <source>Connect to the Freicoin network through a SOCKS proxy.</source>
+        <translation>Koble til Freicoin-nettverket gjennom en SOCKS proxy.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS proxy (default proxy):</source>
@@ -1082,8 +1082,8 @@ Adresse: %4
         <translation>&amp;Bruk ubekreftet veksel</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Åpne automatisk Bitcoin klientporten på ruteren. Dette virker kun om din ruter støtter UPnP og dette er påslått.</translation>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Åpne automatisk Freicoin klientporten på ruteren. Dette virker kun om din ruter støtter UPnP og dette er påslått.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1138,8 +1138,8 @@ Adresse: %4
         <translation>&amp;Språk for brukergrensesnitt</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
-        <translation>Språket for brukergrensesnittet kan settes her. Innstillingen trer i kraft ved omstart av Bitcoin.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
+        <translation>Språket for brukergrensesnittet kan settes her. Innstillingen trer i kraft ved omstart av Freicoin.</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1147,11 +1147,11 @@ Adresse: %4
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Velg standard delt enhet for visning i grensesnittet og for sending av bitcoins.</translation>
+        <translation>Velg standard delt enhet for visning i grensesnittet og for sending av freicoins.</translation>
     </message>
     <message>
-        <source>Whether to show Bitcoin addresses in the transaction list or not.</source>
-        <translation>Om Bitcoin-adresser skal vises i transaksjonslisten eller ikke.</translation>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
+        <translation>Om Freicoin-adresser skal vises i transaksjonslisten eller ikke.</translation>
     </message>
     <message>
         <source>&amp;Display addresses in transaction list</source>
@@ -1205,8 +1205,8 @@ Adresse: %4
         <translation>Skjema</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>Informasjonen som vises kan være foreldet. Din lommebok synkroniseres automatisk med Bitcoin-nettverket etter at tilkobling er opprettet, men denne prosessen er ikke ferdig enda.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Informasjonen som vises kan være foreldet. Din lommebok synkroniseres automatisk med Freicoin-nettverket etter at tilkobling er opprettet, men denne prosessen er ikke ferdig enda.</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -1260,8 +1260,8 @@ Adresse: %4
         <translation>URI-håndtering</translation>
     </message>
     <message>
-        <source>URI can not be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation>URI kunne ikke tolkes! Dette kan forårsakes av en ugyldig Bitcoin-adresse eller feil i URI-parametere.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Freicoin address or malformed URI parameters.</source>
+        <translation>URI kunne ikke tolkes! Dette kan forårsakes av en ugyldig Freicoin-adresse eller feil i URI-parametere.</translation>
     </message>
     <message>
         <source>Requested payment amount of %1 is too small (considered dust).</source>
@@ -1272,8 +1272,8 @@ Adresse: %4
         <translation>Betalingsforespørsel feil</translation>
     </message>
     <message>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
-        <translation>Kan ikke starte Bitcoin: klikk-og-betal håndterer</translation>
+        <source>Cannot start freicoin: click-to-pay handler</source>
+        <translation>Kan ikke starte Freicoin: klikk-og-betal håndterer</translation>
     </message>
     <message>
         <source>Net manager warning</source>
@@ -1327,8 +1327,8 @@ Adresse: %4
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -1343,12 +1343,12 @@ Adresse: %4
         <translation>Feil: Ugyldig kombinasjon av -regtest og -testnet.</translation>
     </message>
     <message>
-        <source>Bitcoin Core didn't yet exit safely...</source>
-        <translation>Bitcoin Core har ennå ikke avsluttet på en sikker måte...</translation>
+        <source>Freicoin didn't yet exit safely...</source>
+        <translation>Freicoin har ennå ikke avsluttet på en sikker måte...</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Skriv inn en Bitcoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Skriv inn en Freicoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1469,16 +1469,16 @@ Adresse: %4
         <translation>Loggfil for feilsøk</translation>
     </message>
     <message>
-        <source>Open the Bitcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Åpne Bitcoin sin loggfil for feilsøk fra den gjeldende datamappen. Dette kan ta noen sekunder for store loggfiler.</translation>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Åpne Freicoin sin loggfil for feilsøk fra den gjeldende datamappen. Dette kan ta noen sekunder for store loggfiler.</translation>
     </message>
     <message>
         <source>Clear console</source>
         <translation>Tøm konsoll</translation>
     </message>
     <message>
-        <source>Welcome to the Bitcoin RPC console.</source>
-        <translation>Velkommen til Bitcoin sin RPC-konsoll.</translation>
+        <source>Welcome to the Freicoin RPC console.</source>
+        <translation>Velkommen til Freicoin sin RPC-konsoll.</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
@@ -1540,8 +1540,8 @@ Adresse: %4
         <translation>Gj&amp;enbruk en eksisterende mottaksadresse (ikke anbefalt)</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
-        <translation>En valgfri melding å tilknytte betalingsforespørselen, som vil bli vist når forespørselen er åpnet. Meldingen vil ikke bli sendt med betalingen over Bitcoin-nettverket.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Freicoin network.</source>
+        <translation>En valgfri melding å tilknytte betalingsforespørselen, som vil bli vist når forespørselen er åpnet. Meldingen vil ikke bli sendt med betalingen over Freicoin-nettverket.</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -1690,7 +1690,7 @@ Adresse: %4
     <name>SendCoinsDialog</name>
     <message>
         <source>Send Coins</source>
-        <translation>Send Bitcoins</translation>
+        <translation>Send Freicoins</translation>
     </message>
     <message>
         <source>Coin Control Features</source>
@@ -1778,7 +1778,7 @@ Adresse: %4
     </message>
     <message>
         <source>Confirm send coins</source>
-        <translation>Bekreft sending av bitcoins</translation>
+        <translation>Bekreft sending av freicoins</translation>
     </message>
     <message>
         <source>%1 to %2</source>
@@ -1853,8 +1853,8 @@ Adresse: %4
         <translation>Transaksjonen ble avvist!  Dette kan skje hvis noen av myntene i lommeboken allerede er brukt, som hvis du kopierte wallet.dat og mynter ble brukt i kopien uten å bli markert som brukt her.</translation>
     </message>
     <message>
-        <source>Warning: Invalid Bitcoin address</source>
-        <translation>Advarsel: Ugyldig Bitcoin-adresse</translation>
+        <source>Warning: Invalid Freicoin address</source>
+        <translation>Advarsel: Ugyldig Freicoin-adresse</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1940,8 +1940,8 @@ Adresse: %4
         <translation>Skriv inn en merkelapp for denne adressen for å legge den til listen av brukte adresser</translation>
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
-        <translation>En melding som var tilknyttet bitcoinen: URI vil bli lagret med transaksjonen for din oversikt. Denne meldingen vil ikke bli sendt over Bitcoin-nettverket.</translation>
+        <source>A message that was attached to the freicoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Freicoin network.</source>
+        <translation>En melding som var tilknyttet freicoinen: URI vil bli lagret med transaksjonen for din oversikt. Denne meldingen vil ikke bli sendt over Freicoin-nettverket.</translation>
     </message>
     <message>
         <source>This is an unverified payment request.</source>
@@ -1959,8 +1959,8 @@ Adresse: %4
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Bitcoin Core is shutting down...</source>
-        <translation>Bitcoin Core lukker...</translation>
+        <source>Freicoin is shutting down...</source>
+        <translation>Freicoin lukker...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -2014,8 +2014,8 @@ Adresse: %4
         <translation>Kopier valgt signatur til utklippstavle</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Bitcoin address</source>
-        <translation>Signer meldingen for å bevise at du eier denne Bitcoin-adressen</translation>
+        <source>Sign the message to prove you own this Freicoin address</source>
+        <translation>Signer meldingen for å bevise at du eier denne Freicoin-adressen</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -2042,8 +2042,8 @@ Adresse: %4
         <translation>Adressen meldingen var signert med (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation>Verifiser meldingen for å være sikker på at den ble signert av den angitte Bitcoin-adressen</translation>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Verifiser meldingen for å være sikker på at den ble signert av den angitte Freicoin-adressen</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -2054,8 +2054,8 @@ Adresse: %4
         <translation>Tilbakestill alle felter for meldingsverifikasjon</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Skriv inn en Bitcoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Skriv inn en Freicoin-adresse (f.eks. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <source>Click "Sign Message" to generate signature</source>
@@ -2113,12 +2113,12 @@ Adresse: %4
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Bitcoin Core utviklerne</translation>
+        <source>The Freicoin developers</source>
+        <translation>Freicoin utviklerne</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -2232,7 +2232,7 @@ Adresse: %4
     </message>
     <message>
         <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
-        <translation>Genererte bitcoins må modnes %1 blokker før de kan brukes. Da du genererte denne blokken ble den kringkastet på nettverket for å bli lagt til i kjeden av blokker. Hvis den ikke kommer med i kjeden vil den endre seg til "ikke akseptert" og pengene vil ikke kunne brukes. Dette vil noen ganger skje hvis en annen node genererer en blokk noen sekunder i tid fra din egen.</translation>
+        <translation>Genererte freicoins må modnes %1 blokker før de kan brukes. Da du genererte denne blokken ble den kringkastet på nettverket for å bli lagt til i kjeden av blokker. Hvis den ikke kommer med i kjeden vil den endre seg til "ikke akseptert" og pengene vil ikke kunne brukes. Dette vil noen ganger skje hvis en annen node genererer en blokk noen sekunder i tid fra din egen.</translation>
     </message>
     <message>
         <source>Debug information</source>
@@ -2539,7 +2539,7 @@ Adresse: %4
     <name>WalletModel</name>
     <message>
         <source>Send Coins</source>
-        <translation>Send Bitcoins</translation>
+        <translation>Send Freicoins</translation>
     </message>
 </context>
 <context>
@@ -2578,7 +2578,7 @@ Adresse: %4
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Bruk:</translation>
@@ -2596,12 +2596,12 @@ Adresse: %4
         <translation>Innstillinger:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Angi konfigurasjonsfil (standardverdi: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>Angi konfigurasjonsfil (standardverdi: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Angi pid-fil (standardverdi: bitcoind.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>Angi pid-fil (standardverdi: freicoind.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>
@@ -2644,8 +2644,8 @@ Adresse: %4
         <translation>Ta imot kommandolinje- og JSON-RPC-kommandoer</translation>
     </message>
     <message>
-        <source>Bitcoin Core RPC client version</source>
-        <translation>Bitcoin Core RPC-klientversjon</translation>
+        <source>Freicoin RPC client version</source>
+        <translation>Freicoin RPC-klientversjon</translation>
     </message>
     <message>
         <source>Run in the background as a daemon and accept commands</source>
@@ -2663,24 +2663,24 @@ Adresse: %4
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=bitcoinrpc
+rpcuser=freicoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
+for example: alertnotify=echo %%s | mail -s "Freicoin Alert" admin@foo.com
 </source>
         <translation>%s, du må angi rpcpassord i konfigurasjonsfilen.
 %s
 Det anbefales at du bruker det følgende tilfeldige passordet:
-rpcbruker=bitcoinrpc
+rpcbruker=freicoinrpc
 rpcpassord=%s
 (du behøver ikke å huske passordet)
 Brukernavnet og passordet MÅ IKKE være like.
 Om filen ikke eksisterer, opprett den nå med eier-kun-les filrettigheter.
 Det er også anbefalt at å sette varselsmelding slik du får melding om problemer.
-For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</translation>
+For eksempel: varselmelding=echo %%s | mail -s "Freicoin Varsel" admin@foo.com</translation>
     </message>
     <message>
         <source>Acceptable ciphers (default: TLSv1.2+HIGH:TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!3DES:@STRENGTH)</source>
@@ -2751,8 +2751,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Dette er en forhåndssluppet testversjon - bruk på egen risiko - ikke for bruk til blokkutvinning eller bedriftsapplikasjoner</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Bitcoin Core is probably already running.</source>
-        <translation>Ute av stand til å binde til %s på denne datamaskinen. Bitcoin Core kjører sannsynligvis allerede.</translation>
+        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
+        <translation>Ute av stand til å binde til %s på denne datamaskinen. Freicoin kjører sannsynligvis allerede.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: -proxy)</source>
@@ -2763,8 +2763,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Advarsel: -paytxfee er satt veldig høyt! Dette er transaksjonsgebyret du betaler når du sender transaksjoner.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
-        <translation>Advarsel: Vennligst undersøk at din datamaskin har riktig dato og klokkeslett! Hvis klokken er stilt feil vil ikke Bitcoin fungere riktig.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Advarsel: Vennligst undersøk at din datamaskin har riktig dato og klokkeslett! Hvis klokken er stilt feil vil ikke Freicoin fungere riktig.</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -2799,8 +2799,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Forsøk å berge private nøkler fra en korrupt wallet.dat</translation>
     </message>
     <message>
-        <source>Bitcoin Core Daemon</source>
-        <translation>Bitcoin Core Daemon</translation>
+        <source>Freicoin Daemon</source>
+        <translation>Freicoin Daemon</translation>
     </message>
     <message>
         <source>Block creation options:</source>
@@ -2912,7 +2912,7 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
     </message>
     <message>
         <source>Failed to write to coin database</source>
-        <translation>Feil ved skriving til bitcoin sin database</translation>
+        <translation>Feil ved skriving til freicoin sin database</translation>
     </message>
     <message>
         <source>Failed to write transaction index</source>
@@ -2940,7 +2940,7 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
     </message>
     <message>
         <source>Generate coins (default: 0)</source>
-        <translation>Generer bitcoins (standardverdi: 0)</translation>
+        <translation>Generer freicoins (standardverdi: 0)</translation>
     </message>
     <message>
         <source>How many blocks to check at startup (default: 288, 0 = all)</source>
@@ -3007,8 +3007,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Dette er tiltenkt verktøy for regresjonstesting og apputvikling.</translation>
     </message>
     <message>
-        <source>Usage (deprecated, use bitcoin-cli):</source>
-        <translation>Bruk (foreldet, bruk bitcoin-cli):</translation>
+        <source>Usage (deprecated, use freicoin-cli):</source>
+        <translation>Bruk (foreldet, bruk freicoin-cli):</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -3043,8 +3043,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Importerer blokker fra ekstern fil blk000??.dat</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Bitcoin Core is probably already running.</source>
-        <translation>Ute av stand til å låse datamappen %s. Bitcoin Core kjører sannsynligvis allerede.</translation>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
+        <translation>Ute av stand til å låse datamappen %s. Freicoin kjører sannsynligvis allerede.</translation>
     </message>
     <message>
         <source>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</source>
@@ -3107,8 +3107,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Skriv ut blokktreet ved oppstart (standardverdi: 0)</translation>
     </message>
     <message>
-        <source>RPC SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>RPC SSL-valg: (se Bitcoin Wiki for oppsettsinstruksjoner for SSL)</translation>
+        <source>RPC SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>RPC SSL-valg: (se Freicoin Wiki for oppsettsinstruksjoner for SSL)</translation>
     </message>
     <message>
         <source>RPC server options:</source>
@@ -3127,12 +3127,12 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Kjør en tråd som skriver lommeboken til disk periodisk (standard: 1)</translation>
     </message>
     <message>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>SSL valg: (se Bitcoin Wiki for instruksjoner for oppsett av SSL)</translation>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>SSL valg: (se Freicoin Wiki for instruksjoner for oppsett av SSL)</translation>
     </message>
     <message>
-        <source>Send command to Bitcoin Core</source>
-        <translation>Send kommando til Bitcoin Core</translation>
+        <source>Send command to Freicoin</source>
+        <translation>Send kommando til Freicoin</translation>
     </message>
     <message>
         <source>Send trace/debug info to console instead of debug.log file</source>
@@ -3167,8 +3167,8 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Angi tidsavbrudd for forbindelse i millisekunder (standardverdi: 5000)</translation>
     </message>
     <message>
-        <source>Start Bitcoin Core Daemon</source>
-        <translation>Start Bitcoin Core Daemon</translation>
+        <source>Start Freicoin Daemon</source>
+        <translation>Start Freicoin Daemon</translation>
     </message>
     <message>
         <source>System error: </source>
@@ -3283,12 +3283,12 @@ For eksempel: varselmelding=echo %%s | mail -s "Bitcoin Varsel" admin@foo.com</t
         <translation>Feil ved lasting av wallet.dat: Lommeboken er skadet</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation>Feil ved lasting av wallet.dat: Lommeboken krever en nyere versjon av Bitcoin</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Feil ved lasting av wallet.dat: Lommeboken krever en nyere versjon av Freicoin</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Lommeboken måtte skrives om: start Bitcoin på nytt for å fullføre</translation>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Lommeboken måtte skrives om: start Freicoin på nytt for å fullføre</translation>
     </message>
     <message>
         <source>Error loading wallet.dat</source>

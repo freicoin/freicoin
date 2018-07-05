@@ -2,8 +2,8 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
-        <translation>Về Bitcoin Core</translation>
+        <source>About Freicoin</source>
+        <translation>Về Freicoin</translation>
     </message>
     </context>
 <context>
@@ -140,7 +140,7 @@
     </message>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>&amp;Overview</source>
         <translation>&amp;Tổng quan</translation>
@@ -170,8 +170,8 @@
         <translation>Mở &amp;URI...</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -206,12 +206,12 @@
         <translation>Trợ &amp;giúp</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
-        <translation>&amp;Về Bitcoin Core</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>&amp;Về Freicoin</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
@@ -377,8 +377,8 @@ Loại: %3
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>version</source>
@@ -392,8 +392,8 @@ Loại: %3
         <translation>Chào mừng</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -463,8 +463,8 @@ Loại: %3
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     </context>
 <context>
@@ -577,8 +577,8 @@ Loại: %3
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin Core</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     </context>
 <context>
@@ -674,7 +674,7 @@ Loại: %3
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Information</source>
         <translation>Thông tin</translation>

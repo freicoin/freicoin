@@ -2,7 +2,7 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
+        <source>About Freicoin</source>
         <translation>Rreth Berthames Bitkoin</translation>
     </message>
     </context>
@@ -160,7 +160,7 @@
     </message>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Synchronizing with network...</source>
         <translation>Duke u sinkronizuar me rrjetin...</translation>
@@ -186,7 +186,7 @@
         <translation>Mbyllni aplikacionin</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
+        <source>Show information about Freicoin</source>
         <translation>Trego informacionin rreth Botkoin-it</translation>
     </message>
     <message>
@@ -198,8 +198,8 @@
         <translation>Ndrysho frazkalimin e përdorur per enkriptimin e portofolit</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -238,15 +238,15 @@
         <translation>[testo rrjetin]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Berthama Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Berthama Freicoin</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
+        <source>&amp;About Freicoin</source>
         <translation>Rreth Berthames Bitkoin</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
+        <source>%n active connection(s) to Freicoin network</source>
         <translation><numerusform>%n lidhje aktive me rrjetin e Bitkoin</numerusform><numerusform>%n lidhje aktive me rrjetin e Bitkoin</numerusform></translation>
     </message>
     <message>
@@ -381,8 +381,8 @@
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Berthama Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Berthama Freicoin</translation>
     </message>
     <message>
         <source>version</source>
@@ -396,12 +396,12 @@
         <translation>Miresevini</translation>
     </message>
     <message>
-        <source>Welcome to Bitcoin Core.</source>
-        <translation>Miresevini ne Berthamen Bitcoin</translation>
+        <source>Welcome to Freicoin.</source>
+        <translation>Miresevini ne Berthamen Freicoin</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -439,11 +439,11 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Futni një adresë Bitkoini (p.sh. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
@@ -586,15 +586,15 @@
         <translation>Alt+P</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Futni një adresë Bitkoini (p.sh. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     </context>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Berthama Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Berthama Freicoin</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -758,7 +758,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Information</source>
         <translation>Informacion</translation>

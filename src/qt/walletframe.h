@@ -8,7 +8,7 @@
 #include <QFrame>
 #include <QMap>
 
-class BitcoinGUI;
+class FreicoinGUI;
 class ClientModel;
 class SendCoinsRecipient;
 class WalletModel;
@@ -23,7 +23,7 @@ class WalletFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit WalletFrame(BitcoinGUI *_gui = 0);
+    explicit WalletFrame(FreicoinGUI *_gui = 0);
     ~WalletFrame();
 
     void setClientModel(ClientModel *clientModel);
@@ -39,7 +39,7 @@ public:
 
 private:
     QStackedWidget *walletStack;
-    BitcoinGUI *gui;
+    FreicoinGUI *gui;
     ClientModel *clientModel;
     QMap<QString, WalletView*> mapWalletViews;
 

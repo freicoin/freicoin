@@ -17,8 +17,8 @@
 // program.  If not, see <https://www.gnu.org/licenses/> and
 // <http://www.opensource.org/licenses/mit-license.php>
 
-#ifndef BITCOIN_CORE_H
-#define BITCOIN_CORE_H
+#ifndef FREICOIN_CORE_H
+#define FREICOIN_CORE_H
 
 #include "script.h"
 #include "serialize.h"
@@ -167,12 +167,12 @@ public:
     bool IsDust(int64_t nMinRelayTxFee) const
     {
         // "Dust" is defined in terms of CTransaction::nMinRelayTxFee,
-        // which has units satoshis-per-kilobyte.
+        // which has units kria-per-kilobyte.
         // If you'd pay more than 1/3 in fees
         // to spend something, then we consider it dust.
         // A typical txout is 34 bytes big, and will
         // need a CTxIn of at least 148 bytes to spend,
-        // so dust is a txout less than 546 satoshis 
+        // so dust is a txout less than 546 kria 
         // with default nMinRelayTxFee.
         return ((nValue*1000)/(3*((int)GetSerializeSize(SER_DISK,0)+148)) < nMinRelayTxFee);
     }

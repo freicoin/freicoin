@@ -120,7 +120,7 @@
     </message>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Synchronizing with network...</source>
         <translation>Sincronizando con la red...</translation>
@@ -146,8 +146,8 @@
         <translation>Salir de la aplicacion </translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Mostrar informacion sobre Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Mostrar informacion sobre Freicoin</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
@@ -178,8 +178,8 @@
         <translation>[prueba_de_red]</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n conexión activa a la red Bitcoin </numerusform><numerusform>%n conexiones activas a la red Bitcoin</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation><numerusform>%n conexión activa a la red Freicoin </numerusform><numerusform>%n conexiones activas a la red Freicoin</numerusform></translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -494,6 +494,6 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     </context>
 </TS>

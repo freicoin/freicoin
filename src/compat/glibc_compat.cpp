@@ -1,4 +1,4 @@
-#include "bitcoin-config.h"
+#include "freicoin-config.h"
 #include <cstddef>
 #include <sys/select.h>
 

@@ -5,84 +5,84 @@ AM_CPPFLAGS += -I$(top_srcdir)/src \
   -I$(top_builddir)/src/qt/forms \
   $(PROTOBUF_CFLAGS) \
   $(QR_CFLAGS)
-bin_PROGRAMS = bitcoin-qt
-noinst_LIBRARIES = libbitcoinqt.a
+bin_PROGRAMS = freicoin-qt
+noinst_LIBRARIES = libfreicoinqt.a
 SUBDIRS = . $(BUILD_TEST_QT)
 DIST_SUBDIRS = . test
 
-# bitcoin qt core #
+# freicoin qt core #
 QT_TS = \
-  locale/bitcoin_ach.ts \
-  locale/bitcoin_af_ZA.ts \
-  locale/bitcoin_ar.ts \
-  locale/bitcoin_be_BY.ts \
-  locale/bitcoin_bg.ts \
-  locale/bitcoin_bs.ts \
-  locale/bitcoin_ca_ES.ts \
-  locale/bitcoin_ca.ts \
-  locale/bitcoin_ca@valencia.ts \
-  locale/bitcoin_cmn.ts \
-  locale/bitcoin_cs.ts \
-  locale/bitcoin_cy.ts \
-  locale/bitcoin_da.ts \
-  locale/bitcoin_de.ts \
-  locale/bitcoin_el_GR.ts \
-  locale/bitcoin_en.ts \
-  locale/bitcoin_eo.ts \
-  locale/bitcoin_es_CL.ts \
-  locale/bitcoin_es_DO.ts \
-  locale/bitcoin_es_MX.ts \
-  locale/bitcoin_es.ts \
-  locale/bitcoin_es_UY.ts \
-  locale/bitcoin_et.ts \
-  locale/bitcoin_eu_ES.ts \
-  locale/bitcoin_fa_IR.ts \
-  locale/bitcoin_fa.ts \
-  locale/bitcoin_fi.ts \
-  locale/bitcoin_fr_CA.ts \
-  locale/bitcoin_fr.ts \
-  locale/bitcoin_gl.ts \
-  locale/bitcoin_gu_IN.ts \
-  locale/bitcoin_he.ts \
-  locale/bitcoin_hi_IN.ts \
-  locale/bitcoin_hr.ts \
-  locale/bitcoin_hu.ts \
-  locale/bitcoin_id_ID.ts \
-  locale/bitcoin_it.ts \
-  locale/bitcoin_ja.ts \
-  locale/bitcoin_ka.ts \
-  locale/bitcoin_kk_KZ.ts \
-  locale/bitcoin_ko_KR.ts \
-  locale/bitcoin_ky.ts \
-  locale/bitcoin_la.ts \
-  locale/bitcoin_lt.ts \
-  locale/bitcoin_lv_LV.ts \
-  locale/bitcoin_mn.ts \
-  locale/bitcoin_ms_MY.ts \
-  locale/bitcoin_nb.ts \
-  locale/bitcoin_nl.ts \
-  locale/bitcoin_pam.ts \
-  locale/bitcoin_pl.ts \
-  locale/bitcoin_pt_BR.ts \
-  locale/bitcoin_pt_PT.ts \
-  locale/bitcoin_ro_RO.ts \
-  locale/bitcoin_ru.ts \
-  locale/bitcoin_sah.ts \
-  locale/bitcoin_sk.ts \
-  locale/bitcoin_sl_SI.ts \
-  locale/bitcoin_sq.ts \
-  locale/bitcoin_sr.ts \
-  locale/bitcoin_sv.ts \
-  locale/bitcoin_th_TH.ts \
-  locale/bitcoin_tr.ts \
-  locale/bitcoin_uk.ts \
-  locale/bitcoin_ur_PK.ts \
-  locale/bitcoin_uz@Cyrl.ts \
-  locale/bitcoin_vi.ts \
-  locale/bitcoin_vi_VN.ts \
-  locale/bitcoin_zh_CN.ts \
-  locale/bitcoin_zh_HK.ts \
-  locale/bitcoin_zh_TW.ts
+  locale/freicoin_ach.ts \
+  locale/freicoin_af_ZA.ts \
+  locale/freicoin_ar.ts \
+  locale/freicoin_be_BY.ts \
+  locale/freicoin_bg.ts \
+  locale/freicoin_bs.ts \
+  locale/freicoin_ca_ES.ts \
+  locale/freicoin_ca.ts \
+  locale/freicoin_ca@valencia.ts \
+  locale/freicoin_cmn.ts \
+  locale/freicoin_cs.ts \
+  locale/freicoin_cy.ts \
+  locale/freicoin_da.ts \
+  locale/freicoin_de.ts \
+  locale/freicoin_el_GR.ts \
+  locale/freicoin_en.ts \
+  locale/freicoin_eo.ts \
+  locale/freicoin_es_CL.ts \
+  locale/freicoin_es_DO.ts \
+  locale/freicoin_es_MX.ts \
+  locale/freicoin_es.ts \
+  locale/freicoin_es_UY.ts \
+  locale/freicoin_et.ts \
+  locale/freicoin_eu_ES.ts \
+  locale/freicoin_fa_IR.ts \
+  locale/freicoin_fa.ts \
+  locale/freicoin_fi.ts \
+  locale/freicoin_fr_CA.ts \
+  locale/freicoin_fr.ts \
+  locale/freicoin_gl.ts \
+  locale/freicoin_gu_IN.ts \
+  locale/freicoin_he.ts \
+  locale/freicoin_hi_IN.ts \
+  locale/freicoin_hr.ts \
+  locale/freicoin_hu.ts \
+  locale/freicoin_id_ID.ts \
+  locale/freicoin_it.ts \
+  locale/freicoin_ja.ts \
+  locale/freicoin_ka.ts \
+  locale/freicoin_kk_KZ.ts \
+  locale/freicoin_ko_KR.ts \
+  locale/freicoin_ky.ts \
+  locale/freicoin_la.ts \
+  locale/freicoin_lt.ts \
+  locale/freicoin_lv_LV.ts \
+  locale/freicoin_mn.ts \
+  locale/freicoin_ms_MY.ts \
+  locale/freicoin_nb.ts \
+  locale/freicoin_nl.ts \
+  locale/freicoin_pam.ts \
+  locale/freicoin_pl.ts \
+  locale/freicoin_pt_BR.ts \
+  locale/freicoin_pt_PT.ts \
+  locale/freicoin_ro_RO.ts \
+  locale/freicoin_ru.ts \
+  locale/freicoin_sah.ts \
+  locale/freicoin_sk.ts \
+  locale/freicoin_sl_SI.ts \
+  locale/freicoin_sq.ts \
+  locale/freicoin_sr.ts \
+  locale/freicoin_sv.ts \
+  locale/freicoin_th_TH.ts \
+  locale/freicoin_tr.ts \
+  locale/freicoin_uk.ts \
+  locale/freicoin_ur_PK.ts \
+  locale/freicoin_uz@Cyrl.ts \
+  locale/freicoin_vi.ts \
+  locale/freicoin_vi_VN.ts \
+  locale/freicoin_zh_CN.ts \
+  locale/freicoin_zh_HK.ts \
+  locale/freicoin_zh_TW.ts
 
 QT_FORMS_UI = \
   forms/aboutdialog.ui \
@@ -107,10 +107,10 @@ QT_MOC_CPP = \
   moc_addressbookpage.cpp \
   moc_addresstablemodel.cpp \
   moc_askpassphrasedialog.cpp \
-  moc_bitcoinaddressvalidator.cpp \
-  moc_bitcoinamountfield.cpp \
-  moc_bitcoingui.cpp \
-  moc_bitcoinunits.cpp \
+  moc_freicoinaddressvalidator.cpp \
+  moc_freicoinamountfield.cpp \
+  moc_freicoingui.cpp \
+  moc_freicoinunits.cpp \
   moc_clientmodel.cpp \
   moc_coincontroldialog.cpp \
   moc_coincontroltreewidget.cpp \
@@ -148,31 +148,31 @@ QT_MOC_CPP = \
   moc_walletmodel.cpp \
   moc_walletview.cpp
 
-BITCOIN_MM = \
+FREICOIN_MM = \
   macdockiconhandler.mm \
   macnotificationhandler.mm
 
 QT_MOC = \
-  bitcoin.moc \
+  freicoin.moc \
   intro.moc \
   overviewpage.moc \
   rpcconsole.moc
 
-QT_QRC_CPP = qrc_bitcoin.cpp
-QT_QRC = bitcoin.qrc
+QT_QRC_CPP = qrc_freicoin.cpp
+QT_QRC = freicoin.qrc
 
 PROTOBUF_CC = paymentrequest.pb.cc
 PROTOBUF_H = paymentrequest.pb.h
 PROTOBUF_PROTO = paymentrequest.proto
 
-BITCOIN_QT_H = \
+FREICOIN_QT_H = \
   addressbookpage.h \
   addresstablemodel.h \
   askpassphrasedialog.h \
-  bitcoinaddressvalidator.h \
-  bitcoinamountfield.h \
-  bitcoingui.h \
-  bitcoinunits.h \
+  freicoinaddressvalidator.h \
+  freicoinamountfield.h \
+  freicoingui.h \
+  freicoinunits.h \
   clientmodel.h \
   coincontroldialog.h \
   coincontroltreewidget.h \
@@ -218,10 +218,10 @@ BITCOIN_QT_H = \
 RES_ICONS = \
   res/icons/add.png \
   res/icons/address-book.png \
-  res/icons/bitcoin.ico \
-  res/icons/bitcoin.png \
-  res/icons/bitcoin_testnet.ico \
-  res/icons/bitcoin_testnet.png \
+  res/icons/freicoin.ico \
+  res/icons/freicoin.png \
+  res/icons/freicoin_testnet.ico \
+  res/icons/freicoin_testnet.png \
   res/icons/clock1.png \
   res/icons/clock2.png \
   res/icons/clock3.png \
@@ -260,12 +260,12 @@ RES_ICONS = \
   res/icons/tx_output.png \
   res/icons/tx_mined.png
 
-BITCOIN_QT_CPP = \
-  bitcoin.cpp \
-  bitcoinaddressvalidator.cpp \
-  bitcoinamountfield.cpp \
-  bitcoingui.cpp \
-  bitcoinunits.cpp \
+FREICOIN_QT_CPP = \
+  freicoin.cpp \
+  freicoinaddressvalidator.cpp \
+  freicoinamountfield.cpp \
+  freicoingui.cpp \
+  freicoinunits.cpp \
   clientmodel.cpp \
   csvmodelwriter.cpp \
   guiutil.cpp \
@@ -283,7 +283,7 @@ BITCOIN_QT_CPP = \
   winshutdownmonitor.cpp
 
 if ENABLE_WALLET
-BITCOIN_QT_CPP += \
+FREICOIN_QT_CPP += \
   addressbookpage.cpp \
   addresstablemodel.cpp \
   askpassphrasedialog.cpp \
@@ -319,40 +319,40 @@ RES_IMAGES = \
 
 RES_MOVIES = $(wildcard res/movies/spinner-*.png)
 
-BITCOIN_RC = res/bitcoin-qt-res.rc
+FREICOIN_RC = res/freicoin-qt-res.rc
 
-libbitcoinqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
+libfreicoinqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
   -I$(top_srcdir)/src/qt/forms $(QT_DBUS_INCLUDES)
-libbitcoinqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
+libfreicoinqt_a_SOURCES = $(FREICOIN_QT_CPP) $(FREICOIN_QT_H) $(QT_FORMS_UI) \
   $(QT_QRC) $(QT_TS) $(PROTOBUF_PROTO) $(RES_ICONS) $(RES_IMAGES) $(RES_MOVIES)
 
-nodist_libbitcoinqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
+nodist_libfreicoinqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
   $(PROTOBUF_H) $(QT_QRC_CPP)
 
-BUILT_SOURCES = $(nodist_libbitcoinqt_a_SOURCES)
+BUILT_SOURCES = $(nodist_libfreicoinqt_a_SOURCES)
 
 #Generating these with a half-written protobuf header leads to wacky results.
 #This makes sure it's done.
 $(QT_MOC): $(PROTOBUF_H)
 $(QT_MOC_CPP): $(PROTOBUF_H)
 
-# bitcoin-qt binary #
-bitcoin_qt_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
+# freicoin-qt binary #
+freicoin_qt_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
   -I$(top_srcdir)/src/qt/forms
-bitcoin_qt_SOURCES = bitcoin.cpp
+freicoin_qt_SOURCES = freicoin.cpp
 if TARGET_DARWIN
-  bitcoin_qt_SOURCES += $(BITCOIN_MM)
+  freicoin_qt_SOURCES += $(FREICOIN_MM)
 endif
 if TARGET_WINDOWS
-  bitcoin_qt_SOURCES += $(BITCOIN_RC)
+  freicoin_qt_SOURCES += $(FREICOIN_RC)
 endif
-bitcoin_qt_LDADD = libbitcoinqt.a $(LIBBITCOIN_SERVER)
+freicoin_qt_LDADD = libfreicoinqt.a $(LIBFREICOIN_SERVER)
 if ENABLE_WALLET
-bitcoin_qt_LDADD += $(LIBBITCOIN_WALLET)
+freicoin_qt_LDADD += $(LIBFREICOIN_WALLET)
 endif
-bitcoin_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
+freicoin_qt_LDADD += $(LIBFREICOIN_CLI) $(LIBFREICOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS)
-bitcoin_qt_LDFLAGS = $(QT_LDFLAGS)
+freicoin_qt_LDFLAGS = $(QT_LDFLAGS)
 
 # forms/foo.h -> forms/ui_foo.h
 QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:.ui=.h))))
@@ -363,15 +363,15 @@ QT_QM=$(QT_TS:.ts=.qm)
 .PHONY: FORCE
 .SECONDARY: $(QT_QM)
 
-bitcoinstrings.cpp: FORCE
-	$(MAKE) -C $(top_srcdir)/src qt/bitcoinstrings.cpp
+freicoinstrings.cpp: FORCE
+	$(MAKE) -C $(top_srcdir)/src qt/freicoinstrings.cpp
 
-translate: bitcoinstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
+translate: freicoinstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(FREICOIN_QT_CPP) $(FREICOIN_QT_H) $(FREICOIN_MM)
 	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
-	@QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts locale/bitcoin_en.ts
+	@QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts locale/freicoin_en.ts
 
 $(QT_QRC_CPP): $(QT_QRC) $(QT_QM) $(QT_FORMS_H) $(RES_ICONS) $(RES_IMAGES) $(RES_MOVIES) $(PROTOBUF_H)
-	@cd $(abs_srcdir); test -f $(RCC) && QT_SELECT=$(QT_SELECT) $(RCC) -name bitcoin -o $(abs_builddir)/$@ $< || \
+	@cd $(abs_srcdir); test -f $(RCC) && QT_SELECT=$(QT_SELECT) $(RCC) -name freicoin -o $(abs_builddir)/$@ $< || \
 	  echo error: could not build $@
 	$(SED) -e '/^\*\*.*Created:/d' $@ > $@.n && mv $@{.n,}
 	$(SED) -e '/^\*\*.*by:/d' $@  > $@.n && mv $@{.n,}

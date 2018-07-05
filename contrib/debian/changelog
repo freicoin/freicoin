@@ -155,7 +155,7 @@ freicoin (0.0.0+1beta5~precise5) precise; urgency=low
 
   [ Mark Friedenbach ]
     * JSON-RPC commands were parsing money values incorrectly--returning the
-      numerical value in units of satoshis, not coins. This is now fixed.
+      numerical value in units of kria, not coins. This is now fixed.
     * FreicoinUnits::amountDigits() now returns the correct value (previous
       off-by-one error due to a simple arithmetic mistake).
     * Fixed logical error in ParseMoney() which was causing amounts less than

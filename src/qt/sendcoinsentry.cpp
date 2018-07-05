@@ -30,10 +30,10 @@ SendCoinsEntry::SendCoinsEntry(QWidget *parent) :
     ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
 #endif
 
-    // normal bitcoin address field
+    // normal freicoin address field
     GUIUtil::setupAddressWidget(ui->payTo, this);
-    // just a label for displaying bitcoin address(es)
-    ui->payTo_is->setFont(GUIUtil::bitcoinAddressFont());
+    // just a label for displaying freicoin address(es)
+    ui->payTo_is->setFont(GUIUtil::freicoinAddressFont());
 }
 
 SendCoinsEntry::~SendCoinsEntry()
@@ -98,7 +98,7 @@ void SendCoinsEntry::clear()
     ui->memoTextLabel_s->clear();
     ui->payAmount_s->clear();
 
-    // update the display unit, to not use the default ("BTC")
+    // update the display unit, to not use the default ("FRC")
     updateDisplayUnit();
 }
 

@@ -7,7 +7,7 @@
 #include "ui_aboutdialog.h"
 #include "ui_helpmessagedialog.h"
 
-#include "bitcoingui.h"
+#include "freicoingui.h"
 #include "clientmodel.h"
 #include "guiutil.h"
 
@@ -26,7 +26,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->setupUi(this);
 
     // Set current copyright year
-    ui->copyrightLabel->setText(tr("Copyright") + QString(" &copy; 2009-%1 ").arg(COPYRIGHT_YEAR) + tr("The Bitcoin Core developers"));
+    ui->copyrightLabel->setText(tr("Copyright") + QString(" &copy; 2009-%1 ").arg(COPYRIGHT_YEAR) + tr("The Freicoin developers"));
 }
 
 void AboutDialog::setModel(ClientModel *model)
@@ -64,12 +64,12 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent) :
     ui->setupUi(this);
     GUIUtil::restoreWindowGeometry("nHelpMessageDialogWindow", this->size(), this);
 
-    header = tr("Bitcoin Core") + " " + tr("version") + " " +
+    header = tr("Freicoin") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  bitcoin-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  freicoin-qt [" + tr("command-line options") + "]                     " + "\n";
 
-    coreOptions = QString::fromStdString(HelpMessage(HMM_BITCOIN_QT));
+    coreOptions = QString::fromStdString(HelpMessage(HMM_FREICOIN_QT));
 
     uiOptions = tr("UI options") + ":\n" +
         "  -choosedatadir            " + tr("Choose data directory on startup (default: 0)") + "\n" +
@@ -78,7 +78,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent) :
         "  -rootcertificates=<file>  " + tr("Set SSL root certificates for payment request (default: -system-)") + "\n" +
         "  -splash                   " + tr("Show splash screen on startup (default: 1)");
 
-    ui->helpMessageLabel->setFont(GUIUtil::bitcoinAddressFont());
+    ui->helpMessageLabel->setFont(GUIUtil::freicoinAddressFont());
 
     // Set help message text
     ui->helpMessageLabel->setText(header + "\n" + coreOptions + "\n" + uiOptions);
@@ -115,7 +115,7 @@ void HelpMessageDialog::on_okButton_accepted()
 
 
 /** "Shutdown" window */
-void ShutdownWindow::showShutdownWindow(BitcoinGUI *window)
+void ShutdownWindow::showShutdownWindow(FreicoinGUI *window)
 {
     if (!window)
         return;
@@ -124,7 +124,7 @@ void ShutdownWindow::showShutdownWindow(BitcoinGUI *window)
     QWidget *shutdownWindow = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(new QLabel(
-        tr("Bitcoin Core is shutting down...") + "<br /><br />" +
+        tr("Freicoin is shutting down...") + "<br /><br />" +
         tr("Do not shut down the computer until this window disappears.")));
     shutdownWindow->setLayout(layout);
 

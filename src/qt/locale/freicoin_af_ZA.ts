@@ -116,7 +116,7 @@
     </message>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Synchronizing with network...</source>
         <translation>Sinchroniseer met die netwerk ...</translation>
@@ -146,8 +146,8 @@
         <translation>Sluit af</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Wys inligting oor Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Wys inligting oor Freicoin</translation>
     </message>
     <message>
         <source>Show information about Qt</source>
@@ -158,8 +158,8 @@
         <translation>&amp;Opsies</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -182,8 +182,8 @@
         <translation>Blad nutsbalk</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
-        <translation>Bitcoin klient</translation>
+        <source>Freicoin client</source>
+        <translation>Freicoin klient</translation>
     </message>
     <message>
         <source>%1 behind</source>
@@ -272,8 +272,8 @@
 <context>
     <name>Intro</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -311,11 +311,11 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Die adres waarheen die betaling gestuur moet word (b.v. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
@@ -438,7 +438,7 @@
         <translation>Teken &amp;Boodskap</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Die adres waarheen die betaling gestuur moet word (b.v. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     </context>
@@ -678,7 +678,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Gebruik:</translation>

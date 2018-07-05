@@ -20,7 +20,7 @@ MAX_NONCE = 1000000L
 
 settings = {}
 
-class BitcoinRPC:
+class FreicoinRPC:
 	OBJID = 1
 
 	def __init__(self, host, port, username, password):
@@ -70,7 +70,7 @@ def getblock(rpc, settings, n):
 	return data
 
 def get_blocks(settings):
-	rpc = BitcoinRPC(settings['host'], settings['port'],
+	rpc = FreicoinRPC(settings['host'], settings['port'],
 			 settings['rpcuser'], settings['rpcpassword'])
 
 	outf = open(settings['output'], 'ab')

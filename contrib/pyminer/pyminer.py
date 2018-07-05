@@ -22,7 +22,7 @@ MAX_NONCE = 1000000L
 settings = {}
 pp = pprint.PrettyPrinter(indent=4)
 
-class BitcoinRPC:
+class FreicoinRPC:
 	OBJID = 1
 
 	def __init__(self, host, port, username, password):
@@ -183,7 +183,7 @@ class Miner:
 			self.submit_work(rpc, work['data'], nonce_bin)
 
 	def loop(self):
-		rpc = BitcoinRPC(settings['host'], settings['port'],
+		rpc = FreicoinRPC(settings['host'], settings['port'],
 				 settings['rpcuser'], settings['rpcpass'])
 		if rpc is None:
 			return

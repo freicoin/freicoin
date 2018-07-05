@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Bitcoin Core - Command-line options</string>
+   <string>Freicoin - Command-line options</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
@@ -28,7 +28,7 @@
       </sizepolicy>
      </property>
      <property name="pixmap">
-      <pixmap resource="../bitcoin.qrc">:/images/about</pixmap>
+      <pixmap resource="../freicoin.qrc">:/images/about</pixmap>
      </property>
     </widget>
    </item>
@@ -89,7 +89,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../bitcoin.qrc"/>
+  <include location="../freicoin.qrc"/>
  </resources>
  <connections>
   <connection>

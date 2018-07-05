@@ -7,7 +7,7 @@
 
 #include <QStackedWidget>
 
-class BitcoinGUI;
+class FreicoinGUI;
 class ClientModel;
 class OverviewPage;
 class ReceiveCoinsDialog;
@@ -35,13 +35,13 @@ public:
     explicit WalletView(QWidget *parent);
     ~WalletView();
 
-    void setBitcoinGUI(BitcoinGUI *gui);
+    void setFreicoinGUI(FreicoinGUI *gui);
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
     void setClientModel(ClientModel *clientModel);
     /** Set the wallet model.
-        The wallet model represents a bitcoin wallet, and offers access to the list of transactions, address book and sending
+        The wallet model represents a freicoin wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
     void setWalletModel(WalletModel *walletModel);

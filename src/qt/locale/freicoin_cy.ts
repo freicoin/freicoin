@@ -112,7 +112,7 @@
     </message>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Synchronizing with network...</source>
         <translation>Cysoni â'r rhwydwaith...</translation>
@@ -138,8 +138,8 @@
         <translation>Gadael rhaglen</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Dangos gwybodaeth am Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Dangos gwybodaeth am Freicoin</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
@@ -514,7 +514,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Information</source>
         <translation>Gwybodaeth</translation>

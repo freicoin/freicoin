@@ -2,20 +2,20 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
-        <translation>Аб Bitcoin Core</translation>
+        <source>About Freicoin</source>
+        <translation>Аб Freicoin</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Bitcoin Core&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Bitcoin Core&lt;/b&gt; версіі</translation>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Freicoin&lt;/b&gt; версіі</translation>
     </message>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Распрацоўнікі Bitcoin Core</translation>
+        <source>The Freicoin developers</source>
+        <translation>Распрацоўнікі Freicoin</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
@@ -171,7 +171,7 @@
         <translation>Пацвердзіце шыфраванне гаманца</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
         <translation>Увага: калі вы зашыфруеце свой гаманец і страціце парольную фразу, то &lt;b&gt;СТРАЦІЦЕ ЎСЕ СВАЕ БІТКОЙНЫ&lt;/b&gt;!</translation>
     </message>
     <message>
@@ -187,8 +187,8 @@
         <translation>Гаманец зашыфраваны</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Bitcoin зачыняецца дзеля завяршэння працэсса шыфравання. Памятайце, што шыфраванне гаманца цалкам абараняе вашыя сродкі ад скрадання шкоднымі праграмамі якія могуць пранікнуць у ваш камп'ютар.</translation>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation>Freicoin зачыняецца дзеля завяршэння працэсса шыфравання. Памятайце, што шыфраванне гаманца цалкам абараняе вашыя сродкі ад скрадання шкоднымі праграмамі якія могуць пранікнуць у ваш камп'ютар.</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -220,7 +220,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Падпісаць паведамленне...</translation>
@@ -258,7 +258,7 @@
         <translation>Выйсці з праграмы</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
+        <source>Show information about Freicoin</source>
         <translation>Паказаць звесткі пра Біткойн</translation>
     </message>
     <message>
@@ -334,12 +334,12 @@
         <translation>[testnet]</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
-        <translation>Bitcoin кліент</translation>
+        <source>Freicoin client</source>
+        <translation>Freicoin кліент</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n актыўнае злучэнне з Bitcoin-сецівам</numerusform><numerusform>%n актыўных злучэнняў з Bitcoin-сецівам</numerusform><numerusform>%n актыўных злучэнняў з Bitcoin-сецівам</numerusform><numerusform>%n актыўных злучэнняў з Bitcoin-сецівам</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation><numerusform>%n актыўнае злучэнне з Freicoin-сецівам</numerusform><numerusform>%n актыўных злучэнняў з Freicoin-сецівам</numerusform><numerusform>%n актыўных злучэнняў з Freicoin-сецівам</numerusform><numerusform>%n актыўных злучэнняў з Freicoin-сецівам</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
@@ -519,7 +519,7 @@ Address: %4
 <context>
     <name>QObject</name>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Увядзіце Біткойн-адрас (ўзор 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
@@ -666,15 +666,15 @@ Address: %4
         <translation>Alt+P</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>Увядзіце Біткойн-адрас (ўзор 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     </context>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Распрацоўнікі Bitcoin Core</translation>
+        <source>The Freicoin developers</source>
+        <translation>Распрацоўнікі Freicoin</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -946,7 +946,7 @@ Address: %4
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Ужыванне:</translation>
@@ -964,12 +964,12 @@ Address: %4
         <translation>Опцыі:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Вызначыць канфігурацыйны файл (зыходна: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>Вызначыць канфігурацыйны файл (зыходна: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Вызначыць pid-файл (зыходна: bitcoind.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>Вызначыць pid-файл (зыходна: freicoind.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>
@@ -1060,12 +1060,12 @@ Address: %4
         <translation>Памылка загрузкі wallet.dat: гаманец пашкоджаны</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation>Памылка загрузкі wallet.dat: гаманец патрабуе новую версію Bitcoin</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Памылка загрузкі wallet.dat: гаманец патрабуе новую версію Freicoin</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Гаманец мае быць перазапісаны: патрэбны перазапуск Bitcoin для выканання</translation>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Гаманец мае быць перазапісаны: патрэбны перазапуск Freicoin для выканання</translation>
     </message>
     <message>
         <source>Error loading wallet.dat</source>

@@ -16,8 +16,8 @@
 // You should have received a copy of both licenses along with this
 // program.  If not, see <https://www.gnu.org/licenses/> and
 // <http://www.opensource.org/licenses/mit-license.php>
-#ifndef BITCOIN_WALLET_H
-#define BITCOIN_WALLET_H
+#ifndef FREICOIN_WALLET_H
+#define FREICOIN_WALLET_H
 
 #include "core.h"
 #include "crypter.h"
@@ -43,7 +43,7 @@ extern bool bSpendZeroConfChange;
 
 // -paytxfee default
 static const int64_t DEFAULT_TRANSACTION_FEE = 0;
-// -paytxfee will warn if called with a higher fee than this amount (in satoshis) per KB
+// -paytxfee will warn if called with a higher fee than this amount (in kria) per KB
 static const int nHighTransactionFeeWarning = 0.01 * COIN;
 
 class CAccountingEntry;

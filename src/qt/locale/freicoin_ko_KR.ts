@@ -2,11 +2,11 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
+        <source>About Freicoin</source>
         <translation>비트코인 코어 소개</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Bitcoin Core&lt;/b&gt; version</source>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
         <translation>&lt;b&gt;비트코인 코어&lt;/b&gt; 버전</translation>
     </message>
     <message>
@@ -14,7 +14,7 @@
         <translation>Copyright</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
+        <source>The Freicoin developers</source>
         <translation>비트코인 코어 개발자</translation>
     </message>
     <message>
@@ -89,11 +89,11 @@
         <translation>받은 주소들</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation>비트코인을 받는 계좌 주소입니다. 코인을 보내기 전에 잔고와 받는 주소를 항상 확인하세요.</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <source>These are your Freicoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
         <translation>비트코인을 받을 수 있는 계좌 주소입니다. 매 거래마다 새로운 주소 사용을 권장합니다. </translation>
     </message>
     <message>
@@ -187,7 +187,7 @@
         <translation>지갑의 암호화를 확정</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
         <translation>경고: 만약 암호화된 지갑의 비밀번호를 잃어버릴 경우, 모든 비트코인들을 잃어버릴 수 있습니다!</translation>
     </message>
     <message>
@@ -207,7 +207,7 @@
         <translation>지갑 암호화 완료</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
         <translation>암호화 처리 과정을 끝내기 위해 비트코인을 종료합니다. 지갑 암호화는 컴퓨터로의 멀웨어 감염으로 인한 비트코인 도난을 완전히 방지할 수 없음을 기억하세요.</translation>
     </message>
     <message>
@@ -240,7 +240,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>메시지 서명&amp;...</translation>
@@ -278,7 +278,7 @@
         <translation>적용 중단</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
+        <source>Show information about Freicoin</source>
         <translation>비트코인에 대한 정보를 보여줍니다.</translation>
     </message>
     <message>
@@ -326,11 +326,11 @@
         <translation>디스크에서 블록 다시 색인중...</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
+        <source>Send coins to a Freicoin address</source>
         <translation>비트코인 주소로 코인 전송</translation>
     </message>
     <message>
-        <source>Modify configuration options for Bitcoin</source>
+        <source>Modify configuration options for Freicoin</source>
         <translation>비트코인 설정 옵션 수정</translation>
     </message>
     <message>
@@ -354,7 +354,7 @@
         <translation>메시지 확인... (&amp;V)</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>비트코인</translation>
     </message>
     <message>
@@ -382,11 +382,11 @@
         <translation>소유 지갑 개인키 암호화</translation>
     </message>
     <message>
-        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
         <translation>지갑 주소가 본인 소유인지 증명하기 위해 비트코인 주소에 서명할 수 있습니다.</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
         <translation>비트코인 주소의 전자 서명 확인을 위해 첨부된 메시지가 있을 경우 이를 검증할 수 있습니다.</translation>
     </message>
     <message>
@@ -410,15 +410,15 @@
         <translation>[테스트넷]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
+        <source>Freicoin</source>
         <translation>비트코인 코어</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
-        <translation>지불 요청하기 (QR코드와 bitcoin: URI가 생성됩니다)</translation>
+        <source>Request payments (generates QR codes and freicoin: URIs)</source>
+        <translation>지불 요청하기 (QR코드와 freicoin: URI가 생성됩니다)</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
+        <source>&amp;About Freicoin</source>
         <translation>비트코인 코어 소개 (&amp;A)</translation>
     </message>
     <message>
@@ -430,23 +430,23 @@
         <translation>한번 이상 사용된 받는 주소와 주소 제목의 목록을 보여줍니다.</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
-        <translation>bitcoin: URI 또는 지불요청 열기</translation>
+        <source>Open a freicoin: URI or payment request</source>
+        <translation>freicoin: URI 또는 지불요청 열기</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>명령줄 옵션 (&amp;C)</translation>
     </message>
     <message>
-        <source>Show the Bitcoin Core help message to get a list with possible Bitcoin command-line options</source>
-        <translation>사용할 수 있는 비트코인 명령어 옵션 목록을 가져오기 위해 Bitcoin-Qt 도움말 메시지를 표시합니다.</translation>
+        <source>Show the Freicoin help message to get a list with possible Freicoin command-line options</source>
+        <translation>사용할 수 있는 비트코인 명령어 옵션 목록을 가져오기 위해 Freicoin-Qt 도움말 메시지를 표시합니다.</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
+        <source>Freicoin client</source>
         <translation>비트코인 클라이언트</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
+        <source>%n active connection(s) to Freicoin network</source>
         <translation><numerusform>비트코인 네트워크와 %n 개의 활성연결</numerusform></translation>
     </message>
     <message>
@@ -542,7 +542,7 @@ Address: %4
         <translation>지갑이 암호화 되었고 현재 잠겨져 있습니다</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Bitcoin can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. Freicoin can no longer continue safely and will quit.</source>
         <translation>치명적인 오류가 있습니다. 비트코인을 더이상 안전하게 진행할 수 없어 곧 종료합니다.</translation>
     </message>
 </context>
@@ -795,7 +795,7 @@ Address: %4
         <translation>입력된 주소는"%1" 이미 주소록에 있습니다.</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Bitcoin address.</source>
+        <source>The entered address "%1" is not a valid Freicoin address.</source>
         <translation>입력한 "%1" 주소는 올바른 비트코인 주소가 아닙니다.</translation>
     </message>
     <message>
@@ -833,11 +833,11 @@ Address: %4
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core - Command-line options</source>
+        <source>Freicoin - Command-line options</source>
         <translation>비트코인 코어 - 명령어-라인 옵션</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
+        <source>Freicoin</source>
         <translation>비트코인코어</translation>
     </message>
     <message>
@@ -884,15 +884,15 @@ Address: %4
         <translation>환영합니다</translation>
     </message>
     <message>
-        <source>Welcome to Bitcoin Core.</source>
+        <source>Welcome to Freicoin.</source>
         <translation>비트코인 코어에 오신것을 환영합니.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Bitcoin Core will store its data.</source>
+        <source>As this is the first time the program is launched, you can choose where Freicoin will store its data.</source>
         <translation>프로그램이 처음으로 실행되고 있습니다. 비트코인 코어가 어디에 데이터를 저장할지 선택할 수 있습니다. </translation>
     </message>
     <message>
-        <source>Bitcoin Core will download and store a copy of the Bitcoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <source>Freicoin will download and store a copy of the Freicoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
         <translation>비트코인 코어가 블럭체인의 복사본을 다운로드 저장합니다. 적어도 %1GB의 데이터가 이 폴더에 저장되며 시간이 경과할수록 점차 증가합니다. 그리고 지갑 또한 이 폴더에 저장됩니다. </translation>
     </message>
     <message>
@@ -904,7 +904,7 @@ Address: %4
         <translation>커스텀 데이터 폴더 사용:</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>비트코인</translation>
     </message>
     <message>
@@ -966,11 +966,11 @@ Address: %4
         <translation>송금 수수료(&amp;F)</translation>
     </message>
     <message>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
+        <source>Automatically start Freicoin after logging in to the system.</source>
         <translation>시스템 로그인후에 비트코인을 자동으로 시작합니다.</translation>
     </message>
     <message>
-        <source>&amp;Start Bitcoin on system login</source>
+        <source>&amp;Start Freicoin on system login</source>
         <translation>시스템 로그인시 비트코인 시작(&amp;S)</translation>
     </message>
     <message>
@@ -986,7 +986,7 @@ Address: %4
         <translation>스크립트 인증 쓰레드의 개수</translation>
     </message>
     <message>
-        <source>Connect to the Bitcoin network through a SOCKS proxy.</source>
+        <source>Connect to the Freicoin network through a SOCKS proxy.</source>
         <translation>SOCKS 프록시를 통해 비트코인 네트워크 연결</translation>
     </message>
     <message>
@@ -1034,7 +1034,7 @@ Address: %4
         <translation>&amp;확인되지 않은 돈을 쓰다</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation>라우터의 비트코인 클라이언트 포트를 자동으로 엽니다. 라우터에서 UPnP를 지원하고 활성화 했을 경우에만 동작합니다.</translation>
     </message>
     <message>
@@ -1090,7 +1090,7 @@ Address: %4
         <translation>사용자 인터페이스 언어(&amp;L):</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
         <translation>사용자 인터페이스 언어를 여기서 설정할 수 있습니다. 이 설정은 비트코인을 다시 시작할때 적용됩니다.</translation>
     </message>
     <message>
@@ -1102,7 +1102,7 @@ Address: %4
         <translation>인터페이스에 표시하고 코인을 보낼때 사용할 기본 최소화 단위를 선택하십시오.</translation>
     </message>
     <message>
-        <source>Whether to show Bitcoin addresses in the transaction list or not.</source>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
         <translation>송금 목록에 비트코인 주소를 표시할지의 여부입니다.</translation>
     </message>
     <message>
@@ -1157,7 +1157,7 @@ Address: %4
         <translation>유형</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
         <translation>표시한 정보가 오래된 것 같습니다. 비트코인 네트워크에 연결하고 난 다음에 지갑을 자동으로 동기화 하지만, 아직 과정이 끝나지는 않았습니다.</translation>
     </message>
     <message>
@@ -1212,7 +1212,7 @@ Address: %4
         <translation>URI 조작중</translation>
     </message>
     <message>
-        <source>URI can not be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
+        <source>URI can not be parsed! This can be caused by an invalid Freicoin address or malformed URI parameters.</source>
         <translation>URI의 파싱에 문제가 발생했습니다. 잘못된 비트코인 주소나 URI 파라미터 구성에 오류가 존재할 수 있습니다.</translation>
     </message>
     <message>
@@ -1224,7 +1224,7 @@ Address: %4
         <translation>지불 요청 애러</translation>
     </message>
     <message>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
+        <source>Cannot start freicoin: click-to-pay handler</source>
         <translation>비트코인을 시작할 수 없습니다: 지급제어기를 클릭하시오</translation>
     </message>
     <message>
@@ -1279,7 +1279,7 @@ Address: %4
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>비트코인</translation>
     </message>
     <message>
@@ -1291,11 +1291,11 @@ Address: %4
         <translation>오류: 잘못된 -regtest 와 -testnet의 조합입니다.</translation>
     </message>
     <message>
-        <source>Bitcoin Core didn't yet exit safely...</source>
+        <source>Freicoin didn't yet exit safely...</source>
         <translation>비트코인 코어가 아직 안전하게 종료되지 않았습니다.</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>비트코인 주소를 입력하기 (예 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
@@ -1417,7 +1417,7 @@ Address: %4
         <translation>로그 파일 디버그</translation>
     </message>
     <message>
-        <source>Open the Bitcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>비트코인 디버그 로그파일을 현재 데이터 폴더에서 여십시요. 용량이 큰 로그 파일들은 몇 초가 걸릴 수 있습니다.</translation>
     </message>
     <message>
@@ -1425,7 +1425,7 @@ Address: %4
         <translation>콘솔 초기화</translation>
     </message>
     <message>
-        <source>Welcome to the Bitcoin RPC console.</source>
+        <source>Welcome to the Freicoin RPC console.</source>
         <translation>비트코인 RPC 콘솔에 오신걸 환영합니다</translation>
     </message>
     <message>
@@ -1753,7 +1753,7 @@ Address: %4
         <translation>거래가 거부되었습니다. 몇몇 코인들이 지갑에서 이미 사용된 경우, 예를 들어 코인을 이미 사용한  wallet.dat를 복사해서 사용한 경우 지금 지갑에 기록이 안되있어 이런 일이 생길 수 있습니다.</translation>
     </message>
     <message>
-        <source>Warning: Invalid Bitcoin address</source>
+        <source>Warning: Invalid Freicoin address</source>
         <translation>경고: 잘못된 비트코인주소입니다</translation>
     </message>
     <message>
@@ -1840,7 +1840,7 @@ Address: %4
         <translation>사용된 주소 목록에 새 주소를 추가하기 위해 제목을 입력합니다. </translation>
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
+        <source>A message that was attached to the freicoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Freicoin network.</source>
         <translation>비트코인에 첨부된 메시지: 참고용으로 거래와 함께 저장될 URI. 메모: 이 메시지는 비트코인 네트워크로 전송되지 않습니다.</translation>
     </message>
     <message>
@@ -1859,7 +1859,7 @@ Address: %4
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Bitcoin Core is shutting down...</source>
+        <source>Freicoin is shutting down...</source>
         <translation>비트코인코어가 닫아지고 있습니다</translation>
     </message>
     <message>
@@ -1914,7 +1914,7 @@ Address: %4
         <translation>현재 서명을 시스템 클립보드에 복사</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Bitcoin address</source>
+        <source>Sign the message to prove you own this Freicoin address</source>
         <translation>여러분의 비트코인 주소를 증명하려면 메시지 서명하십시오</translation>
     </message>
     <message>
@@ -1942,7 +1942,7 @@ Address: %4
         <translation>서명한 메시지의 주소입니다 (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
         <translation>정확한 비트코인주소가 입력됬는지 메시지를 확인하시오</translation>
     </message>
     <message>
@@ -1954,7 +1954,7 @@ Address: %4
         <translation>모든 검증 메시지 필드 재설정</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation>비트코인 주소를 입력하기 (예 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
@@ -2013,11 +2013,11 @@ Address: %4
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
+        <source>Freicoin</source>
         <translation>비트코인코어</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
+        <source>The Freicoin developers</source>
         <translation>비트코인코어 개발자들</translation>
     </message>
     <message>
@@ -2478,7 +2478,7 @@ Address: %4
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>사용법:</translation>
@@ -2496,12 +2496,12 @@ Address: %4
         <translation>옵션:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>설정파일 지정 (기본값: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>설정파일 지정 (기본값: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>pid 파일 지정 (기본값: bitcoind.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>pid 파일 지정 (기본값: freicoind.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>
@@ -2544,7 +2544,7 @@ Address: %4
         <translation>명령줄과 JSON-RPC 명령 수락</translation>
     </message>
     <message>
-        <source>Bitcoin Core RPC client version</source>
+        <source>Freicoin RPC client version</source>
         <translation>비트코인 코어 RPC 클라이언트 버전</translation>
     </message>
     <message>
@@ -2606,7 +2606,7 @@ Address: %4
         <translation>경고: -paytxfee값이 너무 큽니다! 이 값은 송금할때 지불할 송금 수수료입니다.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
         <translation>경고: 컴퓨터의 날짜와 시간이 올바른지 확인하십시오! 시간이 잘못되면 비트코인은 제대로 동작하지 않습니다.</translation>
     </message>
     <message>
@@ -2638,7 +2638,7 @@ Address: %4
         <translation>손상된 wallet.dat에서 개인키 복원을 시도합니다</translation>
     </message>
     <message>
-        <source>Bitcoin Core Daemon</source>
+        <source>Freicoin Daemon</source>
         <translation>비트코인 코어 데몬</translation>
     </message>
     <message>
@@ -2830,8 +2830,8 @@ Address: %4
         <translation>데이터 폴더 안에 지갑 파일을 선택하세요.</translation>
     </message>
     <message>
-        <source>Usage (deprecated, use bitcoin-cli):</source>
-        <translation>사용법 (오래되었습니다. bitcoin-cli를 사용하십시오):</translation>
+        <source>Usage (deprecated, use freicoin-cli):</source>
+        <translation>사용법 (오래되었습니다. freicoin-cli를 사용하십시오):</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -2866,7 +2866,7 @@ Address: %4
         <translation>외부 blk000??.dat 파일에서 블록을 가져옵니다.</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Bitcoin Core is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
         <translation>데이터 디렉토리 %s에 락을 걸 수 없었습니다. 비트코인 코어가 이미 실행 중인 것으로 보입니다.</translation>
     </message>
     <message>
@@ -2930,7 +2930,7 @@ Address: %4
         <translation>구동 시 블럭 트리를 출력합니다. (기본값: 0, 비활성화)</translation>
     </message>
     <message>
-        <source>RPC SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
+        <source>RPC SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
         <translation>RPC SSL 옵션: (비트코인 위키의 SSL 설정 설명서 참고)</translation>
     </message>
     <message>
@@ -2946,11 +2946,11 @@ Address: %4
         <translation>주기적으로 지갑을 비우도록 설정 (기본값: 1)</translation>
     </message>
     <message>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
         <translation>SSL 옵션: (SSL 설정 절차를 보혀면 비트코인 위키를 참조하십시오)</translation>
     </message>
     <message>
-        <source>Send command to Bitcoin Core</source>
+        <source>Send command to Freicoin</source>
         <translation>비트코인 코어로 명령 보내기</translation>
     </message>
     <message>
@@ -2986,7 +2986,7 @@ Address: %4
         <translation>밀리초 단위로 연결 제한시간을 설정하십시오(기본값: 5000)</translation>
     </message>
     <message>
-        <source>Start Bitcoin Core Daemon</source>
+        <source>Start Freicoin Daemon</source>
         <translation>비트코인 코어의 데몬 프로그램을 실행합니다.</translation>
     </message>
     <message>
@@ -3102,11 +3102,11 @@ Address: %4
         <translation>wallet.dat 불러오기 에러: 지갑 오류</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
         <translation>wallet.dat 불러오기 에러:  지갑은 새버전의 비트코인이 필요합니다.</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
         <translation>지갑을 새로 써야 합니다.:  완성하기 위하여 비트코인을 다시 시작하십시오.</translation>
     </message>
     <message>

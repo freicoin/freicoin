@@ -55,8 +55,8 @@ fi
 
 set -f
 
-BITCOIND=${1}/bitcoind
-CLI=${1}/bitcoin-cli
+FREICOIND=${1}/freicoind
+CLI=${1}/freicoin-cli
 
 DIR="${BASH_SOURCE%/*}"
 SENDANDWAIT="${DIR}/send.sh"
@@ -71,7 +71,7 @@ echo "Starting nodes..."
 D4=${D}/node4
 CreateDataDir $D4 port=11030 rpcport=11031
 B4ARGS="-datadir=$D4"
-$BITCOIND $BITCOINDARGS $B4ARGS &
+$FREICOIND $FREICOINDARGS $B4ARGS &
 B4PID=$!
 
 # Want default keypool for 1/2/3, and
@@ -80,7 +80,7 @@ B4PID=$!
 function CreateConfDir {
   DIR=$1
   mkdir -p $DIR
-  CONF=$DIR/bitcoin.conf
+  CONF=$DIR/freicoin.conf
   echo "regtest=1" >> $CONF
   echo "rpcuser=rt" >> $CONF
   echo "rpcpassword=rt" >> $CONF
@@ -96,17 +96,17 @@ function CreateConfDir {
 D1=${D}/node1
 CreateConfDir $D1 port=11000 rpcport=11001 addnode=127.0.0.1:11030
 B1ARGS="-datadir=$D1"
-$BITCOIND $B1ARGS &
+$FREICOIND $B1ARGS &
 B1PID=$!
 D2=${D}/node2
 CreateConfDir $D2 port=11010 rpcport=11011 addnode=127.0.0.1:11030
 B2ARGS="-datadir=$D2"
-$BITCOIND $B2ARGS &
+$FREICOIND $B2ARGS &
 B2PID=$!
 D3=${D}/node3
 CreateConfDir $D3 port=11020 rpcport=11021 addnode=127.0.0.1:11030 addnode=127.0.0.1:11000
 B3ARGS="-datadir=$D3"
-$BITCOIND $BITCOINDARGS $B3ARGS &
+$FREICOIND $FREICOINDARGS $B3ARGS &
 B3PID=$!
 
 # Wait until all nodes are at the same block number
@@ -144,7 +144,7 @@ function WaitMemPools {
 
 echo "Generating initial blockchain..."
 
-# 1 block, 50 XBT each == 50 BTC
+# 1 block, 50 XBT each == 50 FRC
 $CLI $B1ARGS setgenerate true 1
 WaitBlocks
 $CLI $B2ARGS setgenerate true 1
@@ -172,7 +172,7 @@ DEM=0
 function S {
   TXID=$( $CLI -datadir=${D}/node${1} sendtoaddress ${2} "${3}" 0 )
   if [[ $TXID == "" ]] ; then
-      echoerr "node${1}: error sending ${3} btc"
+      echoerr "node${1}: error sending ${3} frc"
       echo -n "node${1} balance: "
       $CLI -datadir=${D}/node${1} getbalance "*" 0
       exit 1
@@ -261,11 +261,11 @@ function EraseThree {
   rm $D3/regtest/wallet.dat
 }
 function StartThree {
-  $BITCOIND $BITCOINDARGS $B1ARGS &
+  $FREICOIND $FREICOINDARGS $B1ARGS &
   B1PID=$!
-  $BITCOIND $BITCOINDARGS $B2ARGS &
+  $FREICOIND $FREICOINDARGS $B2ARGS &
   B2PID=$!
-  $BITCOIND $BITCOINDARGS $B3ARGS &
+  $FREICOIND $FREICOINDARGS $B3ARGS &
   B3PID=$!
 }
 

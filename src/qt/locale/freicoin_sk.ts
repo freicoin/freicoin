@@ -2,20 +2,20 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
-        <translation>O jadre Bitcoin</translation>
+        <source>About Freicoin</source>
+        <translation>O jadre Freicoin</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Bitcoin Core&lt;/b&gt; version</source>
-        <translation>Verzia &lt;b&gt;Bitcoin jadra&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
+        <translation>Verzia &lt;b&gt;Freicoin jadra&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Copyright</source>
         <translation>Autorské práva</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Vývojári jadra Bitcoin</translation>
+        <source>The Freicoin developers</source>
+        <translation>Vývojári jadra Freicoin</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
@@ -89,12 +89,12 @@
         <translation>Adresa prijatia</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Toto sú Vaše Bitcoin adresy pre posielanie platieb. Vždy skontrolujte množstvo a prijímaciu adresu pred poslaním coins.</translation>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Toto sú Vaše Freicoin adresy pre posielanie platieb. Vždy skontrolujte množstvo a prijímaciu adresu pred poslaním coins.</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Toto sú vaše Bitcoin adresy pre prijímanie platieb. Odporúča sa použiť novú prijímaciu adresu pre každú transakciu.</translation>
+        <source>These are your Freicoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Toto sú vaše Freicoin adresy pre prijímanie platieb. Odporúča sa použiť novú prijímaciu adresu pre každú transakciu.</translation>
     </message>
     <message>
         <source>Copy &amp;Label</source>
@@ -191,8 +191,8 @@
         <translation>Potvrďte šifrovanie peňaženky</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>Varovanie: Ak zašifrujete peňaženku a stratíte heslo, &lt;b&gt;STRATÍTE VŠETKY VAŠE BITCOINY&lt;/b&gt;!⏎</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation>Varovanie: Ak zašifrujete peňaženku a stratíte heslo, &lt;b&gt;STRATÍTE VŠETKY VAŠE FREICOINY&lt;/b&gt;!⏎</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -211,8 +211,8 @@
         <translation>Peňaženka zašifrovaná</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Bitcoin sa teraz ukončí pre dokončenie procesu šifrovania. Pamätaj že šifrovanie peňaženky Ťa nemôže úplne ochrániť pred kráďežou bitcoinov pomocou škodlivého software.</translation>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
+        <translation>Freicoin sa teraz ukončí pre dokončenie procesu šifrovania. Pamätaj že šifrovanie peňaženky Ťa nemôže úplne ochrániť pred kráďežou freicoinov pomocou škodlivého software.</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -244,7 +244,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Podpísať &amp;správu...</translation>
@@ -282,8 +282,8 @@
         <translation>Ukončiť program</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
-        <translation>Zobraziť informácie o Bitcoin</translation>
+        <source>Show information about Freicoin</source>
+        <translation>Zobraziť informácie o Freicoin</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -330,12 +330,12 @@
         <translation>Preindexúvam bloky na disku...</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
-        <translation>Poslať bitcoins na adresu</translation>
+        <source>Send coins to a Freicoin address</source>
+        <translation>Poslať freicoins na adresu</translation>
     </message>
     <message>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>Upraviť možnosti nastavenia pre bitcoin</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>Upraviť možnosti nastavenia pre freicoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -358,8 +358,8 @@
         <translation>Overiť správu</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -386,12 +386,12 @@
         <translation>Zašifruj súkromné kľúče ktoré patria do vašej peňaženky</translation>
     </message>
     <message>
-        <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation>Podpísať správu s vašou adresou Bitcoin aby ste preukázali že ju vlastníte</translation>
+        <source>Sign messages with your Freicoin addresses to prove you own them</source>
+        <translation>Podpísať správu s vašou adresou Freicoin aby ste preukázali že ju vlastníte</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Bitcoin addresses</source>
-        <translation>Overiť či správa bola podpísaná uvedenou Bitcoin adresou</translation>
+        <source>Verify messages to ensure they were signed with specified Freicoin addresses</source>
+        <translation>Overiť či správa bola podpísaná uvedenou Freicoin adresou</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -414,16 +414,16 @@
         <translation>[testovacia sieť]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Jadro Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Jadro Freicoin</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
-        <translation>Vyžiadať platbu (vygeneruje QR kód a bitcoin: URI)</translation>
+        <source>Request payments (generates QR codes and freicoin: URIs)</source>
+        <translation>Vyžiadať platbu (vygeneruje QR kód a freicoin: URI)</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
-        <translation>O jadre Bitcoin</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>O jadre Freicoin</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -434,24 +434,24 @@
         <translation>Zobraziť zoznam použitých prijímacích adries a ich popisov</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
-        <translation>Otvoriť bitcoin URI alebo výzvu k platbe</translation>
+        <source>Open a freicoin: URI or payment request</source>
+        <translation>Otvoriť freicoin URI alebo výzvu k platbe</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>Možnosti príkazového riadku</translation>
     </message>
     <message>
-        <source>Show the Bitcoin Core help message to get a list with possible Bitcoin command-line options</source>
-        <translation>Zobraziť pomocnú správu od Bitcoin Jadra pre získanie zoznamu dostupných možností príkazového riadku</translation>
+        <source>Show the Freicoin help message to get a list with possible Freicoin command-line options</source>
+        <translation>Zobraziť pomocnú správu od Freicoin Jadra pre získanie zoznamu dostupných možností príkazového riadku</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
-        <translation>Bitcoin klient</translation>
+        <source>Freicoin client</source>
+        <translation>Freicoin klient</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
-        <translation><numerusform>%n aktívne spojenie v Bitcoin sieti</numerusform><numerusform>%n aktívne spojenia v Bitcoin sieti</numerusform><numerusform>%n aktívnych spojení v Bitconi sieti</numerusform></translation>
+        <source>%n active connection(s) to Freicoin network</source>
+        <translation><numerusform>%n aktívne spojenie v Freicoin sieti</numerusform><numerusform>%n aktívne spojenia v Freicoin sieti</numerusform><numerusform>%n aktívnych spojení v Bitconi sieti</numerusform></translation>
     </message>
     <message>
         <source>No block source available...</source>
@@ -541,8 +541,8 @@ Adresa: %4</translation>
         <translation>Peňaženka je &lt;b&gt;zašifrovaná&lt;/b&gt; a momentálne &lt;b&gt;zamknutá&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Bitcoin can no longer continue safely and will quit.</source>
-        <translation>Vyskytla sa neblahá chyba. Bitcoin nemôže daľej bezpečne pokračovať a vypne sa.</translation>
+        <source>A fatal error occurred. Freicoin can no longer continue safely and will quit.</source>
+        <translation>Vyskytla sa neblahá chyba. Freicoin nemôže daľej bezpečne pokračovať a vypne sa.</translation>
     </message>
 </context>
 <context>
@@ -826,8 +826,8 @@ Adresa: %4</translation>
         <translation>Vložená adresa "%1" sa už nachádza v adresári.</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Bitcoin address.</source>
-        <translation>Vložená adresa "%1" nieje platnou adresou bitcoin.</translation>
+        <source>The entered address "%1" is not a valid Freicoin address.</source>
+        <translation>Vložená adresa "%1" nieje platnou adresou freicoin.</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -864,12 +864,12 @@ Adresa: %4</translation>
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core - Command-line options</source>
-        <translation>Jadro Bitcoin - možnosti príkazového riadku</translation>
+        <source>Freicoin - Command-line options</source>
+        <translation>Jadro Freicoin - možnosti príkazového riadku</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Jadro Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Jadro Freicoin</translation>
     </message>
     <message>
         <source>version</source>
@@ -915,16 +915,16 @@ Adresa: %4</translation>
         <translation>Vitajte</translation>
     </message>
     <message>
-        <source>Welcome to Bitcoin Core.</source>
-        <translation>Vitajte v jadre Bitcoin.</translation>
+        <source>Welcome to Freicoin.</source>
+        <translation>Vitajte v jadre Freicoin.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Bitcoin Core will store its data.</source>
-        <translation>Keďže spúštate program prvý krát, môžte si vybrať kde bude Bitcoin Jadro ukladať svoje dáta.</translation>
+        <source>As this is the first time the program is launched, you can choose where Freicoin will store its data.</source>
+        <translation>Keďže spúštate program prvý krát, môžte si vybrať kde bude Freicoin Jadro ukladať svoje dáta.</translation>
     </message>
     <message>
-        <source>Bitcoin Core will download and store a copy of the Bitcoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Jadro Bitcoin stiahne zo siete a uloží kópiu Bitcoin blockchain. Aspoň %1GB dát bude uložených v tomto priečinku a časom porastie. Peňaženka bude tiež uložená v tomto priečinku.</translation>
+        <source>Freicoin will download and store a copy of the Freicoin block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Jadro Freicoin stiahne zo siete a uloží kópiu Freicoin blockchain. Aspoň %1GB dát bude uložených v tomto priečinku a časom porastie. Peňaženka bude tiež uložená v tomto priečinku.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -935,8 +935,8 @@ Adresa: %4</translation>
         <translation>Použiť vlastný dátový adresár:</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" can not be created.</source>
@@ -997,12 +997,12 @@ Adresa: %4</translation>
         <translation>Zaplatiť transakčné &amp;poplatky</translation>
     </message>
     <message>
-        <source>Automatically start Bitcoin after logging in to the system.</source>
-        <translation>Automaticky spustiť Bitcoin po zapnutí počítača</translation>
+        <source>Automatically start Freicoin after logging in to the system.</source>
+        <translation>Automaticky spustiť Freicoin po zapnutí počítača</translation>
     </message>
     <message>
-        <source>&amp;Start Bitcoin on system login</source>
-        <translation>&amp;Spustiť Bitcoin pri spustení systému správy okien</translation>
+        <source>&amp;Start Freicoin on system login</source>
+        <translation>&amp;Spustiť Freicoin pri spustení systému správy okien</translation>
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1017,8 +1017,8 @@ Adresa: %4</translation>
         <translation>Počet skript overujucich vlákien</translation>
     </message>
     <message>
-        <source>Connect to the Bitcoin network through a SOCKS proxy.</source>
-        <translation>Pripojiť k Bitcoin sieti cez SOCKS proxy.</translation>
+        <source>Connect to the Freicoin network through a SOCKS proxy.</source>
+        <translation>Pripojiť k Freicoin sieti cez SOCKS proxy.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS proxy (default proxy):</source>
@@ -1077,8 +1077,8 @@ Adresa: %4</translation>
         <translation>Minúť nepotvrdený výdavok</translation>
     </message>
     <message>
-        <source>Automatically open the Bitcoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automaticky otvorit port pre Bitcoin na routeri. Toto funguje len ak router podporuje UPnP a je táto podpora aktivovaná.</translation>
+        <source>Automatically open the Freicoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automaticky otvorit port pre Freicoin na routeri. Toto funguje len ak router podporuje UPnP a je táto podpora aktivovaná.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1133,8 +1133,8 @@ Adresa: %4</translation>
         <translation>Jazyk užívateľského rozhrania:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting Bitcoin.</source>
-        <translation>Tu sa dá nastaviť jazyk užívateľského rozhrania. Toto nastavenie bude účinné po reštartovaní Bitcoin.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Freicoin.</source>
+        <translation>Tu sa dá nastaviť jazyk užívateľského rozhrania. Toto nastavenie bude účinné po reštartovaní Freicoin.</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1142,11 +1142,11 @@ Adresa: %4</translation>
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Zvoľte ako deliť bitcoin pri zobrazovaní pri platbách a užívateľskom rozhraní.</translation>
+        <translation>Zvoľte ako deliť freicoin pri zobrazovaní pri platbách a užívateľskom rozhraní.</translation>
     </message>
     <message>
-        <source>Whether to show Bitcoin addresses in the transaction list or not.</source>
-        <translation>Či ukazovať Bitcoin adresy v zozname transakcií alebo nie.</translation>
+        <source>Whether to show Freicoin addresses in the transaction list or not.</source>
+        <translation>Či ukazovať Freicoin adresy v zozname transakcií alebo nie.</translation>
     </message>
     <message>
         <source>&amp;Display addresses in transaction list</source>
@@ -1200,8 +1200,8 @@ Adresa: %4</translation>
         <translation>Forma</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcoin network after a connection is established, but this process has not completed yet.</source>
-        <translation>Zobrazené informácie môžu byť neaktuápne. Vaša peňaženka sa automaticky synchronizuje so sieťou Bitcoin po nadviazaní spojenia ale tento proces ešte nieje ukončený.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Freicoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Zobrazené informácie môžu byť neaktuápne. Vaša peňaženka sa automaticky synchronizuje so sieťou Freicoin po nadviazaní spojenia ale tento proces ešte nieje ukončený.</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -1255,8 +1255,8 @@ Adresa: %4</translation>
         <translation>Spracovanie URI</translation>
     </message>
     <message>
-        <source>URI can not be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation>URI sa nedá rozložiť! To môže byť spôsobené neplatou Bitcoin adresou alebo zle upravenými vlastnosťami URI.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid Freicoin address or malformed URI parameters.</source>
+        <translation>URI sa nedá rozložiť! To môže byť spôsobené neplatou Freicoin adresou alebo zle upravenými vlastnosťami URI.</translation>
     </message>
     <message>
         <source>Requested payment amount of %1 is too small (considered dust).</source>
@@ -1267,8 +1267,8 @@ Adresa: %4</translation>
         <translation>Chyba pri vyžiadaní platby</translation>
     </message>
     <message>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
-        <translation>Nedá sa spustiť obslužný program bitcoin: click-to-pay zaplatiť kliknutím</translation>
+        <source>Cannot start freicoin: click-to-pay handler</source>
+        <translation>Nedá sa spustiť obslužný program freicoin: click-to-pay zaplatiť kliknutím</translation>
     </message>
     <message>
         <source>Net manager warning</source>
@@ -1322,8 +1322,8 @@ Adresa: %4</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Freicoin</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" does not exist.</source>
@@ -1338,12 +1338,12 @@ Adresa: %4</translation>
         <translation>Chyba: Nesprávna kombinácia -regtest a -testnet.</translation>
     </message>
     <message>
-        <source>Bitcoin Core didn't yet exit safely...</source>
-        <translation>Jadro Bitcoin sa ešte úspešne nevyplo ...</translation>
+        <source>Freicoin didn't yet exit safely...</source>
+        <translation>Jadro Freicoin sa ešte úspešne nevyplo ...</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Zadajte Bitcoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Zadajte Freicoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1464,16 +1464,16 @@ Adresa: %4</translation>
         <translation>Súbor záznamu ladenia</translation>
     </message>
     <message>
-        <source>Open the Bitcoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Otvoriť Bitcoin log súbor pre ladenie z aktuálneho dátového adresára. Toto môže trvať niekoľko sekúnd pre veľké súbory.</translation>
+        <source>Open the Freicoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Otvoriť Freicoin log súbor pre ladenie z aktuálneho dátového adresára. Toto môže trvať niekoľko sekúnd pre veľké súbory.</translation>
     </message>
     <message>
         <source>Clear console</source>
         <translation>Vymazať konzolu</translation>
     </message>
     <message>
-        <source>Welcome to the Bitcoin RPC console.</source>
-        <translation>Vitajte v Bitcoin RPC konzole. Baník, pyčo!</translation>
+        <source>Welcome to the Freicoin RPC console.</source>
+        <translation>Vitajte v Freicoin RPC konzole. Baník, pyčo!</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
@@ -1535,8 +1535,8 @@ Adresa: %4</translation>
         <translation>Znovu použiť jestvujúcu prijímaciu adresu (neodporúča sa)</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcoin network.</source>
-        <translation>Pridať voliteľnú správu k výzve na zaplatenie, ktorá sa zobrazí keď bude výzva otvorená. Poznámka: Správa nebude poslaná s platbou cez sieť Bitcoin.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Freicoin network.</source>
+        <translation>Pridať voliteľnú správu k výzve na zaplatenie, ktorá sa zobrazí keď bude výzva otvorená. Poznámka: Správa nebude poslaná s platbou cez sieť Freicoin.</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -1685,7 +1685,7 @@ Adresa: %4</translation>
     <name>SendCoinsDialog</name>
     <message>
         <source>Send Coins</source>
-        <translation>Poslať Bitcoins</translation>
+        <translation>Poslať Freicoins</translation>
     </message>
     <message>
         <source>Coin Control Features</source>
@@ -1773,7 +1773,7 @@ Adresa: %4</translation>
     </message>
     <message>
         <source>Confirm send coins</source>
-        <translation>Potvrdiť odoslanie bitcoins</translation>
+        <translation>Potvrdiť odoslanie freicoins</translation>
     </message>
     <message>
         <source>%1 to %2</source>
@@ -1848,8 +1848,8 @@ Adresa: %4</translation>
         <translation>Transakcia bola zamietnutá! Toto sa môže stať ak niektoré coins vo vašej peňaženke už boli minuté, ako keď použijete kópiu wallet.dat a coins boli minuté z kópie ale neoznačené ako minuté tu.</translation>
     </message>
     <message>
-        <source>Warning: Invalid Bitcoin address</source>
-        <translation>Varovanie: Nesprávna Bitcoin adresa</translation>
+        <source>Warning: Invalid Freicoin address</source>
+        <translation>Varovanie: Nesprávna Freicoin adresa</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1935,8 +1935,8 @@ Adresa: %4</translation>
         <translation>Vložte popis pre túto adresu aby sa uložila do zoznamu použitých adries</translation>
     </message>
     <message>
-        <source>A message that was attached to the bitcoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcoin network.</source>
-        <translation>Správa ktorá bola pripojená k bitcoin: URI a ktorá bude uložená s transakcou pre Vaše potreby. Poznámka: Táto správa nebude poslaná cez sieť Bitcoin.</translation>
+        <source>A message that was attached to the freicoin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Freicoin network.</source>
+        <translation>Správa ktorá bola pripojená k freicoin: URI a ktorá bude uložená s transakcou pre Vaše potreby. Poznámka: Táto správa nebude poslaná cez sieť Freicoin.</translation>
     </message>
     <message>
         <source>This is an unverified payment request.</source>
@@ -1954,8 +1954,8 @@ Adresa: %4</translation>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Bitcoin Core is shutting down...</source>
-        <translation>Jadro Bitcoin sa ukončuje...</translation>
+        <source>Freicoin is shutting down...</source>
+        <translation>Jadro Freicoin sa ukončuje...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -1978,7 +1978,7 @@ Adresa: %4</translation>
     </message>
     <message>
         <source>The address to sign the message with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Zadajte Bitcoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Zadajte Freicoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -2009,7 +2009,7 @@ Adresa: %4</translation>
         <translation>Kopírovať práve zvolenú adresu do systémového klipbordu</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Bitcoin address</source>
+        <source>Sign the message to prove you own this Freicoin address</source>
         <translation>Podpíšte správu aby ste dokázali že vlastníte túto adresu</translation>
     </message>
     <message>
@@ -2034,11 +2034,11 @@ Adresa: %4</translation>
     </message>
     <message>
         <source>The address the message was signed with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Zadajte Bitcoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Zadajte Freicoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Bitcoin address</source>
-        <translation>Overím správy sa uistiť že bola podpísaná označenou Bitcoin adresou</translation>
+        <source>Verify the message to ensure it was signed with the specified Freicoin address</source>
+        <translation>Overím správy sa uistiť že bola podpísaná označenou Freicoin adresou</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -2049,8 +2049,8 @@ Adresa: %4</translation>
         <translation>Obnoviť všetky polia v overiť správu</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Zadajte Bitcoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Zadajte Freicoin adresu (napr. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <source>Click "Sign Message" to generate signature</source>
@@ -2108,12 +2108,12 @@ Adresa: %4</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Jadro Bitcoin</translation>
+        <source>Freicoin</source>
+        <translation>Jadro Freicoin</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
-        <translation>Vývojári jadra Bitcoin</translation>
+        <source>The Freicoin developers</source>
+        <translation>Vývojári jadra Freicoin</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -2526,7 +2526,7 @@ Adresa: %4</translation>
     <name>WalletModel</name>
     <message>
         <source>Send Coins</source>
-        <translation>Poslať Bitcoins</translation>
+        <translation>Poslať Freicoins</translation>
     </message>
 </context>
 <context>
@@ -2565,7 +2565,7 @@ Adresa: %4</translation>
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Použitie:</translation>
@@ -2583,12 +2583,12 @@ Adresa: %4</translation>
         <translation>Možnosti:</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: bitcoin.conf)</source>
-        <translation>Určiť súbor s nastaveniami (predvolené: bitcoin.conf)</translation>
+        <source>Specify configuration file (default: freicoin.conf)</source>
+        <translation>Určiť súbor s nastaveniami (predvolené: freicoin.conf)</translation>
     </message>
     <message>
-        <source>Specify pid file (default: bitcoind.pid)</source>
-        <translation>Určiť súbor pid (predvolené: bitcoind.pid)</translation>
+        <source>Specify pid file (default: freicoind.pid)</source>
+        <translation>Určiť súbor pid (predvolené: freicoind.pid)</translation>
     </message>
     <message>
         <source>Specify data directory</source>
@@ -2631,8 +2631,8 @@ Adresa: %4</translation>
         <translation>Prijímať príkazy z príkazového riadku a JSON-RPC</translation>
     </message>
     <message>
-        <source>Bitcoin Core RPC client version</source>
-        <translation>Verzia RPC klienta Jadra Bitcoin</translation>
+        <source>Freicoin RPC client version</source>
+        <translation>Verzia RPC klienta Jadra Freicoin</translation>
     </message>
     <message>
         <source>Run in the background as a daemon and accept commands</source>
@@ -2650,24 +2650,24 @@ Adresa: %4</translation>
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=bitcoinrpc
+rpcuser=freicoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s "Bitcoin Alert" admin@foo.com
+for example: alertnotify=echo %%s | mail -s "Freicoin Alert" admin@foo.com
 </source>
         <translation>%s, musíte nastaviť rpcpassword heslo v súbore nastavení:
 %s
 Odporúča sa používať nasledujúce náhodné heslo:
-rpcuser=bitcoinrpc
+rpcuser=freicoinrpc
 rpcpassword=%s
 (nemusíte si pamätať toto heslo)
 Užívateľské meno a heslo NESMÚ byť rovnaké.
 Ak súbor neexistuje, vytvorte ho s prístupovým právom owner-readable-only čitateľné len pre majiteľa.
 Tiež sa odporúča nastaviť alertnotify aby ste boli upozorňovaní na problémy;
-napríklad: alertnotify=echo %%s | mail -s "Bitcoin Výstraha" admin@foo.com
+napríklad: alertnotify=echo %%s | mail -s "Freicoin Výstraha" admin@foo.com
 </translation>
     </message>
     <message>
@@ -2736,11 +2736,11 @@ napríklad: alertnotify=echo %%s | mail -s "Bitcoin Výstraha" admin@foo.com
     </message>
     <message>
         <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
-        <translation>Toto je pred-testovacia verzia - použitie je na vlastné riziko - nepoužívajte na tvorbu bitcoin ani obchodovanie.</translation>
+        <translation>Toto je pred-testovacia verzia - použitie je na vlastné riziko - nepoužívajte na tvorbu freicoin ani obchodovanie.</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Bitcoin Core is probably already running.</source>
-        <translation>Nepodarilo sa pripojiť na %s na tomto počítači. Bitcoin Jadro je už pravdepodobne spustené.</translation>
+        <source>Unable to bind to %s on this computer. Freicoin is probably already running.</source>
+        <translation>Nepodarilo sa pripojiť na %s na tomto počítači. Freicoin Jadro je už pravdepodobne spustené.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: -proxy)</source>
@@ -2751,8 +2751,8 @@ napríklad: alertnotify=echo %%s | mail -s "Bitcoin Výstraha" admin@foo.com
         <translation>Varovanie: -paytxfee je nastavené veľmi vysoko. Toto sú transakčné poplatky ktoré zaplatíte ak odošlete transakciu.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Bitcoin will not work properly.</source>
-        <translation>Varovanie: Skontroluj či je na počítači nastavený správny čas a dátum. Ak sú hodiny nastavené nesprávne, Bitcoin nebude správne pracovať.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Freicoin will not work properly.</source>
+        <translation>Varovanie: Skontroluj či je na počítači nastavený správny čas a dátum. Ak sú hodiny nastavené nesprávne, Freicoin nebude správne pracovať.</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -2789,8 +2789,8 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Pokus zachrániť súkromné kľúče z poškodeného wallet.dat</translation>
     </message>
     <message>
-        <source>Bitcoin Core Daemon</source>
-        <translation>Démon Jadro Bitcoin</translation>
+        <source>Freicoin Daemon</source>
+        <translation>Démon Jadro Freicoin</translation>
     </message>
     <message>
         <source>Block creation options:</source>
@@ -2922,7 +2922,7 @@ The network does not appear to fully agree! Some miners appear to be experiencin
     </message>
     <message>
         <source>Find peers using DNS lookup (default: 1 unless -connect)</source>
-        <translation>Nájsť počítače v bitcoin sieti použitím DNS vyhľadávania (predvolené: 1 okrem -connect)</translation>
+        <translation>Nájsť počítače v freicoin sieti použitím DNS vyhľadávania (predvolené: 1 okrem -connect)</translation>
     </message>
     <message>
         <source>Force safe mode (default: 0)</source>
@@ -2997,8 +2997,8 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Toto je mienené nástrojom pre regresné testovania a vývoj programu.</translation>
     </message>
     <message>
-        <source>Usage (deprecated, use bitcoin-cli):</source>
-        <translation>Použitie (neodporúča sa, použite bitcoin-cli):</translation>
+        <source>Usage (deprecated, use freicoin-cli):</source>
+        <translation>Použitie (neodporúča sa, použite freicoin-cli):</translation>
     </message>
     <message>
         <source>Verifying blocks...</source>
@@ -3033,8 +3033,8 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Importuje bloky z externého súboru blk000??.dat</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Bitcoin Core is probably already running.</source>
-        <translation>Neviem uzamknúť data adresár %s. Jadro Bitcoin je pravdepodobne už spustené.</translation>
+        <source>Cannot obtain a lock on data directory %s. Freicoin is probably already running.</source>
+        <translation>Neviem uzamknúť data adresár %s. Jadro Freicoin je pravdepodobne už spustené.</translation>
     </message>
     <message>
         <source>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</source>
@@ -3097,8 +3097,8 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Vytlačiť strom blokov pri spustení (prednastavené: 0)</translation>
     </message>
     <message>
-        <source>RPC SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>Možnosti RPC SSL: (Pozri v Bitcoin Wiki pokyny pre SSL nastavenie)</translation>
+        <source>RPC SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>Možnosti RPC SSL: (Pozri v Freicoin Wiki pokyny pre SSL nastavenie)</translation>
     </message>
     <message>
         <source>RPC server options:</source>
@@ -3117,12 +3117,12 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Mať spustené vlákno pravidelného čístenia peňaženky (predvolené: 1)</translation>
     </message>
     <message>
-        <source>SSL options: (see the Bitcoin Wiki for SSL setup instructions)</source>
-        <translation>SSL možnosť: (pozrite Bitcoin Wiki pre návod na nastavenie SSL)</translation>
+        <source>SSL options: (see the Freicoin Wiki for SSL setup instructions)</source>
+        <translation>SSL možnosť: (pozrite Freicoin Wiki pre návod na nastavenie SSL)</translation>
     </message>
     <message>
-        <source>Send command to Bitcoin Core</source>
-        <translation>Poslať príkaz Jadru Bitcoin</translation>
+        <source>Send command to Freicoin</source>
+        <translation>Poslať príkaz Jadru Freicoin</translation>
     </message>
     <message>
         <source>Send trace/debug info to console instead of debug.log file</source>
@@ -3157,8 +3157,8 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Určiť aut spojenia v milisekundách (predvolené: 5000)</translation>
     </message>
     <message>
-        <source>Start Bitcoin Core Daemon</source>
-        <translation>Štart služby Jadro Bitcoin</translation>
+        <source>Start Freicoin Daemon</source>
+        <translation>Štart služby Jadro Freicoin</translation>
     </message>
     <message>
         <source>System error: </source>
@@ -3273,12 +3273,12 @@ The network does not appear to fully agree! Some miners appear to be experiencin
         <translation>Chyba načítania wallet.dat: Peňaženka je poškodená</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
-        <translation>Chyba načítania wallet.dat: Peňaženka vyžaduje novšiu verziu Bitcoin</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
+        <translation>Chyba načítania wallet.dat: Peňaženka vyžaduje novšiu verziu Freicoin</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
-        <translation>Bolo potrebné prepísať peňaženku: dokončite reštartovaním Bitcoin</translation>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
+        <translation>Bolo potrebné prepísať peňaženku: dokončite reštartovaním Freicoin</translation>
     </message>
     <message>
         <source>Error loading wallet.dat</source>

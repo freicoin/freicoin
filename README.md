@@ -1,26 +1,26 @@
-Bitcoin Core integration/staging tree
+Freicoin integration/staging tree
 =====================================
 
-http://www.bitcoin.org
+http://freico.in
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
 
-What is Bitcoin?
+What is Freicoin?
 ----------------
 
-Bitcoin is an experimental new digital currency that enables instant payments to
-anyone, anywhere in the world. Bitcoin uses peer-to-peer technology to operate
+Freicoin is an experimental new digital currency that enables instant payments to
+anyone, anywhere in the world. Freicoin uses peer-to-peer technology to operate
 with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Bitcoin Core is the name of open source
+out collectively by the network. Freicoin is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Bitcoin Core software, see http://www.bitcoin.org/en/download.
+the Freicoin software, see http://freico.in/en/download.
 
 License
 -------
 
-Bitcoin Core is released under the conjunctive terms of BOTH version 3
+Freicoin is released under the conjunctive terms of BOTH version 3
 of the GNU Affero General Public License as published by the Free
 Software Foundation AND the MIT/X11 software license. See
 [COPYING](COPYING) for more information.
@@ -31,12 +31,12 @@ Development process
 Developers work in their own trees, then submit pull requests when they think
 their feature or bug fix is ready.
 
-If it is a simple/trivial/non-controversial change, then one of the Bitcoin
+If it is a simple/trivial/non-controversial change, then one of the Freicoin
 development team members simply pulls it.
 
 If it is a *more complicated or potentially controversial* change, then the patch
 submitter will be asked to start a discussion (if they haven't already) on the
-[mailing list](http://sourceforge.net/mailarchive/forum.php?forum_name=bitcoin-development).
+[mailing list](http://sourceforge.net/mailarchive/forum.php?forum_name=freicoin-development).
 
 The patch will be accepted if there is broad consensus that it is a good thing.
 Developers should expect to rework and resubmit patches if the code doesn't
@@ -44,8 +44,8 @@ match the project's coding conventions (see [doc/coding.md](doc/coding.md)) or a
 controversial.
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/bitcoin/bitcoin/tags) are created
-regularly to indicate new official, stable release versions of Bitcoin.
+completely stable. [Tags](https://github.com/freicoin/freicoin/tags) are created
+regularly to indicate new official, stable release versions of Freicoin.
 
 Testing
 -------
@@ -63,20 +63,20 @@ submit new unit tests for old code. Unit tests can be compiled and run (assuming
 Every pull request is built for both Windows and Linux on a dedicated server,
 and unit and sanity tests are automatically run. The binaries produced may be
 used for manual QA testing — a link to them will appear in a comment on the
-pull request posted by [BitcoinPullTester](https://github.com/BitcoinPullTester). See https://github.com/TheBlueMatt/test-scripts
+pull request posted by [FreicoinPullTester](https://github.com/FreicoinPullTester). See https://github.com/TheBlueMatt/test-scripts
 for the build/test scripts.
 
 ### Manual Quality Assurance (QA) Testing
 
 Large changes should have a test plan, and should be tested by somebody other
 than the developer who wrote the code.
-See https://github.com/bitcoin/QA/ for how to create a test plan.
+See https://github.com/freicoin/QA/ for how to create a test plan.
 
 Translations
 ------------
 
 Changes to translations as well as new translations can be submitted to
-[Bitcoin Core's Transifex page](https://www.transifex.com/projects/p/bitcoin/).
+[Freicoin's Transifex page](https://www.transifex.com/projects/p/freicoin/).
 
 Periodically the translations are pulled from Transifex and merged into the git repository. See the
 [translation process](doc/translation_process.md) for details on how this works.
@@ -105,7 +105,7 @@ to see it.
 
 **testnet and regtest modes**
 
-Run with the -testnet option to run with "play bitcoins" on the test network, if you
+Run with the -testnet option to run with "play freicoins" on the test network, if you
 are testing multi-machine code that needs to operate across the internet.
 
 If you are testing something that can run on one machine, run with the -regtest option.
@@ -114,7 +114,7 @@ that run in -regest mode.
 
 **DEBUG_LOCKORDER**
 
-Bitcoin Core is a multithreaded application, and deadlocks or other multithreading bugs
+Freicoin is a multithreaded application, and deadlocks or other multithreading bugs
 can be very difficult to track down. Compiling with -DDEBUG_LOCKORDER (configure
 CXXFLAGS="-DDEBUG_LOCKORDER -g") inserts run-time checks to keep track of what locks
 are held, and adds warning to the debug.log file if inconsistencies are detected.

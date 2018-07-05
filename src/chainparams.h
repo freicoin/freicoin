@@ -17,8 +17,8 @@
 // program.  If not, see <https://www.gnu.org/licenses/> and
 // <http://www.opensource.org/licenses/mit-license.php>
 
-#ifndef BITCOIN_CHAIN_PARAMS_H
-#define BITCOIN_CHAIN_PARAMS_H
+#ifndef FREICOIN_CHAIN_PARAMS_H
+#define FREICOIN_CHAIN_PARAMS_H
 
 #include "bignum.h"
 #include "uint256.h"
@@ -40,7 +40,7 @@ struct CDNSSeedData {
 
 /**
  * CChainParams defines various tweakable parameters of a given instance of the
- * Bitcoin system. There are three: the main network on which people trade goods
+ * Freicoin system. There are three: the main network on which people trade goods
  * and services, the public test network which gets reset from time to time and
  * a regression test mode which is intended for private networks only. It has
  * minimal difficulty to ensure that blocks can be found instantly.

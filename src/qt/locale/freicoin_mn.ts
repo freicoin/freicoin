@@ -107,7 +107,7 @@
         <translation>Түрүйвч цоожлогдлоо</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
         <translation>Цоожлолтын процесыг дуусгахын тулд Биткойн одоо хаагдана. Ѳѳрийн түрүйвчийг цоожлох нь таны биткойнуудыг компьютерийн вирус хулгайлахаас бүрэн сэргийлж чадахгүй гэдгийг санаарай.</translation>
     </message>
     <message>
@@ -140,7 +140,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>&amp;Зурвас хавсаргах...</translation>
@@ -170,7 +170,7 @@
         <translation>Програмаас Гарах</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
+        <source>Show information about Freicoin</source>
         <translation>Биткойны мэдээллийг харуулах</translation>
     </message>
     <message>
@@ -206,7 +206,7 @@
         <translation>Оношилгоо ба засварын консолыг онгойлго</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>Биткойн</translation>
     </message>
     <message>
@@ -230,11 +230,11 @@
         <translation>&amp;Тусламж</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
+        <source>Freicoin client</source>
         <translation>Биткойн клиент</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Bitcoin network</source>
+        <source>%n active connection(s) to Freicoin network</source>
         <translation><numerusform>Биткойны сүлжээрүү %n идэвхитэй холболт байна </numerusform><numerusform>Биткойны сүлжээрүү %n идэвхитэй холболтууд байна </numerusform></translation>
     </message>
     <message numerus="yes">
@@ -399,7 +399,7 @@ Address: %4
 <context>
     <name>Intro</name>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>Биткойн</translation>
     </message>
     <message>
@@ -421,7 +421,7 @@ Address: %4
         <translation>МБ</translation>
     </message>
     <message>
-        <source>Connect to the Bitcoin network through a SOCKS proxy.</source>
+        <source>Connect to the Freicoin network through a SOCKS proxy.</source>
         <translation>Биткойны сүлжээрүү SOCKS проксигоор холбогдох.</translation>
     </message>
     <message>
@@ -462,7 +462,7 @@ Address: %4
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>Биткойн</translation>
     </message>
     </context>
@@ -692,7 +692,7 @@ Address: %4
         <translation>Гүйлгээний тѳлбѳр %1-ийг тооцхоор нийт дүн нь таны балансаас хэтрээд байна.</translation>
     </message>
     <message>
-        <source>Warning: Invalid Bitcoin address</source>
+        <source>Warning: Invalid Freicoin address</source>
         <translation>Анхаар:Буруу Биткойны хаяг байна</translation>
     </message>
     <message>
@@ -738,7 +738,7 @@ Address: %4
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Bitcoin Core is shutting down...</source>
+        <source>Freicoin is shutting down...</source>
         <translation>Биткойны цѳм хаагдаж байна...</translation>
     </message>
     <message>
@@ -1045,7 +1045,7 @@ Address: %4
     <name>WalletView</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>Хэрэглээ:</translation>
@@ -1095,7 +1095,7 @@ Address: %4
         <translation>wallet.dat-ыг ачааллахад алдаа гарлаа: Түрүйвч эвдэрсэн байна</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
         <translation>wallet.dat-ыг ачааллахад алдаа гарлаа: Түрүйвч Биткойны шинэ хувилбарыг шаардаж байна</translation>
     </message>
     <message>

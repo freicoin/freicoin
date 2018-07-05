@@ -3,28 +3,28 @@ include Makefile.include
 AM_CPPFLAGS += -I$(builddir)
 
 noinst_LIBRARIES = \
-  libbitcoin_server.a \
-  libbitcoin_common.a \
-  libbitcoin_cli.a
+  libfreicoin_server.a \
+  libfreicoin_common.a \
+  libfreicoin_cli.a
 if ENABLE_WALLET
-noinst_LIBRARIES += libbitcoin_wallet.a
+noinst_LIBRARIES += libfreicoin_wallet.a
 endif
 
 bin_PROGRAMS =
 
-if BUILD_BITCOIND
-  bin_PROGRAMS += bitcoind
+if BUILD_FREICOIND
+  bin_PROGRAMS += freicoind
 endif
 
-if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += bitcoin-cli
+if BUILD_FREICOIN_CLI
+  bin_PROGRAMS += freicoin-cli
 endif
 
 SUBDIRS = . $(BUILD_QT) $(BUILD_TEST)
 DIST_SUBDIRS = . qt test
 .PHONY: FORCE
-# bitcoin core #
-BITCOIN_CORE_H = \
+# freicoin #
+FREICOIN_CORE_H = \
   addrman.h \
   alert.h \
   allocators.h \
@@ -87,7 +87,7 @@ obj/build.h: FORCE
 	  $(abs_top_srcdir)
 version.o: obj/build.h
 
-libbitcoin_server_a_SOURCES = \
+libfreicoin_server_a_SOURCES = \
   addrman.cpp \
   alert.cpp \
   bloom.cpp \
@@ -109,18 +109,18 @@ libbitcoin_server_a_SOURCES = \
   txdb.cpp \
   txmempool.cpp \
   $(JSON_H) \
-  $(BITCOIN_CORE_H)
+  $(FREICOIN_CORE_H)
 
-libbitcoin_wallet_a_SOURCES = \
+libfreicoin_wallet_a_SOURCES = \
   db.cpp \
   crypter.cpp \
   rpcdump.cpp \
   rpcwallet.cpp \
   wallet.cpp \
   walletdb.cpp \
-  $(BITCOIN_CORE_H)
+  $(FREICOIN_CORE_H)
 
-libbitcoin_common_a_SOURCES = \
+libfreicoin_common_a_SOURCES = \
   base58.cpp \
   allocators.cpp \
   chainparams.cpp \
@@ -134,50 +134,50 @@ libbitcoin_common_a_SOURCES = \
   sync.cpp \
   util.cpp \
   version.cpp \
-  $(BITCOIN_CORE_H)
+  $(FREICOIN_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libbitcoin_common_a_SOURCES += compat/glibc_compat.cpp
-libbitcoin_common_a_SOURCES += compat/glibcxx_compat.cpp
+libfreicoin_common_a_SOURCES += compat/glibc_compat.cpp
+libfreicoin_common_a_SOURCES += compat/glibcxx_compat.cpp
 endif
 
-libbitcoin_cli_a_SOURCES = \
+libfreicoin_cli_a_SOURCES = \
   rpcclient.cpp \
-  $(BITCOIN_CORE_H)
+  $(FREICOIN_CORE_H)
 
-nodist_libbitcoin_common_a_SOURCES = $(top_srcdir)/src/obj/build.h
+nodist_libfreicoin_common_a_SOURCES = $(top_srcdir)/src/obj/build.h
 #
 
-# bitcoind binary #
-bitcoind_LDADD = \
-  libbitcoin_server.a \
-  libbitcoin_cli.a \
-  libbitcoin_common.a \
+# freicoind binary #
+freicoind_LDADD = \
+  libfreicoin_server.a \
+  libfreicoin_cli.a \
+  libfreicoin_common.a \
   $(LIBLEVELDB) \
   $(LIBMEMENV)
 if ENABLE_WALLET
-bitcoind_LDADD += libbitcoin_wallet.a
+freicoind_LDADD += libfreicoin_wallet.a
 endif
-bitcoind_SOURCES = bitcoind.cpp
+freicoind_SOURCES = freicoind.cpp
 #
 
 if TARGET_WINDOWS
-bitcoind_SOURCES += bitcoind-res.rc
+freicoind_SOURCES += freicoind-res.rc
 endif
 
 AM_CPPFLAGS += $(BDB_CPPFLAGS)
-bitcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
+freicoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
 
-# bitcoin-cli binary #
-bitcoin_cli_LDADD = \
-  libbitcoin_cli.a \
-  libbitcoin_common.a \
+# freicoin-cli binary #
+freicoin_cli_LDADD = \
+  libfreicoin_cli.a \
+  libfreicoin_common.a \
   $(BOOST_LIBS)
-bitcoin_cli_SOURCES = bitcoin-cli.cpp
+freicoin_cli_SOURCES = freicoin-cli.cpp
 #
 
 if TARGET_WINDOWS
-bitcoin_cli_SOURCES += bitcoin-cli-res.rc
+freicoin_cli_SOURCES += freicoin-cli-res.rc
 endif
 
 # NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race
@@ -188,7 +188,7 @@ leveldb/%.a:
 	  CC="$(CC)" PLATFORM=$(TARGET_OS) AR="$(AR)" $(LEVELDB_TARGET_FLAGS) \
 	  OPT="$(CXXFLAGS) $(CPPFLAGS)"
 
-qt/bitcoinstrings.cpp: $(libbitcoin_server_a_SOURCES) $(libbitcoin_common_a_SOURCES) $(libbitcoin_cli_a_SOURCES)
+qt/freicoinstrings.cpp: $(libfreicoin_server_a_SOURCES) $(libfreicoin_common_a_SOURCES) $(libfreicoin_cli_a_SOURCES)
 	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
 	@cd $(top_srcdir); XGETTEXT=$(XGETTEXT) share/qt/extract_strings_qt.py
 

@@ -2,11 +2,11 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <source>About Bitcoin Core</source>
+        <source>About Freicoin</source>
         <translation>عن جوهر البيت كوين</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Bitcoin Core&lt;/b&gt; version</source>
+        <source>&lt;b&gt;Freicoin&lt;/b&gt; version</source>
         <translation>&lt;b&gt;جوهر البيت كوين&lt;/b&gt; إصدار</translation>
     </message>
     <message>
@@ -14,7 +14,7 @@
         <translation>الحقوق محفوظة</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
+        <source>The Freicoin developers</source>
         <translation>مطوري جوهر البيت كوين</translation>
     </message>
     </context>
@@ -85,11 +85,11 @@
         <translation>استقبال العناوين</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your Freicoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation>هذه هي عناوين Bitcion التابعة لك من أجل إرسال الدفعات. تحقق دائما من المبلغ و عنوان المرسل المستقبل قبل إرسال العملات</translation>
     </message>
     <message>
-        <source>These are your Bitcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <source>These are your Freicoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
         <translation>هذه هي عناوين Bitcion التابعة لك من أجل إستقبال الدفعات. ينصح استخدام عنوان جديد من أجل كل صفقة</translation>
     </message>
     <message>
@@ -183,8 +183,8 @@
         <translation>تأكيد تشفير المحفظة</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITCOINS&lt;/b&gt;!</source>
-        <translation>تحذير: إذا قمت بتشفير محفظتك وفقدت كلمة المرور الخاص بك, ستفقد كل عملات BITCOINS الخاصة بك.</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR FREICOINS&lt;/b&gt;!</source>
+        <translation>تحذير: إذا قمت بتشفير محفظتك وفقدت كلمة المرور الخاص بك, ستفقد كل عملات FREICOINS الخاصة بك.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -203,7 +203,7 @@
         <translation>محفظة مشفرة</translation>
     </message>
     <message>
-        <source>Bitcoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
+        <source>Freicoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your freicoins from being stolen by malware infecting your computer.</source>
         <translation>بتكوين سوف يغلق الآن لإنهاء عملية التشفير. تذكر أن التشفير لا يستطيع حماية محفظتك تمامًا من السرقة من خلال البرمجيات الخبيثة التي تصيب جهازك </translation>
     </message>
     <message>
@@ -236,7 +236,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>FreicoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>التوقيع و الرسائل</translation>
@@ -274,7 +274,7 @@
         <translation>الخروج من التطبيق</translation>
     </message>
     <message>
-        <source>Show information about Bitcoin</source>
+        <source>Show information about Freicoin</source>
         <translation>  إظهار معلومات حول بت كوين</translation>
     </message>
     <message>
@@ -322,12 +322,12 @@
         <translation>إعادة الفهرسة الكتل على القرص ...</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
+        <source>Send coins to a Freicoin address</source>
         <translation>ارسل عملات الى عنوان بيتكوين</translation>
     </message>
     <message>
-        <source>Modify configuration options for Bitcoin</source>
-        <translation>تعديل إعدادات bitcoin</translation>
+        <source>Modify configuration options for Freicoin</source>
+        <translation>تعديل إعدادات freicoin</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -346,7 +346,7 @@
         <translation>&amp;التحقق من الرسالة...</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>بت كوين</translation>
     </message>
     <message>
@@ -390,15 +390,15 @@
         <translation>[testnet]</translation>
     </message>
     <message>
-        <source>Bitcoin Core</source>
+        <source>Freicoin</source>
         <translation>جوهر البيت كوين</translation>
     </message>
     <message>
-        <source>&amp;About Bitcoin Core</source>
-        <translation>حول bitcoin core</translation>
+        <source>&amp;About Freicoin</source>
+        <translation>حول freicoin</translation>
     </message>
     <message>
-        <source>Bitcoin client</source>
+        <source>Freicoin client</source>
         <translation>عميل بت كوين</translation>
     </message>
     <message numerus="yes">
@@ -653,7 +653,7 @@
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Bitcoin Core</source>
+        <source>Freicoin</source>
         <translation>جوهر البيت كوين</translation>
     </message>
     <message>
@@ -684,7 +684,7 @@
         <translation>استخدام دليل بيانات مخصص:</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>بت كوين</translation>
     </message>
     <message>
@@ -843,12 +843,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>Bitcoin</source>
+        <source>Freicoin</source>
         <translation>بت كوين</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>إدخال عنوانBitcoin (مثال :1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>إدخال عنوانFreicoin (مثال :1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1238,7 +1238,7 @@
         <translation>التوقيع</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Bitcoin address</source>
+        <source>Sign the message to prove you own this Freicoin address</source>
         <translation>وقع الرسالة لتثبت انك تمتلك عنوان البت كوين هذا</translation>
     </message>
     <message>
@@ -1258,8 +1258,8 @@
         <translation>تحقق &amp;الرسالة</translation>
     </message>
     <message>
-        <source>Enter a Bitcoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>إدخال عنوانBitcoin (مثال :1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Freicoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>إدخال عنوانFreicoin (مثال :1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <source>Click "Sign Message" to generate signature</source>
@@ -1309,11 +1309,11 @@
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Bitcoin Core</source>
+        <source>Freicoin</source>
         <translation>جوهر البيت كوين</translation>
     </message>
     <message>
-        <source>The Bitcoin Core developers</source>
+        <source>The Freicoin developers</source>
         <translation>مطوري جوهر البيت كوين</translation>
     </message>
     <message>
@@ -1670,7 +1670,7 @@
     </message>
 </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>freicoin-core</name>
     <message>
         <source>Usage:</source>
         <translation>المستخدم</translation>
@@ -1736,8 +1736,8 @@
         <translation>فشل توقيع المعاملة</translation>
     </message>
     <message>
-        <source>Start Bitcoin Core Daemon</source>
-        <translation>ابدأ Bitcoin Core Daemon</translation>
+        <source>Start Freicoin Daemon</source>
+        <translation>ابدأ Freicoin Daemon</translation>
     </message>
     <message>
         <source>System error: </source>
@@ -1788,11 +1788,11 @@
         <translation>خطأ عند تنزيل wallet.dat: المحفظة تالفة</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Bitcoin</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of Freicoin</source>
         <translation>خطأ عند تنزيل wallet.dat: المحفظة تتطلب نسخة أحدث من بتكوين</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Bitcoin to complete</source>
+        <source>Wallet needed to be rewritten: restart Freicoin to complete</source>
         <translation>المحفظة تحتاج لإعادة إنشاء: أعد تشغيل بتكوين للإتمام</translation>
     </message>
     <message>
