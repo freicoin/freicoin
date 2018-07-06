@@ -200,21 +200,76 @@ public:
     }
 
     bool Sign(const uint256 &hash, std::vector<unsigned char>& vchSig) {
-        vchSig.clear();
-        ECDSA_SIG *sig = ECDSA_do_sign((unsigned char*)&hash, sizeof(hash), pkey);
-        if (sig == NULL)
-            return false;
         BN_CTX *ctx = BN_CTX_new();
         BN_CTX_start(ctx);
         const EC_GROUP *group = EC_KEY_get0_group(pkey);
+        const EC_POINT *pubkey = EC_KEY_get0_public_key(pkey);
         BIGNUM *order = BN_CTX_get(ctx);
-        BIGNUM *halforder = BN_CTX_get(ctx);
         EC_GROUP_get_order(group, order, ctx);
-        BN_rshift1(halforder, order);
-        if (BN_cmp(sig->s, halforder) > 0) {
-            // enforce low S values, by negating the value (modulo the order) if above order/2.
-            BN_sub(sig->s, order, sig->s);
-        }
+        BIGNUM *m = BN_CTX_get(ctx);
+        BIGNUM *w = BN_CTX_get(ctx);
+        BIGNUM *u = BN_CTX_get(ctx);
+        BIGNUM *v = BN_CTX_get(ctx);
+        EC_POINT *R = EC_POINT_new(group);
+        BIGNUM *x = BN_CTX_get(ctx);
+        BIGNUM *y = BN_CTX_get(ctx);
+        BIGNUM *sqrt = BN_CTX_get(ctx);
+        bool quadratic = false;
+        ECDSA_SIG *sig = NULL;
+        do {
+            // First we generate a signature using a random nonce,
+            // deleting the old signature if this is not our first
+            // time through the loop. There's a 50% chance this
+            // signature will involve an R.y coordinate that is a
+            // quadratic residue, our tie-breaking condition. If not,
+            // the efficient thing to do would be to invert the nonce
+            // used which is guaranteed to be quadratic. However
+            // OpenSSL doesn't expose the necessary machinery in its
+            // API, so instead we continue to sign using random nonces
+            // until we happen up on a quadratic residue.
+            //
+            // When we switch to libsecp256k1 we should modify the
+            // signing function therein to efficiently find a
+            // quadratic residue signature. This would also let us
+            // avoid affine coordinates for the perfect square check,
+            // another efficiency gain.
+
+            vchSig.clear();
+            if (sig) ECDSA_SIG_free(sig);
+            sig = ECDSA_do_sign((unsigned char*)&hash, sizeof(hash), pkey);
+            if (sig == NULL)
+                return false;
+
+            // Now we verify the ECDSA signature step-by-step, since
+            // we need the full R point value.
+
+            // m := H(message)
+            if (!BN_bin2bn((unsigned char*)&hash, sizeof(hash), m))
+                return false;
+            // w := inverse(s)
+            if (!BN_mod_inverse(w, sig->s, order, ctx))
+                return false;
+            // u := H(message) * inverse(s)
+            if (!BN_mod_mul(u, m, w, order, ctx))
+                return false;
+            // v := r * inverse(s)
+            if (!BN_mod_mul(v, sig->r, w, order, ctx))
+                return false;
+            // R := u*generator + v*pubkey
+            if (!EC_POINT_mul(group, R, u, pubkey, v, ctx))
+                return false;
+            if (!EC_POINT_get_affine_coordinates_GFp(group, R, x, y, ctx))
+                return false;
+            assert(0==BN_cmp(x,sig->r));
+
+            // Check if R.y is a perfect square
+            if (!BN_mod_sqrt(sqrt, y, order, ctx))
+                continue;
+            if (!BN_mod_sqr(sqrt, sqrt, order, ctx))
+                return false;
+            quadratic = !BN_cmp(sqrt, y);
+        } while(!quadratic);
+        EC_POINT_free(R);
         BN_CTX_end(ctx);
         BN_CTX_free(ctx);
         unsigned int nSize = ECDSA_size(pkey);
