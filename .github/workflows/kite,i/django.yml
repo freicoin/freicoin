@@ -1,5 +1,5 @@
 name: Django CI
-
+'#'Kind:kite.i::
 on:
   push:
     branches: [ "master" ]
