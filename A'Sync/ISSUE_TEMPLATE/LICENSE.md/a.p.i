@@ -101,7 +101,7 @@ CHARLOTTE NC 28201-1300
 REV 01/24/23 INTUIT.CG.CFP.SP 1555
 ZACHRY T WOOD
 633441725 BH WOOD 30 0 202312 430
-Form 1040 U.S. Individual Income Tax Return 2022 Department of the Treasury—Internal Revenue Service
+Form 1040 U.S. Individual Income Tax Return 2022 Department of the Treasury—Internal Revenue Service 
 OMB No. 1545-0074 IRS Use Only—Do not write or staple in this space.
 Filing Status
 Check only
