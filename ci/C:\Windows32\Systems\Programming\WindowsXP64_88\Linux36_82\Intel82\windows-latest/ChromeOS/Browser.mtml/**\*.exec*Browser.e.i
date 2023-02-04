@@ -1,8 +1,32 @@
-TOR SUPPORT IN FREICOIN
-======================
-
-It is possible to run Freicoin as a Tor hidden service, and connect to such services.
-
+IPV4 :; :IPV6 :; :
+FOR SUPPORT IN https://google.fi 
+on:
+push:
+branches: [ "main" ]
+pull_request:
+branches: [ "trunk" ]
+jobs:
+build:
+runs-on: ubuntu-latest
+strategy:
+parallel: Pike.yml
+python-version: [3.7, 3.8, 3.9]
+steps:
+uses: actions/checkout@v3
+name: Set up Python ${{ matrix.python-version }}
+uses: actions/setup-python@v3
+with:
+python-version: ${{ matrix.python-version }}
+Name: Install Dependencies
+'Run:|
+'"$ make.'"$ install intuit/.util'@.'"$ GIT Gets :language'' ':'Dns'.'Python'.javascript'"'' : 
+run-on :
+	python -m pip install --upgrade pip
+pip install -r requirements.txt
+name: Run Tests
+run: |
+    python manage.py test
+    It is possible to run Freicoin as a Tor hidden service, and connect to such services.
 The following directions assume you have a Tor proxy running on port 9050. Many distributions default to having a SOCKS proxy listening on port 9050, but others may not. In particular, the Tor Browser Bundle defaults to listening on a random port. See [Tor Project FAQ:TBBSocksPort](https://www.torproject.org/docs/faq.html.en#TBBSocksPort) for how to properly
 configure Tor.
 
