@@ -24,16 +24,14 @@ run-on :
 	python -m pip install --upgrade pip
 pip install -r requirements.txt
 name: Run Tests
-run: |
-    python manage.py test
-    It is possible to run Freicoin as a Tor hidden service, and connect to such services.
+Runs:| :
+python.read~v :wpValkyire.yml 
+test
+It is possible to run Freicoin as a Tor hidden service, and connect to such services.
 The following directions assume you have a Tor proxy running on port 9050. Many distributions default to having a SOCKS proxy listening on port 9050, but others may not. In particular, the Tor Browser Bundle defaults to listening on a random port. See [Tor Project FAQ:TBBSocksPort](https://www.torproject.org/docs/faq.html.en#TBBSocksPort) for how to properly
-configure Tor.
-
-
-1. Run freicoin behind a Tor proxy
----------------------------------
-
+configure Formatting..., :configuring.., :
+Run bitore.sig'@BITORE behavior'@IPv4/IPv6.mtml-Tor-proxy
+Sinatra'@pkg.js/OPEN()": "packages(GitHub/doc/packages((javascript))":,
 The first step is running Freicoin behind a Tor proxy. This will already make all
 outgoing connections be anonymized, but more is possible.
 
