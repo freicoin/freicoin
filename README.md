@@ -1,26 +1,6 @@
-bitcoin'
-i
-
--------
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@mowjoejoejoejoe 
-Your account has been flagged.
-Because of that, your profile is hidden from the public. If you believe this is a mistake, contact support to have your account status reviewed.
-whirlys
-/
-Elastic-In-Practice
-Public
-Fork your own copy of whirlys/Elastic-In-Practice
-Code
-Issues
-1
+BEGIN
+NAME :*TitleChange :Automates :
+title :bitcoin' :Fork your own copy of whirlys/Elastic-In-Practice :Code :Issues:#/1/my.sigs/bitore.sig :
 Pull requests
 Actions
 Projects
