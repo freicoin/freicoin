@@ -1,4 +1,6 @@
-Name :buildthen-deployee-title: 
+ci :C:\zieskr/repositories/bitore.sig env
+BEGIN
+Name :build-then-deployee-title: 
 title :ci :C:\I.yml :
 runs-on :D'jango'.c.i :
 #Kind:kite.i::
