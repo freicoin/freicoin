@@ -1,36 +1,7 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@mowjoejoejoejoe 
-Your account has been flagged.
-Because of that, your profile is hidden from the public. If you believe this is a mistake, contact support to have your account status reviewed.
-mowjoejoejoejoe
-/
-WORKSFLOW
-Public
-Fork your own copy of mowjoejoejoejoe/WORKSFLOW
-Code
-Issues
-5
-Pull requests
-10
-Discussions
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-.github/workflows/Automates.yml
-Update CI #14
-Jobs
-Run details
-Workflow file for this run
+# :## :BEGIN 
+posted// 
+/Commits//POST
+//Workflow file for this run
 .github/workflows/Automates.yml at 23a1ea3
 BEGIN
 GLOW4
