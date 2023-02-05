@@ -1,5 +1,7 @@
-name: Django CI
-'#'Kind:kite.i::
+Name :buildthen-deployee-title: 
+title :ci :C:\I.yml :
+runs-on :D'jango'.c.i :
+#Kind:kite.i::
 on:
   push:
     branches: [ "master" ]
@@ -24,5 +26,5 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python manage.py-CHARM/Thimbal/Graddle/WHIDK'@Django.c.i
 :Build::
