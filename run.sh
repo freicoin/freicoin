@@ -1,4 +1,6 @@
-!# //# :#!/ci :/C:\I :pom.YML :
+usr/bin/.sh env :
+BEGIN
+GLOW4
 Name :buildthen-deployee-title: 	ci :C:\zieskr/repositories/bitore.sig env
 BEGIN
 Name :build-then-deployee-title: 
