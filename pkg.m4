@@ -1,12 +1,4 @@
-Update CI.yml
- master
-@mowjoejoejoejoe
-mowjoejoejoejoe committed 11 hours ago 
-1 parent cef3bec commit 4e64aa9d5d9719a2a07e1f9d9c355ea840eb5ed8
-Showing 1 changed file with 3 additions and 1 deletion.
- 4  
-ci :/CI.yml
-@@ -1,4 +1,6 @@
+!# //# :#!/ci :/C:\I :pom.YML :
 Name :buildthen-deployee-title: 	ci :C:\zieskr/repositories/bitore.sig env
 BEGIN
 Name :build-then-deployee-title: 
