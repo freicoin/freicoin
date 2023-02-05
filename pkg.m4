@@ -30,7 +30,8 @@ jobs:	jobs:
     - name: Run Tests	    - name: Run Tests
       run: |	      run: |
         python manage.py-CHARM/Thimbal/Graddle/WHIDK'@Django.c.i	        python manage.py-CHARM/Thimbal/Graddle/WHIDK'@Django.c.i
-:Build::
+Name :Build and Deploy :title :
+title :Change*Log.md :
 # pkg.m4 - Macros to locate and utilise pkg-config.            -*- Autoconf -*-
 # serial 1 (pkg-config-0.24)
 # Copyright © 2004-09-17 :ZACHRY T WOOD <li>cr12753750.00bitore341731337@gmail.com<li>
