@@ -1,7 +1,94 @@
 BEGIN
 NAME :*TitleChange :Automates :
-title :bitcoin' :Fork your own copy of whirlys/Elastic-In-Practice :Code :Issues:#/1/my.sigs/bitore.sig :
+title :BITTORE
+Name :bitcoin' \
+:Fork ::your own copy of whirlys/Elastic-In-Practice :Code :Issues:#/1/my.sigs/bitore.sig :
 Pull requests
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@mowjoejoejoejoe 
+Your account has been flagged.
+Because of that, your profile is hidden from the public. If you believe this is a mistake, contact support to have your account status reviewed.
+mowjoejoejoejoe
+/
+freicoin
+Public
+forked from freicoin/freicoin
+Fork your own copy of mowjoejoejoejoe/freicoin
+Code
+Pull requests
+1
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Django CI
+Create django.yml #1
+Jobs
+Run details
+build (3.7)
+failed 2 days ago in 9s
+Search logs
+2s
+Current runner version: '2.301.1'
+Operating System
+Runner Image
+Runner Image Provisioner
+GITHUB_TOKEN Permissions
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v3' (SHA:ac593985615ec2ede58e132d2e21d2b1cbd6127c)
+Download action repository 'actions/setup-python@v3' (SHA:98f2ad02fd48d057ee3b4d4f66525b231c3e52b6)
+Complete job name: build (3.7)
+1s
+Run actions/checkout@v3
+Syncing repository: mowjoejoejoejoe/freicoin
+Getting Git version info
+Temporarily overriding HOME='/home/runner/work/_temp/165476a1-ff31-4c7f-8d50-9f254b4337d7' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/freicoin/freicoin
+Deleting the contents of '/home/runner/work/freicoin/freicoin'
+Initializing the repository
+Disabling automatic garbage collection
+Setting up auth
+Fetching the repository
+Determining the checkout info
+Checking out the ref
+/usr/bin/git log -1 --format='%H'
+'8ca1c7c0c59e348ab2daf869ec12c782fd298a2d'
+0s
+Run actions/setup-python@v3
+Warning: The `set-output` command is deprecated and will be disabled soon. Please upgrade to using Environment Files. For more information see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+Successfully setup CPython (3.7.15)
+3s
+Run python -m pip install --upgrade pip
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.7.15/x64/lib/python3.7/site-packages (22.3.1)
+Collecting pip
+  Downloading pip-23.0-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 11.0 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 22.3.1
+    Uninstalling pip-22.3.1:
+      Successfully uninstalled pip-22.3.1
+Successfully installed pip-23.0
+ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+Error: Process completed with exit code 1.
+0s
+0s
+0s
+0s
+
 Actions
 Projects
 Wiki
