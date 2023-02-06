@@ -1,4 +1,39 @@
-## :# !
+usr/bin/.sh BASH
+_'if'.'%'OS'%''='"'='Windows_NT'.setlocal_'set'.DIRNAME='%'~dp0_'if'.'%'DIRNAME'%''='"'=''.set'.DIRNAME='._'set'.APP_BASE_NAME='%'~n0_'set'.APP_HOME='%'DIRNAME'%'_'@rem'.Resolve'.any'.'.'.and'.'.'.'.in'.APP_HOME'.to'.make'.it'.shorter'._'for'.'%''%'i'.in'.('%'APP_HOME'%')'.do'.set'.APP_HOME='%''%'~fi_'@rem'.Add'.default'.JVM'.options'.here'.'.You'.can'.also'.use'.JAVA_OPTS'.and'.GRADLE_OPTS'.to'.pass'.JVM'.options'.to'.this'.script'._'set'.DEFAULT_JVM_OPTS=-Xmx64m'.-Xms64m_'@rem'.Find'.java'.exe_'if'.defined'.JAVA_HOME'.goto'.findJavaFromJavaHome_'set'.JAVA_EXE=java'.exe_''%'JAVA_EXE'%''.-version'.>NUL'.2>&1_'if'.'%'"'{'' '"'"var'"'%'"'' }':'''_''' '.'equ'.0'.goto'.execute_'#Echo'._'#Echo'. ':'''.JAVA_HOME'.is'.set'.and'.no'.java'.command'.could'.be'.found'.in'.your'.PATH'._'#Echo'._'#Echo'.Please'.set'.the'.JAVA_HOME'.variable'.in'.your'.environment'.to'.match'.the_'#Echo'.location'.of'.your'.Java'.installation'._'goto'._' ':''findJavaFromJavaHome_'set'.JAVA_HOME='%'JAVA_HOME ':''='%'_'set'.JAVA_EXE='%'JAVA_HOME'%''/bin'/java'.exe_'if'.exist'.'%'JAVA_EXE'%''.goto'.execute_'#Echo'._'#Echo'. ':'''.JAVA_HOME'.is'.set'.to'.an'.invalid'.directory ':'''.'%'JAVA_HOME'%'_'#Echo'._'#Echo'.Please'.set'.the'.JAVA_HOME'.variable'.in'.your'.environment'.to'.match'.the_'#Echo'.location'.of'.your'.Java'.installation'._'goto'._' ':''execute_'@rem'.Setup'.the'.command'.line_'set'.CLASSPATH='%'APP_HOME'%'\gradle\wrapper\gradle-wrapper'.jar_'@rem'.Execute'.Gradle_''%'JAVA_EXE'%''.'%'DEFAULT_JVM_OPTS'%''.'%'JAVA_OPTS'%''.'%'GRADLE_OPTS'%''.-Dorg'.gradle'.appname='%'APP_BASE_NAME'%''.-classpath'.'%'CLASSPATH'%''.org'.gradle'.wrapper'.GradleWrapper'.'%'*_' ':''_'@rem'.'.local'.scope'.for'.the'.variables'.with'.windows'.NT'.shell_'if'.'%'"'{'' '"'"var'"'%'"'' }':'''_''' '.'equ'.0'.goto'._' ':''_'rem'.Set'.variable'.GRADLE__CONSOLE'.if'.you'.need'.the'._script_'.return'.code'.instead'.of_'rem'.the'._cmd'.exe'.'/c_'.return'.code!_'set'.='"'{'' '"'%'"var"''%'"'' '}'' '':'''_'if'.'%''%''.equ'.0'.set'.=1_'if'.'='"'=''%'_''.'/b'.'%''%'_' ':''_'if'.'%'OS'%''='"'='Windows_NT'.local_' ':''omega_'
+format_version: 10
+pipelines:
+  pipe1:
+    group: simple
+    materials:
+      mygit:
+        git: http://my.example.org/mygit.git
+        # whitelist is still allowed (backwards compatibility) and transforms to includes because format_version is 10
+        whitelist:
+          - externals
+          - tools
+    stages:
+      - build:
+          jobs:
+            build:
+              tasks:
+               - exec:
+                   command: make
+  pipe2:
+    group: simple
+    materials:
+      mygit:
+        git: http://my.example.org/mygit.git
+        # includes is allowed and transforms to includes because format_version is 10
+        includes:
+          - externals
+          - tools
+    stages:
+      - build:
+          jobs:
+            build:
+              tasks:
+                - exec:
+                    command: make
 !#/User/bin/BAsh/ :
 /postedC:]
 ci :C:\usr\bin\bash RUN
