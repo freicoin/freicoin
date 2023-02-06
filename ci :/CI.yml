@@ -1,5 +1,5 @@
-ci :C:\zieskr/repositories/bitore.sig env
-BEGIN
+ci :BEGIN :GLOW4 :#!/ci:repositories/CI env
+!#/USr/bin/Bash/bitore.sig :
 Name :build-then-deployee-title: 
 title :ci :C:\I.yml :
 runs-on :D'jango'.c.i :
