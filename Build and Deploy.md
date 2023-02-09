@@ -1,4 +1,7 @@
-# freicoin
+# freicoin#Build and Deploy.md :
+#bitpre.sig :
+Bitore.sigs/my.sig :
+const :construction :
 Freicoin integration/staging tree http://freico.in/
 Skip to main content
 Click here to return to Amazon Web Services homepage
@@ -2806,3 +2809,6 @@ API
 Training
 Blog
 About
+:Build::
+Publish :pub;lish.yml :
+	
