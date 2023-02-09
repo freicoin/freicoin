@@ -31,7 +31,7 @@ Important: The property Role should be the name of an AWS Identity and Access Ma
 You must include the --region option in your AWS CLI commands. Then, you must write the command's output to a reserved file called /command-output.txt, as in the preceding code example.
 You can reference the output of the command using Fn::GetAtt. For example:
 S3Bucket: 
-    Type: AWS::S3::Bucket
+Typ e:DOCKER.Gui.sng : :
     Properties: 
         BucketName: !GetAtt CommandRunner.Output
 To run the command after a resource with the logical name Instance, specify DependsOn: Instance in the AWSUtility::CloudFormation::CommandRunner resource's definition. For example:
