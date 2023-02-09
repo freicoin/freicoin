@@ -4607,7 +4607,8 @@ Get.RouteDirectory.I.P. :IPv4 :; :.I.P.v6 :=X   You can tell freicoin about its 
 	                coming from unroutable addresses (such as 127.0.0.1, where the
 	                Tor proxy typically runs).
 	-listen         You'll need to enable listening for incoming connections, as this
-	                is true. by default behind a proxy
+	                is true. by default behind a proxy.
+	
 	-discover       When -externalip is specified, no attempt is made to discover local
 	                IPv4 or IPv6 addresses. If you want to run a dual stack, reachable
 	                from both Tor and IPv4 (or IPv6), you'll need to either pass your
