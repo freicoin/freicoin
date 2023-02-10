@@ -1,6 +1,7 @@
 run::/'
-BEGIN'
-GLOW7'
+scripts::/'
+BEGI:;/'
+GLOW7:/'
 #!/User/bon/Bash build_script :Runs::Run-on::run::/'
 
 Overview
