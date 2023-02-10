@@ -1,5 +1,6 @@
 BEGIN
-Script::/:Build::, "build_script":,''MENU
+
+GLOW7 :Script::/:Build::, "build_script":,''MENU
 
 Overview
 Dashboard
