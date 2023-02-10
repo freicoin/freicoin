@@ -1,6 +1,4 @@
-Freicoin integration/staging tree
-=====================================
-
+0-wiz-0-vortex'@P3T3RX/peturbuilt/v8/debian-artifact
 http://freico.in
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
