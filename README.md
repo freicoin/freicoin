@@ -1,7 +1,7 @@
 0-wiz-0-vortex'@P3T3RX/peturbuilt/v8/debian-artifact
 http://www.bitore.net :
 
-Copyright (c) 2009-2015 Bitcoin Core Developers
+Copyright (c) 2003-2023 bitcoin' Developer :ZACHRY T WOOD <li>zachryiixixiiwood@gmail.com<li>
 
 What is Freicoin?
 ----------------
