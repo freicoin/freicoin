@@ -1,6 +1,7 @@
-BEGIN
-
-GLOW7 :Script::/:Build::, "build_script":,''MENU
+run::/'
+BEGIN'
+GLOW7'
+#!/User/bon/Bash build_script :Runs::Run-on::run::/'
 
 Overview
 Dashboard
