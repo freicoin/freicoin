@@ -1,11 +1,11 @@
 run::/'
 scripts::/'
-BEGI:;/'
-GLOW7:/'
-#!/User/bon/Bash build_script :Runs::Run-on::run::/'
-
-Overview
-Dashboard
+##BEGIN:;/'
+#GLOW7:/'
+User/bin/Bash RUN
+bon.james'@bitore.sig/Bash build_script :Runs::Run-on::run::/'
+#Overview
+#Dashboard
 Tasks
 Banking
 Sales
