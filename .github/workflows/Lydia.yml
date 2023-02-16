@@ -1,43 +1,10 @@
-name: C/C++ CI
-
-on:
-  push:
-    branches: [ "master" ]
+ci :C:\iexplore :run::/:Build-then-zDeployee :Release.md :title:Name:
+-on:
+push:
+    branches: [ "base" ]
   pull_request:
-    branches: [ "master" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@mowjoejoejoejoe 
-Your account has been flagged.
-Because of that, your profile is hidden from the public. If you believe this is a mistake, contact support to have your account status reviewed.
-mowjoejoejoejoe
-/
-freicoin
-Public
-forked from freicoin/freicoin
-Fork your own copy of mowjoejoejoejoe/freicoin
+    branches: [ "TGIF" ]
+mowjoejoejoejoe/freicoin
 Code
 Pull requests
 1
@@ -49,13 +16,8 @@ Insights
 Settings
 Python Package using Conda
 Create python-package-conda.yml #1
-Jobs
-Run details
-build-linux
-failed last week in 10s
-Search logs
-2s
-2s
+Jobs Run
+Run::/run::\build_script :CONSTRUCTION
   Receiving objects:  96% (892/929)
   Receiving objects:  97% (902/929)
   Receiving objects:  98% (911/929)
