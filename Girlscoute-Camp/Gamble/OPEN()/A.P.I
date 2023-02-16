@@ -8,8 +8,8 @@ Dallas, TX 75235-8313
 Page 1 of 2
 |
 Balance | Your federal tax return (Form 1040) shows you are due a refund of
-Due/ | $283,370,964,939.00.
-Refund |
+Due/ | 
+  '- '#'"'$''$'28337096493900000000'"'' :Refund ::run::/ :'::runs-on::/BEGIN :|
 ______________________________________________________________________________________ |
 |
 What You | Your tax return - The official return for mailing is included in
