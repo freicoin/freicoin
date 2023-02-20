@@ -1,6 +1,4 @@
-name: Jekyll site CI
-
-on:
+ci :C:\I-on :
   push:
     branches: [ "trunk" ]
   pull_request:
