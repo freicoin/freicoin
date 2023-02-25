@@ -1,7 +1,7 @@
 BEGIN
 GLOW4
 !#/USer/bin/Bash/ 
-'Name: OPEN.json
+'Name: pkg.js/package.json
 language :Dns.Python.javascript :
 on: [push]
 const:
