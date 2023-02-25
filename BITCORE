@@ -9,7 +9,7 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 5
+      mirror-parallel: Patch 4
 Name :Build and Deploy :ChangeLog.md :
     steps:
     - uses: actions/checkout@v3
