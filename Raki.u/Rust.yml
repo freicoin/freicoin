@@ -1,3 +1,10 @@
+ci::\run::\ci:C:\I:\run::\BEGIN :Runs-on :run::\ :
+GLOW4
+AUTOMATE AUTOMATES
+AUTOMATES ALL
+!#/User/bin/Bash/bitore.sig/BITCORE
+Start::\run::\Name::\Build and Deploy :title
+title :ci :
 # This is a basic workflow that is manually triggered
 name: Manual workflow
 # Controls when the action will run. Workflow runs when manually triggered using the UI
