@@ -1,4 +1,96 @@
-ACLOCAL_AMFLAGS = -I src/m4
+Skip to content
+auto Logo
+AUTO
+Search (Press "/" to focus)
+Docs
+Blog
+WELCOME
+
+Introduction
+Getting Started
+Merging Quickly
+CONFIGURATION
+
+.autorc
+Plugins
+Non-npm Usage
+Troubleshooting
+TOOL APIS
+
+SETUP
+
+auto init
+auto create-labels
+auto info
+PUBLISHING
+
+auto version
+auto changelog
+auto release
+auto shipit
+auto latest
+auto next
+auto canary
+PR INTERACTION
+
+auto label
+auto pr-status
+auto pr-check
+auto pr-body
+auto comment
+PACKAGE MANAGER PLUGINS
+
+Homebrew
+Chrome Web Store
+Cocoapod
+Crates
+Docker
+Gem
+Git Tag
+Gradle
+Maven
+NPM
+sbt
+VSCode
+FUNCTIONALITY PLUGINS
+
+All Contributors
+Amazon S3
+Conventional Commits
+Exec
+First Time Contributor
+GitHub Pages
+Jira
+Magic Zero
+Microsoft Teams
+Omit Commits
+Omit Release Notes
+PR Body Labels
+Released
+Slack
+Twitter
+Upload Assets
+PLUGIN AUTHORING
+
+Writing Plugins
+Creating Publishing Plugins
+Hook APIs
+Configuration Hooks
+Init Hooks
+Log Parser Hooks
+Changelog Hooks
+Release Lifecycle Hooks
+CONTINUOUS INTEGRATION
+
+CircleCI
+Travis CI
+GitHub Actions
+Jenkins 2
+init
+Interactive setup for minimum working configuration.
+
+Examples
+auto initACLOCAL_AMFLAGS = -I src/m4
 SUBDIRS = src
 .PHONY: deploy
 
