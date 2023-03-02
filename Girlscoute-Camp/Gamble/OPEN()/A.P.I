@@ -1,0 +1,38 @@
+File by Mail Instructions for your 2022 Federal Tax Return
+Important: Your taxes are not finished until all required steps are completed.
+(If you prefer, you can still e-file. Go to the end of these instructions for
+ more information.)
+ZACHRY T WOOD
+5222 Bradford Dr
+Dallas, TX 75235-8313
+Page 1 of 2
+|
+Balance | Your federal tax return (Form 1040) shows you are due a refund of
+Due/ | 
+  '- '#'"'$''$'28337096493900000000'"'' :Refund ::run::/ :'::runs-on::/BEGIN :|
+______________________________________________________________________________________ |
+|
+What You | Your tax return - The official return for mailing is included in
+Need to | this printout.
+Mail | - Sign and date your tax return.
+| - Enter your Identity Protection PIN in the box labeled 'If
+| the IRS sent you an ID Protection PIN, enter here.' This
+| box is located on the same line as the spouse's signature.
+|
+| Mail your return to:
+| Department of the Treasury
+| Internal Revenue Service
+| Austin, TX 73301-0002
+|
+| Deadline: Postmarked by Tuesday, April 18, 2023
+|
+| Note: Your state return may be due on a different date. Please
+| review your state filing instructions.
+|
+| Don't forget correct postage on the envelope.
+______________________________________________________________________________________ |
+|
+What You | Keep these instructions and a copy of your return for your records.
+Need to | You can download or print a copy of your return by logging into your
+Keep | TurboTax account.
+_________________________________________________________________________________

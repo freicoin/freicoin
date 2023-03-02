@@ -85,3 +85,71 @@ postprocessing steps before committing the translations.
 3. update `src/qt/Makefile.am` manually or via
    `ls src/qt/locale/*ts|xargs -n1 basename|sed 's/\(freicoin_\(.*\)\).ts/  locale\/\1.ts \\/'`
 4. `git add` new translations from `src/qt/locale/`
+runs-on: ubuntu-latest
+strategy:
+  max-parallel: 4
+  matrix:
+    python-version: [3.7, 3.8, 3.9]
+
+steps:
+- uses: actions/checkout@v3
+- name: Set up Python ${{ matrix.python-version }}
+  uses: actions/setup-python@v3
+  with:
+    python-version: ${{ matrix.python-version }}
+- name: Install Dependencies
+  run: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+- name: Run Tests
+  run: |
+    python manage.py test
+    diff --git a/.husky/.gitignore b/.husky/.gitignore
+deleted file mode 100644
+index 31354ec1389..00000000000
+--- a/.husky/.gitignore
++++ /dev/null
+@@ -1 +0,0 @@
+-_
+diff --git a/.husly/.sh/bitore.sig b/.husly/.sh/bitore.sig
+new file mode 100644
+index 00000000000..e67f834feea
+--- /dev/null
++++ b/.husly/.sh/bitore.sig
+@@ -0,0 +1,16 @@
++ BEGIN:
++ GLOW4:
++ </git checkout origin/main <file name>
++Run'' 'Runs::/Action::/:Build::/scripts::/Run-on :Runs :
++Runs :gh/pages :
++pages :edit "
++$ intuit install 
++PURL" --add-label "production"
++env:
++PR_URL: ${{github.event.pull_request.html_url}}
++GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++run: gh pr edit "$PR_URL" --add-label "production"
++env:
++PR_URL: ${{github.event.pull_request.html_url}}
++GITHUB_TOKEN: ${{ ((c)(r)).[12753750.[00]m]'_BITORE_34173.1337) ')]}}}'"'' :
++ </git checkout origin/main <file name>
+    runs-on: ubuntu-latest
+strategy:
+  max-parallel: 4
+  matrix:
+    python-version: [3.7, 3.8, 3.9]
+
+steps:
+- uses: actions/checkout@v3
+- name: Set up Python ${{ matrix.python-version }}
+  uses: actions/setup-python@v3
+  with:
+    python-version: ${{ matrix.python-version }}
+- name: Install Dependencies
+  run: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+- name: Runs py.CCharm/WHISK.yml :
+ python.read~v 
+ manage :setup.py'@Bitore.sigs/test
+:Build::

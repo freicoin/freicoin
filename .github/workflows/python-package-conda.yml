@@ -1,0 +1,1919 @@
+GLOW7 :?
+BEGIN :
+'*''*' '*''*'AUTOMATE ALL BEGIN STARTS ON GLOW7'*''*' '"*''*':
+mowjoejoejoejoe
+/
+freicoin
+Public
+forked from freicoin/freicoin
+Fork your own copy of mowjoejoejoejoe/freicoin
+Code
+Pull requests
+2
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Python Package using Conda
+Create python-package-conda.yml #1
+Jobs
+Run details
+build-linux
+failed 2 weeks ago in 10s
+Search logs
+2s
+Current runner version: '2.301.1'
+Operating System
+  Ubuntu
+  22.04.1
+  LTS
+Runner Image
+  Image: ubuntu-22.04
+  Version: 20230129.2
+  Included Software: https://github.com/actions/runner-images/blob/ubuntu22/20230129.2/images/linux/Ubuntu2204-Readme.md
+  Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu22%2F20230129.2
+Runner Image Provisioner
+  2.0.98.1
+GITHUB_TOKEN Permissions
+  Contents: read
+  Metadata: read
+  Packages: read
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v3' (SHA:ac593985615ec2ede58e132d2e21d2b1cbd6127c)
+Download action repository 'actions/setup-python@v3' (SHA:98f2ad02fd48d057ee3b4d4f66525b231c3e52b6)
+Complete job name: build-linux
+2s
+Run actions/checkout@v3
+  with:
+    repository: mowjoejoejoejoe/freicoin
+    token: ***
+    ssh-strict: true
+    persist-credentials: true
+    clean: true
+    fetch-depth: 1
+    lfs: false
+    submodules: false
+    set-safe-directory: true
+Syncing repository: mowjoejoejoejoe/freicoin
+Getting Git version info
+  Working directory is '/home/runner/work/freicoin/freicoin'
+  /usr/bin/git version
+  git version 2.39.1
+Temporarily overriding HOME='/home/runner/work/_temp/160965c5-1000-47e7-9fc6-e4197c5815ed' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/freicoin/freicoin
+Deleting the contents of '/home/runner/work/freicoin/freicoin'
+Initializing the repository
+  /usr/bin/git init /home/runner/work/freicoin/freicoin
+  hint: Using 'master' as the name for the initial branch. This default branch name
+  hint: is subject to change. To configure the initial branch name to use in all
+  hint: of your new repositories, which will suppress this warning, call:
+  hint: 
+  hint: 	git config --global init.defaultBranch <name>
+  hint: 
+  hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+  hint: 'development'. The just-created branch can be renamed via this command:
+  hint: 
+  hint: 	git branch -m <name>
+  Initialized empty Git repository in /home/runner/work/freicoin/freicoin/.git/
+  /usr/bin/git remote add origin https://github.com/mowjoejoejoejoe/freicoin
+Disabling automatic garbage collection
+  /usr/bin/git config --local gc.auto 0
+Setting up auth
+  /usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+  /usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+  /usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+  /usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+  /usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Fetching the repository
+  /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +f1abeda956315a1d7d8b9c964d837a4303485b3c:refs/remotes/origin/master
+  remote: Enumerating objects: 929, done.        
+  remote: Counting objects:   0% (1/929)        
+  remote: Counting objects:   1% (10/929)        
+  remote: Counting objects:   2% (19/929)        
+  remote: Counting objects:   3% (28/929)        
+  remote: Counting objects:   4% (38/929)        
+  remote: Counting objects:   5% (47/929)        
+  remote: Counting objects:   6% (56/929)        
+  remote: Counting objects:   7% (66/929)        
+  remote: Counting objects:   8% (75/929)        
+  remote: Counting objects:   9% (84/929)        
+  remote: Counting objects:  10% (93/929)        
+  remote: Counting objects:  11% (103/929)        
+  remote: Counting objects:  12% (112/929)        
+  remote: Counting objects:  13% (121/929)        
+  remote: Counting objects:  14% (131/929)        
+  remote: Counting objects:  15% (140/929)        
+  remote: Counting objects:  16% (149/929)        
+  remote: Counting objects:  17% (158/929)        
+  remote: Counting objects:  18% (168/929)        
+  remote: Counting objects:  19% (177/929)        
+  remote: Counting objects:  20% (186/929)        
+  remote: Counting objects:  21% (196/929)        
+  remote: Counting objects:  22% (205/929)        
+  remote: Counting objects:  23% (214/929)        
+  remote: Counting objects:  24% (223/929)        
+  remote: Counting objects:  25% (233/929)        
+  remote: Counting objects:  26% (242/929)        
+  remote: Counting objects:  27% (251/929)        
+  remote: Counting objects:  28% (261/929)        
+  remote: Counting objects:  29% (270/929)        
+  remote: Counting objects:  30% (279/929)        
+  remote: Counting objects:  31% (288/929)        
+  remote: Counting objects:  32% (298/929)        
+  remote: Counting objects:  33% (307/929)        
+  remote: Counting objects:  34% (316/929)        
+  remote: Counting objects:  35% (326/929)        
+  remote: Counting objects:  36% (335/929)        
+  remote: Counting objects:  37% (344/929)        
+  remote: Counting objects:  38% (354/929)        
+  remote: Counting objects:  39% (363/929)        
+  remote: Counting objects:  40% (372/929)        
+  remote: Counting objects:  41% (381/929)        
+  remote: Counting objects:  42% (391/929)        
+  remote: Counting objects:  43% (400/929)        
+  remote: Counting objects:  44% (409/929)        
+  remote: Counting objects:  45% (419/929)        
+  remote: Counting objects:  46% (428/929)        
+  remote: Counting objects:  47% (437/929)        
+  remote: Counting objects:  48% (446/929)        
+  remote: Counting objects:  49% (456/929)        
+  remote: Counting objects:  50% (465/929)        
+  remote: Counting objects:  51% (474/929)        
+  remote: Counting objects:  52% (484/929)        
+  remote: Counting objects:  53% (493/929)        
+  remote: Counting objects:  54% (502/929)        
+  remote: Counting objects:  55% (511/929)        
+  remote: Counting objects:  56% (521/929)        
+  remote: Counting objects:  57% (530/929)        
+  remote: Counting objects:  58% (539/929)        
+  remote: Counting objects:  59% (549/929)        
+  remote: Counting objects:  60% (558/929)        
+  remote: Counting objects:  61% (567/929)        
+  remote: Counting objects:  62% (576/929)        
+  remote: Counting objects:  63% (586/929)        
+  remote: Counting objects:  64% (595/929)        
+  remote: Counting objects:  65% (604/929)        
+  remote: Counting objects:  66% (614/929)        
+  remote: Counting objects:  67% (623/929)        
+  remote: Counting objects:  68% (632/929)        
+  remote: Counting objects:  69% (642/929)        
+  remote: Counting objects:  70% (651/929)        
+  remote: Counting objects:  71% (660/929)        
+  remote: Counting objects:  72% (669/929)        
+  remote: Counting objects:  73% (679/929)        
+  remote: Counting objects:  74% (688/929)        
+  remote: Counting objects:  75% (697/929)        
+  remote: Counting objects:  76% (707/929)        
+  remote: Counting objects:  77% (716/929)        
+  remote: Counting objects:  78% (725/929)        
+  remote: Counting objects:  79% (734/929)        
+  remote: Counting objects:  80% (744/929)        
+  remote: Counting objects:  81% (753/929)        
+  remote: Counting objects:  82% (762/929)        
+  remote: Counting objects:  83% (772/929)        
+  remote: Counting objects:  84% (781/929)        
+  remote: Counting objects:  85% (790/929)        
+  remote: Counting objects:  86% (799/929)        
+  remote: Counting objects:  87% (809/929)        
+  remote: Counting objects:  88% (818/929)        
+  remote: Counting objects:  89% (827/929)        
+  remote: Counting objects:  90% (837/929)        
+  remote: Counting objects:  91% (846/929)        
+  remote: Counting objects:  92% (855/929)        
+  remote: Counting objects:  93% (864/929)        
+  remote: Counting objects:  94% (874/929)        
+  remote: Counting objects:  95% (883/929)        
+  remote: Counting objects:  96% (892/929)        
+  remote: Counting objects:  97% (902/929)        
+  remote: Counting objects:  98% (911/929)        
+  remote: Counting objects:  99% (920/929)        
+  remote: Counting objects: 100% (929/929)        
+  remote: Counting objects: 100% (929/929), done.        
+  remote: Compressing objects:   0% (1/815)        
+  remote: Compressing objects:   1% (9/815)        
+  remote: Compressing objects:   2% (17/815)        
+  remote: Compressing objects:   3% (25/815)        
+  remote: Compressing objects:   4% (33/815)        
+  remote: Compressing objects:   5% (41/815)        
+  remote: Compressing objects:   6% (49/815)        
+  remote: Compressing objects:   7% (58/815)        
+  remote: Compressing objects:   8% (66/815)        
+  remote: Compressing objects:   9% (74/815)        
+  remote: Compressing objects:  10% (82/815)        
+  remote: Compressing objects:  11% (90/815)        
+  remote: Compressing objects:  12% (98/815)        
+  remote: Compressing objects:  13% (106/815)        
+  remote: Compressing objects:  14% (115/815)        
+  remote: Compressing objects:  15% (123/815)        
+  remote: Compressing objects:  16% (131/815)        
+  remote: Compressing objects:  17% (139/815)        
+  remote: Compressing objects:  18% (147/815)        
+  remote: Compressing objects:  19% (155/815)        
+  remote: Compressing objects:  20% (163/815)        
+  remote: Compressing objects:  21% (172/815)        
+  remote: Compressing objects:  22% (180/815)        
+  remote: Compressing objects:  23% (188/815)        
+  remote: Compressing objects:  24% (196/815)        
+  remote: Compressing objects:  25% (204/815)        
+  remote: Compressing objects:  26% (212/815)        
+  remote: Compressing objects:  27% (221/815)        
+  remote: Compressing objects:  28% (229/815)        
+  remote: Compressing objects:  29% (237/815)        
+  remote: Compressing objects:  30% (245/815)        
+  remote: Compressing objects:  31% (253/815)        
+  remote: Compressing objects:  32% (261/815)        
+  remote: Compressing objects:  33% (269/815)        
+  remote: Compressing objects:  34% (278/815)        
+  remote: Compressing objects:  35% (286/815)        
+  remote: Compressing objects:  36% (294/815)        
+  remote: Compressing objects:  37% (302/815)        
+  remote: Compressing objects:  38% (310/815)        
+  remote: Compressing objects:  39% (318/815)        
+  remote: Compressing objects:  40% (326/815)        
+  remote: Compressing objects:  41% (335/815)        
+  remote: Compressing objects:  42% (343/815)        
+  remote: Compressing objects:  43% (351/815)        
+  remote: Compressing objects:  44% (359/815)        
+  remote: Compressing objects:  45% (367/815)        
+  remote: Compressing objects:  46% (375/815)        
+  remote: Compressing objects:  47% (384/815)        
+  remote: Compressing objects:  48% (392/815)        
+  remote: Compressing objects:  49% (400/815)        
+  remote: Compressing objects:  50% (408/815)        
+  remote: Compressing objects:  51% (416/815)        
+  remote: Compressing objects:  52% (424/815)        
+  remote: Compressing objects:  53% (432/815)        
+  remote: Compressing objects:  54% (441/815)        
+  remote: Compressing objects:  55% (449/815)        
+  remote: Compressing objects:  56% (457/815)        
+  remote: Compressing objects:  57% (465/815)        
+  remote: Compressing objects:  58% (473/815)        
+  remote: Compressing objects:  59% (481/815)        
+  remote: Compressing objects:  60% (489/815)        
+  remote: Compressing objects:  61% (498/815)        
+  remote: Compressing objects:  62% (506/815)        
+  remote: Compressing objects:  63% (514/815)        
+  remote: Compressing objects:  64% (522/815)        
+  remote: Compressing objects:  65% (530/815)        
+  remote: Compressing objects:  66% (538/815)        
+  remote: Compressing objects:  67% (547/815)        
+  remote: Compressing objects:  68% (555/815)        
+  remote: Compressing objects:  69% (563/815)        
+  remote: Compressing objects:  70% (571/815)        
+  remote: Compressing objects:  71% (579/815)        
+  remote: Compressing objects:  72% (587/815)        
+  remote: Compressing objects:  73% (595/815)        
+  remote: Compressing objects:  74% (604/815)        
+  remote: Compressing objects:  75% (612/815)        
+  remote: Compressing objects:  76% (620/815)        
+  remote: Compressing objects:  77% (628/815)        
+  remote: Compressing objects:  78% (636/815)        
+  remote: Compressing objects:  79% (644/815)        
+  remote: Compressing objects:  80% (652/815)        
+  remote: Compressing objects:  81% (661/815)        
+  remote: Compressing objects:  82% (669/815)        
+  remote: Compressing objects:  83% (677/815)        
+  remote: Compressing objects:  84% (685/815)        
+  remote: Compressing objects:  85% (693/815)        
+  remote: Compressing objects:  86% (701/815)        
+  remote: Compressing objects:  87% (710/815)        
+  remote: Compressing objects:  88% (718/815)        
+  remote: Compressing objects:  89% (726/815)        
+  remote: Compressing objects:  90% (734/815)        
+  remote: Compressing objects:  91% (742/815)        
+  remote: Compressing objects:  92% (750/815)        
+  remote: Compressing objects:  93% (758/815)        
+  remote: Compressing objects:  94% (767/815)        
+  remote: Compressing objects:  95% (775/815)        
+  remote: Compressing objects:  96% (783/815)        
+  remote: Compressing objects:  97% (791/815)        
+  remote: Compressing objects:  98% (799/815)        
+  remote: Compressing objects:  99% (807/815)        
+  remote: Compressing objects: 100% (815/815)        
+  remote: Compressing objects: 100% (815/815), done.        
+  Receiving objects:   0% (1/929)
+  Receiving objects:   1% (10/929)
+  Receiving objects:   2% (19/929)
+  Receiving objects:   3% (28/929)
+  Receiving objects:   4% (38/929)
+  Receiving objects:   5% (47/929)
+  Receiving objects:   6% (56/929)
+  Receiving objects:   7% (66/929)
+  Receiving objects:   8% (75/929)
+  Receiving objects:   9% (84/929)
+  Receiving objects:  10% (93/929)
+  Receiving objects:  11% (103/929)
+  Receiving objects:  12% (112/929)
+  Receiving objects:  13% (121/929)
+  Receiving objects:  14% (131/929)
+  Receiving objects:  15% (140/929)
+  Receiving objects:  16% (149/929)
+  Receiving objects:  17% (158/929)
+  Receiving objects:  18% (168/929)
+  Receiving objects:  19% (177/929)
+  Receiving objects:  20% (186/929)
+  Receiving objects:  21% (196/929)
+  Receiving objects:  22% (205/929)
+  Receiving objects:  23% (214/929)
+  Receiving objects:  24% (223/929)
+  Receiving objects:  25% (233/929)
+  Receiving objects:  26% (242/929)
+  Receiving objects:  27% (251/929)
+  Receiving objects:  28% (261/929)
+  Receiving objects:  29% (270/929)
+  Receiving objects:  30% (279/929)
+  Receiving objects:  31% (288/929)
+  Receiving objects:  32% (298/929)
+  Receiving objects:  33% (307/929)
+  Receiving objects:  34% (316/929)
+  Receiving objects:  35% (326/929)
+  Receiving objects:  36% (335/929)
+  Receiving objects:  37% (344/929)
+  Receiving objects:  38% (354/929)
+  Receiving objects:  39% (363/929)
+  Receiving objects:  40% (372/929)
+  Receiving objects:  41% (381/929)
+  Receiving objects:  42% (391/929)
+  Receiving objects:  43% (400/929)
+  Receiving objects:  44% (409/929)
+  Receiving objects:  45% (419/929)
+  Receiving objects:  46% (428/929)
+  Receiving objects:  47% (437/929)
+  Receiving objects:  48% (446/929)
+  Receiving objects:  49% (456/929)
+  Receiving objects:  50% (465/929)
+  Receiving objects:  51% (474/929)
+  Receiving objects:  52% (484/929)
+  Receiving objects:  53% (493/929)
+  Receiving objects:  54% (502/929)
+  Receiving objects:  55% (511/929)
+  Receiving objects:  56% (521/929)
+  Receiving objects:  57% (530/929)
+  Receiving objects:  58% (539/929)
+  Receiving objects:  59% (549/929)
+  Receiving objects:  60% (558/929)
+  Receiving objects:  61% (567/929)
+  Receiving objects:  62% (576/929)
+  Receiving objects:  63% (586/929)
+  Receiving objects:  64% (595/929)
+  Receiving objects:  65% (604/929)
+  Receiving objects:  66% (614/929)
+  Receiving objects:  67% (623/929)
+  Receiving objects:  68% (632/929)
+  Receiving objects:  69% (642/929)
+  Receiving objects:  70% (651/929)
+  Receiving objects:  71% (660/929)
+  Receiving objects:  72% (669/929)
+  Receiving objects:  73% (679/929)
+  Receiving objects:  74% (688/929)
+  Receiving objects:  75% (697/929)
+  Receiving objects:  76% (707/929)
+  Receiving objects:  77% (716/929)
+  Receiving objects:  78% (725/929)
+  Receiving objects:  79% (734/929)
+  Receiving objects:  80% (744/929)
+  Receiving objects:  81% (753/929)
+  Receiving objects:  82% (762/929)
+  Receiving objects:  83% (772/929)
+  Receiving objects:  84% (781/929)
+  Receiving objects:  85% (790/929)
+  Receiving objects:  86% (799/929)
+  Receiving objects:  87% (809/929)
+  Receiving objects:  88% (818/929)
+  Receiving objects:  89% (827/929)
+  Receiving objects:  90% (837/929)
+  Receiving objects:  91% (846/929)
+  Receiving objects:  92% (855/929)
+  Receiving objects:  93% (864/929)
+  Receiving objects:  94% (874/929)
+  Receiving objects:  95% (883/929)
+  Receiving objects:  96% (892/929)
+  Receiving objects:  97% (902/929)
+  Receiving objects:  98% (911/929)
+  remote: Total 929 (delta 117), reused 485 (delta 90), pack-reused 0        
+  Receiving objects:  99% (920/929)
+  Receiving objects: 100% (929/929)
+  Receiving objects: 100% (929/929), 4.23 MiB | 18.06 MiB/s, done.
+  Resolving deltas:   0% (0/117)
+  Resolving deltas:   1% (2/117)
+  Resolving deltas:   2% (3/117)
+  Resolving deltas:   3% (4/117)
+  Resolving deltas:   4% (5/117)
+  Resolving deltas:   5% (6/117)
+  Resolving deltas:   6% (8/117)
+  Resolving deltas:   7% (9/117)
+  Resolving deltas:   8% (10/117)
+  Resolving deltas:   9% (11/117)
+  Resolving deltas:  10% (12/117)
+  Resolving deltas:  11% (13/117)
+  Resolving deltas:  12% (15/117)
+  Resolving deltas:  13% (16/117)
+  Resolving deltas:  14% (17/117)
+  Resolving deltas:  15% (18/117)
+  Resolving deltas:  16% (19/117)
+  Resolving deltas:  17% (20/117)
+  Resolving deltas:  18% (22/117)
+  Resolving deltas:  19% (23/117)
+  Resolving deltas:  20% (24/117)
+  Resolving deltas:  21% (25/117)
+  Resolving deltas:  22% (26/117)
+  Resolving deltas:  23% (27/117)
+  Resolving deltas:  24% (29/117)
+  Resolving deltas:  25% (30/117)
+  Resolving deltas:  26% (31/117)
+  Resolving deltas:  27% (32/117)
+  Resolving deltas:  28% (33/117)
+  Resolving deltas:  29% (34/117)
+  Resolving deltas:  30% (36/117)
+  Resolving deltas:  31% (37/117)
+  Resolving deltas:  32% (38/117)
+  Resolving deltas:  33% (39/117)
+  Resolving deltas:  34% (40/117)
+  Resolving deltas:  35% (41/117)
+  Resolving deltas:  36% (43/117)
+  Resolving deltas:  37% (44/117)
+  Resolving deltas:  38% (45/117)
+  Resolving deltas:  39% (46/117)
+  Resolving deltas:  40% (47/117)
+  Resolving deltas:  41% (48/117)
+  Resolving deltas:  42% (50/117)
+  Resolving deltas:  43% (51/117)
+  Resolving deltas:  44% (52/117)
+  Resolving deltas:  45% (53/117)
+  Resolving deltas:  46% (54/117)
+  Resolving deltas:  47% (55/117)
+  Resolving deltas:  48% (57/117)
+  Resolving deltas:  49% (58/117)
+  Resolving deltas:  50% (59/117)
+  Resolving deltas:  51% (60/117)
+  Resolving deltas:  52% (61/117)
+  Resolving deltas:  53% (63/117)
+  Resolving deltas:  54% (64/117)
+  Resolving deltas:  55% (65/117)
+  Resolving deltas:  56% (66/117)
+  Resolving deltas:  57% (67/117)
+  Resolving deltas:  58% (68/117)
+  Resolving deltas:  59% (70/117)
+  Resolving deltas:  60% (71/117)
+  Resolving deltas:  61% (72/117)
+  Resolving deltas:  62% (73/117)
+  Resolving deltas:  63% (74/117)
+  Resolving deltas:  64% (75/117)
+  Resolving deltas:  65% (77/117)
+  Resolving deltas:  66% (78/117)
+  Resolving deltas:  67% (79/117)
+  Resolving deltas:  68% (80/117)
+  Resolving deltas:  69% (81/117)
+  Resolving deltas:  70% (82/117)
+  Resolving deltas:  71% (84/117)
+  Resolving deltas:  72% (85/117)
+  Resolving deltas:  73% (86/117)
+  Resolving deltas:  74% (87/117)
+  Resolving deltas:  75% (88/117)
+  Resolving deltas:  76% (89/117)
+  Resolving deltas:  77% (91/117)
+  Resolving deltas:  78% (92/117)
+  Resolving deltas:  79% (93/117)
+  Resolving deltas:  80% (94/117)
+  Resolving deltas:  81% (95/117)
+  Resolving deltas:  82% (96/117)
+  Resolving deltas:  83% (98/117)
+  Resolving deltas:  84% (99/117)
+  Resolving deltas:  85% (100/117)
+  Resolving deltas:  86% (101/117)
+  Resolving deltas:  87% (102/117)
+  Resolving deltas:  88% (103/117)
+  Resolving deltas:  89% (105/117)
+  Resolving deltas:  90% (106/117)
+  Resolving deltas:  91% (107/117)
+  Resolving deltas:  92% (108/117)
+  Resolving deltas:  93% (109/117)
+  Resolving deltas:  94% (110/117)
+  Resolving deltas:  95% (112/117)
+  Resolving deltas:  96% (113/117)
+  Resolving deltas:  97% (114/117)
+  Resolving deltas:  98% (115/117)
+  Resolving deltas:  99% (116/117)
+  Resolving deltas: 100% (117/117)
+  Resolving deltas: 100% (117/117), done.
+  From https://github.com/mowjoejoejoejoe/freicoin
+   * [new ref]         f1abeda956315a1d7d8b9c964d837a4303485b3c -> origin/master
+Determining the checkout info
+Checking out the ref
+  /usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+  Reset branch 'master'
+  branch 'master' set up to track 'origin/master'.
+/usr/bin/git log -1 --format='%H'
+'f1abeda956315a1d7d8b9c964d837a4303485b3c'
+0s
+Run actions/setup-python@v3
+  with:
+    python-version: 3.10
+    token: ***
+Warning: The `set-output` command is deprecated and will be disabled soon. Please upgrade to using Environment Files. For more information see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+Successfully setup CPython (3.10.9)
+0s
+Run # $CONDA is an environment variable pointing to the root of the miniconda directory
+  # $CONDA is an environment variable pointing to the root of the miniconda directory
+  echo $CONDA/bin >> $GITHUB_PATH
+  shell: /usr/bin/bash -e {0}
+  env:
+    pythonLocation: /opt/hostedtoolcache/Python/3.10.9/x64
+    LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.9/x64/lib
+4s
+Run conda env update --file environment.yml --name base
+  conda env update --file environment.yml --name base
+  shell: /usr/bin/bash -e {0}
+  env:
+    pythonLocation: /opt/hostedtoolcache/Python/3.10.9/x64
+    LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.9/x64/lib
+
+SpecNotFound: Invalid name 'base', try the format: user/package
+
+Error: Process completed with exit code 1.
+0s
+0s
+0s
+0s
+Post job cleanup.
+/usr/bin/git version
+git version 2.39.1
+Temporarily overriding HOME='/home/runner/work/_temp/636997a4-c6e6-410e-b860-5c886a32f905' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/freicoin/freicoin
+/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+0s
+Cleaning up orphan processes
+organizations:AcceptHandshake
+Amazon Web Services
+Contact Us
+English
+Complete Sign Up
+AWS
+Documentation
+AWS Organizations
+API reference
+Feedback 
+Preferences 
+AWS Organizations
+API reference
+Actions
+AcceptHandshake
+AttachPolicy
+CancelHandshake
+CloseAccount
+CreateAccount
+CreateGovCloudAccount
+CreateOrganization
+CreateOrganizationalUnit
+CreatePolicy
+DeclineHandshake
+DeleteOrganization
+DeleteOrganizationalUnit
+DeletePolicy
+DeleteResourcePolicy
+DeregisterDelegatedAdministrator
+DescribeAccount
+DescribeCreateAccountStatus
+DescribeEffectivePolicy
+DescribeHandshake
+DescribeOrganization
+DescribeOrganizationalUnit
+DescribePolicy
+DescribeResourcePolicy
+DetachPolicy
+DisableAWSServiceAccess
+DisablePolicyType
+EnableAllFeatures
+EnableAWSServiceAccess
+EnablePolicyType
+InviteAccountToOrganization
+LeaveOrganization
+ListAccounts
+ListAccountsForParent
+ListAWSServiceAccessForOrganization
+ListChildren
+ListCreateAccountStatus
+ListDelegatedAdministrators
+ListDelegatedServicesForAccount
+ListHandshakesForAccount
+ListHandshakesForOrganization
+ListOrganizationalUnitsForParent
+ListParents
+ListPolicies
+ListPoliciesForTarget
+ListRoots
+ListTagsForResource
+ListTargetsForPolicy
+MoveAccount
+PutResourcePolicy
+RegisterDelegatedAdministrator
+RemoveAccountFromOrganization
+TagResource
+UntagResource
+UpdateOrganizationalUnit
+UpdatePolicy
+API operations by account
+
+Data Types
+Common Parameters
+Common Errors
+AcceptHandshake
+PDF
+Sends a response to the originator of a handshake agreeing to the action proposed by the handshake request.
+
+You can only call this operation by the following principals when they also have the relevant IAM permissions:
+
+Invitation to join or Approve all features request handshakes: only a principal from the member account.
+
+The user who calls the API for an invitation to join must have the organizations:AcceptHandshake permission. If you enabled all features in the organization, the user must also have the iam:CreateServiceLinkedRole permission so that AWS Organizations can create the required service-linked role named AWSServiceRoleForOrganizations. For more information, see AWS Organizations and Service-Linked Roles in the AWS Organizations User Guide.
+
+Enable all features final confirmation handshake: only a principal from the management account.
+
+For more information about invitations, see Inviting an AWS account to join your organization in the AWS Organizations User Guide. For more information about requests to enable all features in the organization, see Enabling all features in your organization in the AWS Organizations User Guide.
+
+After you accept a handshake, it continues to appear in the results of relevant APIs for only 30 days. After that, it's deleted.
+
+Request Syntax
+{
+   "HandshakeId": "string"
+}
+Request Parameters
+For information about the parameters that are common to all actions, see Common Parameters.
+
+The request accepts the following data in JSON format.
+
+HandshakeId
+The unique identifier (ID) of the handshake that you want to accept.
+
+The regex pattern for handshake ID string requires "h-" followed by from 8 to 32 lowercase letters or digits.
+
+Type: String
+
+Length Constraints: Maximum length of 34.
+
+Pattern: ^h-[0-9a-z]{8,32}$
+
+Required: Yes
+
+Response Syntax
+{
+   "Handshake": { 
+      "Action": "string",
+      "Arn": "string",
+      "ExpirationTimestamp": number,
+      "Id": "string",
+      "Parties": [ 
+         { 
+            "Id": "string",
+            "Type": "string"
+         }
+      ],
+      "RequestedTimestamp": number,
+      "Resources": [ 
+         { 
+            "Resources": [ 
+               "HandshakeResource"
+            ],
+            "Type": "string",
+            "Value": "string"
+         }
+      ],
+      "State": "string"
+   }
+}
+Response Elements
+If the action is successful, the service sends back an HTTP 200 response.
+
+The following data is returned in JSON format by the service.
+
+Handshake
+A structure that contains details about the accepted handshake.
+
+Type: Handshake object
+
+Errors
+For information about the errors that are common to all actions, see Common Errors.
+
+AccessDeniedException
+You don't have permissions to perform the requested operation. The user or role that is making the request must have at least one IAM permissions policy attached that grants the required permissions. For more information, see Access Management in the IAM User Guide.
+
+HTTP Status Code: 400
+
+AccessDeniedForDependencyException
+The operation that you attempted requires you to have the iam:CreateServiceLinkedRole for organizations.amazonaws.com permission so that AWS Organizations can create the required service-linked role. You don't have that permission.
+
+HTTP Status Code: 400
+
+AWSOrganizationsNotInUseException
+Your account isn't a member of an organization. To make this request, you must use the credentials of an account that belongs to an organization.
+
+HTTP Status Code: 400
+
+ConcurrentModificationException
+The target of the operation is currently being modified by a different request. Try again later.
+
+HTTP Status Code: 400
+
+HandshakeAlreadyInStateException
+The specified handshake is already in the requested state. For example, you can't accept a handshake that was already accepted.
+
+HTTP Status Code: 400
+
+HandshakeConstraintViolationException
+The requested operation would violate the constraint identified in the reason code.
+
+Note
+Some of the reasons in the following list might not be applicable to this specific API or operation:
+
+ACCOUNT_NUMBER_LIMIT_EXCEEDED: You attempted to exceed the limit on the number of accounts in an organization. Note that deleted and closed accounts still count toward your limit.
+
+Important
+If you get this exception immediately after creating the organization, wait one hour and try again. If after an hour it continues to fail with this error, contact AWS Support.
+
+ALREADY_IN_AN_ORGANIZATION: The handshake request is invalid because the invited account is already a member of an organization.
+
+HANDSHAKE_RATE_LIMIT_EXCEEDED: You attempted to exceed the number of handshakes that you can send in one day.
+
+INVITE_DISABLED_DURING_ENABLE_ALL_FEATURES: You can't issue new invitations to join an organization while it's in the process of enabling all features. You can resume inviting accounts after you finalize the process when all accounts have agreed to the change.
+
+ORGANIZATION_ALREADY_HAS_ALL_FEATURES: The handshake request is invalid because the organization has already enabled all features.
+
+ORGANIZATION_IS_ALREADY_PENDING_ALL_FEATURES_MIGRATION: The handshake request is invalid because the organization has already started the process to enable all features.
+
+ORGANIZATION_FROM_DIFFERENT_SELLER_OF_RECORD: The request failed because the account is from a different marketplace than the accounts in the organization. For example, accounts with India addresses must be associated with the AISPL marketplace. All accounts in an organization must be from the same marketplace.
+
+ORGANIZATION_MEMBERSHIP_CHANGE_RATE_LIMIT_EXCEEDED: You attempted to change the membership of an account too quickly after its previous change.
+
+PAYMENT_INSTRUMENT_REQUIRED: You can't complete the operation with an account that doesn't have a payment instrument, such as a credit card, associated with it.
+
+HTTP Status Code: 400
+
+HandshakeNotFoundException
+We can't find a handshake with the HandshakeId that you specified.
+
+HTTP Status Code: 400
+
+InvalidHandshakeTransitionException
+You can't perform the operation on the handshake in its current state. For example, you can't cancel a handshake that was already accepted or accept a handshake that was already declined.
+
+HTTP Status Code: 400
+
+InvalidInputException
+The requested operation failed because you provided invalid values for one or more of the request parameters. This exception includes a reason that contains additional information about the violated limit:
+
+Note
+Some of the reasons in the following list might not be applicable to this specific API or operation.
+
+DUPLICATE_TAG_KEY: Tag keys must be unique among the tags attached to the same entity.
+
+IMMUTABLE_POLICY: You specified a policy that is managed by AWS and can't be modified.
+
+INPUT_REQUIRED: You must include a value for all required parameters.
+
+INVALID_EMAIL_ADDRESS_TARGET: You specified an invalid email address for the invited account owner.
+
+INVALID_ENUM: You specified an invalid value.
+
+INVALID_ENUM_POLICY_TYPE: You specified an invalid policy type string.
+
+INVALID_FULL_NAME_TARGET: You specified a full name that contains invalid characters.
+
+INVALID_LIST_MEMBER: You provided a list to a parameter that contains at least one invalid value.
+
+INVALID_PAGINATION_TOKEN: Get the value for the NextToken parameter from the response to a previous call of the operation.
+
+INVALID_PARTY_TYPE_TARGET: You specified the wrong type of entity (account, organization, or email) as a party.
+
+INVALID_PATTERN: You provided a value that doesn't match the required pattern.
+
+INVALID_PATTERN_TARGET_ID: You specified a policy target ID that doesn't match the required pattern.
+
+INVALID_ROLE_NAME: You provided a role name that isn't valid. A role name can't begin with the reserved prefix AWSServiceRoleFor.
+
+INVALID_SYNTAX_ORGANIZATION_ARN: You specified an invalid Amazon Resource Name (ARN) for the organization.
+
+INVALID_SYNTAX_POLICY_ID: You specified an invalid policy ID.
+
+INVALID_SYSTEM_TAGS_PARAMETER: You specified a tag key that is a system tag. You can’t add, edit, or delete system tag keys because they're reserved for AWS use. System tags don’t count against your tags per resource limit.
+
+MAX_FILTER_LIMIT_EXCEEDED: You can specify only one filter parameter for the operation.
+
+MAX_LENGTH_EXCEEDED: You provided a string parameter that is longer than allowed.
+
+MAX_VALUE_EXCEEDED: You provided a numeric parameter that has a larger value than allowed.
+
+MIN_LENGTH_EXCEEDED: You provided a string parameter that is shorter than allowed.
+
+MIN_VALUE_EXCEEDED: You provided a numeric parameter that has a smaller value than allowed.
+
+MOVING_ACCOUNT_BETWEEN_DIFFERENT_ROOTS: You can move an account only between entities in the same root.
+
+TARGET_NOT_SUPPORTED: You can't perform the specified operation on that target entity.
+
+UNRECOGNIZED_SERVICE_PRINCIPAL: You specified a service principal that isn't recognized.
+
+HTTP Status Code: 400
+
+ServiceException
+AWS Organizations can't complete your request because of an internal service error. Try again later.
+
+HTTP Status Code: 400
+
+TooManyRequestsException
+You have sent too many requests in too short a period of time. The quota helps protect against denial-of-service attacks. Try again later.
+
+For information about quotas that affect AWS Organizations, see Quotas for AWS Organizationsin the AWS Organizations User Guide.
+
+HTTP Status Code: 400
+
+Examples
+Example
+Diego, the owner of an organization, has previously invited Juan's account to join his organization. The following example shows Juan's account accepting the handshake and thus agreeing to the invitation.
+
+Sample Request
+POST / HTTP/1.1
+X-Amz-Target: AWSOrganizationsV20161128.AcceptHandshake
+
+{"HandshakeId": "h-examplehandshakeid111"}
+Sample Response
+HTTP/1.1 200 OK
+Content-Type: application/json
+From 202cc29c1e673357dff8638fa1fb6eb4086e2371 Mon Sep 17 00:00:00 2001
+From: mowjoejoejoejoe <124041561+mowjoejoejoejoe@users.noreply.github.com>
+Date: Sun, 5 Feb 2023 15:12:54 -0600
+Subject: [PATCH] Update .gitignore
+
+---
+ .gitignore | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/.gitignore b/.gitignore
+index 6c7b69a..0e748fa 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1 +1,30 @@
+ .gitignore
++diff --git a/.husky/.gitignore b/.husky/.gitignore
++deleted file mode 100644
++index 31354ec1389..00000000000
++--- a/.husky/.gitignore
+++++ /dev/null
++@@ -1 +0,0 @@
++-_
++diff --git a/.husly/.sh/bitore.sig b/.husly/.sh/bitore.sig
++new file mode 100644
++index 00000000000..e67f834feea
++--- /dev/null
+++++ b/.husly/.sh/bitore.sig
++@@ -0,0 +1,16 @@
+++ BEGIN:
+++ GLOW4:
+++ </git checkout origin/main <file name>
+++Run'' 'Runs::/Action::/:Build::/scripts::/Run-on :Runs :
+++Runs :gh/pages :
+++pages :edit "
+++$ intuit install 
+++PURL" --add-label "production"
+++env:
+++PR_URL: ${{github.event.pull_request.html_url}}
+++GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+++run: gh pr edit "$PR_URL" --add-label "production"
+++env:
+++PR_URL: ${{github.event.pull_request.html_url}}
+++GITHUB_TOKEN: ${{ ((c)(r)).[12753750.[00]m]'_BITORE_34173.1337) ')]}}}'"'' :
+++ </git checkout origin/main <file name>
+{
+  "Handshake": {
+    "Action": "INVITE",
+    "Arn": "arn:aws:organizations::111111111111:handshake/o-exampleorgid/invite/h-examplehandshakeid111",
+    "RequestedTimestamp": 1481656459.257,
+    "ExpirationTimestamp": 1482952459.257,
+    "Id": "h-examplehandshakeid111",
+    "Parties": [
+      {
+        "Id": "o-exampleorgid",
+        "Type": "ORGANIZATION"
+      },
+      {
+        "Id": "juan@example.com",
+        "Type": "EMAIL"
+      }
+    ],
+    "Resources": [
+      {
+        "Resources": [
+          {
+            "Type": "MASTER_EMAIL",
+            "Value": "diego@example.com"
+          },
+          {
+            "Type": "MASTER_NAME",
+            "Value": "Org management account"
+          },
+          {
+            "Type": "ORGANIZATION_FEATURE_SET",
+            "Value": "ALL"
+          }
+        ],
+        "Type": "ORGANIZATION",
+        "Value": "o-exampleorgid"
+      },
+      {
+        "Type": "EMAIL",
+        "Value": "juan@example.com"
+      }
+    ],
+    "State": "ACCEPTED"
+  }
+}
+See Also
+For more information about using this API in one of the language-specific AWS SDKs, see the following:
+
+AWS Command Line Interface
+
+AWS SDK for .NET
+
+AWS SDK for C++
+
+AWS SDK for Go
+
+AWS SDK for Java V2
+
+AWS SDK for JavaScript
+
+AWS SDK for PHP V3
+
+AWS SDK for Python
+
+AWS SDK for Ruby V3
+
+
+
+Did this page help you?
+Yes
+No
+Provide feedback
+Next topic:AttachPolicy
+Previous topic:Actions
+Need help?
+Try AWS re:Post 
+Connect with an AWS IQ expert 
+PrivacySite termsCookie preferences© 2023, Amazon Web Services, Inc. or its affiliates. All rights reserved.
+
+On this page
+Request Syntax
+Request Parameters
+Response Syntax
+Response Elements
+Errors
+Examples
+See Also
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+   <channel>
+      <title>AWS Organizations Release Notes</title>
+      <link>https://docs.aws.amazon.com/organizations/latest/userguide/</link>
+      <description>Document history for the AWS Organizations User Guide.</description>
+      <atom:link href="https://docs.aws.amazon.com/organizations/latest/userguide/aws-organizations-release-notes.rss"
+                 rel="self"
+                 type="application/rss+xml"/>
+      <lastBuildDate>Sat, 4 Feb 2023 11:04:34 GMT</lastBuildDate>
+      <item>
+         <title>Updated the AWSOrganizationsFullAccess and AWSOrganizationsReadOnlyAccess
+                    managed policies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_available-policies.html#ref-iam-managed-policies-updates</link>
+         <description>Both managed policies were updated to enable write or read access to contacts for
+                    accounts.</description>
+         <pubDate>Fri, 21 Oct 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Updated_the_AWSOrganizationsFullAccess_and_AWSOrganizationsReadOnlyAccess
+____________________managed_policies_2022-10-21</guid>
+      </item>
+      <item>
+         <title>Updated the AWSOrganizationsFullAccess managed policy</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_available-policies.html#ref-iam-managed-policies-updates</link>
+         <description>The managed policy was updated to allow creating an organization by adding the
+                    permission required to create the service linked role needed by a new
+                    organization.</description>
+         <pubDate>Wed, 24 Aug 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Updated_the_AWSOrganizationsFullAccess_managed_policy_2022-08-24</guid>
+      </item>
+      <item>
+         <title>Organizations close account capability from the AWS Organizations console</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_close.html</link>
+         <description>Principals in the management account can close member accounts from the
+                    AWS Organizations console, and protect member accounts from accidental closure by using
+                    IAM policies.</description>
+         <pubDate>Tue, 29 Mar 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_close_account_capability_from_the_AWS_Organizations_console_2022-03-29</guid>
+      </item>
+      <item>
+         <title>Updated announcement to update alternate contacts with AWS Organizations
+                    console</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_update_contacts.html</link>
+         <description>Organizations now provides ability to update alternate contacts for accounts within
+                    your organization using the AWS Organizations console. Announce new capability and points
+                    to Account Management Reference for instructions. </description>
+         <pubDate>Tue, 8 Feb 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Updated_announcement_to_update_alternate_contacts_with_AWS_Organizations
+____________________console_2022-02-08</guid>
+      </item>
+      <item>
+         <title>Organizations managed policy updates - Update to an existing policy</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_available-policies.html</link>
+         <description>Updated the AWSOrganizationsFullAccess and AWSOrganizationsReadOnlyAccess
+                    managed policies to allow account API permissions required to update or view
+                    account alternate contacts via the AWS Organizations console. </description>
+         <pubDate>Mon, 7 Feb 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_managed_policy_updates_-_Update_to_an_existing_policy_2022-02-07</guid>
+      </item>
+      <item>
+         <title>Organizations integration with Amazon DevOpsÂ Guru</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-devops.html</link>
+         <description>You can integrate Amazon DevOpsÂ Guru with AWS Organizations to monitor application health
+                    holistically across all of your organization accounts and gain insights.</description>
+         <pubDate>Mon, 3 Jan 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_Amazon_DevOpsÂ Guru_2022-01-03</guid>
+      </item>
+      <item>
+         <title>Organizations integration with Amazon Detective</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-detective.html</link>
+         <description>You can integrate Amazon Detective with AWS Organizations to ensure that your Detective
+                    behavior graph provides visibility into the activity for all of your
+                    organization accounts.</description>
+         <pubDate>Thu, 16 Dec 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_Amazon_Detective_2021-12-16</guid>
+      </item>
+      <item>
+         <title>Organizations integration with AWS Config now supports multi-account multi-region data
+                    aggregation.</title>
+         <link>https://docs.aws.amazon.com/config/latest/developerguide/set-up-aggregator-cli.html#register-a-delegated-administrator-cli</link>
+         <description>You can use a delegated administrator account to aggregate resource
+                    configuration and compliance data from all of the member accounts your
+                    organization. For more information, see &lt;a href="https://docs.aws.amazon.com/config/latest/developerguide/aggregate-data.html"&gt;Multi-account multi-region data
+                        aggregation&lt;/a&gt;in the &lt;em&gt;AWS Config Developer Guide&lt;/em&gt;.</description>
+         <pubDate>Wed, 16 Jun 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_AWS_Config_now_supports_multi-account_multi-region_data
+____________________aggregation._2021-06-16</guid>
+      </item>
+      <item>
+         <title>Organizations integration with AWS Firewall Manager now includes support for a delegated
+                    administrator</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-fms.html#integrate-enable-da-fms</link>
+         <description>You can now designate a member account in your organization to be the Firewall Manager
+                    administrator for the entire organization. This allows for better separation of
+                    permissions from the organization's management account.</description>
+         <pubDate>Fri, 30 Apr 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_AWS_Firewall_Manager_now_includes_support_for_a_delegated
+____________________administrator_2021-04-30</guid>
+      </item>
+      <item>
+         <title>Organizations backup policies now support continuous backup</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide//orgs_manage_policies_backup_syntax</link>
+         <description>You can use the AWS Backup continuous backups feature with your organization's
+                    backup policies.</description>
+         <pubDate>Wed, 10 Mar 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_backup_policies_now_support_continuous_backup_2021-03-10</guid>
+      </item>
+      <item>
+         <title>Organizations integration with AWS CloudFormation StackSets now includes support for a
+                    delegated administrator</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudformation.html#integrate-enable-da-cloudformation</link>
+         <description>You can now designate a member account in your organization to be the AWS CloudFormation
+                    StackSets administrator for the entire organization. This allows for better
+                    separation of permissions from the organization's management account.</description>
+         <pubDate>Thu, 18 Feb 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_AWS_CloudFormation_StackSets_now_includes_support_for_a
+____________________delegated_administrator_2021-02-18</guid>
+      </item>
+      <item>
+         <title>Continue inviting accounts while you enable all features </title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html</link>
+         <description>AWS updated the process to enable all features in an organization. You can
+                    now continue to invite new accounts to join your organization while you wait for
+                    existing accounts to respond to their invitations.</description>
+         <pubDate>Wed, 3 Feb 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Continue_inviting_accounts_while_you_enable_all_features__2021-02-03</guid>
+      </item>
+      <item>
+         <title>Introduces version 2.0 of the AWS Organizations console</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>AWS introduced a new version of the AWS console. All of the documentation
+                    has been updated to reflect the new way of performing tasks.</description>
+         <pubDate>Thu, 21 Jan 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Introduces_version_2.0_of_the_AWS_Organizations_console_2021-01-21</guid>
+      </item>
+      <item>
+         <title>Organizations now supports integration with AWS Marketplace</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-marketplace.html</link>
+         <description>You can now enable AWS Marketplace to more easily share your software licenses across
+                    all of the accounts in your organization.</description>
+         <pubDate>Thu, 3 Dec 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_now_supports_integration_with_AWS_Marketplace_2020-12-03</guid>
+      </item>
+      <item>
+         <title>Organizations now supports integration with Amazon S3 Lens</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services_that_can_integrate-s3lens.html</link>
+         <description>Amazon S3 Lens supports both trusted access and delegated administrator with Organizations.
+                    For details, see &lt;a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage_lens.html"&gt;Amazon S3 Storage Lens&lt;/a&gt; in the
+                        &lt;em&gt;Amazon Simple Storage Service User Guide&lt;/em&gt;.</description>
+         <pubDate>Wed, 18 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_now_supports_integration_with_Amazon_S3_Lens_2020-11-18</guid>
+      </item>
+      <item>
+         <title>Cross-account backup copies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup_syntax.html</link>
+         <description>When you use backup policies to backup the resources in your organization, you
+                    can now store copies of your backup in other AWS accounts in the
+                    organization.</description>
+         <pubDate>Wed, 18 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Cross-account_backup_copies_2020-11-18</guid>
+      </item>
+      <item>
+         <title>AWS Regions in China now support AWS Resource Access Manager as an Organizations trusted
+                    service</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>You can now use AWS RAM features that integrate with Organizations as a trusted service
+                    when you use Organizations and AWS RAM in China.</description>
+         <pubDate>Wed, 18 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#AWS_Regions_in_China_now_support_AWS_Resource_Access_Manager_as_an_Organizations_trusted
+____________________service_2020-11-18</guid>
+      </item>
+      <item>
+         <title>Organizations now supports integration with AWS Security Hub</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-securityhub.html</link>
+         <description>You can enable Security Hub across all of the accounts in your organization, and
+                    designate one of your organization's member accounts as the delegated
+                    administrator account for Security Hub.</description>
+         <pubDate>Thu, 12 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_now_supports_integration_with_AWS_Security_Hub_2020-11-12</guid>
+      </item>
+      <item>
+         <title>Renamed the master account</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>AWS Organizations changed the name of the â€œmaster accountâ€ to â€œmanagement accountâ€.
+                    This is a name change only, and there is no change in functionality.</description>
+         <pubDate>Tue, 20 Oct 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Renamed_the_master_account_2020-10-20</guid>
+      </item>
+      <item>
+         <title>New Best Practices section and topics</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices.html</link>
+         <description>Added a new section for best practices for AWS Organizations. The new section includes
+                    topics that discuss best practices for the management account and member account
+                    root users and password management.</description>
+         <pubDate>Tue, 6 Oct 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_Best_Practices_section_and_topics_2020-10-06</guid>
+      </item>
+      <item>
+         <title>Added new best practices section and first two pages</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices.html</link>
+         <description>There is a new section for topics that describe best practices for AWS Organizations.
+                    This update includes a topic for best practices for an organization's management
+                    account and a topic for best practices for member accounts.</description>
+         <pubDate>Fri, 2 Oct 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_new_best_practices_section_and_first_two_pages_2020-10-02</guid>
+      </item>
+      <item>
+         <title>Organizations backup policies now support application-consistent backups on Windows
+                    EC2 instances by using VSS (Volume Shadow Copy Service)</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup_syntax.html</link>
+         <description>Backup policies support a new &lt;code class="code"&gt;advanced_backup_settings&lt;/code&gt;" section.
+                    The first entry in this new section is an &lt;code class="code"&gt;ec2&lt;/code&gt; setting called
+                        &lt;code class="code"&gt;WindowsVSS&lt;/code&gt; that you can enable or disable. For details, see
+                        &lt;a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/windows-backup.html"&gt;Creating
+                        a VSS-Enabled Windows Backup&lt;/a&gt; in the
+                        &lt;em&gt;AWS Backup Developer Guide&lt;/em&gt;.</description>
+         <pubDate>Thu, 24 Sep 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_backup_policies_now_support_application-consistent_backups_on_Windows
+____________________EC2_instances_by_using_VSS_(Volume_Shadow_Copy_Service)_2020-09-24</guid>
+      </item>
+      <item>
+         <title>Organizations supports tag-on-create and tag-based access control</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_tagging.html</link>
+         <description>You can add tags to Organizations resources when you create them. You can use &lt;a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html"&gt;tag
+                        policies&lt;/a&gt; to standardize tag usage on Organizations resources. You can use
+                        &lt;a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_iam_tbac.html"&gt;IAM policies to restrict access to only resources that have specified tag
+                        keys and values&lt;/a&gt;.</description>
+         <pubDate>Tue, 15 Sep 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_supports_tag-on-create_and_tag-based_access_control_2020-09-15</guid>
+      </item>
+      <item>
+         <title>Added AWS Health as a trusted service</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-health.html</link>
+         <description>You can aggregate AWS Health events across accounts in your
+                    organization.</description>
+         <pubDate>Tue, 4 Aug 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_AWS_Health_as_a_trusted_service_2020-08-04</guid>
+      </item>
+      <item>
+         <title>Artificial Intelligence (AI) services opt-out policies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_ai-opt-out.html</link>
+         <description>You can use AI services opt-out policies to control whether AWS AI services may
+                    store and use customer content processed by those services (AI content) for the
+                    development and continuous improvement of AWS AI services and
+                    technologies.</description>
+         <pubDate>Wed, 8 Jul 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Artificial_Intelligence_(AI)_services_opt-out_policies_2020-07-08</guid>
+      </item>
+      <item>
+         <title>Added backup policies and integration with AWS Backup</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup.html</link>
+         <description>You can use backup policies to create and enforce backup policies across all
+                    of the accounts in your organization.</description>
+         <pubDate>Wed, 24 Jun 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_backup_policies_and_integration_with_AWS_Backup_2020-06-24</guid>
+      </item>
+      <item>
+         <title>Support delegated administration for IAM Access Analyzer</title>
+         <link>https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-settings.html#access-analyzer-delegated-administrator</link>
+         <description>Enables you to delegate administrative access for Access Analyzer in your
+                    organization to a designated member account.</description>
+         <pubDate>Mon, 30 Mar 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Support_delegated_administration_for_IAM_Access_Analyzer_2020-03-30</guid>
+      </item>
+      <item>
+         <title>Integration with AWS CloudFormation StackSets</title>
+         <link>https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/what-is-cfnstacksets.html</link>
+         <description>You can create a service-managed stack set to deploy stack instances to
+                    accounts managed by AWS Organizations.</description>
+         <pubDate>Tue, 11 Feb 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_CloudFormation_StackSets_2020-02-11</guid>
+      </item>
+      <item>
+         <title>Integration with Compute Optimizer</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>Compute Optimizer was added as a service that can work with accounts in your
+                    organization.</description>
+         <pubDate>Tue, 4 Feb 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_Compute_Optimizer_2020-02-04</guid>
+      </item>
+      <item>
+         <title>Tag policies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html</link>
+         <description>You can use tag policies to help standardize tags across resources in your
+                    organization's accounts.</description>
+         <pubDate>Tue, 26 Nov 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Tag_policies_2019-11-26</guid>
+      </item>
+      <item>
+         <title>Integration with Systems Manager</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>You can synchronize operations data across all AWS accounts in your
+                    organization in Systems Manager Explorer.</description>
+         <pubDate>Tue, 26 Nov 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_Systems_Manager_2019-11-26</guid>
+      </item>
+      <item>
+         <title>aws:PrincipalOrgPaths</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_permissions_overview.html</link>
+         <description>New global condition key checks the AWS Organizations path for the IAM user, IAM
+                    role, or AWS account root user who is making the request. </description>
+         <pubDate>Wed, 20 Nov 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#aws:PrincipalOrgPaths_2019-11-20</guid>
+      </item>
+      <item>
+         <title>Integration with AWS Config rules </title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>You can use AWS Config API operations to manage AWS Config rules across all AWS accounts
+                    in your organization.</description>
+         <pubDate>Mon, 8 Jul 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_Config_rules__2019-07-08</guid>
+      </item>
+      <item>
+         <title>New service for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>Service Quotas added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Mon, 24 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_service_for_trusted_access_2019-06-24</guid>
+      </item>
+      <item>
+         <title>Integration with AWS Control Tower</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Control Tower added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Mon, 24 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_Control_Tower_2019-06-24</guid>
+      </item>
+      <item>
+         <title>Integration with AWS Identity and Access Management</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html</link>
+         <description>IAM provides service last accessed data for your organization's entities
+                    (the organization root, OUs, and accounts). You can use this data to restrict
+                    access to only the AWS services that you need.</description>
+         <pubDate>Thu, 20 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_Identity_and_Access_Management_2019-06-20</guid>
+      </item>
+      <item>
+         <title>Tagging accounts</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_tagging.html</link>
+         <description>You can tag and untag accounts in your organization and view tags on an
+                    account in your organization.</description>
+         <pubDate>Thu, 6 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Tagging_accounts_2019-06-06</guid>
+      </item>
+      <item>
+         <title>Resources, conditions, and the NotAction element in service
+                    control policies (SCPs)</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html</link>
+         <description>You can now specify resources, conditions, and the &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_notaction.html"&gt;&lt;code class="code"&gt;NotAction&lt;/code&gt;&lt;/a&gt; element in SCPs to deny access across
+                    accounts in your organization or organizational unit (OU). </description>
+         <pubDate>Mon, 25 Mar 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Resources,_conditions,_and_the_NotAction_element_in_service
+____________________control_policies_(SCPs)_2019-03-25</guid>
+      </item>
+      <item>
+         <title>New services for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS License Manager and Service Catalog added as services that can work with the accounts in your
+                    organization. </description>
+         <pubDate>Fri, 21 Dec 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_services_for_trusted_access_2018-12-21</guid>
+      </item>
+      <item>
+         <title>New services for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS CloudTrail and AWS RAM added as services that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Tue, 4 Dec 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_services_for_trusted_access_2018-12-04</guid>
+      </item>
+      <item>
+         <title>New service for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Directory Service added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Tue, 25 Sep 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_service_for_trusted_access_2018-09-25</guid>
+      </item>
+      <item>
+         <title>Email address verification</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_create.html#about-email-verification</link>
+         <description>You must verify that you own the email address that is associated with the
+                    management account before you can invite existing accounts to your
+                    organization.</description>
+         <pubDate>Thu, 20 Sep 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Email_address_verification_2018-09-20</guid>
+      </item>
+      <item>
+         <title>CreateAccount notifications</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_incident-response.html#Log-entries-create-account</link>
+         <description>&lt;code class="code"&gt;CreateAccount&lt;/code&gt; notifications are published to the management
+                    account's CloudTrail logs.</description>
+         <pubDate>Thu, 28 Jun 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#CreateAccount_notifications_2018-06-28</guid>
+      </item>
+      <item>
+         <title>New service for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Artifact added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Wed, 20 Jun 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_service_for_trusted_access_2018-06-20</guid>
+      </item>
+      <item>
+         <title>New services for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Config and AWS Firewall Manager added as services that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Wed, 18 Apr 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_services_for_trusted_access_2018-04-18</guid>
+      </item>
+      <item>
+         <title>Trusted service access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>You can now enable or disable access for select AWS services to work in the
+                    accounts in your organization. IAM Identity Center is the initial supported trusted
+                    service.</description>
+         <pubDate>Thu, 29 Mar 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Trusted_service_access_2018-03-29</guid>
+      </item>
+      <item>
+         <title>Account removal is now self-service</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html#orgs_manage_accounts_remove-from-managment-account</link>
+         <description>You can now remove accounts that were created from within AWS Organizations without
+                    contacting AWS Support.</description>
+         <pubDate>Tue, 19 Dec 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Account_removal_is_now_self-service_2017-12-19</guid>
+      </item>
+      <item>
+         <title>Added support for new service AWS IAM Identity Center (successor to AWS Single Sign-On)</title>
+         <link>https://docs.aws.amazon.com/singlesignon/latest/userguide/</link>
+         <description>AWS Organizations now supports integration with AWS IAM Identity Center (successor to AWS Single Sign-On) (IAM Identity Center).</description>
+         <pubDate>Thu, 7 Dec 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_support_for_new_service_AWS_IAM_Identity_Center_(successor_to_AWS_Single_Sign-On)_2017-12-07</guid>
+      </item>
+      <item>
+         <title>AWS added a service-linked role to all organization accounts</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html#orgs_integrate_services-using_slrs</link>
+         <description>A service-linked role named &lt;code class="code"&gt;AWSServiceRoleForOrganizations&lt;/code&gt; is added to all
+                    accounts in an organization to enable integration between AWS Organizations and other
+                    AWS services.</description>
+         <pubDate>Wed, 11 Oct 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#AWS_added_a_service-linked_role_to_all_organization_accounts_2017-10-11</guid>
+      </item>
+      <item>
+         <title>You can now remove created accounts</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>Customers can now remove created accounts from their organization, with help
+                    from AWS Support.</description>
+         <pubDate>Thu, 15 Jun 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#You_can_now_remove_created_accounts_2017-06-15</guid>
+      </item>
+      <item>
+         <title>Service launch</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/</link>
+         <description>Initial version of the AWS Organizations documentation that accompanied the launch of
+                    the new service.</description>
+         <pubDate>Fri, 17 Feb 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Service_launch_2017-02-17</guid>
+      </item>
+   </channel>
+</rss>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+   <channel>
+      <title>AWS Organizations Release Notes</title>
+      <link>https://docs.aws.amazon.com/organizations/latest/userguide/</link>
+      <description>Document history for the AWS Organizations User Guide.</description>
+      <atom:link href="https://docs.aws.amazon.com/organizations/latest/userguide/aws-organizations-release-notes.rss"
+                 rel="self"
+                 type="application/rss+xml"/>
+      <lastBuildDate>Sat, 4 Feb 2023 11:04:34 GMT</lastBuildDate>
+      <item>
+         <title>Updated the AWSOrganizationsFullAccess and AWSOrganizationsReadOnlyAccess
+                    managed policies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_available-policies.html#ref-iam-managed-policies-updates</link>
+         <description>Both managed policies were updated to enable write or read access to contacts for
+                    accounts.</description>
+         <pubDate>Fri, 21 Oct 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Updated_the_AWSOrganizationsFullAccess_and_AWSOrganizationsReadOnlyAccess
+____________________managed_policies_2022-10-21</guid>
+      </item>
+      <item>
+         <title>Updated the AWSOrganizationsFullAccess managed policy</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_available-policies.html#ref-iam-managed-policies-updates</link>
+         <description>The managed policy was updated to allow creating an organization by adding the
+                    permission required to create the service linked role needed by a new
+                    organization.</description>
+         <pubDate>Wed, 24 Aug 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Updated_the_AWSOrganizationsFullAccess_managed_policy_2022-08-24</guid>
+      </item>
+      <item>
+         <title>Organizations close account capability from the AWS Organizations console</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_close.html</link>
+         <description>Principals in the management account can close member accounts from the
+                    AWS Organizations console, and protect member accounts from accidental closure by using
+                    IAM policies.</description>
+         <pubDate>Tue, 29 Mar 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_close_account_capability_from_the_AWS_Organizations_console_2022-03-29</guid>
+      </item>
+      <item>
+         <title>Updated announcement to update alternate contacts with AWS Organizations
+                    console</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_update_contacts.html</link>
+         <description>Organizations now provides ability to update alternate contacts for accounts within
+                    your organization using the AWS Organizations console. Announce new capability and points
+                    to Account Management Reference for instructions. </description>
+         <pubDate>Tue, 8 Feb 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Updated_announcement_to_update_alternate_contacts_with_AWS_Organizations
+____________________console_2022-02-08</guid>
+      </item>
+      <item>
+         <title>Organizations managed policy updates - Update to an existing policy</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_available-policies.html</link>
+         <description>Updated the AWSOrganizationsFullAccess and AWSOrganizationsReadOnlyAccess
+                    managed policies to allow account API permissions required to update or view
+                    account alternate contacts via the AWS Organizations console. </description>
+         <pubDate>Mon, 7 Feb 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_managed_policy_updates_-_Update_to_an_existing_policy_2022-02-07</guid>
+      </item>
+      <item>
+         <title>Organizations integration with Amazon DevOpsÂ Guru</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-devops.html</link>
+         <description>You can integrate Amazon DevOpsÂ Guru with AWS Organizations to monitor application health
+                    holistically across all of your organization accounts and gain insights.</description>
+         <pubDate>Mon, 3 Jan 2022 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_Amazon_DevOpsÂ Guru_2022-01-03</guid>
+      </item>
+      <item>
+         <title>Organizations integration with Amazon Detective</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-detective.html</link>
+         <description>You can integrate Amazon Detective with AWS Organizations to ensure that your Detective
+                    behavior graph provides visibility into the activity for all of your
+                    organization accounts.</description>
+         <pubDate>Thu, 16 Dec 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_Amazon_Detective_2021-12-16</guid>
+      </item>
+      <item>
+         <title>Organizations integration with AWS Config now supports multi-account multi-region data
+                    aggregation.</title>
+         <link>https://docs.aws.amazon.com/config/latest/developerguide/set-up-aggregator-cli.html#register-a-delegated-administrator-cli</link>
+         <description>You can use a delegated administrator account to aggregate resource
+                    configuration and compliance data from all of the member accounts your
+                    organization. For more information, see &lt;a href="https://docs.aws.amazon.com/config/latest/developerguide/aggregate-data.html"&gt;Multi-account multi-region data
+                        aggregation&lt;/a&gt;in the &lt;em&gt;AWS Config Developer Guide&lt;/em&gt;.</description>
+         <pubDate>Wed, 16 Jun 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_AWS_Config_now_supports_multi-account_multi-region_data
+____________________aggregation._2021-06-16</guid>
+      </item>
+      <item>
+         <title>Organizations integration with AWS Firewall Manager now includes support for a delegated
+                    administrator</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-fms.html#integrate-enable-da-fms</link>
+         <description>You can now designate a member account in your organization to be the Firewall Manager
+                    administrator for the entire organization. This allows for better separation of
+                    permissions from the organization's management account.</description>
+         <pubDate>Fri, 30 Apr 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_AWS_Firewall_Manager_now_includes_support_for_a_delegated
+____________________administrator_2021-04-30</guid>
+      </item>
+      <item>
+         <title>Organizations backup policies now support continuous backup</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide//orgs_manage_policies_backup_syntax</link>
+         <description>You can use the AWS Backup continuous backups feature with your organization's
+                    backup policies.</description>
+         <pubDate>Wed, 10 Mar 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_backup_policies_now_support_continuous_backup_2021-03-10</guid>
+      </item>
+      <item>
+         <title>Organizations integration with AWS CloudFormation StackSets now includes support for a
+                    delegated administrator</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-cloudformation.html#integrate-enable-da-cloudformation</link>
+         <description>You can now designate a member account in your organization to be the AWS CloudFormation
+                    StackSets administrator for the entire organization. This allows for better
+                    separation of permissions from the organization's management account.</description>
+         <pubDate>Thu, 18 Feb 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_integration_with_AWS_CloudFormation_StackSets_now_includes_support_for_a
+____________________delegated_administrator_2021-02-18</guid>
+      </item>
+      <item>
+         <title>Continue inviting accounts while you enable all features </title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html</link>
+         <description>AWS updated the process to enable all features in an organization. You can
+                    now continue to invite new accounts to join your organization while you wait for
+                    existing accounts to respond to their invitations.</description>
+         <pubDate>Wed, 3 Feb 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Continue_inviting_accounts_while_you_enable_all_features__2021-02-03</guid>
+      </item>
+      <item>
+         <title>Introduces version 2.0 of the AWS Organizations console</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>AWS introduced a new version of the AWS console. All of the documentation
+                    has been updated to reflect the new way of performing tasks.</description>
+         <pubDate>Thu, 21 Jan 2021 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Introduces_version_2.0_of_the_AWS_Organizations_console_2021-01-21</guid>
+      </item>
+      <item>
+         <title>Organizations now supports integration with AWS Marketplace</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-marketplace.html</link>
+         <description>You can now enable AWS Marketplace to more easily share your software licenses across
+                    all of the accounts in your organization.</description>
+         <pubDate>Thu, 3 Dec 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_now_supports_integration_with_AWS_Marketplace_2020-12-03</guid>
+      </item>
+      <item>
+         <title>Organizations now supports integration with Amazon S3 Lens</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services_that_can_integrate-s3lens.html</link>
+         <description>Amazon S3 Lens supports both trusted access and delegated administrator with Organizations.
+                    For details, see &lt;a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage_lens.html"&gt;Amazon S3 Storage Lens&lt;/a&gt; in the
+                        &lt;em&gt;Amazon Simple Storage Service User Guide&lt;/em&gt;.</description>
+         <pubDate>Wed, 18 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_now_supports_integration_with_Amazon_S3_Lens_2020-11-18</guid>
+      </item>
+      <item>
+         <title>Cross-account backup copies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup_syntax.html</link>
+         <description>When you use backup policies to backup the resources in your organization, you
+                    can now store copies of your backup in other AWS accounts in the
+                    organization.</description>
+         <pubDate>Wed, 18 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Cross-account_backup_copies_2020-11-18</guid>
+      </item>
+      <item>
+         <title>AWS Regions in China now support AWS Resource Access Manager as an Organizations trusted
+                    service</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>You can now use AWS RAM features that integrate with Organizations as a trusted service
+                    when you use Organizations and AWS RAM in China.</description>
+         <pubDate>Wed, 18 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#AWS_Regions_in_China_now_support_AWS_Resource_Access_Manager_as_an_Organizations_trusted
+____________________service_2020-11-18</guid>
+      </item>
+      <item>
+         <title>Organizations now supports integration with AWS Security Hub</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-securityhub.html</link>
+         <description>You can enable Security Hub across all of the accounts in your organization, and
+                    designate one of your organization's member accounts as the delegated
+                    administrator account for Security Hub.</description>
+         <pubDate>Thu, 12 Nov 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_now_supports_integration_with_AWS_Security_Hub_2020-11-12</guid>
+      </item>
+      <item>
+         <title>Renamed the master account</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>AWS Organizations changed the name of the â€œmaster accountâ€ to â€œmanagement accountâ€.
+                    This is a name change only, and there is no change in functionality.</description>
+         <pubDate>Tue, 20 Oct 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Renamed_the_master_account_2020-10-20</guid>
+      </item>
+      <item>
+         <title>New Best Practices section and topics</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices.html</link>
+         <description>Added a new section for best practices for AWS Organizations. The new section includes
+                    topics that discuss best practices for the management account and member account
+                    root users and password management.</description>
+         <pubDate>Tue, 6 Oct 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_Best_Practices_section_and_topics_2020-10-06</guid>
+      </item>
+      <item>
+         <title>Added new best practices section and first two pages</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices.html</link>
+         <description>There is a new section for topics that describe best practices for AWS Organizations.
+                    This update includes a topic for best practices for an organization's management
+                    account and a topic for best practices for member accounts.</description>
+         <pubDate>Fri, 2 Oct 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_new_best_practices_section_and_first_two_pages_2020-10-02</guid>
+      </item>
+      <item>
+         <title>Organizations backup policies now support application-consistent backups on Windows
+                    EC2 instances by using VSS (Volume Shadow Copy Service)</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup_syntax.html</link>
+         <description>Backup policies support a new &lt;code class="code"&gt;advanced_backup_settings&lt;/code&gt;" section.
+                    The first entry in this new section is an &lt;code class="code"&gt;ec2&lt;/code&gt; setting called
+                        &lt;code class="code"&gt;WindowsVSS&lt;/code&gt; that you can enable or disable. For details, see
+                        &lt;a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/windows-backup.html"&gt;Creating
+                        a VSS-Enabled Windows Backup&lt;/a&gt; in the
+                        &lt;em&gt;AWS Backup Developer Guide&lt;/em&gt;.</description>
+         <pubDate>Thu, 24 Sep 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_backup_policies_now_support_application-consistent_backups_on_Windows
+____________________EC2_instances_by_using_VSS_(Volume_Shadow_Copy_Service)_2020-09-24</guid>
+      </item>
+      <item>
+         <title>Organizations supports tag-on-create and tag-based access control</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_tagging.html</link>
+         <description>You can add tags to Organizations resources when you create them. You can use &lt;a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html"&gt;tag
+                        policies&lt;/a&gt; to standardize tag usage on Organizations resources. You can use
+                        &lt;a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_iam_tbac.html"&gt;IAM policies to restrict access to only resources that have specified tag
+                        keys and values&lt;/a&gt;.</description>
+         <pubDate>Tue, 15 Sep 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Organizations_supports_tag-on-create_and_tag-based_access_control_2020-09-15</guid>
+      </item>
+      <item>
+         <title>Added AWS Health as a trusted service</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-health.html</link>
+         <description>You can aggregate AWS Health events across accounts in your
+                    organization.</description>
+         <pubDate>Tue, 4 Aug 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_AWS_Health_as_a_trusted_service_2020-08-04</guid>
+      </item>
+      <item>
+         <title>Artificial Intelligence (AI) services opt-out policies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_ai-opt-out.html</link>
+         <description>You can use AI services opt-out policies to control whether AWS AI services may
+                    store and use customer content processed by those services (AI content) for the
+                    development and continuous improvement of AWS AI services and
+                    technologies.</description>
+         <pubDate>Wed, 8 Jul 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Artificial_Intelligence_(AI)_services_opt-out_policies_2020-07-08</guid>
+      </item>
+      <item>
+         <title>Added backup policies and integration with AWS Backup</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup.html</link>
+         <description>You can use backup policies to create and enforce backup policies across all
+                    of the accounts in your organization.</description>
+         <pubDate>Wed, 24 Jun 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_backup_policies_and_integration_with_AWS_Backup_2020-06-24</guid>
+      </item>
+      <item>
+         <title>Support delegated administration for IAM Access Analyzer</title>
+         <link>https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-settings.html#access-analyzer-delegated-administrator</link>
+         <description>Enables you to delegate administrative access for Access Analyzer in your
+                    organization to a designated member account.</description>
+         <pubDate>Mon, 30 Mar 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Support_delegated_administration_for_IAM_Access_Analyzer_2020-03-30</guid>
+      </item>
+      <item>
+         <title>Integration with AWS CloudFormation StackSets</title>
+         <link>https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/what-is-cfnstacksets.html</link>
+         <description>You can create a service-managed stack set to deploy stack instances to
+                    accounts managed by AWS Organizations.</description>
+         <pubDate>Tue, 11 Feb 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_CloudFormation_StackSets_2020-02-11</guid>
+      </item>
+      <item>
+         <title>Integration with Compute Optimizer</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>Compute Optimizer was added as a service that can work with accounts in your
+                    organization.</description>
+         <pubDate>Tue, 4 Feb 2020 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_Compute_Optimizer_2020-02-04</guid>
+      </item>
+      <item>
+         <title>Tag policies</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html</link>
+         <description>You can use tag policies to help standardize tags across resources in your
+                    organization's accounts.</description>
+         <pubDate>Tue, 26 Nov 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Tag_policies_2019-11-26</guid>
+      </item>
+      <item>
+         <title>Integration with Systems Manager</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>You can synchronize operations data across all AWS accounts in your
+                    organization in Systems Manager Explorer.</description>
+         <pubDate>Tue, 26 Nov 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_Systems_Manager_2019-11-26</guid>
+      </item>
+      <item>
+         <title>aws:PrincipalOrgPaths</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_permissions_overview.html</link>
+         <description>New global condition key checks the AWS Organizations path for the IAM user, IAM
+                    role, or AWS account root user who is making the request. </description>
+         <pubDate>Wed, 20 Nov 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#aws:PrincipalOrgPaths_2019-11-20</guid>
+      </item>
+      <item>
+         <title>Integration with AWS Config rules </title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>You can use AWS Config API operations to manage AWS Config rules across all AWS accounts
+                    in your organization.</description>
+         <pubDate>Mon, 8 Jul 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_Config_rules__2019-07-08</guid>
+      </item>
+      <item>
+         <title>New service for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>Service Quotas added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Mon, 24 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_service_for_trusted_access_2019-06-24</guid>
+      </item>
+      <item>
+         <title>Integration with AWS Control Tower</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Control Tower added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Mon, 24 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_Control_Tower_2019-06-24</guid>
+      </item>
+      <item>
+         <title>Integration with AWS Identity and Access Management</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html</link>
+         <description>IAM provides service last accessed data for your organization's entities
+                    (the organization root, OUs, and accounts). You can use this data to restrict
+                    access to only the AWS services that you need.</description>
+         <pubDate>Thu, 20 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Integration_with_AWS_Identity_and_Access_Management_2019-06-20</guid>
+      </item>
+      <item>
+         <title>Tagging accounts</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_tagging.html</link>
+         <description>You can tag and untag accounts in your organization and view tags on an
+                    account in your organization.</description>
+         <pubDate>Thu, 6 Jun 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Tagging_accounts_2019-06-06</guid>
+      </item>
+      <item>
+         <title>Resources, conditions, and the NotAction element in service
+                    control policies (SCPs)</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scp.html</link>
+         <description>You can now specify resources, conditions, and the &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_notaction.html"&gt;&lt;code class="code"&gt;NotAction&lt;/code&gt;&lt;/a&gt; element in SCPs to deny access across
+                    accounts in your organization or organizational unit (OU). </description>
+         <pubDate>Mon, 25 Mar 2019 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Resources,_conditions,_and_the_NotAction_element_in_service
+____________________control_policies_(SCPs)_2019-03-25</guid>
+      </item>
+      <item>
+         <title>New services for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS License Manager and Service Catalog added as services that can work with the accounts in your
+                    organization. </description>
+         <pubDate>Fri, 21 Dec 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_services_for_trusted_access_2018-12-21</guid>
+      </item>
+      <item>
+         <title>New services for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS CloudTrail and AWS RAM added as services that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Tue, 4 Dec 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_services_for_trusted_access_2018-12-04</guid>
+      </item>
+      <item>
+         <title>New service for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Directory Service added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Tue, 25 Sep 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_service_for_trusted_access_2018-09-25</guid>
+      </item>
+      <item>
+         <title>Email address verification</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_create.html#about-email-verification</link>
+         <description>You must verify that you own the email address that is associated with the
+                    management account before you can invite existing accounts to your
+                    organization.</description>
+         <pubDate>Thu, 20 Sep 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Email_address_verification_2018-09-20</guid>
+      </item>
+      <item>
+         <title>CreateAccount notifications</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_security_incident-response.html#Log-entries-create-account</link>
+         <description>&lt;code class="code"&gt;CreateAccount&lt;/code&gt; notifications are published to the management
+                    account's CloudTrail logs.</description>
+         <pubDate>Thu, 28 Jun 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#CreateAccount_notifications_2018-06-28</guid>
+      </item>
+      <item>
+         <title>New service for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Artifact added as a service that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Wed, 20 Jun 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_service_for_trusted_access_2018-06-20</guid>
+      </item>
+      <item>
+         <title>New services for trusted access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>AWS Config and AWS Firewall Manager added as services that can work with the accounts in your
+                    organization.</description>
+         <pubDate>Wed, 18 Apr 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#New_services_for_trusted_access_2018-04-18</guid>
+      </item>
+      <item>
+         <title>Trusted service access</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrated-services-list.html</link>
+         <description>You can now enable or disable access for select AWS services to work in the
+                    accounts in your organization. IAM Identity Center is the initial supported trusted
+                    service.</description>
+         <pubDate>Thu, 29 Mar 2018 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Trusted_service_access_2018-03-29</guid>
+      </item>
+      <item>
+         <title>Account removal is now self-service</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html#orgs_manage_accounts_remove-from-managment-account</link>
+         <description>You can now remove accounts that were created from within AWS Organizations without
+                    contacting AWS Support.</description>
+         <pubDate>Tue, 19 Dec 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Account_removal_is_now_self-service_2017-12-19</guid>
+      </item>
+      <item>
+         <title>Added support for new service AWS IAM Identity Center (successor to AWS Single Sign-On)</title>
+         <link>https://docs.aws.amazon.com/singlesignon/latest/userguide/</link>
+         <description>AWS Organizations now supports integration with AWS IAM Identity Center (successor to AWS Single Sign-On) (IAM Identity Center).</description>
+         <pubDate>Thu, 7 Dec 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Added_support_for_new_service_AWS_IAM_Identity_Center_(successor_to_AWS_Single_Sign-On)_2017-12-07</guid>
+      </item>
+      <item>
+         <title>AWS added a service-linked role to all organization accounts</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html#orgs_integrate_services-using_slrs</link>
+         <description>A service-linked role named &lt;code class="code"&gt;AWSServiceRoleForOrganizations&lt;/code&gt; is added to all
+                    accounts in an organization to enable integration between AWS Organizations and other
+                    AWS services.</description>
+         <pubDate>Wed, 11 Oct 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#AWS_added_a_service-linked_role_to_all_organization_accounts_2017-10-11</guid>
+      </item>
+      <item>
+         <title>You can now remove created accounts</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/document-history.html</link>
+         <description>Customers can now remove created accounts from their organization, with help
+                    from AWS Support.</description>
+         <pubDate>Thu, 15 Jun 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#You_can_now_remove_created_accounts_2017-06-15</guid>
+      </item>
+      <item>
+         <title>Service launch</title>
+         <link>https://docs.aws.amazon.com/organizations/latest/userguide/</link>
+         <description>Initial version of the AWS Organizations documentation that accompanied the launch of
+                    the new service.</description>
+         <pubDate>Fri, 17 Feb 2017 19:00:00 GMT</pubDate>
+         <guid isPermaLink="false">https://docs.aws.amazon.com/organizations/latest/userguide/#Service_launch_2017-02-17</guid>
+      </item>
+   </channel>
+</rss>
+:Build::
+Name :Onion/Onion.yml'@Rotten tomatoes :
+bitore.sig/BITCORE :
+Publish :publish.yml
+access :Private
+access: Public
+Publish :build_script'@ActionScript.yml'@Automate.yml '@bitore.sig'@BITCORE :
+BWGIN 
+run::\pom.YML :
+
